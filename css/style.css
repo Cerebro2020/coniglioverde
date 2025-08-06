@@ -87,7 +87,7 @@ html::-webkit-scrollbar {
 /* HEADER */
 /* MENU AMBURGER */
 header { 
-  border: 1px solid white;
+  /* border: 1px solid white; */
   width: 100%;
   top: 0;
   padding-top: 10px;
