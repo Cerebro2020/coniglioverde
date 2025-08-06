@@ -32,7 +32,7 @@ export default function(){
   camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
   camera.setFocalLength ( 35 );
   // LIGHTS  
-  const ambiente = new THREE.AmbientLight ( 0xFFFFFF, 1 )
+  const ambiente = new THREE.AmbientLight ( 0xFFFFFF, 1.5 )
   scene.add( ambiente);    
   // ANIMATE SCENE
   function animateScene(){
@@ -52,7 +52,7 @@ export default function(){
     camera.rotation.set( 0, -(t * 0.0001), 0 );   
   }
   document.body.onscroll = moveCamera;
-  
+
   // HOLE - HOME  
   const loaderBuco = new GLTFLoader();
   loaderBuco.load('3d/CV_Home_Hole.glb', (gltf) => {
