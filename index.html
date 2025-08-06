@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Felice Vino">
+        <meta name="description" content="Digital creator and storyteller.">
+        <meta property="og:title" content="CONIGLIO VERDE">
+        <meta property="og:description" content="Digital creator and storyteller.">
+        <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
+        <link rel="icon" href="./images/loghi/favicon.ico">
+        <title>coniglioverde</title>
+        <link rel="stylesheet" href="./css/style.css"> 
+        <!-- Loading -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(window).on("load", function() {
+                    $("#loader").fadeOut("slow");
+                });
+            });
+        </script>
+         <script>
+            var videos = document.getElementsByClassName('video-container-full'); 
+             for (var i = 0; i < videos.length; i++) {
+                 var video = videos[i];
+                 var playPromise = video.play(); 
+                 if (playPromise !== undefined) {
+                     playPromise.then(_ => {                         
+                     })
+                     .catch(error => {
+                     });
+                 }
+             }
+        </script>     
+    </head>
+    <body>        
+        <div id="loader">
+            <div class="loader"></div>
+            <span></span>
+            <div class="text-loader">
+                <p>Loading...</p>
+            </div>
+        </div> 
+        <canvas id="conigliobcg">
+            <script type="importmap">
+                {
+                    "imports": {
+                        "three": "./three_class/three.module.js"
+                        }
+                }
+            </script>
+            <script type = "module">
+                        import scene from "./js/index.js";                    
+                        scene();
+            </script>  
+        </canvas>  
+        <!-- HOME -->
+        <header>
+            <div id="logo">
+                <a href="#"><img src="imges/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
+            </div>
+            <input id="menu-toggle" type="checkbox" aria-label="Toggle-menu"/>
+            <label class='menu-button-container' for="menu-toggle">
+            <div class='menu-button'></div>            
+            </label class='menu-button-container' for="menu-toggle">
+            <ul class="menu">
+                <li><a href="#">HOME</a></li></li>                              
+                <!-- <li><a href="#data">DATA VIZ</a></li> -->
+                <!-- <li><a href="#cinematic">CINEMATIC</a></li> -->
+                <li><a href="#writing">WORDS</a></li>
+                <li><a href="#static">IMAGES</a></li>
+                <li><a href="bio.html">BIO/CONTACT</a></li>
+                <li><a href="index_it.html">EN | IT</a> 
+                </li>                  
+            </ul>
+        </header>
+        <!-- FOOTER -->
+        <footer id="footer"> 
+            <ul>
+                <li>&copy; 2023 felice vino</li>
+                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
+                <!-- <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li>
+                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li> -->
+            </ul>
+        </footer> 
+        <!-- HOME -->
+        <section> 
+            <div class="home1-text">
+                <div class="home-title">
+                    <h1>CONIGLIO VERDE</h1>
+                </div>
+                <div class="home-paragraph">
+                    <p>
+                        Coniglio Verde is inspired by Eduardo Kac’s Alba project. 
+                        <br><br>
+                        Is a multimedia <span class='p-bold'> exhibition space</span> and a research <span class='p-bold'> laboratory </span> on hybridation beetween <span class='p-bold'>poetics</span><span class='p-bold'></span> and <span class='p-bold'>technologies</span>.
+                        <br><br>
+                    </p>                    
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-down.svg" alt="scrolling">
+                </div>                  
+            </div>             
+        </section>  
+        <!--DATA -->             
+        <!-- <section id="data">
+            <div class="data-text">
+                <div class="home-paragraph">
+                    <p>
+                        We produce an ever-growing amount of <span class="p-bold">data</span>, until — over time — we ourselves become its product.    
+                        <br><br>
+                        <a href="data.html">Experience H.E.Arts</a>:<br>a sensitive device that records <span class="p-bold">emotional art experences.
+                    </p>
+                    <p>
+                       <br>
+                        <a href="data.html">Discover AQVAM</a>:<br></b>A narrative of the secret life harbored by water.
+                    </p>       
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-updown.gif" alt="scrolling">
+                </div>                 
+            </div>            
+        </section> -->
+        <!--CINEMATIC --> 
+        <!-- <section id="cinematic">
+            <div class="cinematic-text">               
+                <div class="home-paragraph">
+                    <p>
+                        Moving images have<span class="p-bold"> multiplied</span> and <span class="p-bold">fragmented </span> on <a href="cinematic.html">screens</a> of all kinds, out and inside ouerselves. 
+                        <br><br>                   
+                        <a href="cinematic_B_room.html">Butterfly</a> 
+                        is an immersvive movie counting about a new form of life emerging from a primordial digital broth.
+                    </p>
+                    <br><br>   
+                </div>                              
+                <div class="scrolling">
+                    <img src="images/icons/scroll-updown.gif" alt="scrolling">
+                </div>
+            </div>
+        </section>   -->
+        <!--WRITING --> 
+        <section id="writing">
+            <div class="writing-text">
+                <div class="home-paragraph">
+                    <p> 
+                        In the time of
+                        <span class='p-bold'> half-realities</span>, of virtual worlds, of AIs that can imitate thought, we seek our way to reconnect with <span class='p-bold'>words</span>.
+                        <br><br>
+                        <a href="writing.html">Expreince Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts.
+                    </p>
+                    <br><br>
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-updown.gif" alt="scrolling">
+                </div>
+            </div>
+        </section>
+        <!--STATIC --> 
+        <section id="static">
+            <div class="gallery-text">
+                <div class="home-paragraph">
+                    <p>
+                        In the flow of time images flow, but some of them remain <span class="p-bold">entangled</span>, they stick to the gaze.
+                        <br><br>      
+                        <a href="static.html">Visiting this gallery</a> you can find projects realized with, AI, generative software, sensors. 
+                        <br><br>
+                        Old and new tools to explore the relationships between <span class="p-bold">visible</span> and <span class="p-bold">imaginary</span>.
+                        <br><br> 
+                    </p> 
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-up.svg" alt="scrolling">
+                </div>
+            </div>
+        </section>    
+    </body>
+</html>
