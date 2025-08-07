@@ -26,7 +26,7 @@ export default function(){
   } );  
   // SCENE & FOG
   scene.background = new THREE.Color( 0x000000 );
-  scene.fog = new THREE.Fog( 0x000000, 40, 180);  
+  scene.fog = new THREE.Fog( 0x000000, 45, 180);  
   // CAMERA
   camera.position.set( 0, 0, 0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
@@ -51,29 +51,46 @@ export default function(){
     camera.position.set( 0, 0, t * 0.15 );   
     camera.rotation.set( 0, -(t * 0.0001), 0 );   
   }
-  document.body.onscroll = moveCamera;
+  //document.body.onscroll = moveCamera;
 
-  // HOLE - HOME  
+  // HOLE - HOME 
   const loaderBuco = new GLTFLoader();
   loaderBuco.load('3d/CV_Home_Hole.glb', (gltf) => {
     const model = gltf.scene;
-    scene.add(model); // Aggiungi il modello alla scena
+    scene.add(model); 
     model.position.set(25, 0, -260);
     model.rotation.set(0, Math.PI/2, Math.PI/2);
     model.scale.set(0.65,0.65,0.65);
   });
-  // RABBIT - HOME
+  // RABBIT - 
+   let modelB; // 👉 AGGIUNGI QUESTO PRIMA DEL LOADER
+
   const loaderRabbitB = new GLTFLoader();
   loaderRabbitB.load('3d/CV_Black_Rabbit.glb', (gltf) => {
-    const modelB = gltf.scene;
-    scene.add(modelB); // Aggiungi il modello alla scena
-    modelB.position.set(-9, -12, -48);
+    modelB = gltf.scene;
+    scene.add(modelB); 
+    modelB.position.set(-9, -32, -138);
     modelB.rotation.set(0, Math.PI/2.7, 0);
-    modelB.scale.set(4,4,4);
-    let rabbitB = modelB.clone();
-      rabbitB.position.set( -3, -8, -520 );
-      rabbitB.scale.set(2,2,2); 
-      rabbitB.rotation.set( 0, -2, 0 );     
-      scene.add( rabbitB ); 
+    modelB.scale.set(10,10,10);
+    
+    // let rabbitB = modelB.clone();
+    // rabbitB.position.set( -3, -8, -520 );
+    // rabbitB.scale.set(2,2,2); 
+    // rabbitB.rotation.set( 0, -2, 0 );     
+    // scene.add( rabbitB ); 
+
   });
+
+  function moveModelB() {
+    const t = document.body.getBoundingClientRect().top;
+    if (modelB) {
+      modelB.position.z = -140 +(t*0.15);
+      modelB.position.x = -4 -(t*0.0002);
+      modelB.rotation.y = Math.PI / 2.7 - t * 0.001;
+    }
+  }
+  document.body.onscroll = () => {
+  moveCamera();
+  moveModelB(); // 👈 questa è la nuova funzione
+};
 };
