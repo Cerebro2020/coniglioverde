@@ -1,0 +1,281 @@
+#neutropoli{
+  background-color: white;
+}
+.canvas {
+  z-index: -1;
+}  
+
+.info_leyer { 
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 60px;   
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#info {   
+  /* border: 1px solid red; */
+  width: 160px;
+  height: 30px;   
+  text-align: center; 
+  font-size: 12px;;
+}
+
+.canvas {
+  z-index: -1;             
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  cursor: grab;
+}
+
+canvas:active {				
+cursor: grabbing;
+}
+
+/* COVER AND BOOK CONTAINER*/
+.container-book {    
+  /* border: 1px solid red; */
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  flex-direction: row;   
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: space-around;  
+  width: 70%;
+  height: 60vh; 
+}
+
+.cover-container {    
+  /* border: 1px solid rgb(11, 166, 255); */
+  width: 160px;   
+  width: auto;
+  height: 100%;
+}
+
+.cover-container img {
+  max-height: 100%;
+}
+
+.text-container {  
+  /* border: 1px solid rgb(11, 255, 39);   */
+  overflow: auto;   
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;      
+}
+
+.text-book {
+  width: 90%;
+  height: 80%; 
+  padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.text-book h2 {
+  font-style: italic;
+}
+
+.text-book p {     
+  font-size: 20px;
+  line-height: 22px;  
+  color: black; 
+}
+
+.italic {
+  font-style: italic;  
+}
+
+.button_div_writing {  
+  width: 90%;   
+  height: 20%;  
+  position: relative;
+  display:flex;
+  align-items:end;
+  justify-content: left; 
+  bottom: 0px
+}
+
+.button_div_writing button {
+  background-color: rgba(255, 255, 255, 0);
+  width: 70px;
+  height: 20px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  font-size: 8px;   
+  border-radius: 2px;
+}
+
+.button_div_writing button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+.button_div {
+  width: 90%;
+  display: flex;
+  align-items: center; 
+  justify-content: right; 
+}
+
+.button_camera {  
+  position: fixed;
+  align-items: right;
+  height: 40px;
+  bottom: 40px;  
+  width: 100%; 
+}
+
+.button-controls {
+    width: 90%;
+    position: absolute;
+    display: flex;
+    bottom: 40px;
+    align-items: center;
+    justify-content: right;
+    z-index: 1;
+}
+
+ #btn-camera button , #btn-audio button {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  width:70px;
+  height: 20px;
+  margin-right: 10px;;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 100;    
+}
+  
+#btn-camera button:hover,  #btn-count button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+.scrolling {
+  /* position: absolute; */
+  padding-top: 100px 
+}
+
+.scrolling img {
+  filter: invert(0);
+}
+
+
+
+@media (max-width: 1024px) {
+
+  .container-book {    
+    width: 90%;
+    height: 80Vh;
+  }
+
+  .cover-container {    
+    width: 40%;
+    height: 60%; 
+  }
+      
+  .cover-container img {     
+    height: 100%;
+    width: auto;
+   }       
+  
+  .text-container {  
+    width: 60%;
+    height: 60%;       
+  }
+    
+  .text-book {      
+    width: 90%;
+    height: 80%;       
+    font-weight: 100; 
+  }  
+  
+  .text-book h2 {      
+    font-size: 20px;
+    line-height: 22px;
+    font-weight: 600;     
+  } 
+  
+  .text-book p {      
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 100; 
+  } 
+
+  .button_div_writing {    
+    justify-content: center;    
+  }
+  
+}
+
+@media (max-width: 724px) {  
+
+  .container-book {
+    position: absolute;    
+    flex-direction: column;
+    top: 0;
+    width: 100%;
+    height: 86vh;
+  }
+
+  .cover-container {    
+    overflow: hidden;     
+    width: 100%;
+    height: 30%;   
+  }
+    
+  .cover-container img {     
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: top; 
+  }       
+
+  .text-container {
+    width: 100%;
+    height: 90%;       
+  }
+  
+  .text-book {        
+    height: 90%;   
+    padding-top: 20px; 
+  }
+  
+  .text-book h2 {    
+    font-size: 18px;
+    font-weight: 400; 
+    text-align: left;
+  } 
+  
+  .text-book p {
+    font-size: 16px;
+    line-height: 17px;
+    font-weight: 100; 
+  }  
+
+  .button_div_writing {
+    height: 10%;  
+    justify-content: left;  
+  }
+
+  .button_div_writing {    
+    justify-content: center;    
+  } 
+  
+}
