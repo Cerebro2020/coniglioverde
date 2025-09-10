@@ -11,7 +11,7 @@
         <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
         <link rel="icon" href="./images/loghi/favicon.ico">
         <title>coniglioverde</title>
-        <link rel="stylesheet" href="./css/style.css"> 
+        <link rel="stylesheet" href="../css/style.css"> 
         <!-- Loading -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
@@ -35,7 +35,11 @@
              }
         </script>     
     </head>
-    <body>        
+    <body>
+        <div id="threejs-error" style="display:none; padding:1rem; background:#111; color:#fff;">            
+            Il tuo dispositivo non supporta WebGL o le risorse sono troppo pesanti per questo browser.
+        </div>
+        
         <div id="loader">
             <div class="loader"></div>
             <span></span>
@@ -148,7 +152,7 @@
                         In the time of
                         <span class='p-bold'> half-realities</span>, of virtual worlds, of AIs that can imitate thought, we seek our way to reconnect with <span class='p-bold'>words</span>.
                         <br><br>
-                        <a href="writing.html">Expreince Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts.
+                        <a href="./writing/writing.html">Expreince Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts.
                     </p>
                     <br><br>
                 </div>
