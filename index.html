@@ -10,25 +10,14 @@
     <meta name="author" content="Felice Vino" />
     <meta name="description" content="Digital creator and storyteller." />
     <meta property="og:title" content="CONIGLIO VERDE" />
-    <meta
-      property="og:description"
-      content="Digital creator and storyteller."
-    />
+    <meta property="og:description" content="Digital creator and storyteller." />
+
     <!-- Canonical corretto -->
-    <link
-      rel="canonical"
-      href="https://cerebro2020.github.io/coniglioverde/"
-    />
+    <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde/" />
     <link rel="icon" href="./images/loghi/favicon.ico" />
     <title>coniglioverde</title>
 
     <link rel="stylesheet" href="./css/style.css" />
-
-    <!-- jQuery solo per il loader (puoi rimuoverlo se non necessario altrove) -->
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-      defer
-    ></script>
 
     <!-- Import map per Three.js -->
     <script type="importmap">
@@ -40,29 +29,21 @@
     </script>
 
     <style>
-      /* Assicura che il canvas possa stare dietro o davanti ai testi a seconda del tuo CSS */
+      /* Canvas in BACKGROUND: non interferisce con header/footer/layout */
       #conigliobcg {
         position: fixed;
         inset: 0;
         display: block;
-        z-index: 0; /* se vuoi il canvas dietro ai testi; porta a 2 se lo vuoi sopra */
+        z-index: -1;            /* dietro a tutto */
+        pointer-events: none;   /* non intercetta i click/scroll */
       }
-      header,
-      section,
-      footer {
-        position: relative;
-        z-index: 1;
-      }
-      /* Messaggio WebGL */
+      /* Messaggi di sistema */
       #threejs-error {
         display: none;
         padding: 1rem;
         background: #111;
         color: #fff;
-        position: relative;
-        z-index: 2;
       }
-      /* Noscript minimo */
       noscript {
         display: block;
         padding: 1rem;
@@ -70,54 +51,46 @@
         color: #fff;
         font-weight: 600;
       }
+      /* Loader semplice: resta sopra i contenuti poi scompare */
+      #loader {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #000;
+        color: #fff;
+        z-index: 9999;
+      }
     </style>
   </head>
 
   <body>
-    <div
-      id="threejs-error"
-      role="alert"
-      aria-live="polite"
-    >
-      Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo
-      pesanti per questo browser.
+    <!-- Fallback WebGL -->
+    <div id="threejs-error" role="alert" aria-live="polite">
+      Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
     </div>
 
+    <!-- Loader -->
     <div id="loader" aria-hidden="true">
       <div class="loader"></div>
-      <span></span>
-      <div class="text-loader">
-        <p>Loading...</p>
-      </div>
+      <div class="text-loader"><p>Loading...</p></div>
     </div>
 
-    <!-- Canvas: gli script NON devono stare dentro il canvas -->
+    <!-- Canvas BACKGROUND -->
     <canvas id="conigliobcg"></canvas>
+    <noscript>Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
 
-    <noscript>
-      JavaScript è disabilitato: abilitalo per visualizzare i contenuti
-      interattivi.
-    </noscript>
-
-    <!-- HEADER -->
+    <!-- HEADER (non tocco il tuo layout: segue il tuo CSS in style.css) -->
     <header>
       <div id="logo">
-        <a href="#"
-          ><img
-            src="images/loghi/coniglio_verde_logo.png"
-            alt="logo coniglio verde"
-        /></a>
+        <a href="#">
+          <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde" />
+        </a>
       </div>
-
-      <input
-        id="menu-toggle"
-        type="checkbox"
-        aria-label="Apri/chiudi menu"
-      />
+      <input id="menu-toggle" type="checkbox" aria-label="Apri/chiudi menu" />
       <label class="menu-button-container" for="menu-toggle">
         <div class="menu-button"></div>
       </label>
-
       <ul class="menu">
         <li><a href="#">HOME</a></li>
         <li><a href="#writing">WORDS</a></li>
@@ -127,36 +100,17 @@
       </ul>
     </header>
 
-    <!-- FOOTER -->
-    <footer id="footer">
-      <ul>
-        <li>&copy; 2023 felice vino</li>
-        <li>
-          <a
-            href="https://www.instagram.com/felice_vino/"
-            target="_blank"
-            rel="noopener"
-            ><img src="images/icons/instagram.png" alt="instagram icon"
-          /></a>
-        </li>
-      </ul>
-    </footer>
-
-    <!-- HOME -->
+    <!-- CONTENUTI -->
     <section>
       <div class="home1-text">
-        <div class="home-title">
-          <h1>CONIGLIO VERDE</h1>
-        </div>
+        <div class="home-title"><h1>CONIGLIO VERDE</h1></div>
         <div class="home-paragraph">
           <p>
             Coniglio Verde is inspired by Eduardo Kac’s Alba project.
             <br /><br />
-            Is a multimedia <span class="p-bold"> exhibition space</span> and a
-            research <span class="p-bold"> laboratory </span> on hybridation
-            beetween <span class="p-bold">poetics</span
-            ><span class="p-bold"></span> and
-            <span class="p-bold">technologies</span>.
+            Is a multimedia <span class="p-bold"> exhibition space</span> and a research
+            <span class="p-bold"> laboratory </span> on hybridation beetween
+            <span class="p-bold">poetics</span> and <span class="p-bold">technologies</span>.
             <br /><br />
           </p>
         </div>
@@ -166,18 +120,15 @@
       </div>
     </section>
 
-    <!-- WRITING -->
     <section id="writing">
       <div class="writing-text">
         <div class="home-paragraph">
           <p>
-            In the time of <span class="p-bold"> half-realities</span>, of
-            virtual worlds, of AIs that can imitate thought, we seek our way to
-            reconnect with <span class="p-bold">words</span>.
+            In the time of <span class="p-bold"> half-realities</span>, of virtual worlds, of AIs that can imitate thought,
+            we seek our way to reconnect with <span class="p-bold">words</span>.
             <br /><br />
-            <a href="./writing/writing.html">Expreince Neutropoli</a>:<br />a
-            text, an underground, a pain, a silence, a vertigo, a voice, all the
-            voices, thoughts.
+            <a href="./writing/writing.html">Expreince Neutropoli</a>:<br />a text, an underground, a pain, a silence,
+            a vertigo, a voice, all the voices, thoughts.
           </p>
           <br /><br />
         </div>
@@ -187,19 +138,15 @@
       </div>
     </section>
 
-    <!-- STATIC -->
     <section id="static">
       <div class="gallery-text">
         <div class="home-paragraph">
           <p>
-            In the flow of time images flow, but some of them remain
-            <span class="p-bold">entangled</span>, they stick to the gaze.
+            In the flow of time images flow, but some of them remain <span class="p-bold">entangled</span>, they stick to the gaze.
             <br /><br />
-            <a href="static.html">Visiting this gallery</a> you can find
-            projects realized with, AI, generative software, sensors.
+            <a href="static.html">Visiting this gallery</a> you can find projects realized with, AI, generative software, sensors.
             <br /><br />
-            Old and new tools to explore the relationships between
-            <span class="p-bold">visible</span> and
+            Old and new tools to explore the relationships between <span class="p-bold">visible</span> and
             <span class="p-bold">imaginary</span>.
             <br /><br />
           </p>
@@ -210,75 +157,62 @@
       </div>
     </section>
 
-    <!-- ========== SCRIPT ========== -->
+    <!-- FOOTER -->
+    <footer id="footer">
+      <ul>
+        <li>&copy; 2023 felice vino</li>
+        <li>
+          <a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener">
+            <img src="images/icons/instagram.png" alt="instagram icon" />
+          </a>
+        </li>
+      </ul>
+    </footer>
 
-    <!-- Loader chiusura sicura al termine caricamento -->
+    <!-- ==== Script app ===== -->
     <script>
-      window.addEventListener("load", function () {
-        var ld = document.getElementById("loader");
-        if (ld) ld.style.display = "none";
+      // Chiudi loader quando tutto è pronto
+      window.addEventListener('load', function () {
+        var ld = document.getElementById('loader');
+        if (ld) ld.style.display = 'none';
       });
     </script>
 
-    <!-- Autoplay video sicuro su mobile (se usi elementi video con questa classe) -->
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var vids = document.getElementsByClassName("video-container-full");
-        for (var i = 0; i < vids.length; i++) {
-          var v = vids[i];
-          try {
-            v.setAttribute("playsinline", "");
-            v.muted = true;
-            v.loop = true;
-            var p = v.play();
-            if (p && typeof p.then === "function") p.catch(function () {});
-          } catch (e) {}
-        }
-      });
-    </script>
-
-    <!-- Avvio Three.js con controllo WebGL e fallback -->
     <script type="module">
-      // Check WebGL base (WebGL1 è più compatibile su mobile)
+      // Check WebGL1 per compatibilità mobile
       function webglAvailable() {
         try {
-          const canvas = document.createElement("canvas");
+          const c = document.createElement('canvas');
           return !!(
             window.WebGLRenderingContext &&
-            (canvas.getContext("webgl") ||
-              canvas.getContext("experimental-webgl"))
+            (c.getContext('webgl') || c.getContext('experimental-webgl'))
           );
         } catch (e) {
           return false;
         }
       }
 
-      // Avvio scena
       async function boot() {
         if (!webglAvailable()) {
-          document.getElementById("threejs-error").style.display = "block";
+          const box = document.getElementById('threejs-error');
+          if (box) box.style.display = 'block';
           return;
         }
-
         try {
-          const { default: scene } = await import("./js/index.js");
-          // Alcune scene assumono un canvas specifico o ne creano uno loro.
-          // Se la tua scena richiede un canvas con id "conigliobcg", assicurati che index.js lo usi.
-          // Qui richiamiamo semplicemente la funzione d'avvio.
-          if (typeof scene === "function") {
-            scene();
-          }
+          const { default: scene } = await import('./js/index.js');
+          if (typeof scene === 'function') scene();
         } catch (err) {
-          console.error("Errore nel caricamento della scena:", err);
-          document.getElementById("threejs-error").style.display = "block";
-          document.getElementById("threejs-error").textContent =
-            "Impossibile inizializzare la scena 3D su questo dispositivo.";
+          console.error('Errore nel bootstrap della scena:', err);
+          const box = document.getElementById('threejs-error');
+          if (box) {
+            box.style.display = 'block';
+            box.textContent = 'Impossibile inizializzare la scena 3D su questo dispositivo.';
+          }
         }
       }
 
-      // Evita di avviare troppo presto su iOS/Safari
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", boot, { once: true });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot, { once: true });
       } else {
         boot();
       }
