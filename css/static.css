@@ -79,11 +79,6 @@ footer {
     border-bottom: 1px solid #444;
 }
 
-.scrolling {
-  position: absolute;
-  bottom: 100px;
-}
-
 @media (max-width: 700px) {
  
     .menu-button-container {      
@@ -157,9 +152,9 @@ section {
 }
 
 .home-text {
-  /* border: solid 1px green; */
-  width: 90vw;
-  height: 100vh;
+  border: solid 1px green;
+  width: 80vw;
+  height: 60vh;
 }
 
 .home-title {
@@ -253,7 +248,7 @@ section {
 }
 
 .scrolling {  
-  /* border: 1px solid rgb(255, 230, 0); */
+  border: 1px solid rgb(255, 230, 0);
   height: 30px;
   bottom: 84px;
   position: relative;
