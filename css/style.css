@@ -367,15 +367,15 @@ canvas {
 
 .home1-text { 
   /* border: 5px solid rgb(255, 0, 0); */
-  width: 50%;
+  width: 40%;
   height: 50vh;  
-  margin-left: 40%;
+  margin-left: 34%;
 }
 
 .data-text { 
   /* border: 1px solid rgb(58, 96, 58); */
   width: 50%;  
-  height: 50vh; 
+  height: 44vh; 
   margin-left: 52%;
 }
 
