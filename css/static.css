@@ -145,14 +145,14 @@ footer {
 /* ----GALLERY---- */
 section {
   width: 100%;
-  height: auto;   
+  height: 100vh;   
   display: flex;  
   align-items: center;
   justify-content: center;
 }
 
 .home-text {
-  border: solid 1px green;
+  /* border: solid 1px green; */
   width: 80vw;
   height: 60vh;
 }
@@ -160,7 +160,7 @@ section {
 .home-title {
   width: 70%;
   height: 30%;
-  margin-top: 110px
+  margin-top: 40px
 }
 
 .home-paragraph {
@@ -168,6 +168,9 @@ section {
   height: 70%;
 }
 
+.home-title h2 {
+  font-size: 80px;
+}
 .gallery_central { 
   /* border: solid 1px green; */
   width: 80vw;  
@@ -241,6 +244,7 @@ section {
 }
 
 .title-gallery p {
+  color: rgba(180, 180, 180);
   font-size: 14px;
   line-height: 16px;  
   font-weight: 200;
@@ -248,10 +252,10 @@ section {
 }
 
 .scrolling {  
-  border: 1px solid rgb(255, 230, 0);
+  /* border: 1px solid rgb(255, 230, 0); */
   height: 30px;
-  bottom: 84px;
-  position: relative;
+  bottom: 50px;
+  position: absolute;
   display: flex;
   width: 100%;
   justify-content: center;
