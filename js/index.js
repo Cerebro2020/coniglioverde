@@ -23,8 +23,8 @@ export default function(){
   // ====== CAMERA (identica al tuo setup base) ======
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 10000);
   const player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
-  camera.position.set(0, 0, -260);
-  camera.lookAt(new THREE.Vector3(0, player.height, 0));
+  camera.position.set(0, 0, 0);
+  // camera.lookAt(new THREE.Vector3(0, player.height, 0));
   camera.setFocalLength(35);
 
   // ====== LUCI ======
