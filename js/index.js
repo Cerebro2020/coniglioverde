@@ -25,7 +25,7 @@ export default function(){
   const player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
   camera.position.set(0, 0, 0);
   // camera.lookAt(new THREE.Vector3(0, player.height, 0));
-  camera.setFocalLength(25);
+  camera.setFocalLength(35);
 
   // ====== LUCI ======
   const ambiente = new THREE.AmbientLight(0xFFFFFF, 1.5);
