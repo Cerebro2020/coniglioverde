@@ -1,3 +1,13 @@
 *{
     background-color: rgba (0,0,0,0);
 }
+
+.info_leyer {  
+  background-color: black;
+  height: 80px;
+}
+
+footer {
+  background-color: black;
+  height: 80px;
+}

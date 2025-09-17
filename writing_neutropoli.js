@@ -439,4 +439,6 @@ export default function(){
 
 // Avvio dell'animazione
 animate();
+
+
 };
