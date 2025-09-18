@@ -4,10 +4,11 @@
 
 .info_leyer {  
   background-color: black;
-  height: 80px;
+  height: 90px;
 }
 
 footer {
-  background-color: black;
-  height: 80px;
+  background-color: rgba(0, 0, 0);
+  height: 90px;
+  z-index: 998;
 }

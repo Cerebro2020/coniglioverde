@@ -139,6 +139,7 @@ cursor: grabbing;
   color: rgb(255, 255, 255);
   font-size: 16px;   
   border-radius: 2px;
+  z-index: 999;
 }
 
 .button_div_writing button:hover {
@@ -163,13 +164,13 @@ cursor: grabbing;
 }
 
 .button-controls {
-    width: 90%;
-    position: absolute;
-    display: flex;
-    bottom: 40px;
-    align-items: center;
-    justify-content: right;
-    z-index: 1;
+  width: 90%;
+  position: absolute;
+  display: flex;
+  bottom: 40px;
+  align-items: center;
+  justify-content: right;
+  z-index: 999;
 }
 
  #btn-camera button , #btn-audio button {
@@ -182,7 +183,7 @@ cursor: grabbing;
   border-radius: 12px;
   text-align: center;
   font-size: 9px;
-  font-weight: 100;    
+  font-weight: 100;
 }
   
 #btn-camera button:hover,  #btn-count button:hover {
