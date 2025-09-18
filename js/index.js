@@ -28,7 +28,10 @@ export default function(){
   camera.setFocalLength(35);
 
   // ====== LUCI ======
-  const ambiente = new THREE.AmbientLight(0xFFFFFF, 1.5);
+  const ambiente = new THREE.AmbientLight(0xFFFFFF, 1.2);
+  // const rabbitLight = new THREE.PointLight(0xFFFFFF, 1, 500);
+  // const helper = new THREE.PointLightHelper(rabbitLight);
+  // rabbitLight.position.set(8,-14,-340);
   scene.add(ambiente);
 
   // ====== RESIZE ======

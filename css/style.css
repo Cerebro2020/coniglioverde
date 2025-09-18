@@ -134,14 +134,16 @@ header img {
   overflow: hidden;
 }
 
-.menu li:last-child a {
+/* .menu li:last-child a {
   font-style: normal;
   color:#ff00a2;
   font-weight: 400;
-}
+} */
 
 .menu li a {                
-  color: #a2ff00;  
+  color: #a2ff00; 
+  /* color: #ff00a2; 
+  color: #00a2ff; */
   font-style: italic; 
   text-decoration: none;
   font-size: 16px;   
@@ -302,8 +304,9 @@ footer {
   justify-content: center;	
   bottom: 0;  
   color: #a2ff00;
+  color: #ff00a2;
   font-size: 14px;    
-  font-weight: 0;   
+  font-weight: 400;   
   z-index: 999;    
 }
 
@@ -323,7 +326,7 @@ footer a {
 }
 
 footer img {
-  max-width: 14px;
+  max-width: 12px;
 }
 
 /* @media (max-width: 300px) {
