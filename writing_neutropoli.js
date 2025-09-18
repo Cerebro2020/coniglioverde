@@ -84,7 +84,7 @@ export default function(){
   camera.add(listenerEmme);  
   var soundEmme = new THREE.Audio(listenerEmme); 
   var loaderEmme = new THREE.AudioLoader(); 
-  loaderEmme.load('./audio/neutropoli/Emme.mp3', function(buffer) {
+  loaderEmme.load('./audio/neutropoli/01_emme_uno.mp3', function(buffer) {
     soundEmme.setBuffer(buffer);
     soundEmme.setLoop(true);
     soundEmme.setVolume(0.5);
@@ -95,7 +95,7 @@ export default function(){
   camera.add(listenerFotogramma);  
   var soundFotogramma = new THREE.Audio(listenerEmme);
   var loaderFotogramma = new THREE.AudioLoader();   
-  loaderFotogramma.load('./audio/neutropoli/Fotogramma.m4a', function(buffer) {
+  loaderFotogramma.load('./audio/neutropoli/20_fotogramma.m4a', function(buffer) {
     soundFotogramma.setBuffer(buffer);
     soundFotogramma.setLoop(true);
     soundFotogramma.setVolume(0.5);
@@ -107,7 +107,7 @@ export default function(){
    var soundChiha = new THREE.Audio(listenerChiaha);
    var loaderChiha = new THREE.AudioLoader(); 
    
-   loaderChiha.load('./audio/neutropoli/chiha.mp3', function(buffer) {
+   loaderChiha.load('./audio/neutropoli/02_chi_ha.mp3', function(buffer) {
     soundChiha.setBuffer(buffer);
     soundChiha.setLoop(true);
     soundChiha.setVolume(0.5);
@@ -118,7 +118,7 @@ export default function(){
    camera.add(listenerCiocca);  
    var soundCiocca = new THREE.Audio(listenerCiocca);
    var loaderCiocca = new THREE.AudioLoader();    
-   loaderCiocca.load('./audio/neutropoli/ciocca.mp3', function(buffer) {
+   loaderCiocca.load('./audio/neutropoli/04_una_ciocca.mp3', function(buffer) {
     soundCiocca.setBuffer(buffer);
     soundCiocca.setLoop(true);
     soundCiocca.setVolume(0.5);
@@ -129,7 +129,7 @@ export default function(){
    camera.add(listenerAccavalla);  
    var soundAccavalla = new THREE.Audio(listenerAccavalla);
    var loaderAccavalla = new THREE.AudioLoader();   
-   loaderAccavalla.load('./audio/neutropoli/accavalla.mp3', function(buffer) {
+   loaderAccavalla.load('./audio/neutropoli/03_se_accavalla.mp3', function(buffer) {
     soundAccavalla.setBuffer(buffer);
     soundAccavalla.setLoop(true);
     soundAccavalla.setVolume(0.5);
@@ -140,7 +140,7 @@ export default function(){
   camera.add(listenerPeriferia);  
   var soundPeriferia = new THREE.Audio(listenerPeriferia);
   var loaderPeriferia = new THREE.AudioLoader();      
-  loaderPeriferia.load('./audio/neutropoli/periferia.mp3', function(buffer) {
+  loaderPeriferia.load('./audio/neutropoli/11_alla_periferia.mp3', function(buffer) {
     soundPeriferia.setBuffer(buffer);
     soundPeriferia.setLoop(true);
     soundPeriferia.setVolume(0.5);
@@ -160,54 +160,54 @@ export default function(){
   const listenerBcg2 = new THREE.AudioListener();
   camera.add(listenerBcg2);
   const audioLoader2 = new THREE.AudioLoader();
-   // Selezioniamo i pulsanti
-   let cameraButton = document.querySelector('#btn-camera button');   
-   cameraButton.addEventListener('click', function() {
-     resetCamera();
-   });  
-   function resetCamera() {
-     camera.position.set(  0, 0, -150 ); 
-     camera.rotation.set( 1, 0, 0 );
-     camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
-     controls.listenToKeyEvents( window );
-     controls.minDistance =  5;    
-     controls.maxDistance = 1400;
-     controls.maxPolarAngle = 1.5; 
-   }
-   let audioButton = document.querySelector('#btn-audio button');
+  // Selezioniamo i pulsanti
+  let cameraButton = document.querySelector('#btn-camera button');   
+  cameraButton.addEventListener('click', function() {
+    resetCamera();
+  });  
+  function resetCamera() {
+    camera.position.set(  0, 0, -150 ); 
+    camera.rotation.set( 1, 0, 0 );
+    camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
+    controls.listenToKeyEvents( window );
+    controls.minDistance =  5;    
+    controls.maxDistance = 1400;
+    controls.maxPolarAngle = 1.5; 
+  }
+  let audioButton = document.querySelector('#btn-audio button');
    let isPlaying = true;
-   audioButton.addEventListener('click', function() {
-     if (isPlaying) {
-        backgroundSound.pause();
-        soundEmme.pause();
-        soundFotogramma.pause();
-        soundChiha.pause();
-        soundCiocca.pause();
-        soundAccavalla.pause();
-        soundPeriferia.pausa();
-     } else {
-        backgroundSound.play();
-        soundEmme.play();
-        soundFotogramma.play();
-        soundChiha.play();
-        soundCiocca.play();
-        soundAccavalla.play();
-        soundPeriferia.play();
-     }
-     isPlaying = !isPlaying;
+  audioButton.addEventListener('click', function() {
+    if (isPlaying) {
+      backgroundSound.pause();
+      soundEmme.pause();
+      soundFotogramma.pause();
+      soundChiha.pause();
+      soundCiocca.pause();
+      soundAccavalla.pause();
+      soundPeriferia.pausa();
+    } else {
+      backgroundSound.play();
+      soundEmme.play();
+      soundFotogramma.play();
+      soundChiha.play();
+      soundCiocca.play();
+      soundAccavalla.play();
+      soundPeriferia.play();
+    }
+    isPlaying = !isPlaying;
   });
   // SPEAKER
   const speakerLoader = new GLTFLoader();
   speakerLoader.load(    
     './3d/humans/Low_person_3.glb',
-     function (glt) {
-       const speakerEmme = glt.scene;
-       speakerEmme.position.set(-2,-7.5,-50);
-       speakerEmme.rotation.set( 0, -Math.PI/2, 0 );      
-       speakerEmme.scale.set( 12, 12, 12 );        
-       speakerEmme.traverse(function (node) {
-         if (node.isMesh) { 
-           const materialSGL = new THREE.MeshPhysicalMaterial({
+    function (glt) {
+      const speakerEmme = glt.scene;
+      speakerEmme.position.set(-2,-7.5,-50);
+      speakerEmme.rotation.set( 0, -Math.PI/2, 0 );      
+      speakerEmme.scale.set( 12, 12, 12 );        
+      speakerEmme.traverse(function (node) {
+        if (node.isMesh) { 
+          const materialSGL = new THREE.MeshPhysicalMaterial({
             color: 0xffffff, 
             emissive: 0x000000,
             map: texture2,  
@@ -216,12 +216,12 @@ export default function(){
             clearcoat: 0,
             ior: 0.152,
             sheen: 0.5,
-           });  
-           node.material = materialSGL;
-           node.castShadow = true;
-           node.receiveShadow = true;
-         }
-       });          
+          });  
+          node.material = materialSGL;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });          
       speakerEmme.castShadow = true; 
       speakerEmme.receiveShadow = true; 
       let speakerFotogramma = speakerEmme.clone();
