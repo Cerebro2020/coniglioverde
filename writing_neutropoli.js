@@ -49,14 +49,14 @@ export default function(){
   //AMBIENT
   const ambiente = new THREE.AmbientLight ( 0xffffff, 0.5 )
   scene.add( ambiente);
-  let int = 0.15;
-  let dist = 1000;
-  let decay = 0.5;
+  let int = 1;
+  let dist = 10;
+  let decay = 0.7;
   let pointcolor = 0Xddddff;
   //let yp = 50;
   //POINT
   const pointLight = new THREE.PointLight( pointcolor, int, dist, decay); 
-  pointLight.position.set( -40, 0, -100 );
+  pointLight.position.set( -20, 4, -116 );
   const pointLight2 = new THREE.PointLight( pointcolor, int, dist, decay);    
   pointLight2.position.set( 0, 0, 0);
   const pointLight3 = new THREE.PointLight( pointcolor, int, dist, decay); 
@@ -67,7 +67,7 @@ export default function(){
   const helper2 = new THREE.PointLightHelper(pointLight2);
   const helper3 = new THREE.PointLightHelper(pointLight3);
   const helper4 = new THREE.PointLightHelper(pointLight4);  
-  //scene.add( helper1, helper2,helper3, helper4);
+  // scene.add( helper1, helper2,helper3, helper4);
   scene.add( pointLight, pointLight2,pointLight3,pointLight4 );
   pointLight.castShadow = true;
   //TEXTURES
@@ -95,7 +95,7 @@ export default function(){
   camera.add(listenerFotogramma);  
   var soundFotogramma = new THREE.Audio(listenerEmme);
   var loaderFotogramma = new THREE.AudioLoader();   
-  loaderFotogramma.load('./audio/neutropoli/20_fotogramma.m4a', function(buffer) {
+  loaderFotogramma.load('./audio/neutropoli/20_fotogramma.mp3', function(buffer) {
     soundFotogramma.setBuffer(buffer);
     soundFotogramma.setLoop(true);
     soundFotogramma.setVolume(0.5);
@@ -151,7 +151,7 @@ export default function(){
   camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
   const backgroundSound = new THREE.Audio( listenerBcg );
-  audioLoader.load('audio/neutropoli/Milano metro bcg.mp3', function( buffer ) {
+  audioLoader.load('audio/neutropoli/Milano_Background_metro.m4a', function( buffer ) {
     backgroundSound.setBuffer( buffer );
     backgroundSound.setLoop( true );
     backgroundSound.setVolume( 0.125 );
@@ -230,7 +230,7 @@ export default function(){
       let speakerAccavalla = speakerEmme.clone();
       let speakerPeriferia = speakerEmme.clone();
       speakerFotogramma.position.set(0,-27,50);
-      speakerChiHa.position.set(-18,-7.5,-110);
+      speakerChiHa.position.set(-21,-7.5,-110);
       speakerCiocca.position.set(-22,13,50);
       speakerAccavalla.position.set(22,-27,-50);
       speakerPeriferia.position.set(-22,13,-50);
