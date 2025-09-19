@@ -80,6 +80,19 @@ cursor: grabbing;
   padding: 0px; 
 }
 
+.sub-up-down {
+  border-top:1px solid white; 
+  border-bottom:1px solid white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.sub-down {
+  border-bottom:1px solid white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .text-book {
   /* border: 1px solid rgb(136, 13, 13);   */
 }
