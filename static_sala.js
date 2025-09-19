@@ -39,7 +39,7 @@ export default function(){
   const ambiente = new THREE.AmbientLight ( 0xFFFFFF, 0 )
   scene.add( ambiente);
   // POINT
-  const point = new THREE.PointLight(0xFFFFFF,2,150);
+  const point = new THREE.PointLight(0xAAAAFF,2,250);
   point.position.set(5,0.2,-28);
   scene.add(point);
   let helperP = new THREE.PointLightHelper(point);
