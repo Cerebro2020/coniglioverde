@@ -357,6 +357,25 @@ canvas {
   z-index: -9999;
 }
 
+.sub-up-down {
+  border-top:1px solid white; 
+  border-bottom:1px solid white;
+  padding-top: 20px;
+  padding-bottom: 20px;  
+}
+
+.sub-up {
+  border-top:1px solid white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.sub-down {
+  border-bottom:1px solid white;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 /* .home-text { 
   border: 1px solid rgb(255, 0, 0); 
   width: 50%;
