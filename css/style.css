@@ -387,7 +387,7 @@ canvas {
 } */
 
 .video-container {
-  position: absolute;
+  position: fixed;
   width: 1920px;
   margin: 0 auto;
   object-fit: cover;
