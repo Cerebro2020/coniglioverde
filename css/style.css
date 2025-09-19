@@ -376,16 +376,6 @@ canvas {
   padding-bottom: 20px;
 }
 
-/* .home-text { 
-  border: 1px solid rgb(255, 0, 0); 
-  width: 50%;
-  height: 50vh;   
-  display: flex;
-  flex-direction: column;
-  align-items: center;   
-  justify-content: space-between; 
-} */
-
 .video-container {
   position: fixed;
   width: 1920px;

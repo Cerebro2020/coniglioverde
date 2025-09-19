@@ -152,7 +152,6 @@ section {
 }
 
 .home-text {
-  /* border: solid 1px green; */
   width: 80vw;
   height: 60vh;
 }
@@ -172,7 +171,6 @@ section {
   font-size: 80px;
 }
 .gallery_central { 
-  /* border: solid 1px green; */
   width: 80vw;  
   margin-top: 50px; 
   margin-bottom: 80px;
@@ -184,8 +182,8 @@ section {
 
 .gallery_item {
   /* background-color: black; */
-  border: 1px solid rgb(140, 241, 125);  
-  border: 3px solid rgb(0, 0, 0); 
+  /* border: 1px solid rgb(140, 241, 125);   */
+  /* border: 3px solid rgb(0, 0, 0);  */
   /* border: solid 1px rgb(255, 0, 0);  */
   display: flex;
   flex-direction: column;
