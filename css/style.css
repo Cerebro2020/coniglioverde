@@ -219,7 +219,7 @@ header img {
   transform: rotate(-405deg);
 }
   
-@media (max-width: 700px) {
+@media (max-width: 724px) {
  
   .menu-button-container {      
     display: flex;    
@@ -227,7 +227,7 @@ header img {
   
   .menu { 
     background-color:  #ff00a2;      
-    position:absolute;
+    position:absolute;    
     height: 100vh;
     top: 0;
     margin-top: 0px;    
@@ -337,8 +337,7 @@ footer img {
 } */
 
 /* IMPOSTAZIONE PAGINA*/
-section {   
-  /* border: 1px solid yellow; */
+section {
   width: 100%;  
   height: 100vh;
   scroll-snap-align: center;
@@ -369,42 +368,36 @@ canvas {
 } */
 
 .home1-text { 
-  /* border: 5px solid rgb(255, 0, 0); */
   width: 40%;
   height: 50vh;  
   margin-left: 34%;
 }
 
-.data-text { 
-  /* border: 1px solid rgb(58, 96, 58); */
+.data-text {
   width: 50%;  
   height: 44vh; 
   margin-left: 52%;
 }
 
 .cinematic-text { 
-  /* border: 1px solid rgb(0, 17, 255);  */
   width: 40%;
   height: 50vh;   
   margin-left: 56%; 
 }
 
 .writing-text { 
-  /* border: 1px solid rgb(255, 0, 0); */
   margin-left: 50%;
   width: 40%;
   height: 50vh; 
 }
 
 .gallery-text { 
-  /* border: 1px solid rgb(255, 0, 0); */
   margin-left: 60%;
   width: 40%;
   height: 50vh; 
 }
 
 .home-title{ 
-  /* border: 1px solid rgb(0, 60, 255); */
   width: 100%;
   margin-left: 0%;
   height: 36%;
@@ -412,7 +405,6 @@ canvas {
 }
 
 .home-title h1 { 
-  /* border: 1px solid rgb(255, 238, 0); */
   color: #a2ff00;      
   font-family: 'Source Sans 3', sans-serif;          
   font-size: 80px;    
@@ -420,8 +412,7 @@ canvas {
   font-style: italic;
 }
 
-.home-title h2 {  
-  /* border: 1px solid rgb(7, 239, 223); */
+.home-title h2 { 
   color: #a2ff00;      
   font-family: 'Source Sans 3', sans-serif;        
   font-size: 50px;      
@@ -430,7 +421,6 @@ canvas {
 }
 
 .home-paragraph { 
-  /* border: 1px solid rgb(239, 7, 228); */
   width: 100%;
   height: auto;
   margin-left: 0%;
@@ -439,7 +429,6 @@ canvas {
 }
 
 .home-paragraph a {  
-  /* border: 1px solid rgb(51, 255, 0);  */
   font-weight: 600;  
   font-style: italic;  
 }
@@ -456,7 +445,6 @@ canvas {
 }
 
 .images-div {
-  /* border: 1px solid rgb(0, 60, 255); */
   width: 100%;
   height: 50%;
   display: flex;
@@ -469,7 +457,6 @@ canvas {
 }
 
 .images-text-left { 
-  /* border: 1px solid rgb(255, 0, 0);  */
   width: 50%; 
   height: auto;
   overflow: hidden; 
@@ -477,7 +464,6 @@ canvas {
 }
 
 .images-text-right { 
-  /* border: 1px solid rgb(255, 0, 0); */
   width: 50%; 
   height: auto;
   overflow: hidden; 
@@ -505,7 +491,6 @@ canvas {
 }
 
 .scrolling {  
-  /* border: 1px solid rgb(255, 230, 0); */
   position: relative;
   display: flex;
   width: 100%;
@@ -525,7 +510,6 @@ canvas {
 @media (max-width: 1240px) {
 
   .home1-text { 
-    /* border: 1px solid rgb(255, 136, 0); */
     width: 60%;
     height: 50vh;  
     margin-left: 30%;       
@@ -558,7 +542,6 @@ canvas {
   }
 
   .data-text {
-    /* border: 1px solid rgb(96, 58, 62); */
     width: 60%;
     height: 50vh;
     margin-left: 350px;
@@ -569,7 +552,6 @@ canvas {
   }
 
   .writing-text {
-    /* border: 1px solid rgb(96, 58, 62); */
     width: 60%;
     height: 50vh;
     margin-left: 340px;
@@ -580,7 +562,6 @@ canvas {
   }
 
   .gallery-text {
-    /* border: 1px solid rgb(96, 58, 62); */
     width: 60%;
     height: 50vh;
     margin-left: 340px;
@@ -591,7 +572,6 @@ canvas {
   }
 
   .scrolling {
-    /* border: 1px solid rgb(72, 255, 0); */
     position: relative;
     display: flex;
     width: auto;
@@ -603,13 +583,12 @@ canvas {
 /*--------724----------*/
 
 @media (max-width: 724px) { 
-  .home-text  {
-    /* border: solid 1px coral; */
-
+  section  {
+    width: 100%;
+    height: 100vh;
   }
 
-  .home1-text {    
-    /* border: solid 1px coral; */
+  .home1-text {  
     width: 90%;
     height: 70vh;
     margin-left: 0px;
@@ -668,7 +647,7 @@ canvas {
   }
 
   .home-title h1 {         
-    font-size: 50px;       
+    font-size: 36px;       
     line-height: 40px;  
   }
   
@@ -684,7 +663,6 @@ canvas {
   }
 
   .scrolling {
-    /* border: 1px solid rgb(72, 255, 0); */
     position: absolute;
     display: flex;
     width: auto;
@@ -702,7 +680,6 @@ canvas {
 /*--------280----------*/
 
 @media (max-width: 280px) {
-
   .home-text {
     height: 90vh;
     display: flex;
