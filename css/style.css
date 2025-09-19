@@ -386,6 +386,15 @@ canvas {
   justify-content: space-between; 
 } */
 
+.video-container {
+  position: absolute;
+  width: 1920px;
+  margin: 0 auto;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.25;
+}
+
 .home1-text { 
   width: 40%;
   height: 50vh;  
