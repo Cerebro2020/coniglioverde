@@ -25,13 +25,7 @@ export default function(){
     renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } );
-  // TEXTURS
-  const loader = new THREE.TextureLoader();
-  const bumpP = loader.load ('./images/textures/bump_planet_3.jpg');
-  bumpP.wrapS = THREE.RepeatWrapping;
-  bumpP.wrapT = THREE.RepeatWrapping;
-  bumpP.repeat.set( 2, 800);
+  } );  
   // SCENE & FOG
   scene.background = new THREE.Color( 0x000000 );
   // LIGHTS
@@ -39,9 +33,12 @@ export default function(){
   const ambiente = new THREE.AmbientLight ( 0xFFFFFF, 0 )
   scene.add( ambiente);
   // POINT
-  const point = new THREE.PointLight(0xAAAAFF,2,250);
+  const point = new THREE.PointLight(0x00AAFF,2,350);
   point.position.set(5,0.2,-28);
   scene.add(point);
+  const point2 = new THREE.PointLight(0xFFAAAA,1,350);
+  point2.position.set(-8,-1.2,-24);
+  scene.add(point2);
   let helperP = new THREE.PointLightHelper(point);
   // scene.add(helperP);
   // ANIMATE SCENE
