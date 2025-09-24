@@ -392,7 +392,7 @@ canvas {
 }
 
 .data-text {
-  width: 50%;  
+  width: 40%;  
   height: 44vh; 
   margin-left: 52%;
 }
@@ -515,6 +515,7 @@ canvas {
   justify-content: center;
   align-items: center;
   height: 40px;
+  bottom: -50px;
 }
  
 .scrolling img {

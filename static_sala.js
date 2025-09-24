@@ -64,7 +64,6 @@ export default function(){
     });
     scene.add(model);
     model.position.set(0,0,0);
-    model.rotation.set(0,0,0);
     model.rotation.set(0,0,0.0);
     let MS = 5;
     model.scale.set(MS,MS,MS); 
@@ -74,7 +73,7 @@ export default function(){
     const t = document.body.getBoundingClientRect().top;
     // camera.position.set( (t/20000), t * 0.0075, 0 );
     let fac = (t/100) * 0.015;
-    model.rotation.set(0,fac,0);    
+    model.rotation.set(fac,0,0);    
   }
   document.body.onscroll = moveCamera;
 

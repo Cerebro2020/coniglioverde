@@ -1,0 +1,261 @@
+body {        
+    min-height: 100vh;
+    background-color: black;
+    background-image: url('../images/bcg/SfondoI.jpg');
+    background-size: cover;     
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: -9999;      
+}
+
+.image-cover {
+    width: 100%;
+    height: 40vh;
+    position: absolute;
+    top:0;      
+    margin: 0px;  
+    background-image: url("../images/hearts/esperienza.jpg");
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-size: cover; 
+}
+
+.scrolling {
+    position: absolute;
+    bottom: 40px;
+}
+
+.logoh {
+    position: relative;
+    display: flex;
+    left: -28px;
+}
+
+.logoh img {
+    width: 160px;
+    height: auto;    
+}
+
+#passaggio {
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+}
+
+#aqvam {   
+    min-height: 200vh;
+    background-image: url('../images/aqvam/Milano_Trans_3.png');
+    background-size: cover;
+}
+
+.home-text { 
+    height: 70vh;
+}
+
+.home-title {            
+    height: 30%;
+}
+
+.home-paragraph {
+    height: 90%;
+    display: flex;       
+    align-items: flex-end;    
+    justify-content: center;
+    margin-top: auto; 
+    flex-direction: column;
+}
+
+.home-paragraph { 
+    font-size: 28px;       
+    line-height: 32px;    
+}
+
+.data_ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.data_ul_list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; 
+  align-items: center;      
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.data_ul_list li {
+  padding: 8px;
+  border: 1px solid yellow;
+}
+
+/* GALLERY */
+.paragraph-gallery {
+    position: fixed;
+    top:0;
+    width: 100%;
+    height: 20vh;    
+    margin: 0px;
+    display: flex;
+    z-index: 1;           
+}
+
+.double-image-data  {
+    position: relative;
+    width: 50%;
+    height: 100%;     
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;    
+}
+
+.dids {  
+    width: 50%; 
+}
+
+.dids img {
+    object-fit: cover;
+    object-position: center;    
+    width: 100%; 
+}
+
+.button_div_writing {  
+  width: 90%;   
+  height: 20%;  
+  position: relative;
+  display:flex;
+  align-items:end;
+  justify-content: left; 
+  bottom: 0px
+}
+
+.button_div_writing button {
+  background-color: rgba(255, 255, 255, 0);
+  width: 70px;
+  height: 20px;
+  border: 1px solid rgb(30, 255, 0);
+  border-radius: 10px;
+  color: rgb(30, 255, 0);
+  font-size: 14px;   
+  border-radius: 2px;
+}
+
+.button_div_writing button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+.button_div {
+  width: 90%;
+  display: flex;
+  align-items: center; 
+  justify-content: right; 
+}
+
+.button_camera {  
+  position: fixed;
+  align-items: right;
+  height: 40px;
+  bottom: 40px;  
+  width: 100%; 
+}
+
+.button-controls {
+    width: 90%;
+    position: absolute;
+    display: flex;
+    bottom: 40px;
+    align-items: center;
+    justify-content: right;
+    z-index: 1;
+}
+
+ #btn-camera button , #btn-audio button {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  width:70px;
+  height: 20px;
+  margin-right: 10px;;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 100;    
+}
+  
+#btn-camera button:hover,  #btn-count button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+@media (max-width: 1024px) {
+
+    .paragraph-gallery {        
+        flex-direction: column;
+    }
+
+    .double-image-data {
+        width: 100%;
+    }
+
+    .home-text {                        
+        width:80%;                 
+    }
+
+    .home-title {          
+        width: 100%;
+        text-align: left;
+    }
+
+    .home-paragraph {            
+        width: 100%;
+        height: 46vh;                         
+    }
+
+    .home-paragraph p {                   
+        font-size: 28px;     
+        line-height: 32px;
+    } 
+ 
+}
+
+@media (max-width: 724px) {    
+
+    .home-text {  
+        width: 90%;      
+        height: 70vh;        
+    } 
+
+    .logoh {
+        position: relative;
+        left: -20px;
+    }
+    
+    .logoh img {
+        width: 140px;
+        height: auto;    
+    }
+
+    .paragraph-gallery {
+        height: 40vh;        
+    }
+
+    .home-title h1 {
+        font-size: 50px;           
+        letter-spacing: -2px;        
+    } 
+    
+    .home-paragraph {  
+        width: 100%;
+        height: 46vh;                        
+    } 
+
+    .home-paragraph p {
+        font-size: 20px;
+        line-height: 22px;
+    } 
+
+}
