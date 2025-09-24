@@ -1,0 +1,38 @@
+@media (max-width: 1024px) { 
+  .home-text {
+    border: 1px solid red;
+    width: 90%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .home-title{ 
+  width: 100%;
+  margin-left: 0%;
+  height: 36%;
+  align-items: center;  
+  }
+
+  .home-title h1 {  
+    font-size: 60px;    
+    font-weight: 700; 
+  }
+
+  .home-title h2 {  
+    font-size: 40px;      
+    font-weight: 700; 
+  }
+
+  .home-paragraph p { 
+    font-size: 24px;
+    line-height: 28px;
+  }
+
+  .home-paragraph a {  
+    font-weight: 600;  
+    font-style: italic;  
+  }
+}

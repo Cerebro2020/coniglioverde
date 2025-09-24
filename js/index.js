@@ -18,7 +18,7 @@ export default function(){
   // ====== SCENA ======
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.Fog(0x000000, 45, 180);
+  scene.fog = new THREE.Fog(0x000000, 35, 180);
 
   // ====== CAMERA (identica al tuo setup base) ======
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 10000);

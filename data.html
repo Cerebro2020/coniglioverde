@@ -13,6 +13,7 @@
         <title>coniglioverde|data</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/data.css"> 
+        <link rel="stylesheet" href="css/hometext.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
@@ -38,12 +39,12 @@
                         "three": "./three_class/three.module.js"
                         }
                 }
-                </script>		
-                <script type = "module">
-                        import scene from "./data.js";
-                        //import scene from "./aqvam.js";
-                        scene();
-                </script>            
+            </script>		
+            <!-- <script type = "module">
+                import scene from "./data.js";
+                //import scene from "./aqvam.js";
+                scene();
+            </script>             -->
         </canvas>
         <!-- HOME -->
         <header>
@@ -56,7 +57,7 @@
             </label class='menu-button-container' for="menu-toggle">
             <ul class="menu">                
                 <li><a href="#">DATA VIZ</a></li> 
-                <li><a href="#">H.E.ArtS</a></a></li>
+                <li><a href="#">H.E.ARTS</a></a></li>
                 <li><a href="#aqvam">AQVAM</a></a></li>
                 <li><a href="data_it.html">EN | IT</a></li>                             
             </ul>
@@ -66,11 +67,16 @@
             <ul>
                 <li>&copy; 2023 felice vino</li>
                 <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-                <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li>
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer> 
-        <section>            
+        <section>
+            <div class="video-container">
+                <video controls autoplay muted loop width="1920" height="1080">
+                    <source src="video/data_H/Data_Loop.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>            
             <div class="home-text">
                 <div class="home-title">
                     <!-- <h1 >H.E.Arts</h1>                      -->
@@ -93,7 +99,7 @@
             </div>              
         </section>            
         <!-- GALLERY -->             
-        <section>                                  
+        <section>                                         
             <div class="home-text">     
                 <div class="home-paragraph">
                     <p>
@@ -138,19 +144,22 @@
                 </div>  
             </div>
             <div class="scrolling">
-                <img src="images/icons/scroll-up.svg" alt="scrolling">
+                <img src="images/icons/scroll-updown.gif" alt="scrolling">
+            </div>
+        </section>           
+        <section id="passaggio">
+             <div class="scrolling">
+                <img src="images/icons/scroll-updown.gif" alt="scrolling">
             </div>
         </section>
-        
-        <section id="passaggio"></section>
 
          <!-- AQVAM -->        
          <section id="aqvam"> 
             <section>          
                 <div class="home-text">
                     <div class="home-title">
-                        <h1 >AQVAM</h1>                   
-                    </div>  
+                        <h1 >AQVAM</h1>
+                    </div>
                     <div class="home-paragraph">
                         <p>        
                             Water is the basis of life the origin and future of life.
@@ -166,14 +175,9 @@
                 <div class="scrolling">
                     <img src="images/icons/scroll-updown.gif" alt="scrolling">
                 </div>              
-            </section>
-            
+            </section>            
             <section>            
                 <div class="home-text">
-                    <div class="home-title">
-                        <h1></h1>                    
-                    
-                    </div>  
                     <div class="home-paragraph">
                         <p>         
                             Water is a central element in the myths and cults of all cultures.
