@@ -304,7 +304,7 @@ footer {
   align-items: center;
   justify-content: center;	
   bottom: 0;  
-  color: #aaaaaa;
+  color: #ffffff;
   /* color: #ff00a2; */
   font-size: 14px;    
   font-weight: 400;   
@@ -339,6 +339,32 @@ footer img {
     font-size: 9px; 
   }
 } */
+
+#cookie-banner {
+  display: none;             /* nascosto finché JS non lo mostra */
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #222;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  z-index: 9999;
+}
+#cookie-banner a {
+  color: #8ec7ff;
+  text-decoration: underline;
+}
+#cookie-banner button {
+  margin-left: 10px;
+  padding: 6px 12px;
+  border: 0;
+  cursor: pointer;
+  background: #4caf50;
+  color: #fff;
+}
 
 /* IMPOSTAZIONE PAGINA*/
 section {
@@ -525,7 +551,7 @@ canvas {
 .scrolling img {
   filter: invert(1);
   width: auto;
-  height: 30px;
+  height: 24px;
 }
 
 /*--------1240---------HALF SCREEN-----*/

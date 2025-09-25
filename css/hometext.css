@@ -1,6 +1,6 @@
 @media (max-width: 1024px) { 
   .home-text {
-    border: 1px solid red;
+    /* border: 1px solid red; */
     width: 90%;
     height: 70vh;
     display: flex;

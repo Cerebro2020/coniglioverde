@@ -107,7 +107,7 @@ export default function(){
    var soundChiha = new THREE.Audio(listenerChiaha);
    var loaderChiha = new THREE.AudioLoader(); 
    
-   loaderChiha.load('./audio/neutropoli/02_chi_ha.mp3', function(buffer) {
+   loaderChiha.load('./audio/neutropoli/02_Chiha_2025.m4a', function(buffer) {
     soundChiha.setBuffer(buffer);
     soundChiha.setLoop(true);
     soundChiha.setVolume(0.5);
@@ -154,12 +154,19 @@ export default function(){
   audioLoader.load('audio/neutropoli/Milano_Background_metro.m4a', function( buffer ) {
     backgroundSound.setBuffer( buffer );
     backgroundSound.setLoop( true );
-    backgroundSound.setVolume( 0.125 );
+    backgroundSound.setVolume( 0.075);
     backgroundSound.play();
   });
   const listenerBcg2 = new THREE.AudioListener();
   camera.add(listenerBcg2);
   const audioLoader2 = new THREE.AudioLoader();
+   const backgroundSound2 = new THREE.Audio( listenerBcg2 );
+    audioLoader2.load('audio/neutropoli/attraction.m4a', function( buffer ) {
+    backgroundSound2.setBuffer( buffer );
+    backgroundSound2.setLoop( true );
+    backgroundSound2.setVolume( 0.125 );
+    backgroundSound2.play();
+  });
   // Selezioniamo i pulsanti
   let cameraButton = document.querySelector('#btn-camera button');   
   cameraButton.addEventListener('click', function() {
@@ -295,7 +302,7 @@ export default function(){
         }       
 
         if (soundEmme.isPlaying || soundFotogramma.isPlaying || soundChiha.isPlaying || soundCiocca.isPlaying || soundAccavalla.isPlaying) {
-          backgroundSound.setVolume(0.03);
+          backgroundSound.setVolume(0.06);
         } else {
           backgroundSound.setVolume(0.2);
         }

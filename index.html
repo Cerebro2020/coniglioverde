@@ -146,7 +146,7 @@
           </p>
         </div>
         <div class="scrolling">
-          <img src="images/icons/scroll-up.svg" alt="scrolling" />
+          <img src="images/icons/scroll-updown.gif" alt="scrolling" />
         </div>
       </div>
     </section>
@@ -235,6 +235,37 @@
       } else {
         boot();
       }
+    </script>
+
+    <div id="cookie-banner">
+      <p>
+        Questo sito usa cookie tecnici per funzionare correttamente.
+        <a href="cookie.html">Scopri di più</a>
+      </p>
+      <button id="accept-cookies">Accetto</button>
+    </div>
+
+    <div id="cookie-banner" role="dialog" aria-live="polite">
+      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+      <button id="accept-cookies">Accetto</button>
+    </div>
+
+    <script>
+      // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
+      if (new URLSearchParams(location.search).has('resetCookies')) {
+        localStorage.removeItem('cookiesAccepted');
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('cookie-banner');
+        const button = document.getElementById('accept-cookies');
+        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+
+        if (!accepted) banner.style.display = 'block';
+        button?.addEventListener('click', () => {
+          localStorage.setItem('cookiesAccepted', 'yes');
+          banner.remove();
+        });
+      });
     </script>
   </body>
 </html>
