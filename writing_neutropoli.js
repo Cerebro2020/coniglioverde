@@ -11,7 +11,7 @@ export default function(){
   scene.fog = new THREE.Fog(0x008888, 10, 100);
   //CAMERA
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-  camera.position.set( 0, 0, -150 );
+  camera.position.set( 0, 0, -250 );
   // PLAYER
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 
@@ -44,7 +44,7 @@ export default function(){
   // CONTROLS
   const controls = new FirstPersonControls(camera, renderer.domElement);    
   controls.movementSpeed = 6;
-  controls.lookSpeed = 0.015;
+  controls.lookSpeed = 0.08;
   // LIGHTS
   //AMBIENT
   const ambiente = new THREE.AmbientLight ( 0xffffff, 0.5 )
@@ -445,7 +445,60 @@ export default function(){
 // }
 
 // Avvio dell'animazione
-animate();
 
+// CAMERA POSITION
+  let positions = [ 
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0,z:-250}},/*partenza*/
+    {moveTime: 1, waitTime: 1, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
+    {moveTime: 1, waitTime: 1, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
+    {moveTime: 1, waitTime: 1, pos: {x:-20,y:24,z:-42}},/*Null_1*/
+    {moveTime: 1, waitTime: 1, pos: {x:-20,y:24,z:50}},/*Cioc*/
+    {moveTime: 1, waitTime: 1, pos: {x:22,y:-20,z:-52}},/*Acca*/
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:-15,z:50}},/*Fotog*/
+    {moveTime: 1, waitTime: 1, pos: {x:-22,y:20,z:-52}},/*Null_2*/
+  ];  
 
+  let tweenScene = function(index) {
+    if (index >= positions.length) index = 0;  
+    gsap.to(camera.position, {
+      duration: positions[index].moveTime,
+      x: positions[index].pos.x,
+      y: positions[index].pos.y,
+      z: positions[index].pos.z,
+      onComplete: function() {
+        gsap.delayedCall(positions[index].waitTime, function() {
+          tweenScene(index + 1);
+        });
+      }    
+    });
+  };  
+  tweenScene(0);
+  let rotations = [
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:0}},    
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0.1, z:0}},
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:0.2}},
+    {moveTime: 1, waitTime: 1, pos: {x:0.1,y:0, z:0}},
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0.2, z:0}},    
+    {moveTime: 1, waitTime: 1, pos: {x:-0.1,y:0, z:0}},
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:-0.2}},
+    {moveTime: 1, waitTime: 1, pos: {x:0.1,y:-0.2, z:0}}, 
+  ];  
+  let tweenSceneR = function(index) {
+    if (index >= rotations.length) index = 0;
+  
+    gsap.to(scene.rotation, {
+      duration: rotations[index].moveTime,
+      x: rotations[index].pos.x,
+      y: rotations[index].pos.y,
+      z: rotations[index].pos.z,
+      onComplete: function() {
+        gsap.delayedCall(rotations[index].waitTime, function() {
+          tweenSceneR(index + 1);
+        });
+      }    
+    });
+  };
+  
+  tweenSceneR(0);
+  animate();
 };
