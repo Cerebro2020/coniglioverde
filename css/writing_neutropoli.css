@@ -12,3 +12,24 @@ footer {
   height: 90px;
   z-index: 998;
 }
+
+#cam-nav {
+  width: 80%;
+  left: 80px;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 66px;
+}
+
+.button-controls button {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  width:70px;
+  height: 20px;
+  margin-right: 10px;;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 100;
+}

@@ -11,7 +11,7 @@ export default function(){
   scene.fog = new THREE.Fog(0x008888, 10, 100);
   //CAMERA
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-  camera.position.set( 0, 0, -250 );
+  camera.position.set( 0, 0, -200 );
   // PLAYER
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 
@@ -43,8 +43,8 @@ export default function(){
   camera.setFocalLength ( 25 );
   // CONTROLS
   const controls = new FirstPersonControls(camera, renderer.domElement);    
-  controls.movementSpeed = 6;
-  controls.lookSpeed = 0.08;
+  controls.movementSpeed = 4;
+  controls.lookSpeed = 0.06;
   // LIGHTS
   //AMBIENT
   const ambiente = new THREE.AmbientLight ( 0xffffff, 0.5 )
@@ -356,106 +356,16 @@ export default function(){
     } 
   );
 
-//   // ANIMATION
-
-//   let positions = [
-//   //START
-//   {moveTime: 6, waitTime: 1, pos: {x: 0, y: 0, z: -150}},
-//   // MOVE ////    
-//   {moveTime: 6, waitTime: 1, pos: {x: -20, y: 0, z: -120}},    
-//   {moveTime: 6, waitTime: 1, pos: {x: 0, y: -16, z: 46}}, 
-//   {moveTime: 6, waitTime: 1, pos: {x: -22, y: 0, z: 46}}, 
-
-//   // speakerFotogramma.position.set(0,-27,50);
-//   // speakerChiHa.position.set(-18,-7.5,-110);
-//   // speakerCiocca.position.set(-22,13,50);
-//   // speakerAccavalla.position.set(22,-27,-50);
-//   // speakerPeriferia.position.set(-22,13,-50);
-
-
-
-
-  
-//   // FINISH
-//   {moveTime: 6, waitTime: 1, pos: {x: 0, y: 0, z: -150}},
-//   ];
-
-// // ROTATION
-
-// // let rotations = [
-
-// //   //START
-// //   {rotTime: 1, rotWait: 10, rot: {x: 0, y: 0, z: 0}},
-
-// //   // ROTATE////    
-// //   /*1*/{rotTime: 6, rotWait: 0, rot: {x: 0, y: 0, z: 0}},
-// //   /*2*/{rotTime: 6, rotWait: 0, rot: {x: 0, y: 0, z: 0}},
-
-// //   ///*8*/{rotTime: 3, rotWait: 3, rot: {x: -Math.PI/2, y: -2*Math.PI, z: 0}}, //Mountain
-// //   ///*9*/{rotTime: 3, rotWait: 3, rot: {x: 0, y: 2*Math.PI, z: -Math.PI/2}},// Ocean     
-
-// //   // FINISH
-// //   {rotTime: 6, rotWait: 0, rot: {x: 0, y: 0, z: 0}},
-      
-// // ];
-
-// let tweenScene = function(index) {
-//   if (index >= positions.length) index = 0;
-
-//   gsap.to(camera.position, {
-//     duration: positions[index].moveTime,
-//     x: positions[index].pos.x,
-//     y: positions[index].pos.y,
-//     z: positions[index].pos.z,
-//     onComplete: function() {
-//       gsap.delayedCall(positions[index].waitTime, function() {
-//         tweenScene(index + 1);
-//       });
-//     }    
-//   });
-
-
-//   // if (rotations[index]) {
-//   //   gsap.to(scene.rotation, {
-//   //     duration: rotations[index].rotTime,
-//   //     x: rotations[index].rot.x,
-//   //     y: rotations[index].rot.y,
-//   //     z: rotations[index].rot.z,
-//   //     onComplete: function() {
-//   //       gsap.delayedCall(rotations[index].rotWait, function() {
-//   //         tweenScene(index + 1);
-//   //       });
-//   //     }
-//   //   });
-//   // }
-// };
-
-// tweenScene(0);
-
-// renderer.render(scene, camera);    
-
-// // Funzione di animazione
-// function animate() {
-//   requestAnimationFrame(animate);
-
-//   // Rotazione della camera sull'asse y
-//   camera.rotation.y += 0.001;
-
-//   renderer.render(scene, camera);
-// }
-
-// Avvio dell'animazione
-
 // CAMERA POSITION
   let positions = [ 
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0,z:-250}},/*partenza*/
-    {moveTime: 1, waitTime: 1, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
-    {moveTime: 1, waitTime: 1, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
-    {moveTime: 1, waitTime: 1, pos: {x:-20,y:24,z:-42}},/*Null_1*/
-    {moveTime: 1, waitTime: 1, pos: {x:-20,y:24,z:50}},/*Cioc*/
-    {moveTime: 1, waitTime: 1, pos: {x:22,y:-20,z:-52}},/*Acca*/
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:-15,z:50}},/*Fotog*/
-    {moveTime: 1, waitTime: 1, pos: {x:-22,y:20,z:-52}},/*Null_2*/
+    {moveTime: 10, waitTime: 1, pos: {x:0,y:0,z:-200}},/*partenza*/
+    {moveTime: 10, waitTime: 15, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
+    {moveTime: 10, waitTime: 15, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
+    {moveTime: 10, waitTime: 15, pos: {x:-20,y:24,z:-42}},/*Null_1*/
+    {moveTime: 10, waitTime: 15, pos: {x:-20,y:24,z:50}},/*Cioc*/
+    {moveTime: 10, waitTime: 15, pos: {x:22,y:-20,z:-52}},/*Acca*/
+    {moveTime: 10, waitTime: 15, pos: {x:0,y:-15,z:50}},/*Fotog*/
+    {moveTime: 10, waitTime: 15, pos: {x:-22,y:20,z:-52}},/*Null_2*/
   ];  
 
   let tweenScene = function(index) {
@@ -474,14 +384,14 @@ export default function(){
   };  
   tweenScene(0);
   let rotations = [
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:0}},    
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0.1, z:0}},
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:0.2}},
-    {moveTime: 1, waitTime: 1, pos: {x:0.1,y:0, z:0}},
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0.2, z:0}},    
-    {moveTime: 1, waitTime: 1, pos: {x:-0.1,y:0, z:0}},
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0, z:-0.2}},
-    {moveTime: 1, waitTime: 1, pos: {x:0.1,y:-0.2, z:0}}, 
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},    
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0.1, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0.2}},
+    {moveTime: 4, waitTime: 10, pos: {x:0.1,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0.2, z:0}},    
+    {moveTime: 4, waitTime: 10, pos: {x:-0.1,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:-0.2}},
+    {moveTime: 4, waitTime: 10, pos: {x:0.1,y:-0.2, z:0}}, 
   ];  
   let tweenSceneR = function(index) {
     if (index >= rotations.length) index = 0;
