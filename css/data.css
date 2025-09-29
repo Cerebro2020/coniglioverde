@@ -21,8 +21,9 @@ body {
 }
 
 .video-container {  
-  opacity: 1;
-  z-index: -9998;
+    opacity: 1;
+    filter: blur(0px);
+    z-index: -9998;
 }
 
 .scrolling {

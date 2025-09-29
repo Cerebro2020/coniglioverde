@@ -72,7 +72,7 @@ footer {
 }
 
 .menu li a {
-    font-weight: 700;   
+    font-weight: 400;   
 }
   
 .menu > li:not(:last-child) {
@@ -156,28 +156,33 @@ section {
   justify-content: center;
 }
 
+canvas {
+   filter: blur(1px);
+}
+
 .home-text {
   /* border: solid 1px green; */
-  width: 90vw;
+  width: 80vw;
   height: 100vh;
 }
 
 .home-title {
   width: 70%;
   height: 30%;
-  margin-top: 110px
+  margin-top: 110px;
+}
+
+.home-title h2 {
+  font-weight: 100;
+  font-size: 40px;
+  font-style: normal;
+  letter-spacing: 20px;
 }
 
 .home-paragraph {
   width: 100%;
   height: 70%;
 }
-
-.home-title h2 { 
-    font-size: 10px;
-    font-style: none; 
-    font-weight: 800px;
-  }
 
 .gallery_central { 
   /* border: solid 1px green; */
@@ -308,9 +313,9 @@ section {
   }
 
   .home-title h2 { 
-    top: -20px;   
-    font-size: 30px;
-    font-style: none; 
+    /* top: -20px;    */
+    font-size: 60px;
+    font-style: normal; 
     font-weight: 100;
   }
 
