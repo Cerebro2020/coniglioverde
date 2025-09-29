@@ -1,6 +1,6 @@
 #bio {    
   width: 100%;
-  height: 100vh;  
+  height: 200vh;  
   display: flex;
   align-items: center; 
   overflow: hidden;  
@@ -110,18 +110,15 @@ section {
 
   .bio-text {
     position: absolute;
-    /* border: 1px solid white; */
     bottom: 20%;
   }
 
   .bio-text h1 {
-    /* border: 1px solid white; */
     height: 10%;
   }
 
   .bio-text p {
     height: 90%;
-    /* border: 1px solid white; */
     font-size: 14px;  
     line-height: 15px;
     text-align: left;    
@@ -293,28 +290,69 @@ section {
   height: 100vh;  
 }
 
-.credits {
+.credits { 
   position: absolute;
-  width: 80%;
+  width: 80vh;
+  height: 60vh;
   top: 100px;
   text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.title-credits {
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+}
+
+.credits h1 {
+  font-size: 26px;
+  letter-spacing: 12px;
+  font-weight: 200;
 }
 
 .credits h2 {
-  font-weight: 400;
+  font-size: 20px;
+  letter-spacing: 4px;
+  font-weight: 200;
+}
+
+.scrolling {
+  position: absolute;
+  bottom: 70px;
 }
 
 @media (max-width: 724px){
+  #credits {
+    height: 100vh;  
+  }
 
-  .content-credits {
-    font-size: 14px;
-    line-height: 16px;
+  .credits {  
+    width: 45vh;
+    height: 70vh;    
+    top: 80px;
+  }
+
+  .title-credits {
+    height: 25px;
+  }
+
+  .credits h1 {
+    font-size: 20px;
+    letter-spacing: 6px;
+    font-weight: 200;
   }
 
   .credits h2 {
-    font-size: 20px;
-    line-height: 0px;
-    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-weight: 200;
+  }
+
+  .credits a {
+    font-size: 14px;
   }
 
 }
