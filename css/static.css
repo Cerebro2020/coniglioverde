@@ -79,6 +79,11 @@ footer {
     border-bottom: 1px solid #444;
 }
 
+.scrolling {
+  position: absolute;
+  bottom: 100px;
+}
+
 @media (max-width: 700px) {
  
     .menu-button-container {      
@@ -145,21 +150,22 @@ footer {
 /* ----GALLERY---- */
 section {
   width: 100%;
-  height: 100vh;   
+  height: auto;   
   display: flex;  
   align-items: center;
   justify-content: center;
 }
 
 .home-text {
-  width: 80vw;
-  height: 60vh;
+  /* border: solid 1px green; */
+  width: 90vw;
+  height: 100vh;
 }
 
 .home-title {
   width: 70%;
   height: 30%;
-  margin-top: 40px
+  margin-top: 110px
 }
 
 .home-paragraph {
@@ -167,13 +173,14 @@ section {
   height: 70%;
 }
 
-.home-title h2 {
-  font-size: 50px;
-  font-weight: 300;
-  font-style: normal;
-  letter-spacing: 20px;
-}
+.home-title h2 { 
+    font-size: 10px;
+    font-style: none; 
+    font-weight: 800px;
+  }
+
 .gallery_central { 
+  /* border: solid 1px green; */
   width: 80vw;  
   margin-top: 50px; 
   margin-bottom: 80px;
@@ -185,8 +192,8 @@ section {
 
 .gallery_item {
   /* background-color: black; */
-  /* border: 1px solid rgb(140, 241, 125);   */
-  /* border: 3px solid rgb(0, 0, 0);  */
+  border: 1px solid rgb(140, 241, 125);  
+  border: 3px solid rgb(0, 0, 0); 
   /* border: solid 1px rgb(255, 0, 0);  */
   display: flex;
   flex-direction: column;
@@ -245,7 +252,6 @@ section {
 }
 
 .title-gallery p {
-  color: rgb(255, 255, 255);
   font-size: 14px;
   line-height: 16px;  
   font-weight: 200;
@@ -255,8 +261,8 @@ section {
 .scrolling {  
   /* border: 1px solid rgb(255, 230, 0); */
   height: 30px;
-  bottom: 50px;
-  position: absolute;
+  bottom: 84px;
+  position: relative;
   display: flex;
   width: 100%;
   justify-content: center;
@@ -267,8 +273,6 @@ section {
   width: auto;
   height: 24px;
 }
-
-
 
 /*--- 1024 ---*/
 @media (max-width: 1024px) {
@@ -292,11 +296,9 @@ section {
   }
 
   .home-text { 
-    width: 100%;
+    width: 90%;
     height: 100vh;
-    display: flex;
     flex-direction: column;
-    justify-content: center;
   }
 
   .home-title {
@@ -305,11 +307,10 @@ section {
     height: 10%;
   }
 
-  .home-title h2 {     
-    border: 1px solid rgb(70, 70, 70);   
+  .home-title h2 { 
     top: -20px;   
-    font-size: 40px;
-    font-style: normal;    
+    font-size: 30px;
+    font-style: none; 
     font-weight: 100;
   }
 
@@ -320,7 +321,7 @@ section {
 
   .home-paragraph p {
     font-size: 16px;
-    line-height: 17px;
+    line-height: 20px;
   }
 
   .gallery_central { 
@@ -332,9 +333,8 @@ section {
   }
 
   .gallery_item {
-    width: 100vw;
-    margin-left: 16px;;
-    /* border: 1px solid rgb(70, 70, 70);       */
+    width: 90vw;
+    margin-left: 16px;         
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -358,8 +358,7 @@ section {
     transition: ease-in-out 0.2s;  
   }
       
-  .thumbnail-gallery {  
-    /* border: 1px solid rgb(91, 91, 91);     */
+  .thumbnail-gallery {   
     width: 100%;  
     height: 78px; 
     display: flex;
@@ -398,5 +397,6 @@ section {
     line-height: 16px;  
     font-weight: 200;
     padding-left: 20px; 
-  } 
+  }
+
 }
