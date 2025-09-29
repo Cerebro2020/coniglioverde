@@ -16,22 +16,38 @@ section {
 }
 
 #bio { 
-  /* border: 1px solid rgb(255, 0, 0);  */
   width: 100%;
-  height: relative;  
+  height: 200vh;
+  display: flex;
+  justify-content: flex-start;
+  top: 100px;
   overflow: hidden; 
 }
 
-.bio-content { 
-  /* border: 1px solid rgb(21, 0, 255);  */
-  width: 64%;
+.bio-content {  
+  width: 70%;
   height: relative;
+  top: 400px;  
   display: flex;
   flex-direction: column;
 }
 
-.bio-title {
-  /* border: 1px solid rgb(21, 0, 255); */
+.bio-title-n {
+  width: 100%;  
+}
+
+.bio-title-n ul { 
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  justify-content: space-around;     
+}
+
+.bio-title-n h1 {
+  font-size: 26px;  
+  font-weight: 200;
+  letter-spacing: 64px;
+  text-align: justify;
 }
 
 .bio-title h1 {
@@ -68,8 +84,8 @@ section {
   height: 100%;  
 } */
 
-.bio-table {  
-  /* border: 1px solid rgb(34, 255, 0); */
+.bio-table { 
+  width: 96%;
   border-collapse: collapse;
   align-content: center;
 }
@@ -92,20 +108,20 @@ section {
   width: 20%;
   font-weight: 100;
   vertical-align: top;
-  padding: 4px 8px;
+  padding: 4px 8px;  
   font-style: italic;
+  letter-spacing: 4px;letter-spacing: 4px;
 }
 
 .bio-info-c {
   width: 80%;
   padding: 4px 8px;  
   font-style: italic;
-  
+  letter-spacing: 3px;  
 }
 
 @media (max-width: 1024px) {
   .bio-content { 
-    border-right: 1px solid rgb(249, 237, 6);   
     width: 90%;
     height: 70vh;
     display: flex;
