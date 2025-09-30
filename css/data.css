@@ -33,11 +33,10 @@ body {
 
 .logoh {
     /* border: 1px solid white; */
-    position: relative;
-    display: flex;
-    align-items:center;
-    left: -28px;
-    top: -40px;
+    width: 100%;
+    display: flex;  
+    left: 0px;
+    top: 0px;
 }
 
 .logoh img {
@@ -129,25 +128,29 @@ body {
     width: 100%; 
 }
 
-.button_div_writing {  
-  width: 90%;   
-  height: 20%;  
-  position: relative;
-  display:flex;
-  align-items:end;
-  justify-content: left; 
-  bottom: 0px
+.hearts-menu {
+    /* border: 1px solid yellow; */
+    display: flex;
+    justify-content: center;
+}
+
+.button_div_writing {    
+    /* border: 1px solid blueviolet;   */
+    width: 10%;   
+    height: 20%;
+    display:flex;
+    justify-content: center; 
 }
 
 .button_div_writing button {
-  background-color: rgba(255, 255, 255, 0);
-  width: 70px;
-  height: 20px;
-  border: 1px solid #a2ff00;
-  border-radius: 10px;
-  color: #a2ff00;
-  font-size: 14px;   
-  border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0);
+    width: 70px;
+    height: 20px;
+    border: 1px solid #a2ff00;
+    border-radius: 10px;
+    color: #a2ff00;
+    font-size: 14px;   
+    border-radius: 2px;
 }
 
 .button_div_writing button:hover {

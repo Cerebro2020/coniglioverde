@@ -182,7 +182,7 @@ export default function(){
     controls.maxPolarAngle = 1.5; 
   }
   let audioButton = document.querySelector('#btn-audio button');
-   let isPlaying = true;
+  let isPlaying = true;
   audioButton.addEventListener('click', function() {
     if (isPlaying) {
       backgroundSound.pause();

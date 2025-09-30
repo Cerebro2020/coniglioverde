@@ -116,7 +116,8 @@ cursor: grabbing;
 
 .button_div_writing {
   position: absolute;
-  bottom: 200px; 
+  bottom: 160px;   
+  z-index: 9999;
 }
 
 .button_div_writing button {
@@ -126,8 +127,7 @@ cursor: grabbing;
   border: 1px solid #a2ff00;
   border-radius: 15px;
   color: #a2ff00;
-  font-size: 12px; 
-  z-index: 999;
+  font-size: 12px;
 }
 
 .button_div_writing button:hover {
