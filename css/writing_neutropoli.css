@@ -3,33 +3,63 @@
 }
 
 .info_leyer {  
-  background-color: black;
+  /* background-color: black; */
   height: 90px;
 }
 
 footer {
-  background-color: rgba(0, 0, 0);
+  /* background-color: rgba(0, 0, 0); */
   height: 90px;
   z-index: 998;
 }
 
 #cam-nav {
-  width: 80%;
-  left: 80px;
+  /* border: 1px solid red; */
+  width: 4%;
+  height: 60vh;
   justify-content: space-between;
-  align-items: center;
-  bottom: 66px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  left: 4px;
+  bottom: 126px;
 }
 
 .button-controls button {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(154, 255, 2, 0);
   color: rgb(255, 255, 255);
   border: 1px solid rgb(255, 255, 255);
-  width:70px;
-  height: 20px;
-  margin-right: 10px;;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 16px;
   text-align: center;
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 100;
+}
+
+.button-controls button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+.button-controls img {  
+  width: 14px;
+  filter: invert(1);
+}
+
+@media (max-width: 724px) {
+
+#cam-nav {
+  /* border: 1px solid red; */
+    width: 4%;
+    height: 60vh;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    left: 20px;
+    bottom: 126px;
+  }
+
 }

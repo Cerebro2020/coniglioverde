@@ -1,0 +1,60 @@
+.home-text {
+    width: 60%;
+}
+
+.home-title {
+  width: 70%;
+  height: 30%;
+  margin-top: 110px;
+}
+
+.home-title h2 {
+  font-weight: 100;
+  font-size: 40px;
+  font-style: normal;
+  letter-spacing: 20px;
+}
+
+.home-paragraph p {
+  font-size: 40px;;
+}
+.scrolling {
+  position: absolute;
+  bottom: 100px;
+}
+
+.quote {
+  font-style: italic;
+}
+
+@media (max-width: 724px) {
+
+  .home-text { 
+    width: 90%;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  .home-title {
+    margin-top: -10px;      
+    width: 100%;
+    height: 10%;
+  }
+
+  .home-title h2 { 
+    /* top: -20px;    */
+    font-size: 60px;
+    font-style: normal; 
+    font-weight: 100;
+  }
+
+  .home-paragraph { 
+    width: 100%;
+    height: 60%;
+  }
+
+  .home-paragraph p {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}

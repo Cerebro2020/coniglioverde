@@ -76,12 +76,7 @@ footer {
 }
   
 .menu > li:not(:last-child) {
-    border-bottom: 1px solid #444;
-}
-
-.scrolling {
-  position: absolute;
-  bottom: 100px;
+  border-bottom: 1px solid #444;
 }
 
 @media (max-width: 700px) {
@@ -314,7 +309,7 @@ canvas {
 
   .home-title h2 { 
     /* top: -20px;    */
-    font-size: 60px;
+    font-size: 20px;
     font-style: normal; 
     font-weight: 100;
   }

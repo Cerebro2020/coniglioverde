@@ -114,13 +114,9 @@ cursor: grabbing;
   font-style: italic;  
 }
 
-.button_div_writing { 
-  height: auto;  
-  display: flex;
-  flex-direction: row;  
-  align-items: center;
-  justify-content: center;
-  padding: 0px;
+.button_div_writing {
+  position: absolute;
+  bottom: 200px; 
 }
 
 .button_div_writing button {
@@ -178,7 +174,7 @@ cursor: grabbing;
   font-weight: 100;
 }
   
-#btn-camera button:hover,  #btn-count button:hover {
+#btn-camera button:hover,  #btn-audio button:hover {
   cursor: pointer;
   border: 1px solid rgb(162, 255, 0);
   color: rgb(162, 255, 0);
@@ -239,10 +235,11 @@ cursor: grabbing;
   } 
 
   .button_div_writing {    
-    justify-content: center;    
+    justify-content: center;   
+    bottom: 100px;  
   }
-  
 }
+  
 
 @media (max-width: 724px) {
   .home-text {
@@ -306,13 +303,9 @@ cursor: grabbing;
     justify-content: left;  
   }
 
-  .button_div_writing {    
-    justify-content: center;    
-  } 
-
   .video_performance {
     display: none;
-  }
+  }  
 
   /* .video_performance {
     width: 30%;
