@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Felice Vino">
+    <meta name="description" content="Digital creator and storyteller.">
+    <meta property="og:title" content="CONIGLIO VERDE">
+    <meta property="og:description" content="Digital creator and storyteller.">
+    <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
+    <link rel="icon" href="./images/loghi/favicon.ico">
+    <title>coniglioverde|data|aqvam</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <!-- loading-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        
+        $(document).ready(function() {
+            $(window).on("load", function() {
+                $("#loader").fadeOut("slow");
+            });
+        });
+    </script>
+</head>
+    <link rel="stylesheet" href="css/style.css">  
+    <link rel="stylesheet" href="css/aqvam.css">
+<body>
+    <div id="loader">
+        <div class="loader"></div>
+        <span></span>
+        <div class="text-loader">
+            <p>Loading...</p>
+        </div>
+    </div>  
+    <canvas>       
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "./three_class/three.module.js"
+                }
+            }
+        </script> 
+        <script type = "module">                    
+            import scene from "./aqvamT.js";
+            scene();
+        </script>   
+    </canvas>             
+    <header>
+        <div id="logo">
+            <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
+        </div>
+        <input id="menu-toggle" type="checkbox" aria-label="Toggle-menu"/>
+        <label class='menu-button-container' for="menu-toggle">
+        <div class='menu-button'></div>
+        </label class='menu-button-container' for="menu-toggle">
+        <ul class="menu">                             
+            <li></li>            
+            <li><a href="data.html">DATA</a></li>
+            <li><a href="aqvamT_it.html">EN | IT</a></li>                       
+        </ul>
+    </header>
+    
+    <div class="button-controls-aqvam-left">         
+        <div id="btn-play">
+            <button type="button">PLAY</button>
+        </div>          
+        <div id="btn-pause">
+        <button type="button">PAUSE</button>        
+            <div id="submenu" style="display: none;">
+                <div id="btn-hide-boxes1">
+                    <button type="button">AQUIFER</button>
+                </div>         
+                <div id="btn-hide-boxes2">
+                    <button type="button">FILTER</button>
+                </div>          
+                <div id="btn-hide-boxes3">
+                    <button type="button">CLOR</button>
+                </div> 
+            </div>
+        </div>
+    </div>   
+    
+    <div class="button-controls-jump" id="jump-controls"  style="display: none;">
+        <div id="btn-jump-to-column">
+            <button type="button">
+                <img src="images/icons/jump.png" alt="scrolling">
+            </button>
+        </div>  
+        <div id="btn-previous-column">
+            <button type="button">
+                <img src="images/icons/previous.png" alt="scrolling">
+            </button>
+        </div>  
+    </div>
+
+    <div class="button-controls-aqvam">
+        <div id="btn-cameraC">
+            <button type="button">CENTER</button>
+        </div>  
+        <div id="btn-cameraH">
+            <button type="button">TOP</button>
+        </div>
+        <div id="btn-count">
+            <button type="button">COUNT</button>
+        </div>        
+        <div id="btn-quantity">
+            <button type="button">QUANTITY</button>
+        </div> 
+    </div>	
+    <footer id="footer">
+        <ul>
+            <li>&copy; 2023 felice vino</li>
+            <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
+            <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li>
+            <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
+        </ul>
+    </footer>      
+</body>
+</html>

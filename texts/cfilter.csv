@@ -1,0 +1,143 @@
+taxa,03B,04B,05B,06B,07B,08B,09B,10B,11B,12B,13B,14B
+D_0__Bacteria;D_1__Patescibacteria;D_2__Parcubacteria,108260,12146,89561,10781,24064,73881,14517,4488,22559,50151,27514,834
+D_0__Bacteria;D_1__Proteobacteria;D_2__Gammaproteobacteria,17151,2206,9811,987,7299,16755,4660,9523,9745,19153,9300,202822
+D_0__Bacteria;D_1__Proteobacteria;D_2__Alphaproteobacteria,24721,3777,7025,771,6881,18980,5878,16885,14321,38510,13491,1353
+D_0__Bacteria;D_1__Proteobacteria;D_2__Deltaproteobacteria,14208,780,6272,828,3351,5028,3415,860,1610,5518,2501,724
+D_0__Bacteria;D_1__Patescibacteria;D_2__ABY1,30265,1275,10168,1284,2179,8498,2636,799,3105,9415,2557,555
+D_0__Bacteria;D_1__Patescibacteria;D_2__Gracilibacteria,17202,773,3675,396,1266,4087,1104,495,1841,5176,2076,236
+D_0__Bacteria;D_1__Omnitrophicaeota;D_2__uncultured bacterium,2748,176,1489,234,566,2212,1023,256,588,1487,789,655
+D_0__Bacteria;D_1__Bacteroidetes;D_2__Bacteroidia,10149,516,4720,1922,2680,2721,842,212,1560,3625,1164,858
+D_0__Archaea;D_1__Nanoarchaeaeota;D_2__Woesearchaeia,3438,84,1198,250,438,1818,637,119,393,1828,211,722
+D_0__Bacteria;D_1__Omnitrophicaeota;D_2__Omnitrophia,1419,15,501,144,270,694,447,59,142,623,218,89
+D_0__Bacteria;D_1__Chloroflexi;D_2__Dehalococcoidia,565,30,312,26,227,414,127,18,175,346,64,57
+D_0__Bacteria;D_1__Cyanobacteria;D_2__Melainabacteria,2121,143,1079,0,361,599,244,51,425,323,221,22
+D_0__Bacteria;D_1__Patescibacteria;D_2__Microgenomatia,1044,69,112,67,178,187,181,135,34,1133,179,164
+D_0__Bacteria;D_1__Rokubacteria;D_2__NC10,322,52,607,39,288,534,151,6,47,415,282,87
+D_0__Bacteria;D_1__Nitrospirae;D_2__Thermodesulfovibrionia,899,16,135,75,17,37,65,131,0,1964,0,233
+D_0__Archaea;D_1__Thaumarchaeota;D_2__Nitrososphaeria,600,66,240,90,274,663,210,160,492,383,144,227
+Unassigned;__;__,345,45,246,53,210,355,68,55,94,398,396,195
+D_0__Bacteria;D_1__Patescibacteria;D_2__Saccharimonadia,325,13,34,13,510,2276,477,252,745,1119,815,47
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 6,208,41,192,19,147,133,6,39,67,152,139,81
+D_0__Bacteria;D_1__Nitrospirae;D_2__Nitrospira,325,28,178,41,94,237,46,11,83,342,69,35
+D_0__Bacteria;D_1__Chlamydiae;D_2__Chlamydiae,564,27,264,57,289,577,170,49,86,462,201,20
+D_0__Bacteria;D_1__Actinobacteria;D_2__Actinobacteria,1123,29,128,22,114,428,49,55,151,318,107,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__Planctomycetacia,166,0,51,12,110,79,49,0,23,234,62,56
+D_0__Bacteria;D_1__Elusimicrobia;D_2__Elusimicrobia,356,18,228,0,133,119,62,19,68,267,85,29
+D_0__Bacteria;D_1__Firmicutes;D_2__Bacilli,222,13,20,23,244,127,4,141,0,177,51,6
+D_0__Bacteria;__;__,220,23,332,16,313,311,66,20,74,443,35,17
+D_0__Bacteria;D_1__Firmicutes;D_2__Clostridia,951,35,133,9,74,299,85,42,51,120,175,20
+D_0__Bacteria;D_1__Verrucomicrobia;D_2__Verrucomicrobiae,346,0,249,11,0,57,14,4,88,117,50,81
+D_0__Bacteria;D_1__Bacteroidetes;D_2__Ignavibacteria,181,49,95,43,37,35,9,20,66,205,280,27
+D_0__Bacteria;D_1__Patescibacteria;D_2__Berkelbacteria,390,21,77,19,38,16,27,49,6,394,103,47
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 22,92,28,73,23,76,42,18,0,34,105,21,40
+D_0__Bacteria;D_1__Latescibacteria;D_2__uncultured bacterium,220,0,94,31,26,12,25,0,0,107,0,11
+D_0__Bacteria;D_1__Planctomycetes;D_2__Pla4 lineage,57,0,41,0,17,22,17,0,2,18,0,14
+D_0__Bacteria;D_1__Omnitrophicaeota;__,113,27,87,7,0,86,19,0,59,28,0,14
+D_0__Bacteria;D_1__Dependentiae;D_2__Babeliae,124,0,64,0,36,181,15,0,26,275,40,206
+D_0__Bacteria;D_1__Elusimicrobia;__,50,0,41,0,88,19,7,0,0,75,84,16
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 5,73,11,44,7,58,5,37,0,56,27,0,17
+D_0__Bacteria;D_1__Nitrospirae;__,293,0,0,7,0,0,0,0,0,231,0,0
+D_0__Bacteria;D_1__Latescibacteria;__,47,0,17,0,0,0,8,31,0,122,0,65
+D_0__Bacteria;D_1__Cyanobacteria;D_2__Oxyphotobacteria,0,0,0,0,44,109,10,11,10,37,34,25
+D_0__Bacteria;D_1__WOR-1;D_2__uncultured bacterium,133,9,46,21,0,0,39,36,0,60,0,47
+D_0__Bacteria;D_1__Chloroflexi;D_2__JG30-KF-CM66,132,15,34,0,23,21,8,0,23,30,41,14
+D_0__Bacteria;D_1__Planctomycetes;D_2__vadinHA49,532,9,61,5,0,195,32,0,18,0,0,0
+D_0__Bacteria;D_1__Cyanobacteria;D_2__Sericytochromatia,87,12,37,0,0,28,7,0,34,22,0,988
+D_0__Bacteria;D_1__Dadabacteria;D_2__Dadabacteriia,80,9,20,0,27,15,3,16,0,39,64,8
+D_0__Bacteria;D_1__Chloroflexi;D_2__Anaerolineae,0,0,3,0,14,17,6,13,13,18,0,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__Phycisphaerae,25,0,17,0,0,9,0,6,0,5,0,0
+D_0__Archaea;D_1__Diapherotrites;D_2__Iainarchaeia,123,0,26,3,0,0,0,6,0,100,0,24
+D_0__Bacteria;D_1__Actinobacteria;D_2__Acidimicrobiia,0,0,9,0,6,5,30,0,0,51,0,37
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 21,21,13,30,0,24,0,17,0,26,49,48,3
+D_0__Bacteria;D_1__Nitrospirae;D_2__4-29-1,54,0,0,0,0,11,0,2,0,139,0,0
+D_0__Bacteria;D_1__WOR-1;__,103,0,0,7,0,0,13,19,0,78,0,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__OM190,40,0,34,6,50,19,24,7,0,24,0,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__Brocadiae,25,2,32,0,0,0,0,0,0,47,0,26
+D_0__Bacteria;D_1__Calditrichaeota;D_2__Calditrichia,39,12,200,0,0,0,14,0,0,11,0,0
+D_0__Bacteria;D_1__Chlamydiae;D_2__LD1-PA32,0,0,23,0,0,0,0,0,8,118,0,0
+D_0__Bacteria;D_1__Elusimicrobia;D_2__Lineage IIc,0,5,16,0,19,0,16,0,0,9,0,0
+D_0__Bacteria;D_1__Actinobacteria;D_2__Thermoleophilia,47,0,13,0,0,90,0,0,53,91,22,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 17,107,18,107,0,27,0,9,0,24,42,0,0
+D_0__Bacteria;D_1__WPS-2;__,89,0,44,0,59,63,14,0,0,36,0,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__BD7-11,29,0,34,9,0,42,12,8,24,45,0,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Acidobacteriia,19,0,26,0,0,0,0,0,0,15,0,0
+D_0__Archaea;D_1__Nanoarchaeaeota;D_2__Nanohaloarchaeia,3,0,29,5,0,0,0,0,0,25,0,10
+D_0__Bacteria;D_1__Acidobacteria;D_2__Blastocatellia (Subgroup 4),28,0,7,0,0,0,0,0,0,23,25,0
+D_0__Bacteria;D_1__Planctomycetes;__,9,0,13,0,24,5,5,0,0,11,12,6
+D_0__Bacteria;D_1__Acidobacteria;D_2__Thermoanaerobaculia,0,0,0,0,0,0,9,0,0,0,0,0
+D_0__Bacteria;D_1__Zixibacteria;D_2__uncultured bacterium,12,4,0,0,0,3,13,0,0,21,0,18
+D_0__Bacteria;D_1__Planctomycetes;D_2__Pla3 lineage,40,0,0,0,6,0,0,0,0,9,0,0
+D_0__Bacteria;D_1__Firmicutes;__,94,0,0,0,14,0,4,0,15,29,0,18
+D_0__Bacteria;D_1__Elusimicrobia;D_2__Lineage IIb,0,5,21,0,23,18,5,0,0,0,0,0
+D_0__Bacteria;D_1__Chloroflexi;D_2__KD4-96,0,0,11,0,0,25,0,6,44,80,36,0
+D_0__Bacteria;D_1__Acidobacteria;__,14,0,34,0,0,0,21,0,0,4,39,17
+D_0__Bacteria;D_1__Spirochaetes;D_2__Leptospirae,0,0,9,0,0,15,0,0,75,44,120,0
+D_0__Bacteria;D_1__Entotheonellaeota;D_2__Entotheonellia,14,11,12,0,0,0,0,0,0,29,17,0
+D_0__Bacteria;D_1__Actinobacteria;__,0,0,0,0,0,0,0,6,0,24,0,14
+D_0__Archaea;D_1__Thaumarchaeota;__,60,0,0,0,0,5,6,0,0,14,0,0
+D_0__Archaea;D_1__Diapherotrites;D_2__Micrarchaeia,57,0,4,0,0,16,4,0,0,34,0,7
+D_0__Bacteria;D_1__Bacteroidetes;D_2__OC31,0,4,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Thaumarchaeota;D_2__Group 1.1c,18,0,7,0,0,0,0,0,0,14,0,0
+D_0__Bacteria;D_1__Gemmatimonadetes;D_2__Gemmatimonadetes,8,0,0,0,9,0,0,0,0,17,0,0
+D_0__Bacteria;D_1__GAL15;D_2__uncultured bacterium,25,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Elusimicrobia;D_2__Endomicrobia,0,0,0,0,0,0,5,0,0,26,20,0
+D_0__Bacteria;D_1__Patescibacteria;D_2__WWE3,0,0,0,4,0,0,5,0,3,0,0,5
+D_0__Bacteria;D_1__Fusobacteria;D_2__Fusobacteriia,0,0,0,0,0,8,0,0,0,22,0,0
+D_0__Bacteria;D_1__Hydrogenedentes;D_2__Hydrogenedentia,0,0,27,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Epsilonbacteraeota;D_2__Campylobacteria,0,0,0,0,0,0,4,0,0,0,0,213
+D_0__Bacteria;D_1__AncK6;D_2__uncultured bacterium,5,0,0,0,0,0,0,10,16,0,0,0
+D_0__Bacteria;D_1__Margulisbacteria;__,0,0,8,0,0,36,0,0,11,36,0,0
+D_0__Bacteria;D_1__Spirochaetes;D_2__MVP-15,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Elusimicrobia;D_2__Lineage IIa,0,0,0,0,0,0,0,0,0,7,0,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 15,0,0,27,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Chloroflexi;D_2__P2-11E,16,0,0,6,0,22,0,0,0,0,0,0
+D_0__Bacteria;D_1__Schekmanbacteria;__,0,0,9,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Armatimonadetes;D_2__Chthonomonadetes,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Firmicutes;D_2__Negativicutes,53,0,0,0,25,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Euryarchaeota;D_2__Thermococci,8,0,0,0,0,30,0,0,4,6,0,0
+D_0__Bacteria;D_1__Lentisphaerae;D_2__Lentisphaeria,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Patescibacteria;__,0,0,6,0,0,30,0,0,0,19,0,0
+D_0__Bacteria;D_1__Patescibacteria;D_2__CPR2,0,0,0,0,0,0,13,0,0,0,0,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Holophagae,0,0,0,0,0,0,0,0,22,0,0,0
+D_0__Bacteria;D_1__Actinobacteria;D_2__MB-A2-108,20,0,0,0,0,0,0,0,0,0,8,0
+D_0__Bacteria;D_1__Nitrospinae;D_2__Nitrospinia,0,0,9,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Actinobacteria;D_2__Coriobacteriia,0,0,0,0,0,0,9,0,0,22,0,8
+D_0__Bacteria;D_1__BRC1;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,0,9,0,0
+D_0__Bacteria;D_1__Armatimonadetes;D_2__Fimbriimonadia,0,0,0,0,0,0,0,3,0,0,0,0
+D_0__Bacteria;D_1__WPS-2;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,16,25,0,0
+D_0__Bacteria;D_1__PAUC34f;D_2__uncultured bacterium,8,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Firmicutes;D_2__Limnochordia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Kiritimatiellaeota;D_2__Kiritimatiellae,0,0,0,0,0,0,0,0,0,15,0,0
+D_0__Bacteria;D_1__Armatimonadetes;D_2__Armatimonadia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 9,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Gemmatimonadetes;D_2__BD2-11 terrestrial group,0,0,0,0,0,0,0,0,0,6,8,0
+D_0__Bacteria;D_1__Deinococcus-Thermus;D_2__Deinococci,0,0,0,9,0,0,7,0,0,0,22,0
+D_0__Bacteria;D_1__FBP;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Proteobacteria;__,0,0,0,0,0,0,5,0,3,0,0,0
+D_0__Bacteria;D_1__LCP-89;D_2__uncultured bacterium,34,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Poribacteria;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Crenarchaeota;D_2__Thermoprotei,32,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__CK-2C2-2;__,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Chloroflexi;D_2__TK17,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Chloroflexi;__,0,0,0,0,0,0,0,0,0,0,13,0
+D_0__Bacteria;D_1__Nitrospirae;D_2__BMS9AB35,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Chloroflexi;D_2__Chloroflexia,0,0,0,0,0,0,0,0,0,7,0,0
+D_0__Bacteria;D_1__Chloroflexi;D_2__OLB14,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Acetothermia;D_2__Acetothermiia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Armatimonadetes;D_2__uncultured,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__PAUC34f;__,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Schekmanbacteria;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,4,0,0,0
+D_0__Bacteria;D_1__Actinobacteria;D_2__RBG-16-55-12,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Firmicutes;D_2__Erysipelotrichia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Acidobacteria;D_2__Subgroup 18,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Fibrobacteres;D_2__Fibrobacteria,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Fibrobacteres;D_2__Chitinivibrionia,0,0,10,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Planctomycetes;D_2__028H05-P-BN-P5,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Euryarchaeota;D_2__Thermoplasmata,0,0,0,0,0,0,0,0,0,4,0,0
+D_0__Bacteria;D_1__Nitrospinae;D_2__P9X2b3D02,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Crenarchaeota;D_2__Bathyarchaeia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__Margulisbacteria;D_2__uncultured bacterium,0,0,0,0,0,0,0,0,0,5,0,0
+D_0__Bacteria;D_1__Patescibacteria;D_2__Kazania,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Euryarchaeota;D_2__Methanobacteria,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Archaea;D_1__Euryarchaeota;D_2__Methanomicrobia,0,0,0,0,0,0,0,0,0,0,0,0
+D_0__Bacteria;D_1__FCPU426;__,0,0,0,0,0,0,0,0,0,0,0,0
