@@ -141,12 +141,20 @@ section {
 }
 
 @media (max-width: 1024px) {
+
   .bio-content { 
     width: 90%;
     height: 70vh;
     display: flex;
     flex-direction: column;
     align-items: center;    
+  }
+
+  .bio-title-n h1 {
+    font-size: 18px;  
+    font-weight: 200;
+    letter-spacing: 16px;
+    text-align: center;    
   }
   
   .bio-title h1 {
@@ -190,15 +198,15 @@ section {
   
   #bio{
     justify-content:flex-start;
+    flex-direction: row;
   }
 
   .bio-content{ 
-    border: 1px solid rgb(0, 206, 79);
-    height: 100vh;
-    width: 90%;    
-    padding-top: 40px;    
-  }
-
+    border: 2px solid rgb(0, 206, 79);
+    height: 200vh;
+    width: 100%;  
+  }  
+  
   .bio-text {
     position: absolute;
     bottom: 20%;
@@ -213,7 +221,6 @@ section {
 
   .bio-text h1 {
     height: 10%;
-
   }
 
   .bio-text p {

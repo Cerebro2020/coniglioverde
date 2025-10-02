@@ -35,7 +35,7 @@
   font-style: italic;
 }
 
-@media (max-width: 724px) {
+@media (max-width: 724px) {  
 
   .home-text { 
     width: 90%;
