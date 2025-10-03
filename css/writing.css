@@ -45,16 +45,16 @@ cursor: grabbing;
 /* COVER AND BOOK CONTAINER*/
 .container-book { 
   width: 80%;
-  height: 80vh; 
+  height: 80%; 
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: first baseline;
   -webkit-justify-content: center;
   justify-content: space-around;
 }
 
 /* 1 */
-.cover-container {   
+.cover-container {  
   width: 24%;
   height: 90%;
   display: flex;
@@ -71,7 +71,7 @@ cursor: grabbing;
 
 /* 2 */
 .text-container {  
-  width: 48%;
+  width: 60%;
   height: 90%;
   display: flex;
   flex-direction: column;  
@@ -116,7 +116,7 @@ cursor: grabbing;
 
 .button_div_writing {
   position: absolute;
-  bottom: 160px;   
+  bottom: 130px;   
   z-index: 9999;
 }
 
@@ -181,9 +181,20 @@ cursor: grabbing;
 }
 
 .scrolling {
-  /* position: absolute; */
-  padding-top: 100px 
+  position: absolute;
+  bottom: 52px 
 }
+
+.scrolling img {
+  width: 20px;
+  height: 20px;
+}
+
+.sub-up p {
+  font-size: 16px;
+}
+
+
 
 @media (max-width: 1024px) {
 
