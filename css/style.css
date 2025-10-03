@@ -716,7 +716,7 @@ canvas {
     display: flex;
     width: auto;
     height: 26px;  
-    bottom: 60px; 
+    bottom: 150px; 
   }
    
   .scrolling img {

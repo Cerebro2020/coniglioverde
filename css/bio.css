@@ -32,24 +32,24 @@ section {
   overflow: hidden; 
 }
 
-#agenda .bio-content {
-  width: 70%;
-  height: 70vh;
-} 
-
-#agenda .bio-date {
-  display: inline-block;
-  width: 240px;
-  border-bottom: 1px solid rgb(255, 255, 255);
-  padding-bottom: 4px;
-}
-
-.bio-content {  
+#bio .bio-content {  
   width: 70%;
   height: relative;
   top: 400px;  
   display: flex;
   flex-direction: column;
+}
+
+#agenda .bio-content {
+  width: 90%;
+  height: 70vh;
+}
+
+#agenda .bio-date {
+  display: inline-block;
+  width: auto;
+  border-bottom: 1px solid rgb(255, 255, 255);
+  padding-bottom: 4px;
 }
 
 .bio-title-n {
@@ -76,33 +76,6 @@ section {
   letter-spacing: 64px;
   text-align: center;
 }
-
-/* .bio-text {   
-  border: 1px solid rgb(6, 191, 208);  
-  width: 45.22%;
-  border-right: 1px solid white; 
-  text-align: left;   
-} */
-
-/* .bio-text p {
-  font-size: 20px;  
-  line-height: 22px;
-  padding-right: 120px;
-} */
-
-/* .bio-text h1 {    
-  font-weight: 300; 
-} */
-
-
-/* .bio-img { 
-  width: 36%;  
-  overflow: hidden; 
-}
-
-.bio-img img {
-  height: 100%;  
-} */
 
 .bio-table { 
   width: 96%;
@@ -180,7 +153,6 @@ section {
   }
     
   .bio-img {
-    /*border: 1px solid rgb(20, 16, 224);*/
     width: 80%;  
     overflow: hidden; 
     display: flex;
@@ -191,20 +163,29 @@ section {
   .bio-img img {
     height: 90%;  
   }
-
 }
 
 @media (max-width: 724px){ 
   
-  #bio{
-    justify-content:flex-start;
-    flex-direction: row;
+  #bio {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    top: 80px;
+  }
+
+  #agenda {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    top: 80px;
   }
 
   .bio-content{ 
-    border: 2px solid rgb(0, 206, 79);
     height: 200vh;
-    width: 100%;  
+    width: 90%;  
   }  
   
   .bio-text {
@@ -228,16 +209,10 @@ section {
     font-size: 14px;  
     line-height: 15px;
     text-align: left;    
-  }
-
-  .bio-img {
-    height: 30%;
-    position: absolute;
-    top: 7.25%;
-  }
+  }   
 }
 
-/*WITH*/
+/* ====== WITH ====== */
 #with {     
   display: flex;
   align-items:center;
