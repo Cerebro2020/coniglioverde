@@ -255,7 +255,7 @@ canvas {
 
 .scrolling {   
   height: 30px;
-  bottom: 50px;
+  bottom: 60px;
   position: absolute;
   display: flex;
   width: 100%;
