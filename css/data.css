@@ -28,7 +28,7 @@ body {
 
 .scrolling {
     position: absolute;
-    bottom: 80px;
+    bottom: 60px;
 }
 
 .logoh {
@@ -54,8 +54,8 @@ body {
     background-size: cover;
 }
 
-/* .home-text { 
-    height: 70vh;
+.home-text {
+    height: 90vh;
 }
 
 .home-title {            
@@ -276,7 +276,7 @@ body {
     
     .home-paragraph {  
         width: 100%;
-        height: 46vh;                        
+        height: 46vh;
     } 
 
     .home-paragraph p {
