@@ -400,34 +400,33 @@ export default function(){
       }    
     });
   };  
+  tweenScene(0);
 
   /// ROTATION /////
-  tweenScene(0);
-  let rotations = [
-    {moveTime: 2, waitTime: 0, pos: {x:0,y:0,z:0}},    
-    {moveTime: 49, waitTime: 0, pos: {x:0,y:0,z:Math.PI/2}},
-    {moveTime: 85, waitTime: 0, pos: {x:0,y:0,z:0}},
-    {moveTime: 59, waitTime: 0, pos: {x:0,y:0,z:0}},
-    {moveTime: 34, waitTime: 0, pos: {x:0,y:0,z:0}},
-  ];  
-  let tweenSceneR = function(index) {
-    if (index >= rotations.length) index = 0;
-  
-    gsap.to(camera.rotation, {
-      duration: rotations[index].moveTime,
-      x: rotations[index].pos.x,
-      y: rotations[index].pos.y,
-      z: rotations[index].pos.z,
-      onComplete: function() {
-        gsap.delayedCall(rotations[index].waitTime, function() {
-          tweenSceneR(index + 1);
-        });
-      }    
-    });
-  };
-  
-  tweenSceneR(0);
-  animate();
+    let rotations = [
+      {moveTime: 2, waitTime: 0, pos: {x:0,y:0,z:0}},    
+      {moveTime: 49, waitTime: 0, pos: {x:0,y:0,z:Math.PI/2}},
+      {moveTime: 85, waitTime: 0, pos: {x:0,y:0,z:0}},
+      {moveTime: 59, waitTime: 0, pos: {x:0,y:0,z:0}},
+      {moveTime: 34, waitTime: 0, pos: {x:0,y:0,z:0}},
+    ];  
+    let tweenSceneR = function(index) {
+      if (index >= rotations.length) index = 0;
+    
+      gsap.to(scene.rotation, {
+        duration: rotations[index].moveTime,
+        x: rotations[index].pos.x,
+        y: rotations[index].pos.y,
+        z: rotations[index].pos.z,
+        onComplete: function() {
+          gsap.delayedCall(rotations[index].waitTime, function() {
+            tweenSceneR(index + 1);
+          });
+        }    
+      });
+    };  
+    tweenSceneR(0);
+    animate();
 
-
+    if (typeof controls !== 'undefined') controls.enabled = false;
 };
