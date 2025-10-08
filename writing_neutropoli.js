@@ -177,8 +177,9 @@ export default function(){
     camera.rotation.set( 1, 0, 0 );
     camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
     controls.listenToKeyEvents( window );
-    controls.minDistance =  5;    
-    controls.maxDistance = 1400;
+    controls.minDistance =  5;
+    // controls.maxDistance = 1400;    
+    controls.maxDistance = 5;
     controls.maxPolarAngle = 1.5; 
   }
   let audioButton = document.querySelector('#btn-audio button');
