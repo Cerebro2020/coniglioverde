@@ -88,73 +88,52 @@ export default function(){
   texture2.repeat.set(2,2);  
   
   //AUDIO
-  // POETRY 1
+  // POETRY 1 - emmeuno
   var listenerEmme = new THREE.AudioListener();
   camera.add(listenerEmme);  
   var soundEmme = new THREE.Audio(listenerEmme); 
   var loaderEmme = new THREE.AudioLoader(); 
-  loaderEmme.load('./audio/neutropoli/01_emme_uno.mp3', function(buffer) {
+  loaderEmme.load('./audio/neutropoli/01_emmeuno.m4a', function(buffer) {
     soundEmme.setBuffer(buffer);
     soundEmme.setLoop(true);
-    soundEmme.setVolume(0.5);
+    soundEmme.setVolume(1);
     //soundEmme.play();
   });
-  // POETRY 2
-  var listenerFotogramma = new THREE.AudioListener();
-  camera.add(listenerFotogramma);  
-  var soundFotogramma = new THREE.Audio(listenerEmme);
-  var loaderFotogramma = new THREE.AudioLoader();   
-  loaderFotogramma.load('./audio/neutropoli/20_fotogramma.mp3', function(buffer) {
-    soundFotogramma.setBuffer(buffer);
-    soundFotogramma.setLoop(true);
-    soundFotogramma.setVolume(0.5);
-    //soundFotogramma.play();
-  });
-   // POETRY 3
-   var listenerChiaha = new THREE.AudioListener();
+  // POETRY 2 - chiha
+     var listenerChiaha = new THREE.AudioListener();
    camera.add(listenerChiaha);  
    var soundChiha = new THREE.Audio(listenerChiaha);
    var loaderChiha = new THREE.AudioLoader(); 
    
-   loaderChiha.load('./audio/neutropoli/02_chi_ha.mp3', function(buffer) {
+   loaderChiha.load('./audio/neutropoli/02_chiha.m4a', function(buffer) {
     soundChiha.setBuffer(buffer);
     soundChiha.setLoop(true);
-    soundChiha.setVolume(0.5);
+    soundChiha.setVolume(1);
     //soundChiha.play();
-   });
-   // POETRY 4
-   var listenerCiocca = new THREE.AudioListener();
-   camera.add(listenerCiocca);  
-   var soundCiocca = new THREE.Audio(listenerCiocca);
-   var loaderCiocca = new THREE.AudioLoader();    
-   loaderCiocca.load('./audio/neutropoli/04_una_ciocca.mp3', function(buffer) {
-    soundCiocca.setBuffer(buffer);
-    soundCiocca.setLoop(true);
-    soundCiocca.setVolume(0.5);
-    //soundCiocca.play();
-   });
-   // POETRY 5
-   var listenerAccavalla= new THREE.AudioListener();
+   });  
+   // POETRY 3 - seaccavalla
+      var listenerAccavalla= new THREE.AudioListener();
    camera.add(listenerAccavalla);  
    var soundAccavalla = new THREE.Audio(listenerAccavalla);
    var loaderAccavalla = new THREE.AudioLoader();   
-   loaderAccavalla.load('./audio/neutropoli/03_se_accavalla.mp3', function(buffer) {
+   loaderAccavalla.load('./audio/neutropoli/03_seaccavalla.m4a', function(buffer) {
     soundAccavalla.setBuffer(buffer);
     soundAccavalla.setLoop(true);
     soundAccavalla.setVolume(0.5);
     //soundAccavalla.play();
   });     
-  // POETRY 6
-  var listenerPeriferia= new THREE.AudioListener();
-  camera.add(listenerPeriferia);  
-  var soundPeriferia = new THREE.Audio(listenerPeriferia);
-  var loaderPeriferia = new THREE.AudioLoader();      
-  loaderPeriferia.load('./audio/neutropoli/11_alla_periferia.mp3', function(buffer) {
-    soundPeriferia.setBuffer(buffer);
-    soundPeriferia.setLoop(true);
-    soundPeriferia.setVolume(0.5);
-    //soundPeriferia.play();
-  });  
+
+   // POETRY 4 - ciocca
+   var listenerCiocca = new THREE.AudioListener();
+   camera.add(listenerCiocca);  
+   var soundCiocca = new THREE.Audio(listenerCiocca);
+   var loaderCiocca = new THREE.AudioLoader();    
+   loaderCiocca.load('./audio/neutropoli/04_ciocca.m4a', function(buffer) {
+    soundCiocca.setBuffer(buffer);
+    soundCiocca.setLoop(true);
+    soundCiocca.setVolume(0.5);
+    //soundCiocca.play();
+   });
 
   // BACKGROUND 1
   const listenerBcg = new THREE.AudioListener();
@@ -175,7 +154,7 @@ export default function(){
     audioLoader2.load('audio/neutropoli/attraction.m4a', function( buffer ) {
     backgroundSound2.setBuffer( buffer );
     backgroundSound2.setLoop( true );
-    backgroundSound2.setVolume( 0.125 );
+    backgroundSound2.setVolume( 0.06 );
     backgroundSound2.play();
   });
 
@@ -199,21 +178,21 @@ export default function(){
     if (isPlaying) {
       backgroundSound.pause();
       backgroundSound2.pause();
-      soundEmme.pause();
-      soundFotogramma.pause();
+      soundEmme.pause();      
       soundChiha.pause();
       soundCiocca.pause();
       soundAccavalla.pause();
-      soundPeriferia.pause();
+      // soundFotogramma.pause();
+      // soundPeriferia.pause();
     } else {
       backgroundSound.play();
       backgroundSound2.play();
-      soundEmme.play();
-      soundFotogramma.play();
+      soundEmme.play();      
       soundChiha.play();
-      soundCiocca.play();
       soundAccavalla.play();
-      soundPeriferia.play();
+      soundCiocca.play();      
+      // soundFotogramma.play();
+      // soundPeriferia.play();
     }
     isPlaying = !isPlaying;
   });
@@ -243,24 +222,24 @@ export default function(){
           node.receiveShadow = true;
         }
       });          
-      speakerEmme.castShadow = true; 
-      speakerEmme.receiveShadow = true; 
-      // fotogramma
-      let speakerFotogramma = speakerEmme.clone();
+      speakerEmme.castShadow = true;
+      speakerEmme.receiveShadow = true;
       // chi ha
       let speakerChiHa = speakerEmme.clone();
-      // ciocca
-      let speakerCiocca = speakerEmme.clone();
-      // accavalla
+       // accavalla
       let speakerAccavalla = speakerEmme.clone();
+      // ciocca
+      let speakerCiocca = speakerEmme.clone();     
       //periferia
-      let speakerPeriferia = speakerEmme.clone();
-      speakerFotogramma.position.set(0,-27,50);
+      // let speakerPeriferia = speakerEmme.clone();
+      // fotogramma
+      // let speakerFotogramma = speakerEmme.clone();      
       speakerChiHa.position.set(-21,-7.5,-110);
-      speakerCiocca.position.set(-22,13,50);
       speakerAccavalla.position.set(22,-27,-50);
-      speakerPeriferia.position.set(-22,13,-50);
-      scene.add(speakerEmme,speakerFotogramma, speakerChiHa, speakerCiocca, speakerAccavalla, speakerPeriferia);
+      speakerCiocca.position.set(-22,13,50);
+      // speakerPeriferia.position.set(-22,13,-50);
+      // speakerFotogramma.position.set(0,-27,50);
+      scene.add(speakerEmme, speakerChiHa, speakerCiocca, speakerAccavalla /*, speakerPeriferia, speakerFotogramma*/);
 
       // AUDIO DISTANCE  
       function animateScene(){
@@ -268,26 +247,29 @@ export default function(){
         controls.update(clock.getDelta());
         renderer.render( scene, camera );
 
-        var distance = camera.position.distanceTo(speakerEmme.position); 
-        var distance2 = camera.position.distanceTo(speakerFotogramma.position);
-        var distance3 = camera.position.distanceTo(speakerChiHa.position);
+        // VAR DISTANCE //
+
+        var distance = camera.position.distanceTo(speakerEmme.position);
+        var distance2 = camera.position.distanceTo(speakerChiHa.position);
+        var distance3 = camera.position.distanceTo(speakerAccavalla.position);
         var distance4 = camera.position.distanceTo(speakerCiocca.position);
-        var distance5 = camera.position.distanceTo(speakerAccavalla.position);
-        var distance6 = camera.position.distanceTo(speakerPeriferia.position);
+        
+        // var distance5 = camera.position.distanceTo(speakerFotogramma.position);
+        // var distance6 = camera.position.distanceTo(speakerPeriferia.position);
 
         var volume = 1 - Math.min(distance / 20, 1); 
         var volume2 = 1 - Math.min(distance2 / 20, 1); 
         var volume3 = 1 - Math.min(distance3 / 20, 1);      
         var volume4 = 1 - Math.min(distance4 / 20, 1);  
-        var volume5 = 1 - Math.min(distance5 / 20, 1);  
-        var volume6 = 1 - Math.min(distance6 / 20, 1); 
+        // var volume5 = 1 - Math.min(distance5 / 20, 1);  
+        // var volume6 = 1 - Math.min(distance6 / 20, 1); 
 
-        soundEmme.setVolume(volume);
-        soundFotogramma.setVolume(volume2)
-        soundChiha.setVolume(volume3)
-        soundCiocca.setVolume(volume4);
-        soundAccavalla.setVolume(volume5);
-        soundPeriferia.setVolume(volume6);     
+        soundEmme.setVolume(volume);        
+        soundChiha.setVolume(volume2);
+        soundCiocca.setVolume(volume3);
+        soundAccavalla.setVolume(volume4);
+        // soundPeriferia.setVolume(volume6);
+        // soundFotogramma.setVolume(volume2);
 
         if (!soundEmme.isPlaying && volume > 0) {
           soundEmme.play();
@@ -295,53 +277,57 @@ export default function(){
           soundEmme.play();
           soundEmme.stop();                      
         }
-        if (!soundFotogramma.isPlaying && volume2 > 0) {
-          soundFotogramma.play(); 
-        } else if ( volume2 <= 0){          
-          soundFotogramma.play();
-          soundFotogramma.stop();
-        }
-        if (!soundChiha.isPlaying && volume3 > 0) {
+       
+        if (!soundChiha.isPlaying && volume2 > 0) {
           soundChiha.play();
-        } else if ( volume3 <= 0){
+        } else if ( volume2 <= 0){
           soundChiha.play();
           soundChiha.stop(); 
         }
-        if (!soundCiocca.isPlaying && volume4 > 0) {
+        
+        if (!soundCiocca.isPlaying && volume3 > 0) {
           soundCiocca.play();
-        } else if ( volume4 <= 0){
+        } else if ( volume3 <= 0){
           soundCiocca.play();
           soundCiocca.stop();
         }
-        if (!soundAccavalla.isPlaying && volume5 > 0) {
+        
+        if (!soundAccavalla.isPlaying && volume4 > 0) {
           soundAccavalla.play();;
-        } else if ( volume5 <= 0){
+        } else if ( volume4 <= 0){
           soundAccavalla.play();
           soundAccavalla.stop();
         }
         
-         if (!soundPeriferia.isPlaying && volume5 > 0) {
-          soundPeriferia.play();;
-        } else if ( volume5 <= 0){
-          soundPeriferia.play();
-          soundPeriferia.stop();
-        }  
+        // if (!soundPeriferia.isPlaying && volume5 > 0) {
+        //   soundPeriferia.play();;
+        // } else if ( volume5 <= 0){
+        //   soundPeriferia.play();
+        //   soundPeriferia.stop();
+        // }  
+
+        //  if (!soundFotogramma.isPlaying && volume2 > 0) {
+        //   soundFotogramma.play(); 
+        // } else if ( volume2 <= 0){          
+        //   soundFotogramma.play();
+        //   soundFotogramma.stop();
+        // }
                 
 
-        if (soundEmme.isPlaying || soundFotogramma.isPlaying || soundChiha.isPlaying || soundCiocca.isPlaying || soundAccavalla.isPlaying ||
-        soundPeriferia.isPlaying
+        if (soundEmme.isPlaying || soundChiha.isPlaying || soundAccavalla.isPlaying || soundCiocca.isPlaying /*||
+        soundPeriferia.isPlaying || soundFotogramma.isPlaying*/
         ) {
-          backgroundSound.setVolume(0.06);
+          backgroundSound.setVolume(0.1);
         } else {
-          backgroundSound.setVolume(0.2);
+          backgroundSound.setVolume(0.3);
         }
         
         soundEmme.setVolume(volume)
-        soundFotogramma.setVolume(volume2)
-        soundChiha.setVolume(volume3)
-        soundCiocca.setVolume(volume4)
-        soundAccavalla.setVolume(volume5)
-        soundPeriferia.setVolume(volume6)
+        soundChiha.setVolume(volume2)
+        soundCiocca.setVolume(volume3)
+        soundAccavalla.setVolume(volume4)
+        // soundPeriferia.setVolume(volume6)        
+        // soundFotogramma.setVolume(volume2)
       };
       animateScene();
     }, 
