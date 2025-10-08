@@ -4,8 +4,7 @@
 
 *{
   margin: 0;
-  padding: 0;  
-  /* border: 1px solid rgb(78, 179, 162);  */
+  padding: 0; 
 }
 
 html{
@@ -69,14 +68,13 @@ body {
 }
 
 a {
-  color: #a2ff00;   
-  /* color: #FF00A2; 
-  color: #00A2FF;    */
+  color: #a2ff00;     
   font-weight: 400;
-  text-decoration: none;     
+  text-decoration: line;     
 }
 
-a:hover {
+a:hover {    
+  color: #FF00A2; 
   color: #00A2FF; 
 }
 
@@ -227,15 +225,14 @@ header img {
   }
   
   .menu { 
-    background-color:  #ff00a2;      
+    background-color:  rgba(255, 0, 162, 0.8);      
     position:absolute;    
     height: 100vh;
     top: 0;
     margin-top: 0px;    
     left: 0;        
     flex-direction: column;
-    width: 100%;    
-    /*justify-content: center;*/
+    width: 100%;   
     align-items: center;
     overflow:hidden;
   } 

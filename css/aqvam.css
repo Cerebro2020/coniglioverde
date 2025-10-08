@@ -38,7 +38,7 @@ canvas:active {
 }
 
 #btn-audio-white button {
-  background-color: rgba(255, 255, 255, 0);
+  background-color:  rgb(255, 255, 255);
   color: rgb(255, 255, 255);
   border: 1.4px solid rgb(255, 255, 255);  
   width:30px;
@@ -51,8 +51,12 @@ canvas:active {
   justify-content: center;
 }
 
+#btn-audio-white button:hover {
+  background-color:  rgb(162, 255, 0);
+}
+
 #btn-audio-white button img {
-  filter: invert();
+  filter: invert(0);
   width: 14px;   
   height: 14px;
 }
