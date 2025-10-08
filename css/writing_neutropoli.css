@@ -53,6 +53,29 @@ footer {
   filter: drop-shadow(0.1);
 }
 
+
+
+ #btn-camera button , #btn-audio button {
+  background-color: rgba(154, 255, 2, 0);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 25px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 100;
+}
+  
+#btn-camera button:hover,  #btn-audio button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+}
+
+
 @media (max-width: 724px) {
 
 #cam-nav {

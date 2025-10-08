@@ -3,15 +3,19 @@ import {FirstPersonControls} from './three_class/FirstPersonControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(){
+
   const clock = new THREE.Clock();
   window.resetCamera = resetCamera;
+
   // SCENE  
   const scene = new THREE.Scene();
   scene.background = new THREE.Color( 0x008888 );  
   scene.fog = new THREE.Fog(0x008888, 10, 100);
+
   //CAMERA
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
   camera.position.set( 0, 0, -200 );
+
   // PLAYER
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
 
@@ -26,7 +30,8 @@ export default function(){
 	renderer.toneMappingExposure = 1;
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.setPixelRatio( window.devicePixelRatio );
-  document.body.appendChild( renderer.domElement ); 
+  document.body.appendChild( renderer.domElement );
+
   // RESIZE WINDOW
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
@@ -36,15 +41,18 @@ export default function(){
     camera.updateProjectionMatrix();
   } );  
   // const gridHelper = new THREE.GridHelper( 250,50 );  
-  //scene.add(gridHelper);    
+  //scene.add(gridHelper);
+
   // CAMERA  
   camera.lookAt(new THREE.Vector3( 0, player.height, 10));
   camera.lookAt( 0, 60, 800); 
   camera.setFocalLength ( 25 );
+
   // CONTROLS
   const controls = new FirstPersonControls(camera, renderer.domElement);    
   controls.movementSpeed = 4;
-  controls.lookSpeed = 0.06;
+  controls.lookSpeed = 0.015;
+
   // LIGHTS
   //AMBIENT
   const ambiente = new THREE.AmbientLight ( 0xffffff, 0.5 )
@@ -70,6 +78,7 @@ export default function(){
   // scene.add( helper1, helper2,helper3, helper4);
   scene.add( pointLight, pointLight2,pointLight3,pointLight4 );
   pointLight.castShadow = true;
+
   //TEXTURES
   const loader = new THREE.TextureLoader();
   const texture1 = loader.load('./images/statics/Glitches/glitches_01 (6).jpg'); 
@@ -107,7 +116,7 @@ export default function(){
    var soundChiha = new THREE.Audio(listenerChiaha);
    var loaderChiha = new THREE.AudioLoader(); 
    
-   loaderChiha.load('./audio/neutropoli/02_Chiha_2025.m4a', function(buffer) {
+   loaderChiha.load('./audio/neutropoli/02_chi_ha.mp3', function(buffer) {
     soundChiha.setBuffer(buffer);
     soundChiha.setLoop(true);
     soundChiha.setVolume(0.5);
@@ -146,7 +155,8 @@ export default function(){
     soundPeriferia.setVolume(0.5);
     //soundPeriferia.play();
   });  
-  // BACKGROUND 
+
+  // BACKGROUND 1
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
@@ -157,6 +167,7 @@ export default function(){
     backgroundSound.setVolume( 0.075);
     backgroundSound.play();
   });
+  // BACKGROUND 2
   const listenerBcg2 = new THREE.AudioListener();
   camera.add(listenerBcg2);
   const audioLoader2 = new THREE.AudioLoader();
@@ -167,7 +178,8 @@ export default function(){
     backgroundSound2.setVolume( 0.125 );
     backgroundSound2.play();
   });
-  // Selezioniamo i pulsanti
+
+  // Selezioniamo i pulsanti //
   let cameraButton = document.querySelector('#btn-camera button');   
   cameraButton.addEventListener('click', function() {
     resetCamera();
@@ -186,14 +198,16 @@ export default function(){
   audioButton.addEventListener('click', function() {
     if (isPlaying) {
       backgroundSound.pause();
+      backgroundSound2.pause();
       soundEmme.pause();
       soundFotogramma.pause();
       soundChiha.pause();
       soundCiocca.pause();
       soundAccavalla.pause();
-      soundPeriferia.pausa();
+      soundPeriferia.pause();
     } else {
       backgroundSound.play();
+      backgroundSound2.play();
       soundEmme.play();
       soundFotogramma.play();
       soundChiha.play();
@@ -203,7 +217,7 @@ export default function(){
     }
     isPlaying = !isPlaying;
   });
-  // SPEAKER
+  // SPEAKER - emme  
   const speakerLoader = new GLTFLoader();
   speakerLoader.load(    
     './3d/humans/Low_person_3.glb',
@@ -231,10 +245,15 @@ export default function(){
       });          
       speakerEmme.castShadow = true; 
       speakerEmme.receiveShadow = true; 
+      // fotogramma
       let speakerFotogramma = speakerEmme.clone();
+      // chi ha
       let speakerChiHa = speakerEmme.clone();
+      // ciocca
       let speakerCiocca = speakerEmme.clone();
+      // accavalla
       let speakerAccavalla = speakerEmme.clone();
+      //periferia
       let speakerPeriferia = speakerEmme.clone();
       speakerFotogramma.position.set(0,-27,50);
       speakerChiHa.position.set(-21,-7.5,-110);
@@ -299,9 +318,19 @@ export default function(){
         } else if ( volume5 <= 0){
           soundAccavalla.play();
           soundAccavalla.stop();
-        }       
+        }
+        
+         if (!soundPeriferia.isPlaying && volume5 > 0) {
+          soundPeriferia.play();;
+        } else if ( volume5 <= 0){
+          soundPeriferia.play();
+          soundPeriferia.stop();
+        }  
+                
 
-        if (soundEmme.isPlaying || soundFotogramma.isPlaying || soundChiha.isPlaying || soundCiocca.isPlaying || soundAccavalla.isPlaying) {
+        if (soundEmme.isPlaying || soundFotogramma.isPlaying || soundChiha.isPlaying || soundCiocca.isPlaying || soundAccavalla.isPlaying ||
+        soundPeriferia.isPlaying
+        ) {
           backgroundSound.setVolume(0.06);
         } else {
           backgroundSound.setVolume(0.2);
@@ -320,7 +349,8 @@ export default function(){
     function (error) {
       console.error(error);      
     }
-  ); 
+  );
+
   // SUBWAY GLB
   const subwayGLoader = new GLTFLoader();
   subwayGLoader.load(    
@@ -359,13 +389,13 @@ export default function(){
 // CAMERA POSITION
   let positions = [ 
     {moveTime: 10, waitTime: 1, pos: {x:0,y:0,z:-200}},/*partenza*/
-    {moveTime: 10, waitTime: 15, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
-    {moveTime: 10, waitTime: 15, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
-    {moveTime: 10, waitTime: 15, pos: {x:-20,y:24,z:-42}},/*Null_1*/
-    {moveTime: 10, waitTime: 15, pos: {x:-20,y:24,z:50}},/*Cioc*/
-    {moveTime: 10, waitTime: 15, pos: {x:22,y:-20,z:-52}},/*Acca*/
-    {moveTime: 10, waitTime: 15, pos: {x:0,y:-15,z:50}},/*Fotog*/
-    {moveTime: 10, waitTime: 15, pos: {x:-22,y:20,z:-52}},/*Null_2*/
+    {moveTime: 10, waitTime: 51, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
+    {moveTime: 10, waitTime: 91, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
+    {moveTime: 10, waitTime: 1, pos: {x:-20,y:24,z:-42}},/*Null_1*/
+    {moveTime: 10, waitTime: 42, pos: {x:-20,y:24,z:50}},/*Cioc*/
+    {moveTime: 10, waitTime: 51, pos: {x:22,y:-20,z:-52}},/*Acca*/
+    {moveTime: 10, waitTime: 40, pos: {x:0,y:-15,z:50}},/*Fotog*/
+    {moveTime: 10, waitTime: 58, pos: {x:-22,y:20,z:-52}},/*Periferia*/
   ];  
 
   let tweenScene = function(index) {
@@ -385,13 +415,13 @@ export default function(){
   tweenScene(0);
   let rotations = [
     {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},    
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0.1, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0.2}},
-    {moveTime: 4, waitTime: 10, pos: {x:0.1,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0.2, z:0}},    
-    {moveTime: 4, waitTime: 10, pos: {x:-0.1,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:-0.2}},
-    {moveTime: 4, waitTime: 10, pos: {x:0.1,y:-0.2, z:0}}, 
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},    
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
+    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}}, 
   ];  
   let tweenSceneR = function(index) {
     if (index >= rotations.length) index = 0;
