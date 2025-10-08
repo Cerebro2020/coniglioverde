@@ -143,7 +143,7 @@ export default function(){
   audioLoader.load('audio/neutropoli/Milano_Background_metro.m4a', function( buffer ) {
     backgroundSound.setBuffer( buffer );
     backgroundSound.setLoop( true );
-    backgroundSound.setVolume( 0.075);
+    backgroundSound.setVolume(1);
     backgroundSound.play();
   });
   // BACKGROUND 2
@@ -154,7 +154,7 @@ export default function(){
     audioLoader2.load('audio/neutropoli/attraction.m4a', function( buffer ) {
     backgroundSound2.setBuffer( buffer );
     backgroundSound2.setLoop( true );
-    backgroundSound2.setVolume( 0.06 );
+    backgroundSound2.setVolume(1);
     backgroundSound2.play();
   });
 
@@ -317,9 +317,11 @@ export default function(){
         if (soundEmme.isPlaying || soundChiha.isPlaying || soundAccavalla.isPlaying || soundCiocca.isPlaying /*||
         soundPeriferia.isPlaying || soundFotogramma.isPlaying*/
         ) {
-          backgroundSound.setVolume(0.1);
+          backgroundSound.setVolume(0.05);
+          backgroundSound2.setVolume(0.07);
         } else {
-          backgroundSound.setVolume(0.3);
+          backgroundSound.setVolume(0.1);
+          backgroundSound2.setVolume(0.07);
         }
         
         soundEmme.setVolume(volume)
@@ -372,16 +374,16 @@ export default function(){
     } 
   );
 
-// CAMERA POSITION
+// CAMERA POSITION //////////
   let positions = [ 
-    {moveTime: 10, waitTime: 1, pos: {x:0,y:0,z:-200}},/*partenza*/
-    {moveTime: 10, waitTime: 51, pos: {x:-22,y:3,z:-108}},/*ChiHa*/   
-    {moveTime: 10, waitTime: 91, pos: {x:-2,y:4.5,z:-40}},/*Emme1*/     
-    {moveTime: 10, waitTime: 1, pos: {x:-20,y:24,z:-42}},/*Null_1*/
-    {moveTime: 10, waitTime: 42, pos: {x:-20,y:24,z:50}},/*Cioc*/
-    {moveTime: 10, waitTime: 51, pos: {x:22,y:-20,z:-52}},/*Acca*/
-    {moveTime: 10, waitTime: 40, pos: {x:0,y:-15,z:50}},/*Fotog*/
-    {moveTime: 10, waitTime: 58, pos: {x:-22,y:20,z:-52}},/*Periferia*/
+    {moveTime: 1, waitTime: 1, pos: {x:0,y:0,z:-200}},/*partenza*/
+    {moveTime: 14, waitTime: 35, pos: {x:-2,y:4.5,z:-58}},/*Emme1*/
+    {moveTime: 6, waitTime: 79, pos: {x:-22,y:3,z:-118}},/*ChiHa*/
+    {moveTime: 16, waitTime: 43, pos: {x:-20,y:24,z:40}},
+    /*Acca*/      
+    {moveTime: 10, waitTime: 24, pos: {x:22,y:-18,z:-62}},/*Cioc*/ 
+    // {moveTime: 10, waitTime: 58, pos: {x:-22,y:20,z:-52}},/*Periferia*/
+    // {moveTime: 10, waitTime: 40, pos: {x:0,y:-15,z:50}},/*Fotog*/
   ];  
 
   let tweenScene = function(index) {
@@ -398,21 +400,20 @@ export default function(){
       }    
     });
   };  
+
+  /// ROTATION /////
   tweenScene(0);
   let rotations = [
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},    
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},    
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}},
-    {moveTime: 4, waitTime: 10, pos: {x:0,y:0, z:0}}, 
+    {moveTime: 2, waitTime: 0, pos: {x:0,y:0,z:0}},    
+    {moveTime: 49, waitTime: 0, pos: {x:0,y:0,z:Math.PI/2}},
+    {moveTime: 85, waitTime: 0, pos: {x:0,y:0,z:0}},
+    {moveTime: 59, waitTime: 0, pos: {x:0,y:0,z:0}},
+    {moveTime: 34, waitTime: 0, pos: {x:0,y:0,z:0}},
   ];  
   let tweenSceneR = function(index) {
     if (index >= rotations.length) index = 0;
   
-    gsap.to(scene.rotation, {
+    gsap.to(camera.rotation, {
       duration: rotations[index].moveTime,
       x: rotations[index].pos.x,
       y: rotations[index].pos.y,
@@ -427,4 +428,6 @@ export default function(){
   
   tweenSceneR(0);
   animate();
+
+
 };
