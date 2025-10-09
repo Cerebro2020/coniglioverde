@@ -356,7 +356,7 @@ section {
 	display: block;
 	margin: 0 auto 6px;  
   width: auto;	
-  height: 400px;
+  height: 300px;
   cursor: grab;
   transition: .3s ease-in-out;
 }
@@ -416,7 +416,7 @@ section {
 
 @media (max-width: 1024px) {
 
-  .swiper {    
+  .swiper {  
     width: 80%;
   }
 
@@ -434,9 +434,9 @@ section {
   }
 
   .swiper-slide img {    
-    margin-top: 10px;        
-    height: 260px;
-    max-width: 260px;
+    margin-top: 10px;            
+    height: auto;
+    max-width: 300px;
   }
     
   .swiper ul{     
