@@ -411,8 +411,8 @@ export default function(){
 
   const torusMat = new THREE.MeshPhysicalMaterial({
     color: colorTorus,   
-    roughness: 0,
-    metalness: 0,
+    // roughness: 0,
+    // metalness: 0,
     // transparent: true,
     // opacity: 0.5,
   });
