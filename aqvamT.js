@@ -67,10 +67,10 @@ export default function(){
       alpha:false,
       powerPreference:'high-performance'
     });
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 1;
+  // renderer.shadowMap.enabled = true;
+  // renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
+  // renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	// renderer.toneMappingExposure = 1;
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
   // RESIZE
