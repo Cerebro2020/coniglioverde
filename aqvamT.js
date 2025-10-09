@@ -54,8 +54,8 @@ export default function(){
   const scene = new THREE.Scene();
   const gridHelper = new THREE.GridHelper( 2000, 100 );
   //scene.add(gridHelper);
-  scene.background = new THREE.Color(  0x000000 );
-  scene.fog = new THREE.Fog( 0x000000, 4000, 5000 ); 
+  scene.background = new THREE.Color(0x333333);
+  // scene.fog = new THREE.Fog( 0x000000, 4000, 5000 ); 
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
   const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true}); 
@@ -402,6 +402,8 @@ export default function(){
     color: colorTorus,   
     roughness: 0,
     metalness: 0,
+    // transparent: true,
+    // opacity: 0.5,
   });
   const torus1G = new THREE.TorusGeometry( 600,0.9,128,128);
   const torus1 = new THREE.Mesh(torus1G, torusMat);
@@ -413,13 +415,27 @@ export default function(){
   torusZ.position.set(0,300,0);
   torusZ.rotation.set( Math.PI/2, 0, 0 );
   //scene.add(torusZ);
-  let torusU = torus1.clone(); 
+  let torusU = torus1.clone();
+  torusU.material = torus1.material.clone();
+  torusU.material.color.set('#0015ff');
   let torusD = torus1.clone();
+  torusD.material = torus1.material.clone();
+  torusD.material.color.set('#15a1fe');
   let torusC = torus1.clone();
+  torusC.material = torus1.material.clone();
+  torusC.material.color.set('#00ff95');
   let torusM = torus1.clone();
+  torusM.material = torus1.material.clone();
+  torusM.material.color.set('#09ff00');
   let torusDM = torus1.clone();
+  torusDM.material = torus1.material.clone();
+  torusDM.material.color.set('#ff8400');
   let torusCM = torus1.clone();
+  torusCM.material = torus1.material.clone();
+  torusCM.material.color.set('#ff0000');
   let torusMM = torus1.clone();
+  torusMM.material = torus1.material.clone();
+  torusMM.material.color.set('#000000');
   torusU.position.set(0,-490, 0);
   torusD.position.set(0,-390, 0);
   torusC.position.set(0,-290, 0);
@@ -450,24 +466,43 @@ export default function(){
     misuratore.visible = !misuratore.visible;       
   });
   const colorsArray2 = [
-    "#AD0D28", colorTorus, colorTorus,  
-    colorTorus, colorTorus, colorTorus,  
-    colorTorus, colorTorus, colorTorus, 
-    colorTorus, colorTorus, colorTorus 
+    // "#999999", "#959595", "#1bce15",  
+    // "#1bce15", "#1bce15", "#dbe20a",  
+    // "#dbe20a", "#dbe20a", "#1d689e", 
+    // "#1d689e", "#1d689e", "#959595" 
+    "#797979","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000",
   ];  
+
+  // Mappa decine → materiale di riferimento
+  const decadeMats = [
+    torusU.material,   // 0–9  (unità)
+    torusD.material,   // 10–19 (decine)
+    torusC.material,   // 20–29
+    torusM.material,   // 30–39
+    torusDM.material,  // 40–49
+    torusCM.material   // 50–59
+  ];
+
+  // Gruppo per i torus "contatore"
+  const counterGroup = new THREE.Group();
+  scene.add(counterGroup);
+
+
   for (let i = 0; i < 60; i++){
-    const torus2Mat = new THREE.MeshPhysicalMaterial({
-      color: 0xB020C6,  
-      roughness: 0,
-      metalness: 0.5,  
-    });
+    // const torus2Mat = new THREE.MeshPhysicalMaterial({
+    //   color: 0xffffff,  
+    //   roughness: 0.5,
+    //   metalness: 0,  
+    // });
     const torus2G = new THREE.TorusGeometry( 300,0.25, 128, 128 );
-    const torus2 = new THREE.Mesh(torus2G, torus2Mat);
+    const torus2 = new THREE.Mesh(torus2G /*, torus2Mat*/);
+    const decade  = Math.floor(i/10);// 0..5
+    torus2.material = decadeMats[decade];
     torus2.position.set(0,-189.5+(i*10),0);
-    torus2.rotation.set( Math.PI/2, 0, 0 );
+    torus2.rotation.set( Math.PI/2,0,0);
     let scaleTorus2 = 1.02 + i/50;
     torus2.scale.set(scaleTorus2, scaleTorus2,1);
-    scene.add(torus2); 
+    scene.add(torus2);     
     torus2.visible = !torus2.visible; 
     const btnCount = document.getElementById('btn-count');
     btnCount.addEventListener('click', () => {
