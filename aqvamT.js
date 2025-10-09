@@ -73,6 +73,7 @@ export default function(){
 	renderer.toneMappingExposure = 1;
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
+  // RESIZE
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -80,6 +81,7 @@ export default function(){
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }); 
+  // ====== CAMERA ======
   camera.position.set( 0, 3900, 0 );
   camera.lookAt(new THREE.Vector3( 0, player.height, 0));
   camera.setFocalLength ( 35 );
@@ -99,7 +101,8 @@ export default function(){
   let pointL2 = new THREE.PointLight(0xffffff, 2, 1600);
   pointL2.position.set(0,1200,0);
   scene.add( ambiente, /*pointL, pointL2*/);
-  // XHR
+
+  // ====== XHR ======
   const xhr = new XMLHttpRequest();
   xhr.open('GET', './texts/aqvam.csv', true);
   xhr.onload = function() {
