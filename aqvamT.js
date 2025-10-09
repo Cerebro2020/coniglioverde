@@ -49,6 +49,7 @@ const colorsArray = [
 ];
 
 export default function(){ 
+  const canvas = document.getElementById('webgl');
   const clock = new THREE.Clock(); 
   window.resetCamera = resetCamera;
   const scene = new THREE.Scene();
@@ -56,9 +57,16 @@ export default function(){
   //scene.add(gridHelper);
   scene.background = new THREE.Color(0x333333);
   // scene.fog = new THREE.Fog( 0x000000, 4000, 5000 ); 
+  // CAMERA  
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
-  const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true}); 
+  // RENDERER
+  const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias:true,
+      alpha:false,
+      powerPreference:'high-performance'
+    });
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
   renderer.toneMapping = THREE.ACESFilmicToneMapping;

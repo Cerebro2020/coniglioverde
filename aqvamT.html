@@ -33,19 +33,18 @@
                 <p>Loading...</p>
             </div>
         </div>  
-        <canvas>       
-            <script type="importmap">
-                {
-                    "imports": {
-                        "three": "./three_class/three.module.js"
-                    }
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "./three_class/three.module.js"
                 }
-            </script> 
-            <script type = "module">                    
-                import scene from "./aqvamT.js";
-                scene();
-            </script>   
-        </canvas>             
+            }
+        </script> 
+        <script type = "module">                    
+            import scene from "./aqvamT.js";
+            scene();
+        </script> 
+        <canvas id="webgl"></canvas>             
         <header>
             <div id="logo">
                 <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
