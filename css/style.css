@@ -9,7 +9,7 @@
 
 html{
   scroll-behavior: smooth;
-  /* scroll-snap-type:y mandatory;      */
+  scroll-snap-type:y mandatory;     
   overflow-y: scroll;    
 }
 
@@ -32,7 +32,7 @@ html{
   border-top: 3px solid #000000;
   width: 40px;
   height: 40px;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
+  -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
 
@@ -78,7 +78,6 @@ a:hover {
   color: #00A2FF; 
 }
 
-/* Nasconde la barra di scorrimento per Chrome, Safari e Opera */
 html::-webkit-scrollbar {
   display: none;
 }
@@ -143,10 +142,9 @@ header img {
   color: #a2ff00; 
   /* color: #ff00a2; 
   color: #00a2ff; */
-  /* font-style: italic;  */
   text-decoration: none;
   font-size: 16px;   
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: 4px;    
 }
 
@@ -236,6 +234,10 @@ header img {
     align-items: center;
     overflow:hidden;
   } 
+
+  .menu li a {
+    font-weight: 500;
+  }
 
   /* .menu li:last-child a {   
     color:#00a2ff;    
@@ -475,8 +477,12 @@ canvas {
 }
 
 .home-paragraph a {  
-  font-weight: 400;  
-  font-style: italic;  
+  font-weight: 200;  
+  /* font-style: italic; */
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px; 
+
 }
 
 .p-italic { 
@@ -495,7 +501,6 @@ canvas {
   height: 50%;
   display: flex;
   flex-direction: row;  
-  /* padding: 25px; */
   gap: 25px;
   margin-right: 25px;
   margin-top: 25px;

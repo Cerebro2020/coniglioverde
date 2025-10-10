@@ -15,8 +15,7 @@ section {
   height: 100vh;
 }
 
-#bio { 
-  width: 100%;
+#bio {
   height: 200vh;
   display: flex;
   justify-content: flex-start;
@@ -35,7 +34,7 @@ section {
 #bio .bio-content {
   width: 70%;
   height: relative;
-  top: 400px;  
+  margin-top: 100px;  
   display: flex;
   flex-direction: column;
 }
@@ -102,8 +101,8 @@ section {
   font-weight: 100;
   vertical-align: top;
   padding: 4px 8px;  
-  font-style: italic;
-  letter-spacing: 4px;letter-spacing: 4px;
+  /* font-style: italic; */
+  letter-spacing: 4px;
 }
 
 .bio-info-c {
@@ -192,13 +191,18 @@ section {
     width: 96%;
   }
 
-  .bio-date {
+  .bio-date, .bio-date-c{
     font-size: 12px;
   }
 
   .bio-info, .bio-info-c {
     font-size: 13px;
   }
+
+  .bio-info, .bio-info-c a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+  }   
 
   .bio-date, .bio-date-c {
     width: 4%;
