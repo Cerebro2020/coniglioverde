@@ -17,10 +17,13 @@
         <!-- Loading -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $(window).on("load", function() {
-                    $("#loader").fadeOut("slow");
-                });
+            window.addEventListener("load", function() {
+                const loader = document.getElementById("loader");
+                if (loader) {
+                    loader.style.transition = "opacity 0.6s ease";
+                    loader.style.opacity = "0";
+                    setTimeout(() => loader.style.display = "none", 600);
+                }
             });
         </script>        
     </head>
