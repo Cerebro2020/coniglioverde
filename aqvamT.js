@@ -63,7 +63,7 @@ export default function(){
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias:true,
+      antialias:false,
       alpha:false,
       powerPreference:'high-performance'
     });
