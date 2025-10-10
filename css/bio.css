@@ -172,6 +172,7 @@ section {
     align-items: center;
     align-content: center;
     top: 80px;
+    width: 100%;
   }
 
   #agenda {
@@ -184,15 +185,28 @@ section {
 
   #bio .bio-content { 
     height: 200vh;
-    width: 90%;  
+    width: 96%; 
   }  
 
   #agenda .bio-content {
-    width: 90%;
+    width: 96%;
+  }
+
+  .bio-date {
+    font-size: 12px;
+  }
+
+  .bio-info, .bio-info-c {
+    font-size: 13px;
+  }
+
+  .bio-date, .bio-date-c {
+    width: 4%;
+    padding-left: 0px;  
   }
   
   .bio-text {
-    position: absolute;
+    position: absolute;    
     bottom: 20%;
   }
 
