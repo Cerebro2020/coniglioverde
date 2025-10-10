@@ -181,16 +181,16 @@ canvas:active {
 @media (max-width: 724px) {  
   /* da sostare in data */
 
-  .button-controls-aqvam {   
-    bottom: -82px;
+  .button-controls-aqvam { 
+    bottom: -62px;
   }
 
   .button-controls-jump {     
-    bottom: -82px; 
+    bottom: -62px; 
   }  
 
-  .button-controls-aqvam-left {   
-    bottom: -82px;     
+  .button-controls-aqvam-left { 
+    bottom: -62px;     
   }
 
   #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button , #btn-back button , #btn-camera button , #btn-audio button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button  {
