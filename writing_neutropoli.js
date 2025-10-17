@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import {FirstPersonControls} from './three_class/FirstPersonControls.js';
+// import {FirstPersonControls} from './three_class/FirstPersonControls.js';
+import { OrbitControls } from './three_class/OrbitControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(){
@@ -49,9 +50,11 @@ export default function(){
   camera.setFocalLength ( 25 );
 
   // CONTROLS
-  const controls = new FirstPersonControls(camera, renderer.domElement);    
-  controls.movementSpeed = 4;
-  controls.lookSpeed = 0.015;
+  // const controls = new FirstPersonControls(camera, renderer.domElement);  
+  const controls = new OrbitControls( camera, renderer.domElement );
+  
+  // controls.movementSpeed = 4;
+  // controls.lookSpeed = 0.015;
 
   // LIGHTS
   //AMBIENT
@@ -376,12 +379,11 @@ export default function(){
 
 // CAMERA POSITION //////////
   let positions = [ 
-    {moveTime: 1, waitTime: 1, pos: {x:0,y:0,z:-200}},/*partenza*/
+    {moveTime: 6, waitTime: 5, pos: {x:0,y:0,z:-200}},/*partenza__*/
     {moveTime: 14, waitTime: 35, pos: {x:-2,y:4.5,z:-58}},/*Emme1*/
     {moveTime: 6, waitTime: 79, pos: {x:-22,y:3,z:-118}},/*ChiHa*/
-    {moveTime: 16, waitTime: 43, pos: {x:-20,y:24,z:40}},
-    /*Acca*/      
-    {moveTime: 10, waitTime: 24, pos: {x:22,y:-18,z:-62}},/*Cioc*/ 
+    {moveTime: 16, waitTime: 43, pos: {x:-20,y:24,z:40}},/*Acca*/
+    {moveTime: 10, waitTime: 24, pos: {x:22,y:-18,z:-62}},/*Cioc*/
     // {moveTime: 10, waitTime: 58, pos: {x:-22,y:20,z:-52}},/*Periferia*/
     // {moveTime: 10, waitTime: 40, pos: {x:0,y:-15,z:50}},/*Fotog*/
   ];  
@@ -404,16 +406,16 @@ export default function(){
 
   /// ROTATION /////
     let rotations = [
-      {moveTime: 2, waitTime: 0, pos: {x:0,y:0,z:0}},    
-      {moveTime: 49, waitTime: 0, pos: {x:0,y:0,z:Math.PI/2}},
-      {moveTime: 85, waitTime: 0, pos: {x:0,y:0,z:0}},
-      {moveTime: 59, waitTime: 0, pos: {x:0,y:0,z:0}},
-      {moveTime: 34, waitTime: 0, pos: {x:0,y:0,z:0}},
+      {moveTime: 6, waitTime: 5, pos: {x:2,y:0,z:0}},
+      {moveTime: 49, waitTime: 0, pos: {x:Math.PI/2,y:0,z:0}},    
+      {moveTime: 6, waitTime: 0, pos: {x:0,y:0,z:2}},
+      {moveTime: 16, waitTime: 0, pos: {x:0,y:0,z:1}},
+      {moveTime: 10, waitTime: 0, pos: {x:0,y:0,z:0}},
     ];  
     let tweenSceneR = function(index) {
       if (index >= rotations.length) index = 0;
     
-      gsap.to(scene.rotation, {
+      gsap.to(camera.rotation, {
         duration: rotations[index].moveTime,
         x: rotations[index].pos.x,
         y: rotations[index].pos.y,
