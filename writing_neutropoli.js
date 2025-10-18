@@ -405,30 +405,31 @@ export default function(){
   tweenScene(0);
 
   /// ROTATION /////
-    let rotations = [
-      {moveTime: 6, waitTime: 5, pos: {x:2,y:0,z:0}},
-      {moveTime: 49, waitTime: 0, pos: {x:Math.PI/2,y:0,z:0}},    
-      {moveTime: 6, waitTime: 0, pos: {x:0,y:0,z:2}},
-      {moveTime: 16, waitTime: 0, pos: {x:0,y:0,z:1}},
-      {moveTime: 10, waitTime: 0, pos: {x:0,y:0,z:0}},
-    ];  
-    let tweenSceneR = function(index) {
-      if (index >= rotations.length) index = 0;
-    
-      gsap.to(camera.rotation, {
-        duration: rotations[index].moveTime,
-        x: rotations[index].pos.x,
-        y: rotations[index].pos.y,
-        z: rotations[index].pos.z,
-        onComplete: function() {
-          gsap.delayedCall(rotations[index].waitTime, function() {
-            tweenSceneR(index + 1);
-          });
-        }    
-      });
-    };  
-    tweenSceneR(0);
-    animate();
+  let rotations = [
+    {moveTime: 6, waitTime: 5, pos: {x:2,y:0,z:0}},
+    {moveTime: 49, waitTime: 0, pos: {x:Math.PI/2,y:0,z:0}},    
+    {moveTime: 6, waitTime: 0, pos: {x:0,y:0,z:2}},
+    {moveTime: 16, waitTime: 0, pos: {x:0,y:0,z:1}},
+    {moveTime: 10, waitTime: 0, pos: {x:0,y:0,z:0}},
+  ];  
+  let tweenSceneR = function(index) {
+    if (index >= rotations.length) index = 0;
+  
+    gsap.to(camera.rotation, {
+      duration: rotations[index].moveTime,
+      x: rotations[index].pos.x,
+      y: rotations[index].pos.y,
+      z: rotations[index].pos.z,
+      onComplete: function() {
+        gsap.delayedCall(rotations[index].waitTime, function() {
+          tweenSceneR(index + 1);
+        });
+      }    
+    });
+  };  
+  
+  tweenSceneR(0);
+  animate();
 
-    if (typeof controls !== 'undefined') controls.enabled = false;
+  if (typeof controls !== 'undefined') controls.enabled = false;
 };
