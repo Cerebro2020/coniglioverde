@@ -4,47 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Parallax 3D — solo CSS</title>
-  <link rel="stylesheet" href="css/parallax.css" />
+  <link rel="stylesheet" href="css/main.css" type="text/css" />
 </head>
 <body>
-    <header>
-        <div id="logo">
-            <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
-        </div>
-        <input id="menu-toggle" type="checkbox" aria-label="Toggle-menu"/>
-        <label class='menu-button-container' for="menu-toggle">
-        <div class='menu-button'></div>        
-        </label class='menu-button-container' for="menu-toggle">
-        <ul class="menu">                     
-            <li><a href="#">BIO</a></li></li>         
-            <li><a href="#with">WITH</a></li>
-            <li><a href="#credits">CREDITS</a></li>
-            <!-- <li><a href="bio_it.html">EN | IT</a></li>             -->
-        </ul>        
-    </header>
-        <!-- FOOTER -->
-        <footer id="footer">
-            <ul>
-                <li>&copy; 2023 felice vino</li>
-                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
-            </ul>
-        </footer>
+  <div class="parallax_wrapper">
+    <div class="parallax_group intro_screen" id="intro">
+      Awsome parallax    
+    </div>
 
-  <section class="parallax" aria-label="Scena parallax 3D">
-    <!-- Livelli 3D -->
-    <div class="parallax__layer parallax__layer--back" aria-hidden="true"></div>
-    <div class="parallax__layer parallax__layer--mid" aria-hidden="true"></div>
-    <div class="parallax__layer parallax__layer--fore" aria-hidden="true"></div>  
-  </section>
+    <div class="parallax_group" id="group-1">
 
-  <section class="panel">
-    <h2>Sezione successiva</h2>
-    <p>Serve solo a farle notare l’uscita dalla scena.</p>
-  </section>
+      <div class="parallax_layer base_layer" >
+        base layer
+      </div>
 
-  <footer class="site-footer">
-    <small>© 2025</small>
-  </footer>
+      <div class="parallax_layer mid_layer">
+        mid layer
+      </div>
+    </div>
+
+    <div class="parallax_group" id="group-2">
+
+      <div class="parallax_layer mid_layer">
+        mid layer 
+      </div>
+      
+      <div class="parallax_layer top_layer">
+        top layer
+      </div>
+    </div>
+
+    <div class="parallax_group outro_screen" id="outro"> 
+      The end
+    </div>
+
+  </div>
+  
 </body>
 </html>

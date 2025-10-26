@@ -25,45 +25,53 @@ export default function(choose, quadri){
   const colore18 = choose[17][1];
   const colore19 = choose[18][1]; 
   const colore20 = choose[19][1];
-//////////////// ARRAY POSIZIONI /////////////
-const positionsM = [
+  //////////////// ARRAY POSIZIONI /////////////
+  const altezza = 4;
+  const positionsM = [
   // Posizioni del fusto
-  [30, 5, 40],
-  [38, 45, -20],
-  [-3, 6, -3],
-  [4.5, 9, -4.5],
-  [-4.5, 12, 4.5],
-  [0, 15, 0],
-  [3, 18, -3],
-  [-3, 21, 3],
-  [4.5, 24, 4.5],
-  [0, 27, 0],
-  // Posizioni sotto la testa del fungo
-  [15, 200, 0],
-  [10.5, 200, 10.5],
-  [0, 200, 15],
-  [-10.5, 200, 10.5],
-  [-15, 200, 0],
-  [-10.5, 200, -10.5],
-  [0, 230, -15],
-  [10.5, 230, -10.5],
-  [6, 240, 6],
-  [-6, 240, -6],
-];
+ [500.0, altezza, 0.0],
+  [475.52826, altezza, 154.5085],
+  [404.5085, altezza, 293.89263],
+  [293.89263, altezza, 404.5085],
+  [154.5085, altezza, 475.52826],
+  [0.0, altezza, 500.0],
+  [-154.5085, altezza, 475.52826],
+  [-293.89263, altezza, 404.5085],
+  [-404.5085, altezza, 293.89263],
+  [-475.52826, altezza, 154.5085],
+  [-500.0, altezza, 0.0],
+  [-475.52826, altezza, -154.5085],
+  [-404.5085, altezza, -293.89263],
+  [-293.89263, altezza, -404.5085],
+  [-154.5085, altezza, -475.52826],
+  [0.0, altezza, -500.0],
+  [154.5085, altezza, -475.52826],
+  [293.89263, altezza, -404.5085],
+  [404.5085, altezza, -293.89263],
+  [475.52826, altezza, -154.5085]
+  ];
   const clock = new THREE.Clock();
   window.resetCamera = resetCamera;
   // SCENE  
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(  0x00FFFFFF );
+  // scene.background = new THREE.Color(  0x00FFFFFF );
+
+  const loader2 = new THREE.TextureLoader();
+  loader2.load('images/equiangular/Esky2.png', texture => {
+    texture.colorSpace = THREE.SRGBColorSpace;           // colori corretti
+    texture.mapping = THREE.EquirectangularReflectionMapping; // per immagine 2:1
+    scene.background = texture;                          // visibile come sfondo
+  });
+
   //scene.fog = new THREE.Fog( 0x0A9EE8, 1100, 1400 );
   scene.position.set(0,0,0);
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0, 100, 600 ); 
-  camera.rotation.set( 0, 0,Math.PI/2);
-  camera.lookAt(new THREE.Vector3( 0, player.height, 0));  
-  camera.setFocalLength (35);
+  camera.position.set(0,0,-400); 
+  camera.rotation.set(0,0,0);
+  camera.lookAt(new THREE.Vector3( 0, player.height, 1000));  
+  camera.setFocalLength (25);
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
     alpha:true, 
@@ -102,17 +110,18 @@ const positionsM = [
   } );    
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight( 0xFFFFFF, 0.9 );  
+  // const ambient = new THREE.AmbientLight( 0xFFFFFF, 0.9 );
+  const ambient = new THREE.AmbientLight( 0xFFFFFF, 1.5 ); 
   scene.add( ambient);
   //POINTS 
-  const pLight = new THREE.PointLight( 0x88FFFF, 0.8, 5000 );  
-  pLight.position.set( 300, 600, 300);  
-  pLight.castShadow = true;  
-  pLight.shadow.mapSize.width = 2048; // default
-  pLight.shadow.mapSize.height = 2048; // default
-  pLight.shadow.camera.near = 0.5; // default
-  pLight.shadow.camera.far = 100; // default
-  // scene.add( pLight); 
+  const pLight = new THREE.PointLight( 0x88FFFF, 2, 5000 );  
+  pLight.position.set( 0, 100, 0);  
+  // pLight.castShadow = true;  
+  // pLight.shadow.mapSize.width = 128; 
+  // pLight.shadow.mapSize.height = 128; 
+  // pLight.shadow.camera.near = 0.5; 
+  // pLight.shadow.camera.far = 100; 
+  scene.add( pLight); 
   const pLight2 = new THREE.PointLight( 0xFFFFFF, 2, 5000 );  
   pLight2.position.set( 0, 100, 0);  
   pLight2.castShadow = true;   
@@ -120,7 +129,7 @@ const positionsM = [
   pLight2.shadow.mapSize.height = 2048; // default
   pLight2.shadow.camera.near = 0.5; // default
   pLight2.shadow.camera.far = 100; // default
-  scene.add( pLight2);
+  // scene.add( pLight2);
   // ANIMATE SCENE //////
   function animateScene(){
     requestAnimationFrame( animateScene );
@@ -129,7 +138,10 @@ const positionsM = [
   animateScene();
   //TEXTURES
   const loader = new THREE.TextureLoader();
-
+  let skin = loader.load("images/textures/alluminium.jpg");
+  let skin2 = loader.load("images/textures/skin2.png");
+  let skin2Trans = loader.load("images/textures/skin2T.png");
+  skin2Trans.colorSpace = THREE.NoColorSpace;
 
   // GRUPPO EMOZIONI //////
   let emotionGroup = new THREE.Group();
@@ -213,31 +225,42 @@ const positionsM = [
 
   console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
 
-  ////////////// INSERIRE IL CIELO ROTANTE E DARGLI COME COLORE coloreOggetto////////////
+  /////// INSERIRE IL CIELO ROTANTE////////////
 
   for (let i = 0; i < gruppiColori.length; i++) {
     if (gruppiColori[i].includes(coloreCorrente)) {
       forma = formeGeometriche[nomiFormeGeometriche[i]];
       break; 
-    }
-  }   
+      }
+    }   
 
-    if (!forma) {
+      if (!forma) {
       forma = formeGeometriche['octaedro'];;
     }
     // EMOTION MATERIAL
     const emoMaterial = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(v[1]),
       metalness: 0.5,
-      roughness: 0.5,
-
+      metalnessMap: skin2,
+      roughness: 0,
+      roughnessMap: skin2,
+      map: skin2,
+      bumpMap: skin2,
+      bumpScale: 1,     
+      alphaMap: skin2Trans,
+      transparent: true,
+      opacity: 1,
     }); 
 
     //  EMOTION 1
     const emotion1 = new THREE.Mesh( forma, emoMaterial);  
-    emotion1.position.set(-7.1, 13.5, -0.3 );
-    emotion1.rotation.set( 0, 0, 0);
-    emotion1.scale.set( 1.5, 1.5, 1.5 );    
+    emotion1.position.set(-7.1,13.5,-0.3);
+    emotion1.rotation.set(
+      0,
+      Math.PI/4,     
+      0
+    );
+    emotion1.scale.set(1.5,1.5,1.5);    
     emotion1.castShadow = true; 
     emotion1.receiveShadow = true;    
     //  EMOTION 2
@@ -256,9 +279,13 @@ const positionsM = [
     }
     
     const emotion2 = new THREE.Mesh(forma2, newMat);  
-    emotion2.position.set( -6.1, 12.5, -0.3 );
-    emotion2.rotation.set( 0, 0, -Math.PI/3 );
-    emotion2.scale.set( 1.3, 1.3, 1.3 );    
+    emotion2.position.set(-7.9,11.25,-0.3);
+    emotion2.rotation.set(
+      Math.PI/4,
+      0,
+      Math.PI/2
+    );
+    emotion2.scale.set(1,1,1);    
     emotion2.castShadow = true; 
     emotion2.receiveShadow = true;   
     // EMOTION 3 
@@ -276,28 +303,37 @@ const positionsM = [
       forma3 = formeGeometriche['octaedro'];
     }       
     const emotion3 = new THREE.Mesh(forma3, newMat);  
-    emotion3.position.set( -7.7, 11.6, -0.3 );
-    emotion3.rotation.set( 0, 0, Math.PI/1.5 );
-    emotion3.scale.set( 1.1, 1.1, 1.1 ); 
+    emotion3.position.set(-6.1,11.5,-0.3);
+    emotion3.rotation.set(
+      Math.PI/4,
+      0,
+      Math.PI/-2
+    );
+    emotion3.scale.set(0.7,0.7,0.7); 
     emotion3.castShadow = true; 
     emotion3.receiveShadow = true;
     
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
-    ret.scale.set(8,8,8);
-    // ret.position.set( 0, k+0.5, 0); 
+    ret.scale.set(10,10,10);
+    ret.position.set(0,(k*25)-180,0);
+    ret.rotation.set(
+      0,
+      k*Math.PI/-16,
+      k*Math.PI/-16,
+    );
     scene.add(ret);  
 
-    if (k < positionsM.length) {
-      const [x, y, z] = positionsM[k];
-      ret.position.set(x, y, z); // Imposta la posizione
-    }
+    // if (k < positionsM.length) {
+    //   const [x, y, z] = positionsM[k];
+    //   ret.position.set(x, y, z); // Imposta la posizione
+    // }
   })
   
   ////// AMBIENTE GLTF //////////////////////
-  let PSy = -180;
+  let PSy = -80;
   const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/heart/Hearts_Planet.glb', (gltf) => {
+  loaderPlanet.load('3d/heart/CV_Heart_color.glb', (gltf) => {
     const model = gltf.scene;
     // Attiva proiezione e ricezione ombre per ogni mesh nel modello
     model.traverse((node) => {
@@ -308,77 +344,14 @@ const positionsM = [
     });
     scene.add(model); // Aggiungi il modello alla scena
     model.position.set(0, PSy, 0);
-    model.rotation.set(0, 0, 0);
-    model.scale.set(20,20,20);     A
-  });
-  loaderPlanet.load(
-    // resource URL
-    '3d/heart/Planet_heart_2.glb',
-    // called when the resource is loaded
-    function ( gltf ) {
-      //scene.add( gltf.scene );
-      gltf.animations; // Array<THREE.AnimationClip>
-      gltf.scene; // THREE.Group
-      gltf.scenes; // Array<THREE.Group>
-      gltf.cameras; // Array<THREE.Camera>
-      gltf.asset; // Object
-    },
-    // called while loading is progressing
-    function ( xhr ) {
-      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    },
-    // called when loading has errors
-    function ( error ) {
-      console.log( 'An error happened' );
-    }
-  ); 
-  const loaderSky = new GLTFLoader();
-  loaderSky.load('3d/heart/Sky.glb',(gltf) => {
-    const model = gltf.scene;
-    // Attiva proiezione e ricezione ombre per ogni mesh nel modello
-    model.traverse((node) => {
-      if (node.isMesh) {
-        node.castShadow = true;    // Proietta ombre
-        node.receiveShadow = true; // Riceve ombre
-      }
-    });
-    scene.add(model); // Aggiungi il modello alla scena
-    model.position.set(0, PSy, 0);
-    model.rotation.set(0, 0, 0);
-    model.scale.set(40,40,40);
-    // Funzione per animare la rotazione sull'asse Z
-    function animateSky() {
-      requestAnimationFrame(animateSky); 
-      model.rotation.y -= 0.0001; 
-      model.rotation.z -= 0.0001; 
-      renderer.render(scene, camera); // Renderizza la scena
-    }
-    // Avvia l'animazione
-    animateSky();
+    model.rotation.set(0, Math.PI/16, 0);
+    const scala = 110;
+    model.scale.set(scala,scala,scala);
   });
 
-  loaderSky.load(
-    // resource URL
-    '3d/heart/Sky.glb',
-    // called when the resource is loaded
-    function ( gltf ) {
-      //scene.add( gltf.scene );
-      gltf.animations; // Array<THREE.AnimationClip>
-      gltf.scene; // THREE.Group
-      gltf.scenes; // Array<THREE.Group>
-      gltf.cameras; // Array<THREE.Camera>
-      gltf.asset; // Object
-    },
-    // called while loading is progressing
-    function ( xhr ) {
-      console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-    },
-    // called when loading has errors
-    function ( error ) {
-      console.log( 'An error happened' );
-    }
-  );   
-  /////////////////////////// BACKGROUND 
+  
+  
+  ////////// BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
@@ -390,31 +363,5 @@ const positionsM = [
     backgroundSound.play();
   });
 
-  // Selezioniamo i pulsanti
-  let cameraButton = document.querySelector('#btn-camera button');  
-  let audioButton = document.querySelector('#btn-audio button');
-  let isPlaying = true;
-  cameraButton.addEventListener('click', function() {
-    resetCamera();
-  });
-  audioButton.addEventListener('click', function() {
-    if (isPlaying) {
-      backgroundSound.pause();
-    } else {
-      backgroundSound.play();
-    }
-    // Cambiamo lo stato
-    isPlaying = !isPlaying;
-  });
-  
-  // Funzione per resettare la camera
-  function resetCamera() {
-    camera.position.set( 0, 0, 80 ); 
-    camera.rotation.set( 1, 0, 0 );
-    camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
-    controls.listenToKeyEvents( window );
-    controls.minDistance =  5;    
-    controls.maxDistance = 1100;
-    controls.maxPolarAngle = 1.5; 
-  }    
+     
 };
