@@ -79,10 +79,12 @@ export default function(choose,quadri){
 
   //TEXTURES
   const loader = new THREE.TextureLoader();  
-  let TextureF = new THREE.CanvasTexture(new FlakesTexture());
+  let TextureF = loader.load('images/textures/Alluminium.jpg');
+  
+  // new THREE.CanvasTexture(new FlakesTexture());
   TextureF.wrapS = THREE.RepeatWrapping;
   TextureF.wrapT = THREE.RepeatWrapping;
-  TextureF.repeat.set(15, 15); 
+  TextureF.repeat.set(1, 1); 
   
   // GRUPPO EMOZIONI //////
   let emotionGroup = new THREE.Group();
@@ -185,7 +187,7 @@ loaderTorsolo.load(
     torsolo.traverse(function (node) {
       if (node.isMesh) {
         const material = new THREE.MeshPhysicalMaterial({
-          //map: TextureF,
+          map: TextureF,
           //color: 0xc0652b,
           color: new THREE.Color(coloreOggetto), 
           //metalness: 0.1,            
@@ -286,12 +288,16 @@ loaderTorsolo.load(
     ret.rotation.set( 0, k/3.4, 0 );
     ret.scale.set( 3,3,3 );
   })
+
   let gRoom = new THREE.SphereGeometry(351, 64, 64 );
   let mRoom = new THREE.MeshPhysicalMaterial({
-    color: 0x050101,
-    //color: 0xc0652b,          
+    // color: 0x050101,
+    color: 0xc0652b,          
+    color: 0x402225, 
     roughness:0.8,
     metalness:0.1,
+    bumpMap: TextureF,
+    bumpScale: 1,
     //flatShading: true,
     sheenColor: 0xffffff, 
     clearcoat: 0.2, 
