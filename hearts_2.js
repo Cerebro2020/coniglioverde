@@ -265,7 +265,7 @@ export default function(choose, quadri){
     emotion1.receiveShadow = true;    
     //  EMOTION 2
     let newMat = emoMaterial.clone()
-    newMat.color = new THREE.Color(v[2] ? v[2] : v[1]);
+    newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
     let forma2; 
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
@@ -275,7 +275,7 @@ export default function(choose, quadri){
       }
     }
     if (!forma2) {
-      forma2 = formeGeometriche['octaedro'];;
+      forma2 = formeGeometriche['octaedro'];
     }
     
     const emotion2 = new THREE.Mesh(forma2, newMat);  
@@ -290,7 +290,7 @@ export default function(choose, quadri){
     emotion2.receiveShadow = true;   
     // EMOTION 3 
     newMat = emoMaterial.clone();
-    newMat.color = new THREE.Color(v[3] ? v[3] : v[1]);
+    newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
     let forma3;
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();

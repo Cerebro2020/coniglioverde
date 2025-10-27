@@ -241,7 +241,7 @@ loaderTorsolo.load(
     emotion1.receiveShadow = true;     
     //  EMOTION 2
     let newMat = emoMaterial.clone()
-    newMat.color = new THREE.Color(v[2] ? v[2] : v[1]);
+    newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
     let forma2; 
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
@@ -262,7 +262,7 @@ loaderTorsolo.load(
     emotion2.receiveShadow = true;    
     // EMOTION 3 
     newMat = emoMaterial.clone();
-    newMat.color = new THREE.Color(v[3] ? v[3] : v[1]);
+    newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
     let forma3;
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
