@@ -49,7 +49,7 @@ export default function(choose,quadri){
   scene.background = new THREE.Color(  0x000000 );
   // LIGHT
   //AMBIENT
-  const ambient = new THREE.AmbientLight( 0xffffff, 0 );  
+  const ambient = new THREE.AmbientLight( 0xffffff, 0.5 );  
   scene.add( ambient); 
   //POINTS 
   const pLight = new THREE.PointLight( 0xffffff, 0.26, 2000 );  
@@ -79,7 +79,7 @@ export default function(choose,quadri){
 
   //TEXTURES
   const loader = new THREE.TextureLoader();  
-  let TextureF = loader.load('images/textures/Alluminium.jpg');
+  let TextureF = loader.load('images/textures/Ottone.jpg');
   
   // new THREE.CanvasTexture(new FlakesTexture());
   TextureF.wrapS = THREE.RepeatWrapping;
@@ -163,55 +163,52 @@ export default function(choose,quadri){
 
     console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
 
-// let gTotale = new THREE.SphereGeometry(1200, 16, 16);
-// let matTotale = new THREE.MeshPhysicalMaterial ({
-//   color: new THREE.Color(coloreOggetto), 
-//   map: TextureQ2,
-//   side: THREE.DoubleSide, 
-//   alphaMap: alphaCielo,
-//   transparent: true,
-// });
-// let emotionTotale = new THREE.Mesh(gTotale, matTotale);
-// emotionTotale.rotation.set(0,1,0);
-// scene.add(emotionTotale);
+  // let gTotale = new THREE.SphereGeometry(1200, 16, 16);
+  // let matTotale = new THREE.MeshPhysicalMaterial ({
+  //   color: new THREE.Color(coloreOggetto), 
+  //   map: TextureQ2,
+  //   side: THREE.DoubleSide, 
+  //   alphaMap: alphaCielo,
+  //   transparent: true,
+  // });
+  // let emotionTotale = new THREE.Mesh(gTotale, matTotale);
+  // emotionTotale.rotation.set(0,1,0);
+  // scene.add(emotionTotale);
 
-// TORSOLO
-const loaderTorsolo = new GLTFLoader();
-loaderTorsolo.load(    
-  '3d/heart/CV_Hearts_Pomo.glb',
-  function (glt) {
-    const torsolo = glt.scene;
-    torsolo.position.set(0, -5, 0);
-    torsolo.rotation.set(0, -Math.PI/1.4, 0);      
-    torsolo.scale.set(10,10,10);       
-    torsolo.traverse(function (node) {
-      if (node.isMesh) {
-        const material = new THREE.MeshPhysicalMaterial({
-          map: TextureF,
-          //color: 0xc0652b,
-          color: new THREE.Color(coloreOggetto), 
-          //metalness: 0.1,            
-          //roughness: 1,
-          //sheenColor: new THREE.Color(v[1]),                  
-    metalness: 0.9,            
-    roughness: 0.5,
-        });  
-        node.material = material;
-        node.castShadow = true;
-        node.receiveShadow = true;
-      }
-    });  
-    scene.add(torsolo);       
-    torsolo.castShadow = true; 
-    torsolo.receiveShadow = true;  
-  },      
-  undefined, 
-  function (error) {
-    console.error(error);      
-  }  
-); 
+  // TORSOLO
+  const loaderTorsolo = new GLTFLoader();
+  loaderTorsolo.load(    
+    '3d/heart/CV_Hearts_Pomo.glb',
+    function (glt) {
+      const torsolo = glt.scene;
+      torsolo.position.set(0, -5, 0);
+      torsolo.rotation.set(0, -Math.PI/1.4, 0);      
+      torsolo.scale.set(10,10,10);       
+      torsolo.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            map: TextureF,
+            color: new THREE.Color(coloreOggetto),             
+            sheenColor: new THREE.Color(v[1]),                 
+            metalness: 0.5,            
+            roughness: 0.0,
+          });  
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });  
+      scene.add(torsolo);       
+      torsolo.castShadow = true; 
+      torsolo.receiveShadow = true;  
+    },      
+    undefined, 
+    function (error) {
+      console.error(error);      
+    }  
+  ); 
 
-///////////////////////////////////////
+  ///////////////////////////////////////
     for (let i = 0; i < gruppiColori.length; i++) {
       console.log(`Checking group ${i}:`, gruppiColori[i]);
       console.log(`Current color:`, coloreCorrente);
@@ -223,10 +220,11 @@ loaderTorsolo.load(
     }
     // EMOTION MATERIAL
     const emoMaterial = new THREE.MeshPhysicalMaterial({
+      map: TextureF,
       color: new THREE.Color(v[1]),
       sheenColor: new THREE.Color(v[1]),                  
-      metalness: 0.9,            
-      roughness: 0.5,
+      metalness: 0.5,            
+      roughness: 0.0,
     }); 
     if (!forma) {
       forma = formeGeometriche['torus'];
@@ -291,10 +289,10 @@ loaderTorsolo.load(
 
   let gRoom = new THREE.SphereGeometry(351, 64, 64 );
   let mRoom = new THREE.MeshPhysicalMaterial({
-    // color: 0x050101,
-    color: 0xc0652b,          
-    color: 0x402225, 
-    roughness:0.8,
+    map:TextureF,
+    color: 0x402225,
+    color: 0x1c1c1c,
+    roughness:0.5,
     metalness:0.1,
     bumpMap: TextureF,
     bumpScale: 1,
