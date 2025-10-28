@@ -58,17 +58,15 @@ export default function(choose, quadri){
 
   const loader2 = new THREE.TextureLoader();
   loader2.load('images/equiangular/Esky2.png', texture => {
-    texture.colorSpace = THREE.SRGBColorSpace;           // colori corretti
+    texture.colorSpace = THREE.SRGBColorSpace;// colori corretti
     texture.mapping = THREE.EquirectangularReflectionMapping; // per immagine 2:1
-    scene.background = texture;                          // visibile come sfondo
+    scene.background = texture;// visibile come sfondo
   });
-
-  //scene.fog = new THREE.Fog( 0x0A9EE8, 1100, 1400 );
   scene.position.set(0,0,0);
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,0,-400); 
+  camera.position.set(0,0,0); 
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000));  
   camera.setFocalLength (25);
@@ -84,17 +82,14 @@ export default function(choose, quadri){
   controls.minDistance =  35;    
   controls.maxDistance = 2000;
   controls.maxPolarAngle = 1.5;
- 
+  // CAMERA 
   let initialCameraPosition = new THREE.Vector3();
   initialCameraPosition.copy(camera.position);
-  // Crea una funzione per resettare la camera
   function resetCamera() {
     camera.position.copy(initialCameraPosition);  
   }
   // RENDERER
   renderer.shadowMap.enabled = true;
-  // renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
-  // renderer.shadowMap.type = THREE.VSMShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 0.9;
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -110,26 +105,25 @@ export default function(choose, quadri){
   } );    
   // LIGHTS //////
   //AMBIENT
-  // const ambient = new THREE.AmbientLight( 0xFFFFFF, 0.9 );
-  const ambient = new THREE.AmbientLight( 0xFFFFFF, 1.5 ); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.9); 
   scene.add( ambient);
   //POINTS 
-  const pLight = new THREE.PointLight( 0x88FFFF, 2, 5000 );  
-  pLight.position.set( 0, 100, 0);  
-  // pLight.castShadow = true;  
-  // pLight.shadow.mapSize.width = 128; 
-  // pLight.shadow.mapSize.height = 128; 
-  // pLight.shadow.camera.near = 0.5; 
-  // pLight.shadow.camera.far = 100; 
+  const pLight = new THREE.PointLight(0x88FFFF,10,500);  
+  pLight.position.set(0,100,0);  
+  pLight.castShadow = true;  
+  pLight.shadow.mapSize.width = 128; 
+  pLight.shadow.mapSize.height = 128; 
+  pLight.shadow.camera.near = 0.5; 
+  pLight.shadow.camera.far = 100; 
   scene.add( pLight); 
-  const pLight2 = new THREE.PointLight( 0xFFFFFF, 2, 5000 );  
-  pLight2.position.set( 0, 100, 0);  
+  const pLight2 = new THREE.PointLight( 0xFFFFFF,1,500);  
+  pLight2.position.set(0,200,0);  
   pLight2.castShadow = true;   
   pLight2.shadow.mapSize.width = 2048; // default
   pLight2.shadow.mapSize.height = 2048; // default
   pLight2.shadow.camera.near = 0.5; // default
   pLight2.shadow.camera.far = 100; // default
-  // scene.add( pLight2);
+  scene.add( pLight2);
   // ANIMATE SCENE //////
   function animateScene(){
     requestAnimationFrame( animateScene );
@@ -139,10 +133,9 @@ export default function(choose, quadri){
   //TEXTURES
   const loader = new THREE.TextureLoader();
   let skin = loader.load("images/textures/alluminium.jpg");
-  let skin2 = loader.load("images/textures/skin2.png");
+  let skin2 = loader.load("images/textures/Bronze.jpg");
   let skin2Trans = loader.load("images/textures/skin2T.png");
   skin2Trans.colorSpace = THREE.NoColorSpace;
-
   // GRUPPO EMOZIONI //////
   let emotionGroup = new THREE.Group();
   const emozioni=_.map(choose,(v,k)=>{
@@ -172,22 +165,17 @@ export default function(choose, quadri){
     for (let i = 0; i < gruppiColori.length; i++){
     contaCorrente.push('coloreCorrente');
     }
-
     let forma;
-
 ///////////////////////////////////////////////
-
   // Inizializza un array per tenere traccia del conteggio delle aree
   let conteggioAree = [0, 0, 0, 0];
-
   let mappaColori = {
-    'area1': '#E1BB0D', // giallo
-    'area2': '#E10D0D', // rosso
-    'area3': '#0DA5E1', // blu
-    'area4': '#57D743', // verde
+    'area1': '#f0e73cff', // giallo
+    'area2': '#f32727ff', // rosso
+    'area3': '#2fb8eeff', // blu
+    'area4': '#6bc043ff', // verde
     'areaEquivalente': '#777777' // arancione per scelte equivalenti
   };
-
   // Itera su ogni colore scelto
   for (let quad in choose) {
     // Ottieni il colore corrente
@@ -204,14 +192,11 @@ export default function(choose, quadri){
     if (indiceArea !== undefined && choose[quad][1] !== '#FFFFFF') {
       conteggioAree[indiceArea]++;
     }
-    }
-
+  }
   // Trova il massimo conteggio
   let maxConteggio = Math.max(...conteggioAree);
-
   // Verifica se ci sono più aree con lo stesso massimo conteggio
   let areeEquivalenti = conteggioAree.filter(conteggio => conteggio === maxConteggio).length > 1;
-
   let coloreOggetto;
   // Se ci sono scelte equivalenti, usa il colore per scelte equivalenti
   if (areeEquivalenti) {
@@ -222,20 +207,16 @@ export default function(choose, quadri){
     // Se nessun'area è stata scelta (tutte hanno conteggio 0), usa il colore bianco
     coloreOggetto = maxConteggio > 0 ? mappaColori[`area${areaPiuScelta + 1}`] : '#FFFFFF';
   }
-
   console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
-
   /////// INSERIRE IL CIELO ROTANTE////////////
-
   for (let i = 0; i < gruppiColori.length; i++) {
     if (gruppiColori[i].includes(coloreCorrente)) {
       forma = formeGeometriche[nomiFormeGeometriche[i]];
       break; 
       }
-    }   
-
+    }
       if (!forma) {
-      forma = formeGeometriche['octaedro'];;
+      forma = formeGeometriche['octaedro'];
     }
     // EMOTION MATERIAL
     const emoMaterial = new THREE.MeshPhysicalMaterial({
@@ -250,8 +231,7 @@ export default function(choose, quadri){
       alphaMap: skin2Trans,
       transparent: true,
       opacity: 1,
-    }); 
-
+    });
     //  EMOTION 1
     const emotion1 = new THREE.Mesh( forma, emoMaterial);  
     emotion1.position.set(-7.1,13.5,-0.3);
@@ -276,8 +256,7 @@ export default function(choose, quadri){
     }
     if (!forma2) {
       forma2 = formeGeometriche['octaedro'];
-    }
-    
+    }    
     const emotion2 = new THREE.Mesh(forma2, newMat);  
     emotion2.position.set(-7.9,11.25,-0.3);
     emotion2.rotation.set(
@@ -311,29 +290,37 @@ export default function(choose, quadri){
     );
     emotion3.scale.set(0.7,0.7,0.7); 
     emotion3.castShadow = true; 
-    emotion3.receiveShadow = true;
-    
+    emotion3.receiveShadow = true;    
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
     ret.scale.set(10,10,10);
-    ret.position.set(0,(k*25)-180,0);
+    ret.position.set(30,(k*25)-180,-70);
     ret.rotation.set(
       0,
       k*Math.PI/-16,
       k*Math.PI/-16,
     );
-    scene.add(ret);  
-
-    // if (k < positionsM.length) {
-    //   const [x, y, z] = positionsM[k];
-    //   ret.position.set(x, y, z); // Imposta la posizione
-    // }
-  })
-  
+    const numCopies = 12;
+    const raggio = 300;// maggiore distanza
+    for (let i = 0; i < numCopies; i++) {
+      const clone = ret.clone(true);
+      // capovolgi l’ordine (prima scelta davanti)
+      const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
+      clone.position.set(
+        Math.cos(angolo) * raggio,
+        0,
+        Math.sin(angolo) * raggio
+      );
+      clone.rotation.y = angolo; 
+      clone.scale.set(5,5,5);
+      scene.add(clone);
+    }
+    scene.add(ret);   
+  })  
   ////// AMBIENTE GLTF //////////////////////
-  let PSy = -80;
+  let PSy = -100;
   const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/heart/CV_Heart_color.glb', (gltf) => {
+  loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
     const model = gltf.scene;
     // Attiva proiezione e ricezione ombre per ogni mesh nel modello
     model.traverse((node) => {
@@ -347,10 +334,7 @@ export default function(choose, quadri){
     model.rotation.set(0, Math.PI/16, 0);
     const scala = 110;
     model.scale.set(scala,scala,scala);
-  });
-
-  
-  
+  });  
   ////////// BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
@@ -361,7 +345,5 @@ export default function(choose, quadri){
     backgroundSound.setLoop( true );
     backgroundSound.setVolume( 0.1 );
     backgroundSound.play();
-  });
-
-     
+  });     
 };
