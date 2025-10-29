@@ -326,7 +326,7 @@ export default function(choose, quadri){
     model.traverse((node) => {
       if (node.isMesh) {
         node.castShadow = true;    // Proietta ombre
-        node.receiveShadow = true; // Riceve ombre
+        //node.receiveShadow = true; // Riceve ombre
       }
     });
     scene.add(model); // Aggiungi il modello alla scena

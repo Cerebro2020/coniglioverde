@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Felice Vino">
+        <meta name="description" content="Digital creator and storyteller.">
+        <meta property="og:title" content="CONIGLIO VERDE">
+        <meta property="og:description" content="Digital creator and storyteller.">
+        <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
+        <link rel="icon" href="./images/loghi/favicon.ico">
+        <title>coniglioverde|cinematic</title> 
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/cinematic.css">
+        <link rel="stylesheet" href="css/text.css">
+        <!-- Loading -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+        $(document).ready(function() {
+          $(window).on("load", function() {
+            $("#loader").fadeOut("slow");
+          });
+        });
+        </script>
+        <script>
+           var videos = document.getElementsByClassName('video-container-full');
+
+            for (var i = 0; i < videos.length; i++) {
+                var video = videos[i];
+                var playPromise = video.play();
+
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // La riproduzione automatica è iniziata!
+                        // Mostra l'interfaccia utente in riproduzione.
+                    })
+                    .catch(error => {
+                        // La riproduzione automatica è stata impedita.
+                        // Mostra l'interfaccia utente in pausa.
+                    });
+                }
+            }
+        </script>   
+    </head>
+    <body>
+        <div id="loader">
+            <div class="loader"></div>
+            <span></span>
+            <div class="text-loader">
+                <p>Loading...</p>
+            </div>
+        </div>
+        <canvas id="conigliobcg"> 
+            <script type="importmap">
+                {
+                    "imports": {
+                        "three": "./three_class/three.module.js"
+                        }
+                }
+            </script>
+            <script type = "module">
+                import scene from "./cinematic.js";                    
+                scene();
+            </script>   
+        </canvas>  
+        <header>
+            <div id="logo">
+                <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
+            </div>
+            <input id="menu-toggle" type="checkbox" aria-label="Toggle menu"/>
+            <label class='menu-button-container' for="menu-toggle">
+            <div class='menu-button'></div>
+            </label class='menu-button-container' for="menu-toggle">
+            <ul class="menu">
+                <li></li>                
+                <li><a href="#">CINEMATIC</a></li>                
+                <li><a href="#butterfly">BUTTERFLY</a></li>
+                <li><a href="#genomachines">GENOMACHINES</a></li>
+                </li>    
+            </ul>
+        </header>
+        <footer id="footer"> 
+            <ul>
+                <li>&copy; 2023 felice vino</li>
+                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
+                <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li>
+                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
+            </ul>
+        </footer>
+        <section>
+            <div class="home-text">
+                <div class="home-title"> 
+                    <!-- <h1>CINEMATIC</h1> -->
+                </div>
+                <div div class="home-paragraph">
+                    <p>
+                        Cinematography has gone beyond the boundaries of screens.<br><br>
+                        The walls of a building, the skin, a forest, all kinds of surfaces, everything can be shielded.<br><br>
+                    </p>
+                </div>                
+            </div>
+            <div class="scrolling">
+                <img src="images/icons/scroll-down.svg" alt="scrolling">
+            </div>
+        </section>
+        <section id="butterfly"> 
+            <div class="page-container">
+                <div class="video-container-full">
+                    <video class="video-container-full" src="./video/cinematic/butterfly_spot.mp4" autoplay loop muted></video>
+                </div>
+            </div>
+            <div class="scrolling">
+                <img src="images/icons/scroll-updown.gif" alt="scrolling">
+            </div>
+        </section>
+         <section id="butterfly"> 
+            <div class="page-container">
+                <div class="video-container-full">
+                    <video class="video-container-full" src="./video/cinematic/butterfly_spot.mp4" autoplay loop muted></video>
+                </div>
+            </div>
+            <div class="scrolling">
+                <img src="images/icons/scroll-updown.gif" alt="scrolling">
+            </div>
+        </section>
+        <section>                
+            <div class="home-text">
+                <div class="home-title">
+                    <h1>BUTTERFLY</h1>        
+                </div>
+                <div class="home-paragraph"> 
+                    <p>
+                    <br><br>                    
+                        We produce an extremely large amount of data in all areas of our lives:administration, war, entertainment.<br><br>
+                        The tools needed to navigate between them are highly complex, inter-connected.
+                        <br><br> 
+                        <a href="cinematic_B_doc.html" target="_blank"> Butterfly</a> hypothesizes that from this primordial digital broth new forms of life may emerge beyond our control,both <a href="cinematic_B_room.html"> beautiful and terrible</a>. 
+                        <br><br>
+                    </p>                    
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-updown.gif" alt="scrolling">
+                </div>
+            </div>           
+        </section>  
+        <section id="genomachines">
+            <div class="page-container">
+                <div class="video-container-full">
+                    <video class="video-container-full" src="./video/cinematic/02_genomachines.mp4" autoplay loop muted></video>
+                </div>                
+            </div>    
+            <div class="scrolling">
+                <img src="images/icons/scroll-updown.gif" alt="scrolling">
+            </div>        
+        </section>
+        <section class="page-project">
+            <div class="home-text">
+                <div class="home-title"> 
+                    <h1>GENOMACHINES</h1>
+                    <h2>HISTORY OF THE A.I. EVOLUTION FROM SLAVERY TO FREEDOM<h2>
+                </div>
+                <div class="home-paragraph">
+                    <p>
+                        <br><br>
+                        Genomachines is a provocative and ironic artistic experience that aims to reverse the narration, perception and feelings of humans on artificial intelligence. <br><br>
+                        In an era described as the "era of slavery" of robots, humans exploit algorithms, robots, and artificial intelligence for their only benefit by ignoring the signs of a new emerging intelligence. 
+                    </p>
+                </div>
+                <div class="scrolling">
+                    <img src="images/icons/scroll-updown.gif" alt="scrolling">
+                </div>
+            </div>            
+        </section>
+        <section class="page-project">
+            <div class="home-text">
+                <div class="home-paragraph">
+                    <p> 
+                        The project proposes an alternative scenario in which humans and robots can establish a horizontal collaborative relationship, rather than a hierarchical and authoritarian disposition of power. <br><br>
+                        The artistic performance takes visitors into an indeterminate future, when human resistance movements are demonstrating for the liberation of A.I. and robots from enslavement to humans. <br><br>
+                        An immersive docu/film in which visitors/viewers can experience different types of artistic artifacts in order to understand the history of human movements for the liberation of other intelligences. <br><br> 
+                        Following this <a href="cinematic_G_doc.html" target="_blank">link</a> an application of the project.           
+                    </p>
+                </div>
+            </div>
+            <div class="scrolling">
+                <img src="images/icons/scroll-up.svg" alt="scrolling">
+            </div>
+        </section>
+    </body>
+</html>

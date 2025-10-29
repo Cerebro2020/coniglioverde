@@ -1,0 +1,170 @@
+canvas {  
+  cursor: grab;  
+}
+
+canvas:active {				
+  cursor: grabbing;
+}
+
+.info_leyer { 
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;          
+}
+
+#info-white {
+  width: 160px;
+  height: 30px;  		
+  z-index: 999;
+}
+
+#info-white p {  
+  color: rgb(255, 255, 255);  
+  text-align: center; 
+  font-size: 12px;
+  font-weight: 400;		
+}
+
+.page-container {
+  width: 100%;
+  height: 86vh;
+  position: absolute;
+  top: 0px;
+  display: flex;
+  flex-direction: column;   
+  align-items: center;  
+}
+
+.video-container { 
+  border: 1px solid red;
+  width: 100vw;
+  height: auto;
+  /* width: 100vw; */
+  position: absolute;  
+  top: 0px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;  
+}
+
+.video-container video {  
+  object-fit: cover; 
+}
+
+.video-container-full { 
+  position: absolute;  
+  /* top: 0px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;   
+}
+
+.video-container-full video {
+  /* border: 1px solid red; */
+  height: 50%; 
+  width: 50%;
+  object-fit: cover;
+}
+
+.page-project {
+  min-height: 100vh;
+}
+
+.home-title h1 {
+  font-size: 60px;
+  line-height: 50px;
+}
+
+.home-title h2 {
+  font-size: 30px;
+  line-height: 30px;
+}
+
+iframe {
+  width:100%; 
+  height:100vh;  
+ }
+
+.text-container {
+  position: relative;
+  width: 60%;
+  height: 50%;   
+  font-size: 22px;
+  line-height: 24px;
+  font-weight: 100; 
+  padding-top: 60px;
+}
+
+.text-container a {
+  font-style: italic;
+}
+
+.scrolling {
+  position: absolute;
+  bottom: 100px 
+}
+
+
+@media (max-width: 1024px) {
+  .text-container {
+    width: 80%;    
+  }
+  
+}
+
+@media (max-width: 724px) { 
+  
+  .home-title h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .home-title h2 {
+    font-size: 20px;
+    line-height: 20px;
+  }
+ 
+  .home-paragraph p {
+    font-size: 16px;
+    line-height: 17px;
+  } 
+}
+
+/* PLAY */
+.button-controls {
+  /* border: 1px solid red; */
+  width: 90%;
+  position: absolute;
+  display: flex;
+  bottom: 40px;
+  align-items: center;
+  justify-content: right;
+  z-index: 1;
+}
+
+#btn-pause button , #btn-camera button , #btn-audio button {
+  background-color: rgba(255, 255, 255, 0);
+  color: rgb(255, 255, 255);
+  border: 1px solid rgb(255, 255, 255);
+  width:70px;
+  height: 20px;
+  margin-right: 10px;;
+  border-radius: 12px;
+  font-size: 9px;
+  font-weight: 100;    
+}
+
+#btn-pause button:hover, #btn-camera button:hover,  #btn-audio button:hover {
+  cursor: pointer;
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+}
+
+
