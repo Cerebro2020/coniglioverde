@@ -156,9 +156,9 @@ document.addEventListener('keyup', event => {
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.3); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.4); 
   scene.add( ambient);
-  const spotLight = new THREE.SpotLight(0xffffff, 10);
+  const spotLight = new THREE.SpotLight(0xffffff, 8);
   spotLight.position.set(0,3000,0);
   spotLight.angle = Math.PI/16;
   spotLight.penumbra = 0.5;
@@ -176,14 +176,19 @@ document.addEventListener('keyup', event => {
   //scene.add(spotHelper);
 
   //POINTS 
-  const pLight = new THREE.SpotLight(0xffffff,1,240);  
-  pLight.position.set(0,180,0);  
+  const pLight = new THREE.SpotLight(0xffffff,2,5000);  
+  pLight.position.set(0,2000,0);  
   pLight.castShadow = true;  
   pLight.shadow.mapSize.width = 128; 
   pLight.shadow.mapSize.height = 128; 
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 10; 
   scene.add( pLight); 
+  const pointH1 = new THREE.PointLightHelper(pLight,100);
+  scene.add(pointH1);
+
+  const pointLH1 = new THREE.PointLightHelper(pLight,1);
+    scene.add( pointLH1 );
   const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
   pLight2.position.set(100,200,100);  
   pLight2.castShadow = true;   
