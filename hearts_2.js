@@ -53,6 +53,7 @@ export default function(choose, quadri){
   [475.52826, altezza, -154.5085]
   ];
   const clock = new THREE.Clock();
+  let mixer;
   window.resetCamera = resetCamera;
   // SCENE  
   const scene = new THREE.Scene();
@@ -68,7 +69,7 @@ export default function(choose, quadri){
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,player.height,0);
+  camera.position.set(0,player.height,-400);
   
   const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
@@ -155,15 +156,15 @@ document.addEventListener('keyup', event => {
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.5); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.3); 
   scene.add( ambient);
-  const spotLight = new THREE.SpotLight(0xffffff, 2);
+  const spotLight = new THREE.SpotLight(0xffffff, 10);
   spotLight.position.set(0,3000,0);
-  spotLight.angle = Math.PI/2;
+  spotLight.angle = Math.PI/16;
   spotLight.penumbra = 0.5;
-  spotLight.decay = 2;
+  spotLight.decay = 3;
   spotLight.distance = 9000;
-  spotLight.castShadow = true;
+  // spotLight.castShadow = true;
   spotLight.shadow.mapSize.width = 128;
   spotLight.shadow.mapSize.height = 128;
   spotLight.shadow.radius = 4;
@@ -172,19 +173,19 @@ document.addEventListener('keyup', event => {
   scene.add(spotLight);
 
   const spotHelper = new THREE.SpotLightHelper(spotLight);
-  scene.add(spotHelper);
+  //scene.add(spotHelper);
 
   //POINTS 
-  const pLight = new THREE.SpotLight(0xff0000,1,500);  
-  pLight.position.set(0,500,0);  
+  const pLight = new THREE.SpotLight(0xffffff,1,240);  
+  pLight.position.set(0,180,0);  
   pLight.castShadow = true;  
   pLight.shadow.mapSize.width = 128; 
   pLight.shadow.mapSize.height = 128; 
   pLight.shadow.camera.near = 0.5; 
-  pLight.shadow.camera.far = 100; 
-  // scene.add( pLight); 
+  pLight.shadow.camera.far = 10; 
+  scene.add( pLight); 
   const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
-  pLight2.position.set(0,200,0);  
+  pLight2.position.set(100,200,100);  
   pLight2.castShadow = true;   
   pLight2.shadow.mapSize.width = 2048; // default
   pLight2.shadow.mapSize.height = 2048; // default
@@ -195,6 +196,7 @@ document.addEventListener('keyup', event => {
   function animateScene() {
   requestAnimationFrame(animateScene);
   const delta = clock.getDelta();
+  if (mixer) mixer.update(delta);
 
   // movimento FPS
   velocity.x -= velocity.x * 0.5 * delta;
@@ -400,58 +402,50 @@ if (move.down) {
       );
       let randomValue = Math.floor(Math.random() * 2) + 1.5;
       const numCopies = 12;
-      const raggio = 1100;// maggiore distanza
-      // for (let i = 0; i < numCopies; i++) {
-      //   const clone = ret.clone(true);
-      //   // capovolgi l’ordine (prima scelta davanti)
-      //   const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
-      //   clone.position.set(
-      //     Math.cos(-angolo) * raggio,
-      //     0,
-      //     Math.sin(-angolo) * raggio
-      //   );
-      //   clone.rotation.y = angolo; 
-      //   clone.scale.set(5,5,5);
-      //   scene.add(clone);
-      // }
+      const raggio = 200;// maggiore distanza
+      for (let i = 0; i < numCopies; i++) {
+        const clone = ret.clone(true);
+        // capovolgi l’ordine (prima scelta davanti)
+        const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
+        clone.position.set(
+          Math.cos(-angolo) * raggio,
+          0,
+          Math.sin(-angolo) * raggio
+        );
+        clone.rotation.y = angolo; 
+        clone.scale.set(5,5,5);
+        scene.add(clone);
+      }
       scene.add(ret);   
     })  
     ////// AMBIENTE GLTF //////////////////////
     let PSy = -100;
     
     const loaderPlanet = new GLTFLoader();
-    loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
-      const model = gltf.scene;
-      model.traverse((node) => {
-        if (node.isMesh) {
-          node.castShadow = true;
-          node.receiveShadow = true;
-          node.material.side = THREE.DoubleSide;
-        }
-      });
-      model.position.set(0, PSy, 0);
-      model.rotation.set(0, Math.PI / 28.5, 0);
-      const scala = 400;
-      model.scale.set(scala, scala, scala);
-      scene.add(model);
-    });
+loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
+  const model = gltf.scene;
+  model.traverse((node) => {
+    if (node.isMesh) {
+      node.castShadow = true;
+      node.receiveShadow = true;
+      node.material.side = THREE.DoubleSide;
+    }
+  });
+  model.position.set(0, PSy, 0);
+  model.rotation.set(0, Math.PI / 28.5, 0);
+  const scala = 400;
+  model.scale.set(scala, scala, scala);
+  scene.add(model);
 
-    const loaderPlanet2 = new GLTFLoader();
-    loaderPlanet2.load('3d/heart/CV_Heart_color_3.glb', (gltf) => {
-      const model = gltf.scene;
-      model.traverse((node) => {
-        if (node.isMesh) {
-          node.castShadow = true;
-          node.receiveShadow = true;
-          node.material.side = THREE.DoubleSide;
-        }
-      });
-      model.position.set(0, PSy, 0);
-      model.rotation.set(0, Math.PI / 28.5, 0);
-      const scala = 400;
-      model.scale.set(scala, scala, scala);
-      scene.add(model);
-    });
+  mixer = new THREE.AnimationMixer(model);
+  gltf.animations.forEach((clip) => {
+  mixer.clipAction(clip).play();
+  });
+
+  controls.lock(); // se vuoi avviare il controllo qui
+});
+
+    
 
     ////////// BACKGROUND ///////
     const listenerBcg = new THREE.AudioListener();
