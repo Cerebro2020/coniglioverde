@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import {OrbitControls} from './three_class/OrbitControls.js';
+import {FirstPersonControls} from './three_class/FirstPersonControls.js';
+import { PointerLockControls } from './three_class/PointerLockControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(choose, quadri){
@@ -66,9 +68,42 @@ export default function(choose, quadri){
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,0,0); 
+  camera.position.set(0,player.height,0);
+  
+  const velocity = new THREE.Vector3();
+const direction = new THREE.Vector3();
+const move = {
+  forward: false,
+  backward: false,
+  left: false,
+  right: false,
+  up: false,     // salita con SPACE
+  down: false    // discesa con SHIFT
+};
+
+document.addEventListener('keydown', event => {
+  switch (event.code) {
+    case 'KeyW': move.forward = true; break;
+    case 'KeyS': move.backward = true; break;
+    case 'KeyA': move.left = true; break;
+    case 'KeyD': move.right = true; break;
+    case 'Space': move.up = true; break;
+    case 'ShiftLeft': move.down = true; break;
+  }
+});
+
+document.addEventListener('keyup', event => {
+  switch (event.code) {
+    case 'KeyW': move.forward = false; break;
+    case 'KeyS': move.backward = false; break;
+    case 'KeyA': move.left = false; break;
+    case 'KeyD': move.right = false; break;
+    case 'Space': move.up = false; break;
+    case 'ShiftLeft': move.down = false;  break;
+  }
+});
   camera.rotation.set(0,0,0);
-  camera.lookAt(new THREE.Vector3( 0, player.height, 1000));  
+  camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
   camera.setFocalLength (25);
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
@@ -76,12 +111,27 @@ export default function(choose, quadri){
     antialias:true
   });
   // CONTROLS //////
-  const controls = new OrbitControls( camera, renderer.domElement );  
-  controls.listenToKeyEvents( window );
-  controls.listenToKeyEvents( window );
-  controls.minDistance =  35;    
-  controls.maxDistance = 2000;
-  controls.maxPolarAngle = 1.5;
+  // const controls = new OrbitControls( camera, renderer.domElement );
+  // controls.listenToKeyEvents( window );
+  // controls.listenToKeyEvents( window );
+  // controls.minDistance =  35;    
+  // controls.maxDistance = 1500;
+  // controls.maxPolarAngle = 1.5; 
+  const controls = new PointerLockControls(camera, document.body); 
+
+  controls.addEventListener('lock', () => {
+    console.log('Controllo attivato');
+  });
+
+  controls.addEventListener('unlock', () => {
+    console.log('Controllo disattivato');
+  });
+  
+  renderer.domElement.addEventListener('click', () => {
+    if (!controls.isLocked) {
+      controls.lock();
+    }
+  });
   // CAMERA 
   let initialCameraPosition = new THREE.Vector3();
   initialCameraPosition.copy(camera.position);
@@ -96,40 +146,88 @@ export default function(choose, quadri){
   document.body.appendChild( renderer.domElement ); 
   renderer.xr.enabled = true,    
   // RESIZE WINDOW //////
-  window.addEventListener('resize', function(){
+   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
     renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } );    
+  } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.9); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.5); 
   scene.add( ambient);
+  const spotLight = new THREE.SpotLight(0xffffff, 2);
+  spotLight.position.set(0,3000,0);
+  spotLight.angle = Math.PI/2;
+  spotLight.penumbra = 0.5;
+  spotLight.decay = 2;
+  spotLight.distance = 9000;
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize.width = 128;
+  spotLight.shadow.mapSize.height = 128;
+  spotLight.shadow.radius = 4;
+  spotLight.shadow.camera.near = 0.5; 
+  spotLight.shadow.camera.far = 4000;
+  scene.add(spotLight);
+
+  const spotHelper = new THREE.SpotLightHelper(spotLight);
+  scene.add(spotHelper);
+
   //POINTS 
-  const pLight = new THREE.PointLight(0x88FFFF,10,500);  
-  pLight.position.set(0,100,0);  
+  const pLight = new THREE.SpotLight(0xff0000,1,500);  
+  pLight.position.set(0,500,0);  
   pLight.castShadow = true;  
   pLight.shadow.mapSize.width = 128; 
   pLight.shadow.mapSize.height = 128; 
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 100; 
-  scene.add( pLight); 
-  const pLight2 = new THREE.PointLight( 0xFFFFFF,1,500);  
+  // scene.add( pLight); 
+  const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
   pLight2.position.set(0,200,0);  
   pLight2.castShadow = true;   
   pLight2.shadow.mapSize.width = 2048; // default
   pLight2.shadow.mapSize.height = 2048; // default
   pLight2.shadow.camera.near = 0.5; // default
   pLight2.shadow.camera.far = 100; // default
-  scene.add( pLight2);
+  // scene.add(pLight2);
   // ANIMATE SCENE //////
-  function animateScene(){
-    requestAnimationFrame( animateScene );
-    renderer.render( scene, camera );
-  };
+  function animateScene() {
+  requestAnimationFrame(animateScene);
+  const delta = clock.getDelta();
+
+  // movimento FPS
+  velocity.x -= velocity.x * 0.5 * delta;
+  velocity.z -= velocity.z * 0.5 * delta;
+
+  direction.z = Number(move.forward) - Number(move.backward);
+  direction.x = Number(move.right) - Number(move.left);
+  direction.normalize();
+
+  if (move.forward || move.backward) velocity.z -= direction.z * 50 * delta;
+  if (move.left || move.right) velocity.x -= direction.x * 50 * delta;
+
+  controls.moveRight(-velocity.x * delta);
+  controls.moveForward(-velocity.z * delta);
+  if (move.up) {
+  controls.getObject().position.y += 50 * delta;
+}
+const floorHeight = 1.8;
+if (move.down) {
+  if (controls.getObject().position.y > floorHeight) {
+    controls.getObject().position.y -= 50 * delta;
+    // Evita di andare sotto al pavimento
+    if (controls.getObject().position.y < floorHeight) {
+      controls.getObject().position.y = floorHeight;
+    }
+  }
+}
+
+  renderer.render(scene, camera);
+}
   animateScene();
+
+
   //TEXTURES
   const loader = new THREE.TextureLoader();
   let skin = loader.load("images/textures/alluminium.jpg");
@@ -208,142 +306,164 @@ export default function(choose, quadri){
     coloreOggetto = maxConteggio > 0 ? mappaColori[`area${areaPiuScelta + 1}`] : '#FFFFFF';
   }
   console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
-  /////// INSERIRE IL CIELO ROTANTE////////////
-  for (let i = 0; i < gruppiColori.length; i++) {
-    if (gruppiColori[i].includes(coloreCorrente)) {
-      forma = formeGeometriche[nomiFormeGeometriche[i]];
-      break; 
-      }
-    }
-      if (!forma) {
-      forma = formeGeometriche['octaedro'];
-    }
-    // EMOTION MATERIAL
-    const emoMaterial = new THREE.MeshPhysicalMaterial({
-      color: new THREE.Color(v[1]),
-      metalness: 0.5,
-      metalnessMap: skin2,
-      roughness: 0,
-      roughnessMap: skin2,
-      map: skin2,
-      bumpMap: skin2,
-      bumpScale: 1,     
-      alphaMap: skin2Trans,
-      transparent: true,
-      opacity: 1,
-    });
-    //  EMOTION 1
-    const emotion1 = new THREE.Mesh( forma, emoMaterial);  
-    emotion1.position.set(-7.1,13.5,-0.3);
-    emotion1.rotation.set(
-      0,
-      Math.PI/4,     
-      0
-    );
-    emotion1.scale.set(1.5,1.5,1.5);    
-    emotion1.castShadow = true; 
-    emotion1.receiveShadow = true;    
-    //  EMOTION 2
-    let newMat = emoMaterial.clone()
-    newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
-    let forma2; 
+    /////// INSERIRE IL CIELO ROTANTE////////////
     for (let i = 0; i < gruppiColori.length; i++) {
-      const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
-      if (gruppiColori[i].includes(coloreCorrente2)) {
-        forma2 = formeGeometriche[nomiFormeGeometriche[i]];    
+      if (gruppiColori[i].includes(coloreCorrente)) {
+        forma = formeGeometriche[nomiFormeGeometriche[i]];
         break; 
+        }
       }
-    }
-    if (!forma2) {
-      forma2 = formeGeometriche['octaedro'];
-    }    
-    const emotion2 = new THREE.Mesh(forma2, newMat);  
-    emotion2.position.set(-7.9,11.25,-0.3);
-    emotion2.rotation.set(
-      Math.PI/4,
-      0,
-      Math.PI/2
-    );
-    emotion2.scale.set(1,1,1);    
-    emotion2.castShadow = true; 
-    emotion2.receiveShadow = true;   
-    // EMOTION 3 
-    newMat = emoMaterial.clone();
-    newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
-    let forma3;
-    for (let i = 0; i < gruppiColori.length; i++) {
-      const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
-      if (gruppiColori[i].includes(coloreCorrente2)) {
-        forma3 = formeGeometriche[nomiFormeGeometriche[i]]; 
-        break;
+        if (!forma) {
+        forma = formeGeometriche['octaedro'];
       }
-    }  
-    if (!forma3) {
-      forma3 = formeGeometriche['octaedro'];
-    }       
-    const emotion3 = new THREE.Mesh(forma3, newMat);  
-    emotion3.position.set(-6.1,11.5,-0.3);
-    emotion3.rotation.set(
-      Math.PI/4,
-      0,
-      Math.PI/-2
-    );
-    emotion3.scale.set(0.7,0.7,0.7); 
-    emotion3.castShadow = true; 
-    emotion3.receiveShadow = true;    
-    const ret = emotionGroup.clone(true);
-    ret.add(emotion1, emotion2, emotion3);
-    ret.scale.set(10,10,10);
-    ret.position.set(30,(k*25)-180,-70);
-    ret.rotation.set(
-      0,
-      k*Math.PI/-16,
-      k*Math.PI/-16,
-    );
-    const numCopies = 12;
-    const raggio = 300;// maggiore distanza
-    for (let i = 0; i < numCopies; i++) {
-      const clone = ret.clone(true);
-      // capovolgi l’ordine (prima scelta davanti)
-      const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
-      clone.position.set(
-        Math.cos(angolo) * raggio,
+      // EMOTION MATERIAL
+      const emoMaterial = new THREE.MeshPhysicalMaterial({
+        color: new THREE.Color(v[1]),
+        metalness: 0.5,
+        metalnessMap: skin2,
+        roughness: 0,
+        roughnessMap: skin2,
+        map: skin2,
+        bumpMap: skin2,
+        bumpScale: 1,     
+        alphaMap: skin2Trans,
+        transparent: true,
+        opacity: 1,
+      });
+      //  EMOTION 1
+      const emotion1 = new THREE.Mesh( forma, emoMaterial);  
+      emotion1.position.set(-7.1,13.5,-0.3);
+      emotion1.rotation.set(
         0,
-        Math.sin(angolo) * raggio
+        Math.PI/4,     
+        0
       );
-      clone.rotation.y = angolo; 
-      clone.scale.set(5,5,5);
-      scene.add(clone);
-    }
-    scene.add(ret);   
-  })  
-  ////// AMBIENTE GLTF //////////////////////
-  let PSy = -100;
-  const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
-    const model = gltf.scene;
-    // Attiva proiezione e ricezione ombre per ogni mesh nel modello
-    model.traverse((node) => {
-      if (node.isMesh) {
-        node.castShadow = true;    // Proietta ombre
-        //node.receiveShadow = true; // Riceve ombre
+      emotion1.scale.set(1.5,1.5,1.5);    
+      emotion1.castShadow = true; 
+      emotion1.receiveShadow = true;    
+      //  EMOTION 2
+      let newMat = emoMaterial.clone()
+      newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
+      let forma2; 
+      for (let i = 0; i < gruppiColori.length; i++) {
+        const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
+        if (gruppiColori[i].includes(coloreCorrente2)) {
+          forma2 = formeGeometriche[nomiFormeGeometriche[i]];    
+          break; 
+        }
       }
+      if (!forma2) {
+        forma2 = formeGeometriche['octaedro'];
+      }    
+      const emotion2 = new THREE.Mesh(forma2, newMat);  
+      emotion2.position.set(-7.9,11.25,-0.3);
+      emotion2.rotation.set(
+        Math.PI/4,
+        0,
+        Math.PI/2
+      );
+      emotion2.scale.set(1,1,1);    
+      emotion2.castShadow = true; 
+      emotion2.receiveShadow = true;   
+      // EMOTION 3 
+      newMat = emoMaterial.clone();
+      newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
+      let forma3;
+      for (let i = 0; i < gruppiColori.length; i++) {
+        const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
+        if (gruppiColori[i].includes(coloreCorrente2)) {
+          forma3 = formeGeometriche[nomiFormeGeometriche[i]]; 
+          break;
+        }
+      }  
+      if (!forma3) {
+        forma3 = formeGeometriche['octaedro'];
+      }       
+      const emotion3 = new THREE.Mesh(forma3, newMat);  
+      emotion3.position.set(-6.1,11.5,-0.3);
+      emotion3.rotation.set(
+        Math.PI/4,
+        0,
+        Math.PI/-2
+      );
+      emotion3.scale.set(0.7,0.7,0.7); 
+      emotion3.castShadow = true; 
+      emotion3.receiveShadow = true;    
+      const ret = emotionGroup.clone(true);
+      ret.add(emotion1, emotion2, emotion3);
+      ret.scale.set(10,10,10);
+      ret.position.set(30,(k*25)-180,-70);
+      ret.rotation.set(
+        0,
+        k*Math.PI/-16,
+        k*Math.PI/-16,
+      );
+      let randomValue = Math.floor(Math.random() * 2) + 1.5;
+      const numCopies = 12;
+      const raggio = 1100;// maggiore distanza
+      // for (let i = 0; i < numCopies; i++) {
+      //   const clone = ret.clone(true);
+      //   // capovolgi l’ordine (prima scelta davanti)
+      //   const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
+      //   clone.position.set(
+      //     Math.cos(-angolo) * raggio,
+      //     0,
+      //     Math.sin(-angolo) * raggio
+      //   );
+      //   clone.rotation.y = angolo; 
+      //   clone.scale.set(5,5,5);
+      //   scene.add(clone);
+      // }
+      scene.add(ret);   
+    })  
+    ////// AMBIENTE GLTF //////////////////////
+    let PSy = -100;
+    
+    const loaderPlanet = new GLTFLoader();
+    loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
+      const model = gltf.scene;
+      model.traverse((node) => {
+        if (node.isMesh) {
+          node.castShadow = true;
+          node.receiveShadow = true;
+          node.material.side = THREE.DoubleSide;
+        }
+      });
+      model.position.set(0, PSy, 0);
+      model.rotation.set(0, Math.PI / 28.5, 0);
+      const scala = 400;
+      model.scale.set(scala, scala, scala);
+      scene.add(model);
     });
-    scene.add(model); // Aggiungi il modello alla scena
-    model.position.set(0, PSy, 0);
-    model.rotation.set(0, Math.PI/16, 0);
-    const scala = 110;
-    model.scale.set(scala,scala,scala);
-  });  
-  ////////// BACKGROUND ///////
-  const listenerBcg = new THREE.AudioListener();
-  camera.add(listenerBcg);
-  const audioLoader = new THREE.AudioLoader();
-  const backgroundSound = new THREE.Audio( listenerBcg );
-  audioLoader.load('audio/deep-meditation-192828.mp3', function( buffer ) {
-    backgroundSound.setBuffer( buffer );
-    backgroundSound.setLoop( true );
-    backgroundSound.setVolume( 0.1 );
-    backgroundSound.play();
-  });     
-};
+
+    const loaderPlanet2 = new GLTFLoader();
+    loaderPlanet2.load('3d/heart/CV_Heart_color_3.glb', (gltf) => {
+      const model = gltf.scene;
+      model.traverse((node) => {
+        if (node.isMesh) {
+          node.castShadow = true;
+          node.receiveShadow = true;
+          node.material.side = THREE.DoubleSide;
+        }
+      });
+      model.position.set(0, PSy, 0);
+      model.rotation.set(0, Math.PI / 28.5, 0);
+      const scala = 400;
+      model.scale.set(scala, scala, scala);
+      scene.add(model);
+    });
+
+    ////////// BACKGROUND ///////
+    const listenerBcg = new THREE.AudioListener();
+    camera.add(listenerBcg);
+    const audioLoader = new THREE.AudioLoader();
+    const backgroundSound = new THREE.Audio( listenerBcg );
+    audioLoader.load('audio/deep-meditation-192828.mp3', function( buffer ) {
+      backgroundSound.setBuffer( buffer );
+      backgroundSound.setLoop( true );
+      backgroundSound.setVolume( 0.1 );
+      backgroundSound.play();
+    });  
+    
+    controls.lock(); 
+  };
