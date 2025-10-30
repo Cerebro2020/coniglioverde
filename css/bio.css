@@ -82,6 +82,11 @@ section {
   align-content: center;
 }
 
+.cv a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
 .bio-date {
   width: 20%;
   font-weight: 100;
@@ -94,6 +99,11 @@ section {
   width: 80%;
   padding: 4px 8px;  
   letter-spacing: 2.2px;
+}
+
+.bio-content a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .bio-date-c {
@@ -401,6 +411,10 @@ section {
   align-items: center;
   justify-content: center;
 }
+.credits a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
 
 .title-credits {
   height: 50px;
@@ -454,6 +468,6 @@ section {
   }
 
   .credits a {
-    font-size: 14px;
+    font-size: 14px;    
   }
 }

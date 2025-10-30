@@ -68,8 +68,8 @@ canvas:active {
 
 .video-container-full video {
   /* border: 1px solid red; */
-  height: 50%; 
-  width: 50%;
+  height: 70%; 
+  width: 70%;
   object-fit: cover;
 }
 
@@ -108,7 +108,12 @@ iframe {
 
 .scrolling {
   position: absolute;
-  bottom: 100px 
+  left: 0px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 46px 
 }
 
 

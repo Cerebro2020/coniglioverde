@@ -52,14 +52,14 @@ export default function(){
   vTexture2.format = THREE.RGBAFormat;
   // SCENE & FOG
   scene.background = new THREE.Color(0x000000);
-  scene.fog = new THREE.Fog(0x000000,1,70);     
+  scene.fog = new THREE.Fog(0x000000,1,170);     
   // CAMERA
   camera.position.set( 0, 0, 0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
   camera.setFocalLength ( 35 );
   // LIGHTS
   //AMBIENT
-  const ambiente = new THREE.AmbientLight ( 0xffffff, 1 )
+  const ambiente = new THREE.AmbientLight ( 0xffffff, 0.3 )
   scene.add( ambiente);
   //POINT
   const pointLight = new THREE.PointLight( 0xffffff, 0.5, 100); 

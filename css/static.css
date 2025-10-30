@@ -175,6 +175,13 @@ canvas {
   height: 70%;
 }
 
+.home-paragraph p {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 6px;  
+}
+
+
+
 .gallery_central { 
   width: 80vw;  
   margin-top: 10px; 
