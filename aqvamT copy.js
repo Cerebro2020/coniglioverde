@@ -62,10 +62,6 @@ export default function(){
       let boxes1 = [];
       let boxes2 = [];
       let boxes3 = [];
-
-      let prevY1 = [];
-      let prevY2 = [];
-      let prevY3 = [];
       // ====== LUNA ======
       let gLuna = new THREE.SphereGeometry(20,64,64);
       let mLuna = new THREE.MeshPhysicalMaterial({
@@ -88,9 +84,6 @@ export default function(){
       // ====== CREA BOX ====== 
       function createBoxSet(columnIndex, boxesArray) {
         for (let i = 0; i < allCsvData.length; i++) {
-          if (boxesArray === boxes1) prevY1.push(0);
-          if (boxesArray === boxes2) prevY2.push(0);
-          if (boxesArray === boxes3) prevY3.push(0);
           const xOffset = columnIndex * 0;//offset
           let color;                 
           const gBox = new THREE.SphereGeometry(5,8,8);
@@ -236,30 +229,8 @@ export default function(){
             let boxTrans = boxesArray[i];
             let box = boxTrans.children[0];
             if (box) {
-              const currentY = boxTrans.position.y;            
-            // Logica di rotazione in base alla variazione
-
-
-        
-let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
-let previousY = prevYArray[i];
-
-// Logica di rotazione in base alla variazione
-if (previousY === 0 && currentY !== 0) {
-  box.rotation.x = Math.PI / 2;
-} else if (currentY > previousY) {
-  box.rotation.x = -2;
-} else if (currentY < previousY) {
-  box.rotation.x = 0.95;
-} else {
-  box.rotation.x = Math.PI / 2;
-}
-
-box.position.z = -302.5 - (currentY * scaleFactor);
-
-// Salva il valore corrente per il prossimo confronto
-prevYArray[i] = currentY;
-          }
+              box.position.z = -302.5 - (boxTrans.position.y * scaleFactor);
+            }
           }
         }
       
@@ -303,10 +274,6 @@ prevYArray[i] = currentY;
                 let lerpFactor = 0.125/2;
                 let lerpFactor2 = 0.00008;
                 let currentY = boxesArray[i].position.y;
-
-                
-
-
                 boxesArray[i].position.y = THREE.MathUtils.lerp(currentY, targetY, lerpFactor);
                 const targetRY = i * boxSpacingX;
                 const currentRY = boxesArray[i].rotation.y;
@@ -314,26 +281,9 @@ prevYArray[i] = currentY;
                 let scaleFactor = 0.6;
                 let boxTrans = boxesArray[i];
                 let box = boxTrans.children[0];
-              if (box) {
-  let currentY = boxTrans.position.y;
-  let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
-  let previousY = prevYArray[i];
-
-  // Direzione rotazione coda
-  if (currentY > previousY) {
-    box.rotation.x = -2;
-  } else if (currentY < previousY) {
-    box.rotation.x = 0.95;
-  } else {
-    box.rotation.x = Math.PI / 2;
-  }
-
-  // Aggiorna posizione z della coda
-  box.position.z = -302.5 - (currentY * scaleFactor);
-
-  // Salva il valore corrente come precedente per la prossima volta
-  prevYArray[i] = currentY;
-}
+                if (box) {
+                  box.position.z = -302.5 - (boxTrans.position.y * scaleFactor);
+                }
                 prevY = boxesArray[i].position.y;
                 // rotazone coda
                 if (currentY > prevY) {
