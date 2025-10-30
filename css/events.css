@@ -40,7 +40,6 @@ a {
   background: #222;
 }
 .content {
-  /* border: 1px solid rgb(0, 255, 4); */
   position: relative;
   display: flex;
   flex-direction: row;
