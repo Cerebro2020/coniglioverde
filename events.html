@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Felice Vino">
+        <meta name="description" content="Digital creator and storyteller.">
+        <meta property="og:title" content="CONIGLIO VERDE">
+        <meta property="og:description" content="Digital creator and storyteller.">
+        <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
+        <link rel="icon" href="./images/loghi/favicon.ico">
+        <title>coniglioverde|bio</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/events.css">      
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"> 
+        <!-- Loading -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            window.addEventListener("load", function() {
+                const loader = document.getElementById("loader");
+                if (loader) {
+                    loader.style.transition = "opacity 0.6s ease";
+                    loader.style.opacity = "0";
+                    setTimeout(() => loader.style.display = "none", 600);
+                }
+            });
+        </script>        
+    </head>
+    <body>       
+        <div id="loader">
+            <div class="loader"></div>
+            <span></span>
+            <div class="text-loader">
+                <p>Loading...</p>
+            </div>
+        </div>
+       <!-- HOME -->
+       <header>
+            <div id="logo">
+                <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
+            </div>
+            <input id="menu-toggle" type="checkbox" aria-label="Toggle-menu"/>
+            <label class='menu-button-container' for="menu-toggle">
+            <div class='menu-button'></div>        
+            </label class='menu-button-container' for="menu-toggle">
+            <ul class="menu">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="#">PAST EVENTS</a>
+                    <ul class="submenu">
+                        <li><a href="#">VOCALE TOUR</a></li>
+                        <li><a href="#assab">ASSAB ONE</a></li>
+                        <li><a href="#meet">MEET</a></li>
+                    </ul>
+                </li>
+                <li><a href="bio.html">BIO</a></li></li>
+                <li><a href="bio.html#agenda">AGENDA</a></li></li>
+                <!-- <li><a href="bio_it.html">EN | IT</a></li>             -->
+            </ul>
+        </header>
+        <!-- FOOTER -->
+        <footer id="footer">
+            <ul>
+                <li>&copy; 2023 felice vino</li>
+                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
+                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
+            </ul>
+        </footer>
+        <section>
+            <div class="content">
+                <div class="left-text">
+                    <div class="left-title">
+                        <p>
+                            <H1>VOCALE TOUR</H1>
+                        </p>                        
+                    </div>
+                    <br><br>
+                    <div class="left-paragraph">
+                        <p>
+                            Sant'angelo di Romanga <br>
+                            Padova <br>
+                            Roma <br>
+                        </p>
+                    </div>                      
+                </div>
+                <div class="right-pics">
+                    <ul>
+                        <li><img src="images/events/vocale (1).jpg" class="img-wide" alt="event"></li>
+                        <li><img src="images/events/vocale (7).jpeg" class="img-wide" alt="event"></li>
+                        <li><img src="images/events/vocale (5).jpg" class="img-wide" alt="event"></li>                     
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="assab">
+            <div class="content">
+                <div class="right-text"> 
+                    <div class="right-title">
+                        <p>
+                            <H1>ASSAB ONE</H1>
+                        </p>
+                    </div>
+                    <div class="right-paragraph">
+                        <p>
+                            Lorem ipsum infieri alleggi naprenda sectio
+                        </p>
+                    </div>                    
+                </div>
+                <div class="left-pics">
+                    <ul>
+                        <li><img src="images/events/2022_assabone (3).jpeg" class="img-border" alt="event"></li>
+                        <li><img src="images/events/2022_assabone (2).jpeg" class="img-border" alt="event"></li>
+                        <li><img src="images/events/2022_assabone (1).jpeg" class="img-border" alt="event"></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="meet">
+            <div class="content">
+                <div class="right-text"> 
+                    <div class="right-title">
+                        <p>
+                            <H1>MEET</H1>
+                        </p>
+                    </div>
+                    <div class="right-paragraph">
+                        <p>
+                            Lorem ipsum infieri alleggi naprenda sectio
+                        </p>
+                    </div>                    
+                </div>
+                <div class="left-pics">
+                    <ul>
+                        <li><img src="images/events/meet.jpg" class="img-border" alt="event"></li>
+                        <!-- <li><img src="images/events/2022_assabone (2).jpeg" class="img-border" alt="event"></li>
+                        <li><img src="images/events/2022_assabone (1).jpeg" class="img-border" alt="event"></li> -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const pastEvents = document.querySelector('.menu li:nth-child(2)');
+            pastEvents.addEventListener('click', e => {
+                if (window.innerWidth <= 724) {
+                    e.preventDefault();
+                    pastEvents.classList.toggle('show-sub');
+                }
+            });
+        });
+    </script>
+
+
+    </body>
+</html>

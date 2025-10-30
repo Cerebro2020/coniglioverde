@@ -1,0 +1,196 @@
+/* ===== STRUTTURA BASE ===== */
+section {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ===== MENU PERSONALIZZATO PER EVENTS ===== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* voci principali */
+.menu li {
+  position: relative;
+  overflow: visible !important;     /* riabilita visibilità submenu */
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 725px) {
+  .menu li ul.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0,0,0,0.95);
+    border: 1px solid #a2ff00;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 180px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > ul.submenu {
+    display: block;
+  }
+
+  .menu li ul.submenu li a {
+    color: #a2ff00;
+    display: block;
+    padding: 8px 14px;
+    font-size: 14px;
+    text-decoration: none;
+    letter-spacing: 1px;
+  }
+
+  .menu li ul.submenu li a:hover {
+    background: #111;
+    color: #00a2ff;
+  }
+}
+
+@media (max-width: 724px) {
+  /* ===== MENU MOBILE: SUBMENU VERTICALE SOTTO LA VOCE ===== */
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .menu li {
+    width: 100%;
+    text-align: center;
+    overflow: visible !important;
+  }
+
+  /* sottomenu parte del flusso, subito sotto la voce */
+  .menu li ul.submenu {
+    position: static;
+    display: none;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* si apre in verticale, spinge in basso le altre voci */
+  .menu li.show-sub > ul.submenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    animation: expand 0.3s ease;
+  }
+
+  .menu li ul.submenu li {
+    width: 100%;
+  }
+
+  .menu li ul.submenu li a {
+    display: block;
+    width: 100%;
+    color: #a2ff00;
+    font-size: 16px;
+    padding: 6px 0;
+    text-decoration: none;
+    letter-spacing: 3px;
+  }
+
+  .menu li ul.submenu li a:hover {
+    color: #00a2ff;
+  }
+
+  @keyframes expand {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+
+/* ===== CONTENUTO ===== */
+.content {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 80vh;
+  color: #fff;
+  margin: auto;
+}
+
+/* ===== COLONNE ===== */
+.right-text, .left-text, .right-pics, .left-pics {
+  position: relative;
+  width: 50%;
+  margin: 10px;
+}
+
+.left-text, .left-pics { order: 0; }
+.right-text, .right-pics { order: 1; }
+
+.left-pics, .right-pics {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+/* ===== LISTA IMMAGINI ===== */
+.left-pics ul,
+.right-pics ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* ===== BLOCCO IMMAGINE ===== */
+.left-pics li,
+.right-pics li {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* ===== IMMAGINE ===== */
+.left-pics img,
+.right-pics img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: object-fit 0.5s ease, transform 0.5s ease;
+}
+
+/* ===== EFFETTO HOVER ===== */
+.left-pics li:hover img,
+.right-pics li:hover img {
+  object-fit: contain;
+  transform: scale(1.02);
+  background-color: #000;
+}
+
+/* ===== TESTI ===== */
+.content h1 {
+  font-size: 20px;
+  font-weight: 200;
+  font-style: italic;
+}
