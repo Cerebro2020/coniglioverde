@@ -481,7 +481,8 @@ canvas {
   /* font-style: italic; */
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
+  text-underline-offset: 4px; 
+
 }
 
 .p-italic { 
@@ -762,4 +763,3 @@ canvas {
     line-height: 16px;    
   }
 }
-
