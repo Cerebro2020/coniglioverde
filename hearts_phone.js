@@ -165,7 +165,7 @@ export default function(choose, quadri){
     pLight.shadow.mapSize.height = 128; 
     pLight.shadow.camera.near = 0.5; 
     pLight.shadow.camera.far = 10; 
-    scene.add( pLight); 
+    scene.add( pLight);
     const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
     pLight2.position.set(100,200,100);  
     pLight2.castShadow = true;   

@@ -1,6 +1,4 @@
 import * as THREE from 'three';
-import {OrbitControls} from './three_class/OrbitControls.js';
-import {FirstPersonControls} from './three_class/FirstPersonControls.js';
 import { PointerLockControls } from './three_class/PointerLockControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
@@ -28,37 +26,12 @@ export default function(choose, quadri){
   const colore19 = choose[18][1]; 
   const colore20 = choose[19][1];
   //////////////// ARRAY POSIZIONI /////////////
-  const altezza = 4;
-  const positionsM = [
-  // Posizioni del fusto
- [500.0, altezza, 0.0],
-  [475.52826, altezza, 154.5085],
-  [404.5085, altezza, 293.89263],
-  [293.89263, altezza, 404.5085],
-  [154.5085, altezza, 475.52826],
-  [0.0, altezza, 500.0],
-  [-154.5085, altezza, 475.52826],
-  [-293.89263, altezza, 404.5085],
-  [-404.5085, altezza, 293.89263],
-  [-475.52826, altezza, 154.5085],
-  [-500.0, altezza, 0.0],
-  [-475.52826, altezza, -154.5085],
-  [-404.5085, altezza, -293.89263],
-  [-293.89263, altezza, -404.5085],
-  [-154.5085, altezza, -475.52826],
-  [0.0, altezza, -500.0],
-  [154.5085, altezza, -475.52826],
-  [293.89263, altezza, -404.5085],
-  [404.5085, altezza, -293.89263],
-  [475.52826, altezza, -154.5085]
-  ];
+  
   const clock = new THREE.Clock();
   let mixer;
   window.resetCamera = resetCamera;
   // SCENE  
   const scene = new THREE.Scene();
-  // scene.background = new THREE.Color(  0x00FFFFFF );
-
   const loader2 = new THREE.TextureLoader();
   loader2.load('images/equiangular/Esky2.png', texture => {
     texture.colorSpace = THREE.SRGBColorSpace;// colori corretti
@@ -72,37 +45,39 @@ export default function(choose, quadri){
   camera.position.set(0,player.height,-400);
   
   const velocity = new THREE.Vector3();
-const direction = new THREE.Vector3();
-const move = {
-  forward: false,
-  backward: false,
-  left: false,
-  right: false,
-  up: false,     // salita con SPACE
-  down: false    // discesa con SHIFT
-};
+  const direction = new THREE.Vector3();
+  const move = {
+    forward: false,
+    backward: false,
+    left: false,
+    right: false,
+    up: false,     // salita con SPACE
+    down: false    // discesa con SHIFT
+  };
 
-document.addEventListener('keydown', event => {
-  switch (event.code) {
-    case 'KeyW': move.forward = true; break;
-    case 'KeyS': move.backward = true; break;
-    case 'KeyA': move.left = true; break;
-    case 'KeyD': move.right = true; break;
-    case 'Space': move.up = true; break;
-    case 'ShiftLeft': move.down = true; break;
-  }
-});
+  document.addEventListener('keydown', event => {
+    switch (event.code) {
+      case 'KeyW': move.forward = true; break;
+      case 'KeyS': move.backward = true; break;
+      case 'KeyA': move.left = true; break;
+      case 'KeyD': move.right = true; break;
+      case 'Space': move.up = true; break;
+      case 'ShiftLeft': move.down = true; break;
+    }
+  });
 
-document.addEventListener('keyup', event => {
-  switch (event.code) {
-    case 'KeyW': move.forward = false; break;
-    case 'KeyS': move.backward = false; break;
-    case 'KeyA': move.left = false; break;
-    case 'KeyD': move.right = false; break;
-    case 'Space': move.up = false; break;
-    case 'ShiftLeft': move.down = false;  break;
-  }
-});
+    document.addEventListener('keyup', event => {
+      switch (event.code) {
+        case 'KeyW': move.forward = false; break;
+        case 'KeyS': move.backward = false; break;
+        case 'KeyA': move.left = false; break;
+        case 'KeyD': move.right = false; break;
+        case 'Space': move.up = false; break;
+        case 'ShiftLeft': move.down = false;  break;
+      }
+  }); 
+
+  
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
   camera.setFocalLength (25);
@@ -111,13 +86,7 @@ document.addEventListener('keyup', event => {
     alpha:true, 
     antialias:true
   });
-  // CONTROLS //////
-  // const controls = new OrbitControls( camera, renderer.domElement );
-  // controls.listenToKeyEvents( window );
-  // controls.listenToKeyEvents( window );
-  // controls.minDistance =  35;    
-  // controls.maxDistance = 1500;
-  // controls.maxPolarAngle = 1.5; 
+  
   const controls = new PointerLockControls(camera, document.body); 
 
   controls.addEventListener('lock', () => {
@@ -171,12 +140,10 @@ document.addEventListener('keyup', event => {
   spotLight.shadow.camera.near = 0.5; 
   spotLight.shadow.camera.far = 4000;
   scene.add(spotLight);
-
   const spotHelper = new THREE.SpotLightHelper(spotLight);
   //scene.add(spotHelper);
-
   //POINTS 
-  const pLight = new THREE.SpotLight(0xffffff,2,5000);  
+  const pLight = new THREE.SpotLight(0xffffff,2,1000);  
   pLight.position.set(0,2000,0);  
   pLight.castShadow = true;  
   pLight.shadow.mapSize.width = 128; 
@@ -186,9 +153,8 @@ document.addEventListener('keyup', event => {
   scene.add( pLight); 
   const pointH1 = new THREE.PointLightHelper(pLight,100);
   scene.add(pointH1);
-
   const pointLH1 = new THREE.PointLightHelper(pLight,1);
-    scene.add( pointLH1 );
+  scene.add( pointLH1 );
   const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
   pLight2.position.set(100,200,100);  
   pLight2.castShadow = true;   
@@ -198,43 +164,36 @@ document.addEventListener('keyup', event => {
   pLight2.shadow.camera.far = 100; // default
   // scene.add(pLight2);
   // ANIMATE SCENE //////
-  function animateScene() {
-  requestAnimationFrame(animateScene);
-  const delta = clock.getDelta();
-  if (mixer) mixer.update(delta);
-
-  // movimento FPS
-  velocity.x -= velocity.x * 0.5 * delta;
-  velocity.z -= velocity.z * 0.5 * delta;
-
-  direction.z = Number(move.forward) - Number(move.backward);
-  direction.x = Number(move.right) - Number(move.left);
-  direction.normalize();
-
-  if (move.forward || move.backward) velocity.z -= direction.z * 50 * delta;
-  if (move.left || move.right) velocity.x -= direction.x * 50 * delta;
-
-  controls.moveRight(-velocity.x * delta);
-  controls.moveForward(-velocity.z * delta);
-  if (move.up) {
-  controls.getObject().position.y += 50 * delta;
-}
-const floorHeight = 1.8;
-if (move.down) {
-  if (controls.getObject().position.y > floorHeight) {
-    controls.getObject().position.y -= 50 * delta;
-    // Evita di andare sotto al pavimento
-    if (controls.getObject().position.y < floorHeight) {
-      controls.getObject().position.y = floorHeight;
+    function animateScene() {
+    requestAnimationFrame(animateScene);
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
+    // movimento FPS
+    velocity.x -= velocity.x * 0.5 * delta;
+    velocity.z -= velocity.z * 0.5 * delta;
+    direction.z = Number(move.forward) - Number(move.backward);
+    direction.x = Number(move.right) - Number(move.left);
+    direction.normalize();
+    if (move.forward || move.backward) velocity.z -= direction.z * 50 * delta;
+    if (move.left || move.right) velocity.x -= direction.x * 50 * delta;
+    controls.moveRight(-velocity.x * delta);
+    controls.moveForward(-velocity.z * delta);
+    if (move.up) {
+    controls.getObject().position.y += 50 * delta;
+  }
+  const floorHeight = 1.8;
+  if (move.down) {
+    if (controls.getObject().position.y > floorHeight) {
+      controls.getObject().position.y -= 50 * delta;
+      // Evita di andare sotto al pavimento
+      if (controls.getObject().position.y < floorHeight) {
+        controls.getObject().position.y = floorHeight;
+      }
     }
   }
-}
-
-  renderer.render(scene, camera);
-}
+    renderer.render(scene, camera);
+  }
   animateScene();
-
-
   //TEXTURES
   const loader = new THREE.TextureLoader();
   let skin = loader.load("images/textures/alluminium.jpg");

@@ -5,7 +5,6 @@ import { GLTFLoader } from './three_class/GLTFLoader.js';
 export default function(){
 
   const clock = new THREE.Clock();
-  window.resetCamera = resetCamera;
   // === SCENE  ===
   const scene = new THREE.Scene();
   scene.background = new THREE.Color( 0x008888 );  
@@ -156,45 +155,7 @@ export default function(){
     backgroundSound2.play();
   });
 
-  // === PULSANTI ===
-  // Selezioniamo i pulsanti //
-  let cameraButton = document.querySelector('#btn-camera button');   
-  cameraButton.addEventListener('click', function() {
-    resetCamera();
-  });  
-  function resetCamera() {
-    camera.position.set(  0, 0, -150 ); 
-    camera.rotation.set( 1, 0, 0 );
-    camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
-    controls.listenToKeyEvents( window );
-    controls.minDistance =  5;    
-    controls.maxDistance = 1400;
-    controls.maxPolarAngle = 1.5; 
-  }
-  let audioButton = document.querySelector('#btn-audio button');
-  let isPlaying = true;
-  audioButton.addEventListener('click', function() {
-    if (isPlaying) {
-      backgroundSound.pause();
-      backgroundSound2.pause();
-      soundEmme.pause();      
-      soundChiha.pause();
-      soundCiocca.pause();
-      soundAccavalla.pause();
-      // soundFotogramma.pause();
-      // soundPeriferia.pause();
-    } else {
-      backgroundSound.play();
-      backgroundSound2.play();
-      soundEmme.play();      
-      soundChiha.play();
-      soundAccavalla.play();
-      soundCiocca.play();      
-      // soundFotogramma.play();
-      // soundPeriferia.play();
-    }
-    isPlaying = !isPlaying;
-  });
+ 
   // SPEAKER - GLTF   
   const speakerLoader = new GLTFLoader();
   speakerLoader.load(    
@@ -340,41 +301,7 @@ export default function(){
     console.error(error);      
     } 
   );
-  // CAMERA POSITION //////////
-  let positions = [ 
-     
-    {moveTime:0,waitTime:0,
-      pos:{x:20,y:4.5,z:-68}
-    },/*partenza__*/
-    {moveTime:40,waitTime:30,
-      pos:{x:-2,y:1.5,z:-58}
-    },/*Emme1*/
-    {moveTime:6,waitTime:79,
-      pos: {x:-22,y:1,z:-98}
-    },/*ChiHa*/
-    {moveTime:16,waitTime:43,
-      pos: {x:-22,y:22,z:40}
-    },/*Acca*/
-    {moveTime:10,waitTime:24, 
-      pos: {x:22,y:-18,z:-62}
-    },/*Cioc*/
-  ]; 
-
-  let tweenScene = function(index) {
-    if (index >= positions.length) index = 0;  
-    gsap.to(camera.position, {
-      duration: positions[index].moveTime,
-      x: positions[index].pos.x,
-      y: positions[index].pos.y,
-      z: positions[index].pos.z,
-      onComplete: function() {
-        gsap.delayedCall(positions[index].waitTime, function() {
-          tweenScene(index + 1);
-        });
-      }    
-    });
-  };  
-  tweenScene(0);
+    
   animate();
   if (typeof controls !== 'undefined') controls.enabled = false;
 };

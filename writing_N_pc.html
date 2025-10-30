@@ -17,6 +17,7 @@
         <!-- Loading -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
             $(document).ready(function() {
@@ -42,7 +43,7 @@
             }
         </script>	
         <script type = "module">
-            import scene from "./writing_neutropoli.js";          
+            import scene from "./writing_N_pc.js";          
             scene();
         </script>  
         <header>
@@ -63,36 +64,11 @@
         <div class="info_leyer">
             <div id="info">
                 <p>
-                    POINTER directon<br>WSDA constols
+                    WASD&nbsp;&nbsp;>&nbsp;&nbsp;Move &nbsp; &nbsp; SHIFT/SPACE&nbsp;&nbsp;>&nbsp;&nbsp;/Down<br>  
+                    Mouse&nbsp;&nbsp;>&nbsp;&nbsp;Look &nbsp; &nbsp; &nbsp;ESC/Click&nbsp;&nbsp;>&nbsp;&nbsp;Out/In 
                 </p>
             </div>
         </div>      
-    
-        <div id="cam-nav" class="button-controls">
-            <!-- <button data-goto="0">Start</button> -->
-            <button data-goto="1">1</button>
-            <button data-goto="2">2</button>
-            <button data-goto="4">3</button>
-            <button data-goto="6">4</button>
-            <!-- <button data-goto="6">5</button>
-            <button data-goto="6">6</button> -->
-
-            <button data-cam="pause">
-                <img src="images/icons/play-buttton.png" alt="play icon">
-            </button>
-
-            <div id="btn-audio">
-                <button>
-                    <img src="images/icons/equalizer.png" alt="sound icon">
-                </button>
-            </div>  
-            <div id="btn-camera">
-                <button type="button">
-                    <img src="images/icons/refresh.png" alt="refresh icon">
-                </button>
-            </div>  
-
-        </div>
         <footer id="footer"> 
             <ul>
                 <li>&copy; 2023 felice vino</li>

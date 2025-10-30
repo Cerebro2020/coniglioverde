@@ -124,8 +124,8 @@ function onMouseMove( event ) {
 	const camera = this.camera;
 	_euler.setFromQuaternion( camera.quaternion );
 
-	_euler.y -= movementX * 0.002 * this.pointerSpeed;
-	_euler.x -= movementY * 0.002 * this.pointerSpeed;
+	_euler.y -= movementX * 0.0006 * this.pointerSpeed;
+	_euler.x -= movementY * 0.0006 * this.pointerSpeed;
 
 	_euler.x = Math.max( _PI_2 - this.maxPolarAngle, Math.min( _PI_2 - this.minPolarAngle, _euler.x ) );
 
