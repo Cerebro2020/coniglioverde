@@ -125,7 +125,7 @@ export default function(choose, quadri){
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.4); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.8); 
   scene.add( ambient);
   const spotLight = new THREE.SpotLight(0xffffff, 8);
   spotLight.position.set(0,3000,0);
@@ -386,7 +386,7 @@ export default function(choose, quadri){
     let PSy = -100;
     
     const loaderPlanet = new GLTFLoader();
-loaderPlanet.load('3d/heart/CV_Heart_color_2.glb', (gltf) => {
+loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
   const model = gltf.scene;
   model.traverse((node) => {
     if (node.isMesh) {
