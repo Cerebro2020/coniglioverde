@@ -196,67 +196,6 @@ export default function(){
     backgroundSound2.setVolume(0.5);
     //backgroundSound2.play();
   });
-
-  
-// === GRUPPO LUCI A SPIRALE ===
-const totalLights = 34;
-
-const spiralGroup = new THREE.Group();
-scene.add(spiralGroup);
-
-const colors = [
-  0xff9966, 0xffcc33, 0xffff66, 0x99ff66, 0x33ff99, 0x33ffff,
-  0x3399ff, 0x6666ff, 0xcc66ff, 0xff66cc, 0xff6666, 0xffffff,
-  0xff9933, 0x66ff66, 0x33ccff, 0x9966ff, 0xcc99ff, 0xff99cc,
-  0xffcc99, 0x99ffcc, 0x99ccff, 0xccffff, 0xffcccc, 0xccccff
-];
-
-const lights = [];
-const timers = new Array(totalLights).fill(0);
-
-// === Parametri spirale ===
-const baseRadius = 13;
-const radiusStep = 0.7;
-const heightStep = 1.2;
-const angleStep = Math.PI / 6;
-
-// === Creazione luci ferme ===
-for (let i = 0; i < totalLights; i++) {
-  const light = new THREE.PointLight(colors[i], 0, 10); // spente inizialmente
-  const angle = i * angleStep;
-  const radius = baseRadius + i * radiusStep;
-  const x = Math.cos(angle) * radius;
-  const y = i * heightStep * 0.4;
-  const z = Math.sin(angle) * radius;
-  light.position.set(x, y, z);
-  spiralGroup.add(light);
-  lights.push(light);
-}
-
-// === Accensione e spegnimento casuale ===
-function animateLights() {
-  requestAnimationFrame(animateLights);
-
-  for (let i = 0; i < totalLights; i++) {
-    const light = lights[i];
-
-    // Countdown casuale per ogni luce
-    if (timers[i] <= 0) {
-      timers[i] = Math.random() * 200 + 60; // tempo prima del prossimo cambio
-      const turnOn = Math.random() < 0.4;   // 40% probabilità di accendersi
-      light.intensity = turnOn ? 1 : 0;     // ON/OFF netto
-    } else {
-      timers[i]--;
-    }
-  }
-
-  renderer.render(scene, camera);
-}
-
-animateLights();
-
-
-
  
   document.addEventListener('DOMContentLoaded', function() {
     let audioToggleButton = document.getElementById('audio-toggle-button');

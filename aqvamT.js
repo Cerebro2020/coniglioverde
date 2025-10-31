@@ -241,21 +241,21 @@ export default function(){
 
 
         
-let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
-let previousY = prevYArray[i];
+  let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
+  let previousY = prevYArray[i];
 
-// Logica di rotazione in base alla variazione
-if (previousY === 0 && currentY !== 0) {
-  box.rotation.x = Math.PI / 2;
-} else if (currentY > previousY) {
-  box.rotation.x = -2;
-} else if (currentY < previousY) {
-  box.rotation.x = 0.95;
-} else {
-  box.rotation.x = Math.PI / 2;
-}
+  // Logica di rotazione in base alla variazione
+  if (previousY === 0 && currentY !== 0) {
+    box.rotation.x = Math.PI / 2;
+  } else if (currentY > previousY) {
+    box.rotation.x = -2;
+  } else if (currentY < previousY) {
+    box.rotation.x = 0.95;
+  } else {
+    box.rotation.x = Math.PI / 2;
+  }
 
-box.position.z = -302.5 - (currentY * scaleFactor);
+  box.position.z = -302.5 - (currentY * scaleFactor);
 
 // Salva il valore corrente per il prossimo confronto
 prevYArray[i] = currentY;

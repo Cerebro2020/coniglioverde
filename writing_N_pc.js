@@ -1,10 +1,8 @@
 import * as THREE from 'three';
-// import {FirstPersonControls} from './three_class/FirstPersonControls.js';
 import { PointerLockControls } from './three_class/PointerLockControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(){
-
   const clock = new THREE.Clock();
   // === SCENE  ===
   const scene = new THREE.Scene();
@@ -231,6 +229,8 @@ document.addEventListener('keyup', (e) => {
       // AUDIO DISTANCE  
       function animateScene(){
         requestAnimationFrame( animateScene );
+
+        ////
         // DELTA AGGIORNATO   
         const delta = clock.getDelta();
         velocity.set(0, 0, 0);
