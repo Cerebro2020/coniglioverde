@@ -46,10 +46,11 @@
   }
 
   .home-title h2 { 
-    /* top: -20px;    */
-    font-size: 60px;
+    font-size: 14px;
     font-style: normal; 
-    font-weight: 100;
+    font-weight: 100;    
+    line-height: 18px;
+    letter-spacing: 3px;
   }
 
   .home-paragraph { 
