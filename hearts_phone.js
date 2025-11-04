@@ -80,6 +80,22 @@ export default function(choose, quadri){
     down: false    // discesa con SHIFT
   };
 
+   const video = document.createElement('video');
+    video.src = "video/video_textures/water_loop.mp4";
+    video.loop = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.autoplay = true;
+    video.style.display = "none";
+    document.body.appendChild(video);
+    video.load();
+    video.play();
+  
+  const videoTexture = new THREE.VideoTexture(video);
+  videoTexture.minFilter = THREE.LinearFilter;
+  videoTexture.magFilter = THREE.LinearFilter;
+  videoTexture.format = THREE.RGBAFormat;
+
   document.addEventListener('keydown', event => {
     switch (event.code) {
       case 'KeyW': move.forward = true; break;
@@ -141,19 +157,20 @@ export default function(choose, quadri){
     //AMBIENT
     const ambient = new THREE.AmbientLight(0xFFFFFF,0.4); 
     scene.add( ambient);
-    const spotLight = new THREE.SpotLight(0xffffff, 8);
-    spotLight.position.set(0,3000,0);
-    spotLight.angle = Math.PI/16;
-    spotLight.penumbra = 0.5;
-    spotLight.decay = 3;
-    spotLight.distance = 9000;
-    // spotLight.castShadow = true;
-    spotLight.shadow.mapSize.width = 128;
-    spotLight.shadow.mapSize.height = 128;
-    spotLight.shadow.radius = 4;
-    spotLight.shadow.camera.near = 0.5; 
-    spotLight.shadow.camera.far = 4000;
-    scene.add(spotLight);
+   const spotLight = new THREE.SpotLight(0xffffff, 3);
+    spotLight.position.set(600,1000,0);
+     spotLight.angle = Math.PI/4;
+     spotLight.penumbra = 0.5;
+     spotLight.decay = 3;
+     spotLight.distance = 9000;
+     spotLight.castShadow = true;
+     spotLight.shadow.mapSize.width = 2048;
+     spotLight.shadow.mapSize.height = 2048;
+     spotLight.shadow.radius = 4;
+     spotLight.shadow.camera.near = 0.1; 
+     spotLight.shadow.camera.far = 10000;
+     spotLight.shadow.bias = -0.0005;
+     scene.add(spotLight); 
     const spotHelper = new THREE.SpotLightHelper(spotLight);
     //scene.add(spotHelper);
 
@@ -396,6 +413,30 @@ export default function(choose, quadri){
     }); 
     controls.lock();
   }); 
+
+  let radiusC = 900;
+  let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
+  let poolM = new THREE.MeshPhysicalMaterial({
+    color: 0Xffccff,
+    map: videoTexture,
+     metalness: 0.05,
+    roughness: 0.1,
+    transmission: 1.0, 
+    transparent: true,
+    opacity: 0.5,
+    ior: 1.333,  
+    thickness: 1.5,    
+    displacementMap: videoTexture,
+    displacementScale: 1, 
+    clearcoat: 1,        
+    clearcoatRoughness: 0.05,
+  });
+  
+  let pool = new THREE.Mesh(poolG,poolM);
+  pool.position.set(0,-99,0);
+  pool.rotation.set(0,Math.PI,0);
+  pool.receiveShadow = true;
+  scene.add(pool);
 
     ////////// BACKGROUND ///////
     const listenerBcg = new THREE.AudioListener();
