@@ -33,10 +33,11 @@ export default function(){
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
-    renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight);  
+  });
   // === CAMERA 2 === 
   camera.lookAt(new THREE.Vector3( 0, player.height, 10));
   camera.lookAt( 0, 60, 800); 

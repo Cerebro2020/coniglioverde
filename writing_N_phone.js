@@ -31,10 +31,11 @@ export default function(){
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
-    renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight);  
+  });
   // === CAMERA 2 === 
   camera.lookAt(new THREE.Vector3( 0, player.height, 10));
   camera.lookAt( 0, 60, 800); 
@@ -340,6 +341,25 @@ export default function(){
     console.error(error);      
     } 
   );
+
+  // == TEWEEN ==
+  let currentTween = null;
+
+document.querySelectorAll('[data-goto]').forEach(button => {
+  button.addEventListener('click', (e) => {
+    const targetIndex = parseInt(button.getAttribute('data-goto'), 10);
+
+    if (!isNaN(targetIndex)) {
+      if (currentTween) {
+        currentTween.kill();
+        currentTween = null;
+      }
+      tweenScene(targetIndex);
+    }
+  });
+});
+
+
   // CAMERA POSITION //////////
   let positions = [ 
      
@@ -360,20 +380,40 @@ export default function(){
     },/*Cioc*/
   ]; 
 
+  
   let tweenScene = function(index) {
-    if (index >= positions.length) index = 0;  
-    gsap.to(camera.position, {
-      duration: positions[index].moveTime,
-      x: positions[index].pos.x,
-      y: positions[index].pos.y,
-      z: positions[index].pos.z,
-      onComplete: function() {
-        gsap.delayedCall(positions[index].waitTime, function() {
-          tweenScene(index + 1);
-        });
-      }    
-    });
-  };  
+  if (index >= positions.length) index = 1;
+
+  if (currentTween) {
+    currentTween.kill();
+    currentTween = null;
+  }
+
+  currentTween = gsap.to(camera.position, {
+    duration: positions[index].moveTime,
+    x: positions[index].pos.x,
+    y: positions[index].pos.y,
+    z: positions[index].pos.z,
+    onComplete: function () {
+      currentTween = null;
+
+      // === PLAY AUDIO CORRETTO ===
+      soundEmme.stop();
+      soundChiha.stop();
+      soundAccavalla.stop();
+      soundCiocca.stop();
+
+      if (index === 1) soundEmme.play();
+      if (index === 2) soundChiha.play();
+      if (index === 3) soundAccavalla.play();
+      if (index === 4) soundCiocca.play();
+
+      gsap.delayedCall(positions[index].waitTime, function () {
+        tweenScene(index + 1);
+      });
+    }
+  });
+};
   tweenScene(0);
   animate();
   if (typeof controls !== 'undefined') controls.enabled = false;

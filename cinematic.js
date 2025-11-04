@@ -15,14 +15,15 @@ export default function(){
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement ); 
-  // RESIZE WINDOW
+   // === RESIZE WINDOW ===
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
-    renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } );
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight);  
+  });
   // VIDEO  
   // VIDEO 1
   var video1 = document.createElement('video');

@@ -13,7 +13,7 @@ export default function(){
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-    camera.position.set(18,player.height+5,30);
+    camera.position.set(19.5,player.height+5,30);
    
     //=== RENDERER ===
     const renderer = new THREE.WebGLRenderer({    
@@ -35,10 +35,12 @@ export default function(){
     window.addEventListener('resize', function(){
       var width = window.innerWidth;
       var height = window.innerHeight;
-      renderer.setSize( width, height );
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-    } );
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+   
     // === CAMERA 2 === 
     camera.lookAt(new THREE.Vector3( 0, player.height, 10));
     camera.lookAt( 0, 0, 0); 

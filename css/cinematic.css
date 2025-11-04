@@ -1,20 +1,21 @@
+/* === CANVAS CURSOR === */
 canvas {  
   cursor: grab;  
 }
-
 canvas:active {				
   cursor: grabbing;
 }
 
+/* === INFO LAYER === */
 .info_leyer { 
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 100%;
   height: 60px;
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;          
+  z-index: 10;
 }
 
 #info-white {
@@ -24,78 +25,55 @@ canvas:active {
 }
 
 #info-white p {  
-  color: rgb(255, 255, 255);  
+  color: white;  
   text-align: center; 
   font-size: 12px;
   font-weight: 400;		
 }
 
+/* === PAGE CONTAINER === */
 .page-container {
   width: 100%;
   height: 86vh;
   position: absolute;
-  top: 0px;
+  top: 0;
   display: flex;
   flex-direction: column;   
   align-items: center;  
 }
 
-.video-container { 
-  border: 1px solid red;
-  width: 100vw;
-  height: auto;
-  /* width: 100vw; */
-  position: absolute;  
-  top: 0px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;  
-}
-
-.video-container video {  
-  object-fit: cover; 
-}
-
+/* === FULLSCREEN VIDEO CONTAINER === */
 .video-container-full { 
   position: absolute;  
-  /* top: 0px; */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;   
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;   
+  overflow: hidden;
+  z-index: -1; /* Behind content */
 }
 
 .video-container-full video {
-  /* border: 1px solid red; */
-  height: 70%; 
-  width: 70%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.page-project {
-  min-height: 100vh;
-}
-
-.home-title h1 {
-  font-size: 60px;
-  line-height: 50px;
-}
-
-.home-title h2 {
-  font-size: 30px;
-  line-height: 30px;
-}
-
+/* === IFRAME FULLSCREEN === */
 iframe {
-  width:100%; 
-  height:100vh;  
- }
+  width: 100%; 
+  height: 100vh;  
+}
 
+/* === TEXT CONTAINER === */
 .text-container {
   position: relative;
   width: 60%;
-  height: 50%;   
+  max-width: 800px;
+  height: auto;
   font-size: 22px;
   line-height: 24px;
   font-weight: 100; 
@@ -106,45 +84,19 @@ iframe {
   font-style: italic;
 }
 
+/* === SCROLLING === */
 .scrolling {
   position: absolute;
-  left: 0px;
+  left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  bottom: 46px 
+  bottom: 46px;
 }
 
-
-@media (max-width: 1024px) {
-  .text-container {
-    width: 80%;    
-  }
-  
-}
-
-@media (max-width: 724px) { 
-  
-  .home-title h1 {
-    font-size: 40px;
-    line-height: 36px;
-  }
-
-  .home-title h2 {
-    font-size: 20px;
-    line-height: 20px;
-  }
- 
-  .home-paragraph p {
-    font-size: 16px;
-    line-height: 17px;
-  } 
-}
-
-/* PLAY */
+/* === BUTTON CONTROLS === */
 .button-controls {
-  /* border: 1px solid red; */
   width: 90%;
   position: absolute;
   display: flex;
@@ -154,22 +106,97 @@ iframe {
   z-index: 1;
 }
 
-#btn-pause button , #btn-camera button , #btn-audio button {
+#btn-pause button,
+#btn-camera button,
+#btn-audio button {
   background-color: rgba(255, 255, 255, 0);
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
-  width:70px;
+  color: white;
+  border: 1px solid white;
+  width: 70px;
   height: 20px;
-  margin-right: 10px;;
+  margin-right: 10px;
   border-radius: 12px;
   font-size: 9px;
   font-weight: 100;    
+  transition: all 0.2s ease;
 }
 
-#btn-pause button:hover, #btn-camera button:hover,  #btn-audio button:hover {
+#btn-pause button:hover,
+#btn-camera button:hover,
+#btn-audio button:hover {
   cursor: pointer;
-  border: 1px solid rgb(162, 255, 0);
+  border-color: rgb(162, 255, 0);
   color: rgb(162, 255, 0);
 }
 
+/* === TYPOGRAPHY === */
+.home-title h1 {
+  font-size: 60px;
+  line-height: 50px;
+}
 
+.home-title h2 {
+  font-size: 30px;
+  line-height: 30px;
+}
+
+.home-paragraph p {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .text-container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 724px) {
+  .home-title h1 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .home-title h2 {
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .home-paragraph p {
+    font-size: 16px;
+    line-height: 17px;
+  }
+
+  .text-container {
+    width: 90%;
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .video-container-full {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+@media (max-width: 724px) {
+  .video-container-full {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  .video-container-full video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}

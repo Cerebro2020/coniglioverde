@@ -125,44 +125,41 @@ export default function(choose, quadri){
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.8); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1); 
   scene.add( ambient);
-  const spotLight = new THREE.SpotLight(0xffffff, 8);
-  spotLight.position.set(0,3000,0);
-  spotLight.angle = Math.PI/16;
+  const spotLight = new THREE.SpotLight(0xffffff, 2);
+  spotLight.position.set(600,2000,0);
+  spotLight.angle = Math.PI/8;
   spotLight.penumbra = 0.5;
   spotLight.decay = 3;
   spotLight.distance = 9000;
-  // spotLight.castShadow = true;
-  spotLight.shadow.mapSize.width = 128;
-  spotLight.shadow.mapSize.height = 128;
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize.width = 2048;
+  spotLight.shadow.mapSize.height = 2048;
   spotLight.shadow.radius = 4;
-  spotLight.shadow.camera.near = 0.5; 
-  spotLight.shadow.camera.far = 4000;
-  scene.add(spotLight);
-  const spotHelper = new THREE.SpotLightHelper(spotLight);
-  //scene.add(spotHelper);
+  spotLight.shadow.camera.near = 0.1; 
+  spotLight.shadow.camera.far = 10000;
+  spotLight.shadow.bias = -0.0005;
+  scene.add(spotLight); 
   //POINTS 
   const pLight = new THREE.SpotLight(0xffffff,2,1000);  
   pLight.position.set(0,2000,0);  
   pLight.castShadow = true;  
-  pLight.shadow.mapSize.width = 128; 
-  pLight.shadow.mapSize.height = 128; 
+  pLight.shadow.mapSize.width = 2048; 
+  pLight.shadow.mapSize.height = 2048; 
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 10; 
-  scene.add( pLight); 
-  const pointH1 = new THREE.PointLightHelper(pLight,100);
-  scene.add(pointH1);
-  const pointLH1 = new THREE.PointLightHelper(pLight,1);
-  scene.add( pointLH1 );
+  pLight.shadow.bias = -0.0005;
+  scene.add( pLight);  
   const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
-  pLight2.position.set(100,200,100);  
+  pLight2.position.set(100,2000,100);  
   pLight2.castShadow = true;   
-  pLight2.shadow.mapSize.width = 2048; // default
-  pLight2.shadow.mapSize.height = 2048; // default
-  pLight2.shadow.camera.near = 0.5; // default
-  pLight2.shadow.camera.far = 100; // default
-  // scene.add(pLight2);
+  pLight2.shadow.mapSize.width = 2048; 
+  pLight2.shadow.mapSize.height = 2048;
+  pLight2.shadow.camera.near = 0.5; 
+  pLight2.shadow.camera.far = 100;
+  pLight2.shadow.bias = -0.0005; 
+  scene.add(pLight2);
   // ANIMATE SCENE //////
     function animateScene() {
     requestAnimationFrame(animateScene);
@@ -196,7 +193,10 @@ export default function(choose, quadri){
   animateScene();
   //TEXTURES
   const loader = new THREE.TextureLoader();
-  let skin = loader.load("images/textures/alluminium.jpg");
+  let skin = loader.load("images/textures/marble_2.jpg");
+  skin.wrapS = THREE.RepeatWrapping;
+  skin.wrapT = THREE.RepeatWrapping;
+  skin.repeat.set(8,8);
   let skin2 = loader.load("images/textures/Bronze.jpg");
   let skin2Trans = loader.load("images/textures/skin2T.png");
   skin2Trans.colorSpace = THREE.NoColorSpace;
@@ -378,6 +378,15 @@ export default function(choose, quadri){
         );
         clone.rotation.y = angolo; 
         clone.scale.set(5,5,5);
+        clone.traverse((node) => {
+        if (node.isMesh) {
+          node.material = node.material.clone();
+          node.material.transparent = true;
+          node.material.opacity = 0.4;  // o quanto vuoi
+        }
+      });
+        
+       
         scene.add(clone);
       }
       scene.add(ret);   
@@ -386,15 +395,16 @@ export default function(choose, quadri){
     let PSy = -100;
     
     const loaderPlanet = new GLTFLoader();
-loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
-  const model = gltf.scene;
-  model.traverse((node) => {
-    if (node.isMesh) {
-      node.castShadow = true;
-      node.receiveShadow = true;
-      node.material.side = THREE.DoubleSide;
-    }
-  });
+    loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
+      const model = gltf.scene;
+      model.traverse((node) => {
+        if (node.isMesh) {
+          // node.material.map = skin;
+          node.castShadow = true;
+          node.receiveShadow = true;
+          node.material.side = THREE.DoubleSide;
+        }
+      });
   model.position.set(0, PSy, 0);
   model.rotation.set(0, Math.PI / 28.5, 0);
   const scala = 400;
