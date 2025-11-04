@@ -130,6 +130,7 @@ header img {
 .menu > li {
   margin: 0 1rem;
   overflow: hidden;
+  background-color: #000000;
 }
 
 /* .menu li:last-child a {
@@ -141,7 +142,7 @@ header img {
 .menu li a {                
   color: #a2ff00; 
   /* color: #ff00a2; 
-  color: #00a2ff; */
+  color: #00a2ff; */  
   text-decoration: none;
   font-size: 16px;   
   font-weight: 300;
@@ -420,6 +421,8 @@ canvas {
   height: 50vh;  
   margin-left: 34%;
 }
+
+
 
 .data-text {
   width: 40%;  

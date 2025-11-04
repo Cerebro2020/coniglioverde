@@ -43,9 +43,9 @@ cursor: grabbing;
 }
 
 /* COVER AND BOOK CONTAINER*/
-.container-book { 
+.container-book {
   width: 80%;
-  height: 80%; 
+  height: 80%;
   display: flex;
   flex-direction: row;
   align-items: first baseline;

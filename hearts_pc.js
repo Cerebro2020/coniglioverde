@@ -141,7 +141,7 @@ videoTexture.format = THREE.RGBAFormat;
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,1); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1.5); 
   scene.add( ambient);
   const spotLight = new THREE.SpotLight(0xffffff, 3);
  spotLight.position.set(600,1000,0);
@@ -398,7 +398,7 @@ videoTexture.format = THREE.RGBAFormat;
         if (node.isMesh) {
           node.material = node.material.clone();
           node.material.transparent = true;
-          node.material.opacity = 0.4;  // o quanto vuoi
+          node.material.opacity = 1;  // o quanto vuoi
         }
       });
         
@@ -448,13 +448,13 @@ let poolM = new THREE.MeshPhysicalMaterial({
   ior: 1.333,  
   thickness: 1.5,    
   displacementMap: videoTexture,
-  displacementScale: 1, 
+  displacementScale: 0, 
   clearcoat: 1,        
   clearcoatRoughness: 0.05,
 });
 
 let pool = new THREE.Mesh(poolG,poolM);
-pool.position.set(0,-99,0);
+pool.position.set(0,-102,0);
 pool.rotation.set(0,Math.PI,0);
 pool.receiveShadow = true;
 scene.add(pool);

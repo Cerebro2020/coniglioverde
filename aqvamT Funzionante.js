@@ -55,50 +55,10 @@ export default function(){
   // ====== XHR ======
   const xhr = new XMLHttpRequest();
   xhr.open('GET', './texts/aqvam.csv', true);
-
-
-    function makeTextSprite(message, parameters = {}) {
-      const fontSize = parameters.fontSize || 40;
-      const fontColor = parameters.color || '#ffffff';
-      const fontFace = parameters.font || 'Arial';
-
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
-
-      context.font = `${fontSize}px ${fontFace}`;
-      const textWidth = context.measureText(message).width;
-
-      canvas.width = textWidth;
-      canvas.height = fontSize * 1.4;
-
-      // Reimposta font dopo resize
-      context.font = `${fontSize}px ${fontFace}`;
-      context.fillStyle = fontColor;
-      context.fillText(message, 0, fontSize);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.needsUpdate = true;
-
-      const spriteMaterial = new THREE.SpriteMaterial({
-        map: texture,
-        transparent: true,
-      });
-
-      const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.scale.set(canvas.width / 10, canvas.height / 10, 1);
-
-      return sprite;
-    }
-
-let labelFollowMap = [];
-
-
   xhr.onload = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let rows = xhr.responseText.split('\n');
-      let allCsvRaw = rows.slice(1).map(row => row.split(','));
-      let names = allCsvRaw.map(row => row[0]);
-      let allCsvData = allCsvRaw.map(row => row.slice(1).map(Number));
+      let allCsvData = rows.slice(1).map(row => row.split(',').map(Number));
       let boxes1 = [];
       let boxes2 = [];
       let boxes3 = [];
@@ -152,45 +112,13 @@ let labelFollowMap = [];
           // ====== CODA ======
           lineVer.position.set(0, 0, 35);
           lineVer.rotation.set(Math.PI / 2, 0, 0);
-          box.add(lineVer, boxLine);0
+          box.add(lineVer, boxLine);
           box.rotation.x = Math.PI / 2;               
           // ====== centro trasparente
           let boxTrans = new THREE.Mesh(gBox, mTrans);
           boxTrans.position.z += xOffset;                    
           boxTrans.add(box);
           scene.add(boxTrans);
-
-          // Calcolo angolo radiale
-          let angle = (i / allCsvData.length) * 2 * Math.PI + columnIndex * 0.05;
-          let radius = 100 + columnIndex * 200;
-          let labelHeight = 50;
-
-          // Posizione finale dell’etichetta
-          let endX = Math.cos(angle) * radius;
-          let endZ = Math.sin(angle) * radius;
-          let endY = box.position.y + labelHeight;
-
-          // Creazione del ray (linea) dalla testa alla scritta
-          let points = [
-            new THREE.Vector3(0, 0, 0), // in locale, la testa è origine
-            new THREE.Vector3(endX - box.getWorldPosition(new THREE.Vector3()).x, 
-                    endY - box.getWorldPosition(new THREE.Vector3()).y,
-                    endZ - box.getWorldPosition(new THREE.Vector3()).z)
-            ];
-            let lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-            let lineMat = new THREE.LineBasicMaterial({ color: 0xffffff });
-            let line = new THREE.Line(lineGeo, lineMat);
-            box.add(line);
-            line.visible = false; // se vuoi che resti invisibile
-
-            // Aggiungi il testo (sprite)
-            let label = makeTextSprite(names[i]);            
-            label.position.set(endX, endY, endZ);
-            scene.add(label);
-
-            labelFollowMap.push({ box: box, label: label });
-
-
           boxesArray.push(boxTrans);
         }
       }
@@ -235,17 +163,13 @@ let labelFollowMap = [];
         setBoxesVisibility(boxes3, isVisibleBoxes3);
       });
       function setBoxesVisibility(boxes, isVisible) {
-  boxes.forEach(box => {
-    const shouldShow = isVisible && box.position.y >= 0.999999;
-    box.visible = shouldShow;
-
-    // Trova la label corrispondente
-    let match = labelFollowMap.find(entry => entry.box === box);
-    if (match) {
-      match.label.visible = shouldShow;
-    }
-  });
-}
+        boxes.forEach(box => {
+          box.visible = isVisible;
+          if (box.position.y < 0.999999) {
+            box.visible = false;
+          }
+        });
+      }
       // Ensure the boxes' visibility is respected during jump or previous actions
       function updateVisibility() {
         setBoxesVisibility(boxes1, isVisibleBoxes1);
@@ -391,25 +315,25 @@ prevYArray[i] = currentY;
                 let boxTrans = boxesArray[i];
                 let box = boxTrans.children[0];
               if (box) {
-              let currentY = boxTrans.position.y;
-              let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
-              let previousY = prevYArray[i];
+  let currentY = boxTrans.position.y;
+  let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
+  let previousY = prevYArray[i];
 
-              // Direzione rotazione coda
-              if (currentY > previousY) {
-                box.rotation.x = -2;
-              } else if (currentY < previousY) {
-                box.rotation.x = 0.95;
-              } else {
-                box.rotation.x = Math.PI / 2;
-              }
+  // Direzione rotazione coda
+  if (currentY > previousY) {
+    box.rotation.x = -2;
+  } else if (currentY < previousY) {
+    box.rotation.x = 0.95;
+  } else {
+    box.rotation.x = Math.PI / 2;
+  }
 
-                // Aggiorna posizione z della coda
-                box.position.z = -302.5 - (currentY * scaleFactor);
+  // Aggiorna posizione z della coda
+  box.position.z = -302.5 - (currentY * scaleFactor);
 
-                // Salva il valore corrente come precedente per la prossima volta
-                prevYArray[i] = currentY;
-                }
+  // Salva il valore corrente come precedente per la prossima volta
+  prevYArray[i] = currentY;
+}
                 prevY = boxesArray[i].position.y;
                 // rotazone coda
                 if (currentY > prevY) {
@@ -425,11 +349,6 @@ prevYArray[i] = currentY;
                 } else {
                   boxesArray[i].visible = true;
                 } 
-
-                let match = labelFollowMap.find(entry => entry.box === boxesArray[i]);
-                if (match) {
-                  match.label.visible = boxesArray[i].visible;
-                }
                    
                 if (Math.abs(currentRotation - targetRotation) < 1) {
                   if (currentColumn === 0) {
@@ -450,14 +369,7 @@ prevYArray[i] = currentY;
           animateBoxes(boxes1, 1); 
           animateBoxes(boxes2, 2);
           animateBoxes(boxes3, 3);
-        }
-        
-        labelFollowMap.forEach(({ box, label }) => {
-          const worldPos = new THREE.Vector3();
-          box.getWorldPosition(worldPos);
-          label.position.set(worldPos.x, worldPos.y + 30, worldPos.z); // +30 per tenerla sopra
-        });
-
+        }          
         controls.update(clock.getDelta());
         renderer.render(scene, camera); 
         }           
