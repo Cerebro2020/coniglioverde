@@ -44,6 +44,7 @@ cursor: grabbing;
 
 /* COVER AND BOOK CONTAINER*/
 .container-book {
+  /* border: 1px solid greenyellow; */
   width: 80%;
   height: 80%;
   display: flex;
@@ -70,14 +71,19 @@ cursor: grabbing;
 }
 
 /* 2 */
-.text-container {  
-  width: 60%;
+.text-container { 
+  /* border: 1px solid orange;  */
+  width: 80%;
   height: 90%;
   display: flex;
   flex-direction: column;  
   align-items: center;
   justify-content: space-around;
   padding: 0px; 
+}
+
+.text-book {
+  /* border: 1px solid rgb(55, 136, 169); */
 }
 
 .text-book h2 {
@@ -114,8 +120,12 @@ cursor: grabbing;
   font-style: italic;  
 }
 
-.button_div_writing {
+.button_div_writing {  
+  /* border: 1px solid rgb(255, 57, 47); */
+  width: 20%;
   position: absolute;
+  display: flex;
+  justify-content: space-between;
   bottom: 130px;   
   z-index: 9999;
 }
@@ -161,25 +171,6 @@ cursor: grabbing;
   z-index: 999;
 }
 
- /* #btn-camera button , #btn-audio button {
-  background-color: rgba(255, 255, 255, 0);
-  color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
-  width:70px;
-  height: 20px;
-  margin-right: 10px;;
-  border-radius: 12px;
-  text-align: center;
-  font-size: 9px;
-  font-weight: 100;
-}
-  
-#btn-camera button:hover,  #btn-audio button:hover {
-  cursor: pointer;
-  border: 1px solid rgb(162, 255, 0);
-  color: rgb(162, 255, 0);
-} */
-
 .scrolling {
   position: absolute;
   bottom: 52px 
@@ -191,15 +182,13 @@ cursor: grabbing;
 }
 
 .sub-up p {
-  font-size: 16px;  
+  font-size: 20px;
 }
 
 .sub-up a {
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
 }
-
-
 
 @media (max-width: 1024px) {
 
@@ -284,7 +273,7 @@ cursor: grabbing;
     width: 100%;
     height: 30%;   
   }
-    
+  
   .cover-container img {     
     width: 100%;
     height: auto;
@@ -309,31 +298,17 @@ cursor: grabbing;
   } 
   
   .text-book p {
-    font-size: 16px;
-    line-height: 17px;
+    font-size: 18px;
+    line-height: 19px;
     font-weight: 100; 
   }  
 
   .button_div_writing {
-    height: 10%;  
-    justify-content: left;  
+    width: 70%;   
   }
 
   .video_performance {
     display: none;
-  }  
-
-  /* .video_performance {
-    width: 30%;
-    height: 90%;
-    display: flex;
-    flex-direction: row;  
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-  }
-
-  .video_performance img {
-    width: 100%; 
-  }     */
+  } 
+  
 }
