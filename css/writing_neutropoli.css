@@ -28,7 +28,7 @@ footer {
 .button-controls button {
   background-color: rgba(154, 255, 2, 0);
   color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
+  border: 0px solid rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -58,7 +58,7 @@ footer {
  #btn-camera button , #btn-audio button {
   background-color: rgba(154, 255, 2, 0);
   color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
+  border: 0px solid rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;

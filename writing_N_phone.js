@@ -4,15 +4,22 @@ import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(){
 
+  let autoSequenceActive = true;
+  let jumpRequested = false;
+  let jumpStarted = false;
+  let autoMode = true;
+
+  let cameraIsMoving = false;
   const clock = new THREE.Clock();
-  window.resetCamera = resetCamera;
+  // window.resetCamera = resetCamera;
   // === SCENE  ===
   const scene = new THREE.Scene();
   scene.background = new THREE.Color( 0x008888 );  
   scene.fog = new THREE.Fog(0x008888, 10, 100);
   // === CAMERA ===
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-  camera.position.set(20,4.5,-68);
+  camera.position.set(30,4.5,-150);
+  
   // === PLAYER ===
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
   //=== RENDERER ===
@@ -42,8 +49,8 @@ export default function(){
   camera.setFocalLength ( 25 );
   // === CONTROLS ===
   const controls = new FirstPersonControls(camera, renderer.domElement);   
-  controls.movementSpeed = 4;
-  controls.lookSpeed = 0.015;
+  controls.movementSpeed = 0.001;
+  controls.lookSpeed = 0.0001;
   // LIGHTS
   //AMBIENT
   const ambiente = new THREE.AmbientLight ( 0xffffff, 0.2 )
@@ -97,7 +104,7 @@ export default function(){
   var loaderEmme = new THREE.AudioLoader(); 
   loaderEmme.load('./audio/neutropoli/01_emmeuno.m4a', function(buffer) {
     soundEmme.setBuffer(buffer);
-    soundEmme.setLoop(true);
+    soundEmme.setLoop(false);
     soundEmme.setVolume(1);
     //soundEmme.play();
   });
@@ -108,7 +115,7 @@ export default function(){
   var loaderChiha = new THREE.AudioLoader();    
   loaderChiha.load('./audio/neutropoli/02_chiha.m4a', function(buffer) {
     soundChiha.setBuffer(buffer);
-    soundChiha.setLoop(true);
+    soundChiha.setLoop(false);
     soundChiha.setVolume(1);
   //soundChiha.play();
   });  
@@ -119,7 +126,7 @@ export default function(){
   var loaderAccavalla = new THREE.AudioLoader();   
   loaderAccavalla.load('./audio/neutropoli/03_seaccavalla.m4a', function(buffer) {
     soundAccavalla.setBuffer(buffer);
-    soundAccavalla.setLoop(true);
+    soundAccavalla.setLoop(false);
     soundAccavalla.setVolume(0.5);
     //soundAccavalla.play();
   });
@@ -130,7 +137,7 @@ export default function(){
   var loaderCiocca = new THREE.AudioLoader();    
   loaderCiocca.load('./audio/neutropoli/04_ciocca.m4a', function(buffer) {
     soundCiocca.setBuffer(buffer);
-    soundCiocca.setLoop(true);
+    soundCiocca.setLoop(false);
     soundCiocca.setVolume(0.5);
     //soundCiocca.play();
   });
@@ -158,20 +165,48 @@ export default function(){
   });
 
   // === PULSANTI ===
+
+  // Crea bottone modalità se non esiste già
+let btnModeContainer = document.createElement('div');
+btnModeContainer.id = 'btn-mode';
+
+let toggleModeButton = document.createElement('button');
+toggleModeButton.id = 'toggle-mode';
+
+const modeIcon = document.createElement('img');
+modeIcon.id = 'mode-icon';
+modeIcon.src = autoMode ? 'images/icons/moviecam.png' : 'images/icons/book.png';
+modeIcon.alt = autoMode ? 'Modalità automatica' : 'Modalità manuale';
+modeIcon.style.width = '16px';
+modeIcon.style.height = '16px';
+
+toggleModeButton.appendChild(modeIcon);
+btnModeContainer.appendChild(toggleModeButton);
+
+// Inserisci nel container dei controlli
+document.getElementById('cam-nav').appendChild(btnModeContainer);
+
+// Listener toggle
+toggleModeButton.addEventListener('click', () => {
+  autoMode = !autoMode;
+  modeIcon.src = autoMode ? 'images/icons/moviecam.png' : 'images/icons/book.png';
+  modeIcon.alt = autoMode ? 'Modalità automatica' : 'Modalità manuale';
+});
+
   // Selezioniamo i pulsanti //
-  let cameraButton = document.querySelector('#btn-camera button');   
-  cameraButton.addEventListener('click', function() {
-    resetCamera();
-  });  
-  function resetCamera() {
-    camera.position.set(  0, 0, -150 ); 
-    camera.rotation.set( 1, 0, 0 );
-    camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
-    controls.listenToKeyEvents( window );
-    controls.minDistance =  5;    
-    controls.maxDistance = 1400;
-    controls.maxPolarAngle = 1.5; 
-  }
+  // let cameraButton = document.querySelector('#btn-camera button');   
+  // cameraButton.addEventListener('click', function() {
+  //   resetCamera();
+  // });  
+  // function resetCamera() {
+  //   camera.position.set(  30, 4.5, -68 ); 
+  //   camera.rotation.set( 1, 0, 0 );
+  //   camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
+  //   controls.listenToKeyEvents( window );
+  //   controls.minDistance =  5;    
+  //   controls.maxDistance = 1400;
+  //   controls.maxPolarAngle = 1.5; 
+  // }
   let audioButton = document.querySelector('#btn-audio button');
   let isPlaying = true;
   audioButton.addEventListener('click', function() {
@@ -196,6 +231,15 @@ export default function(){
     }
     isPlaying = !isPlaying;
   });
+
+    
+    // const modeIcon = document.getElementById('mode-icon');
+
+    // toggleModeButton.addEventListener('click', () => {
+    //   autoMode = !autoMode;
+    //   modeIcon.src = autoMode ? 'images/icons/moviecam.png' : 'images/icons/book.png';
+    //   modeIcon.alt = autoMode ? 'modalità automatica' : 'modalità manuale';
+    // });
   // SPEAKER - GLTF   
   const speakerLoader = new GLTFLoader();
   speakerLoader.load(    
@@ -238,67 +282,58 @@ export default function(){
       speakerCiocca.position.set(-22,13,50);
       scene.add(speakerEmme,speakerChiHa,speakerAccavalla,speakerCiocca);
       // AUDIO DISTANCE  
-      function animateScene(){
-        requestAnimationFrame( animateScene );   
-        controls.update(clock.getDelta());
-        renderer.render( scene, camera );
-        // VAR DISTANCE //
-        var distance = camera.position.distanceTo(speakerEmme.position);
-        var distance2 = camera.position.distanceTo(speakerChiHa.position);
-        var distance3 = camera.position.distanceTo(speakerAccavalla.position);
-        var distance4 = camera.position.distanceTo(speakerCiocca.position);
+      function animateScene() {
+  requestAnimationFrame(animateScene);
+  controls.update(clock.getDelta());
+  renderer.render(scene, camera);
 
-        var volume = 1 - Math.min(distance / 20, 1); 
-        var volume2 = 1 - Math.min(distance2 / 20, 1); 
-        var volume3 = 1 - Math.min(distance3 / 20, 1);      
-        var volume4 = 1 - Math.min(distance4 / 20, 1);  
+  // Blocca logica audio se la camera è in movimento
+  if (!cameraIsMoving) {
+    const distance = camera.position.distanceTo(speakerEmme.position);
+    const distance2 = camera.position.distanceTo(speakerChiHa.position);
+    const distance3 = camera.position.distanceTo(speakerAccavalla.position);
+    const distance4 = camera.position.distanceTo(speakerCiocca.position);
 
-        soundEmme.setVolume(volume);        
-        soundChiha.setVolume(volume2);
-        soundCiocca.setVolume(volume3);
-        soundAccavalla.setVolume(volume4);
+    const volume = 1 - Math.min(distance / 20, 1);
+    const volume2 = 1 - Math.min(distance2 / 20, 1);
+    const volume3 = 1 - Math.min(distance3 / 20, 1);
+    const volume4 = 1 - Math.min(distance4 / 20, 1);
 
-        if (!soundEmme.isPlaying && volume > 0) {
-          soundEmme.play();
-        } else if ( volume <= 0){          
-          soundEmme.play();
-          soundEmme.stop();                      
-        }
-       
-        if (!soundChiha.isPlaying && volume2 > 0) {
-          soundChiha.play();
-        } else if ( volume2 <= 0){
-          soundChiha.play();
-          soundChiha.stop(); 
-        }
+    soundEmme.setVolume(volume);
+    soundChiha.setVolume(volume2);
+    soundCiocca.setVolume(volume3);
+    soundAccavalla.setVolume(volume4);
+
+    if (volume > 0 && !soundEmme.isPlaying) soundEmme.play();
+    else if (volume <= 0 && soundEmme.isPlaying) soundEmme.stop();
+
+    if (volume2 > 0 && !soundChiha.isPlaying) soundChiha.play();
+    else if (volume2 <= 0 && soundChiha.isPlaying) soundChiha.stop();
+
+    if (volume3 > 0 && !soundCiocca.isPlaying) soundCiocca.play();
+    else if (volume3 <= 0 && soundCiocca.isPlaying) soundCiocca.stop();
+
+    if (volume4 > 0 && !soundAccavalla.isPlaying) soundAccavalla.play();
+    else if (volume4 <= 0 && soundAccavalla.isPlaying) soundAccavalla.stop();
+  }
+
+  // Gestione volumi di sottofondo
+  if (
+    soundEmme.isPlaying ||
+    soundChiha.isPlaying ||
+    soundAccavalla.isPlaying ||
+    soundCiocca.isPlaying
+  ) {
+    backgroundSound.setVolume(0.05);
+    backgroundSound2.setVolume(0.07);
+  } else {
+    backgroundSound.setVolume(0.1);
+    backgroundSound2.setVolume(0.07);
+  }
+}
         
-        if (!soundCiocca.isPlaying && volume3 > 0) {
-          soundCiocca.play();
-        } else if ( volume3 <= 0){
-          soundCiocca.play();
-          soundCiocca.stop();
-        }
         
-        if (!soundAccavalla.isPlaying && volume4 > 0) {
-          soundAccavalla.play();;
-        } else if ( volume4 <= 0){
-          soundAccavalla.play();
-          soundAccavalla.stop();
-        }    
-
-        if (soundEmme.isPlaying || soundChiha.isPlaying || soundAccavalla.isPlaying || soundCiocca.isPlaying
-        ) {
-          backgroundSound.setVolume(0.05);
-          backgroundSound2.setVolume(0.07);
-        } else {
-          backgroundSound.setVolume(0.1);
-          backgroundSound2.setVolume(0.07);
-        }        
-        soundEmme.setVolume(volume)
-        soundChiha.setVolume(volume2)
-        soundCiocca.setVolume(volume3)
-        soundAccavalla.setVolume(volume4)
-      };
+  
       animateScene();
     }, 
     undefined, 
@@ -342,10 +377,10 @@ export default function(){
     } 
   );
 
-  // == TEWEEN ==
-  let currentTween = null;
+    // == TEWEEN ==
+    let currentTween = null;
 
-document.querySelectorAll('[data-goto]').forEach(button => {
+    document.querySelectorAll('[data-goto]').forEach(button => {
   button.addEventListener('click', (e) => {
     const targetIndex = parseInt(button.getAttribute('data-goto'), 10);
 
@@ -354,6 +389,12 @@ document.querySelectorAll('[data-goto]').forEach(button => {
         currentTween.kill();
         currentTween = null;
       }
+
+      autoSequenceActive = false;
+      jumpRequested = true;
+      jumpStarted = true;
+
+
       tweenScene(targetIndex);
     }
   });
@@ -363,10 +404,10 @@ document.querySelectorAll('[data-goto]').forEach(button => {
   // CAMERA POSITION //////////
   let positions = [ 
      
-    {moveTime:10,waitTime:0,
-      pos:{x:20,y:4.5,z:-68}
-    },/*partenza__*/
-    {moveTime:40,waitTime:30,
+    {moveTime:0,waitTime:0,
+      pos:{x:30,y:4.5,z:-150}
+    },/*start*/
+    {moveTime:40,waitTime:35,
       pos:{x:-2,y:1.5,z:-58}
     },/*Emme1*/
     {moveTime:6,waitTime:79,
@@ -382,39 +423,115 @@ document.querySelectorAll('[data-goto]').forEach(button => {
 
   
   let tweenScene = function(index) {
-  if (index >= positions.length) index = 1;
+    // let jumpStarted = false;
+    if (index >= positions.length) index = 1;
+    if (currentTween) {
+      currentTween.kill();
+      currentTween = null;
+    }
 
-  if (currentTween) {
-    currentTween.kill();
-    currentTween = null;
-  }
-
-  currentTween = gsap.to(camera.position, {
+    cameraIsMoving = true;
+    currentTween = gsap.to(camera.position, {
     duration: positions[index].moveTime,
     x: positions[index].pos.x,
     y: positions[index].pos.y,
     z: positions[index].pos.z,
+
     onComplete: function () {
       currentTween = null;
+      cameraIsMoving = false;
 
-      // === PLAY AUDIO CORRETTO ===
-      soundEmme.stop();
-      soundChiha.stop();
-      soundAccavalla.stop();
-      soundCiocca.stop();
+      // Ferma eventuali audio attivi
+      // Ferma solo gli audio NON necessari
+      if (index !== 1 && soundEmme.isPlaying) soundEmme.stop();
+      if (index !== 2 && soundChiha.isPlaying) soundChiha.stop();
+      if (index !== 3 && soundAccavalla.isPlaying) soundAccavalla.stop();
+      if (index !== 4 && soundCiocca.isPlaying) soundCiocca.stop();
 
-      if (index === 1) soundEmme.play();
-      if (index === 2) soundChiha.play();
-      if (index === 3) soundAccavalla.play();
-      if (index === 4) soundCiocca.play();
 
-      gsap.delayedCall(positions[index].waitTime, function () {
-        tweenScene(index + 1);
+      // Riproduci l’audio corretto con un piccolo ritardo
+      gsap.delayedCall(0.5, function () {
+        if (index === 1 && !soundEmme.isPlaying) soundEmme.play();
+        if (index === 2 && !soundChiha.isPlaying) soundChiha.play();
+        if (index === 3 && !soundAccavalla.isPlaying) soundAccavalla.play();
+        if (index === 4 && !soundCiocca.isPlaying) soundCiocca.play();
       });
-    }
-  });
+
+      // Procedi alla prossima scena dopo il tempo di attesa
+      const proceedToNextScene = () => {
+  if (jumpStarted) {
+    autoSequenceActive = true;
+    jumpStarted = false;
+  }
+
+  if (autoSequenceActive && autoMode) {
+  if (index < positions.length - 1) {
+    // Avanza normalmente alla prossima scena
+    tweenScene(index + 1);
+  } else {
+    // Ultima scena: torna alla prima posizione con movimento
+    gsap.to(camera.position, {
+      duration: 4,
+      x: positions[0].pos.x,
+      y: positions[0].pos.y,
+      z: positions[0].pos.z,
+      onComplete: () => {
+        tweenScene(0); // riparte da capo!
+      }
+    });
+  }
+}
+
+
+
+
+
+
+
+
 };
-  tweenScene(0);
-  animate();
-  if (typeof controls !== 'undefined') controls.enabled = false;
+
+const setAudioAndProceed = (audio) => {
+  if (!audio.isPlaying) audio.play();
+  audio.source.onended = () => {
+    proceedToNextScene();
+  };
+};
+
+// Avvia audio corretto
+gsap.delayedCall(0.5, function () {
+  if (index === 1) setAudioAndProceed(soundEmme);
+  else if (index === 2) setAudioAndProceed(soundChiha);
+  else if (index === 3) setAudioAndProceed(soundAccavalla);
+  else if (index === 4) setAudioAndProceed(soundCiocca);
+});
+
+// Prendi la durata dell'audio corrente, o fallback a 10 sec
+const audioDurations = {
+  1: soundEmme.buffer ? soundEmme.buffer.duration : 10,
+  2: soundChiha.buffer ? soundChiha.buffer.duration : 10,
+  3: soundAccavalla.buffer ? soundAccavalla.buffer.duration : 10,
+  4: soundCiocca.buffer ? soundCiocca.buffer.duration : 10
+};
+
+const delayTime = audioDurations[index] || 60;
+
+if (autoMode) {
+  gsap.delayedCall(delayTime, proceedToNextScene);
+}
+
+    }
+    });
+  };
+  // 2. Movimento iniziale verso la prima posizione
+  camera.position.set(0, 0, -150);
+gsap.to(camera.position, {
+  duration: 4,
+  x: positions[0].pos.x,
+  y: positions[0].pos.y,
+  z: positions[0].pos.z,
+  onComplete: () => {
+    tweenScene(1); 
+  }
+});
 };
