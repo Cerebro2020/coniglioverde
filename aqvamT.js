@@ -555,7 +555,7 @@ prevYArray[i] = currentY;
     let scaleTorus2 = 1.02 + i/50;
     torus2.scale.set(scaleTorus2, scaleTorus2,1);
     scene.add(torus2);     
-    torus2.visible = !torus2.visible; 
+    torus2.visible = false; 
     const btnCount = document.getElementById('btn-count');
     btnCount.addEventListener('click', () => {
       torus2.visible = !torus2.visible;     

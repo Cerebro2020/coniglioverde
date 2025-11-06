@@ -42,7 +42,7 @@ export default function(choose, quadri){
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,player.height,-400);
+  camera.position.set(0,player.height,-1200);
   
   const velocity = new THREE.Vector3();
   const direction = new THREE.Vector3();
@@ -209,7 +209,7 @@ videoTexture.format = THREE.RGBAFormat;
   animateScene();
   //TEXTURES
   const loader = new THREE.TextureLoader();
-  let skin = loader.load("images/textures/marble_2.jpg");
+  let skin = loader.load("images/textures/marble_2.png");
   skin.wrapS = THREE.RepeatWrapping;
   skin.wrapT = THREE.RepeatWrapping;
   skin.repeat.set(8,8);
@@ -421,19 +421,20 @@ videoTexture.format = THREE.RGBAFormat;
           node.material.side = THREE.DoubleSide;
         }
       });
-  model.position.set(0, PSy, 0);
-  model.rotation.set(0, Math.PI / 28.5, 0);
-  const scala = 400;
-  model.scale.set(scala, scala, scala);
-  scene.add(model);
+      model.position.set(0, PSy, 0);
+      model.rotation.set(0, Math.PI / 28.5, 0);
+      const scala = 400;
+      model.scale.set(scala, scala, scala);
+      scene.add(model);
 
-  mixer = new THREE.AnimationMixer(model);
-  gltf.animations.forEach((clip) => {
-  mixer.clipAction(clip).play();
+      mixer = new THREE.AnimationMixer(model);
+      gltf.animations.forEach((clip) => {
+      mixer.clipAction(clip).play();
+    });
+    controls.lock(); // se vuoi avviare il controllo qui
   });
 
-  controls.lock(); // se vuoi avviare il controllo qui
-});
+  
 
 let radiusC = 900;
 let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);

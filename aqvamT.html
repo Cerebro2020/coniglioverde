@@ -72,19 +72,19 @@
         
         <div class="button-controls-aqvam-left">         
             <div id="btn-play">
-                <button type="button">PLAY</button>
+                <button type="button" ><img src= "images/icons/play-buttton.png"></button>
             </div>          
             <div id="btn-pause">
-            <button type="button">PAUSE</button>        
+            <button type="button"><img src= "images/icons/pause.png"></button>        
                 <div id="submenu" style="display: none;">
                     <div id="btn-hide-boxes1">
-                        <button type="button">AQUIFER</button>
+                        <button type="button" class="active">AQUIFER</button>
                     </div>         
-                    <div id="btn-hide-boxes2">
-                        <button type="button">FILTER</button>
+                    <div id="btn-hide-boxes2" >
+                        <button type="button" class="active">FILTER</button>
                     </div>          
                     <div id="btn-hide-boxes3">
-                        <button type="button">CLOR</button>
+                        <button type="button" class="active">CLOR</button>
                     </div> 
                 </div>
             </div>
@@ -111,10 +111,10 @@
                 <button type="button">TOP</button>
             </div>
             <div id="btn-count">
-                <button type="button">COUNT</button>
+                <button type="button" class="active">COUNT</button>
             </div>        
             <div id="btn-quantity">
-                <button type="button">QUANTITY</button>
+                <button type="button" class="active">QUANTITY</button>
             </div> 
         </div>	
         <footer id="footer">
@@ -124,6 +124,73 @@
                 <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li>
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
-        </footer>      
+        </footer>  
+            <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const playBtn  = document.querySelector('#btn-play button');
+  const pauseBtn = document.querySelector('#btn-pause button');
+
+  const allButtons = document.querySelectorAll(
+    '#btn-start button, #btn-play button, #btn-pause button, #btn-count button, #btn-quantity button, #btn-back button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button, #btn-audio-white button'
+  );
+
+  const multiActiveSelectors = [
+    '#btn-count',
+    '#btn-quantity',
+    '#btn-hide-boxes1',
+    '#btn-hide-boxes2',
+    '#btn-hide-boxes3'
+  ];
+
+  const excludedSelectors = ['#btn-jump-to-column', '#btn-previous-column'];
+
+  // ---- Gestione Play/Pause esclusiva ----
+  function setPlayState(isPlaying) {
+    playBtn.classList.toggle('active', isPlaying);
+    pauseBtn.classList.toggle('active', !isPlaying);
+  }
+
+  playBtn.addEventListener('click',  () => setPlayState(true));
+  pauseBtn.addEventListener('click', () => setPlayState(false));
+
+  // ---- Gestione di tutti gli altri pulsanti ----
+  allButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const parentId = '#' + button.parentElement.id;
+
+      // Esclusi
+      if (excludedSelectors.includes(parentId)) return;
+      // Evita di interferire con play/pause
+      if (parentId === '#btn-play' || parentId === '#btn-pause') return;
+
+      const isMulti = multiActiveSelectors.includes(parentId);
+
+      // Se non fa parte dei gruppi multipli → disattiva altri pulsanti singoli
+      if (!isMulti) {
+        allButtons.forEach(b => {
+          const bParent = '#' + b.parentElement.id;
+          if (
+            !multiActiveSelectors.includes(bParent) &&
+            !excludedSelectors.includes(bParent) &&
+            bParent !== '#btn-play' &&
+            bParent !== '#btn-pause'
+          ) {
+            b.classList.remove('active');
+          }
+        });
+      }
+
+      // Attiva/disattiva solo il pulsante cliccato
+      button.classList.toggle('active');
+    });
+  });
+
+  // ---- Stati iniziali ----
+  setPlayState(true); // play attivo, pause spento
+  document.querySelector('#btn-quantity button')?.classList.add('active'); // quantity attivo
+  document.querySelector('#btn-count button')?.classList.remove('active'); // count disattivo
+});
+</script>
+
     </body>
 </html>

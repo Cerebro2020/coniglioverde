@@ -42,6 +42,12 @@ canvas:active {
 cursor: grabbing;
 }
 
+.home-text {
+  width: 70%;
+  height: 70vh; 
+}
+
+
 /* COVER AND BOOK CONTAINER*/
 .container-book {
   /* border: 1px solid greenyellow; */

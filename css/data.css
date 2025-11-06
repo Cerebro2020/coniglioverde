@@ -32,7 +32,6 @@ body {
 }
 
 .logoh {
-    /* border: 1px solid white; */
     width: 100%;
     display: flex;  
     left: 0px;
@@ -54,21 +53,26 @@ body {
     background-size: cover;
 }
 
-.home-text {
-    height: 90vh;
+#aqvam-install {
 }
 
-.home-title {            
+.home-text {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+}
+
+.home-title { 
+    width: 100%;          
     height: 30%;
 }
 
 .home-paragraph {
-    height: 90%;
-    display: flex;       
-    align-items: flex-end;    
-    justify-content: center;
-    margin-top: auto; 
-    flex-direction: column;
+    display: flex;
+    height: 90%;   
+    text-align: left;
 }
 
 .home-paragraph { 
@@ -95,7 +99,6 @@ body {
 
 .data_ul_list li {
   padding: 8px;
-  border: 1px solid yellow;
 }
 
 /* GALLERY */
@@ -129,42 +132,46 @@ body {
 }
 
 .hearts-menu {
-    /* border: 1px solid yellow; */
+    width: 50%;
+    height: 50px;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.button_div_writing {    
-    /* border: 1px solid blueviolet;   */
-    width: 10%;   
-    height: 20%;
-    display:flex;
-    justify-content: center; 
+.button_div_writing {  
+    width: auto;   
+    height: 20px;
+    display:flex;    
+    justify-content: center;
+    align-items: center;
+    padding: 10px;  
 }
 
 .button_div_writing button {
     background-color: rgba(255, 255, 255, 0);
     width: 70px;
-    height: 20px;
+    height: 25px;
     border: 1px solid #a2ff00;
-    border-radius: 10px;
+    border-radius: 25px;
     color: #a2ff00;
-    font-size: 14px;   
-    border-radius: 2px;
+    font-size: 12px;   
+    font-weight: 100;
 }
 
 .button_div_writing button:hover {
   cursor: pointer;
-  border: 1px solid #a2ff00;
-  color: #a2ff00;
+  border: 1px solid rgb(252, 71, 252) ;
+  color: rgb(252, 71, 252);
 }
 
-.button_div {
+/* .button_div {
   width: 90%;
   display: flex;
   align-items: center; 
   justify-content: right; 
-}
+} */
 
 .button_camera {  
   position: fixed;
@@ -222,7 +229,7 @@ body {
     }
 
     .home-text {                        
-        width:80%;                 
+        width:70%;                 
     }
 
     .home-title {          
@@ -232,12 +239,12 @@ body {
 
     .home-paragraph {            
         width: 100%;
-        height: 46vh;                         
+        height: 60%;                         
     }
 
     .home-paragraph p {                   
-        font-size: 28px;     
-        line-height: 32px;
+        font-size: 24px;     
+        line-height: 30px;
     }  
 }
 
@@ -284,13 +291,16 @@ body {
         line-height: 22px;
     }
 
-    .hearts-menu {
+    /* .hearts-menu {
         width: 80%;
-
-    }
+    } */
+     .hearts-menu {
+    width: 100%;
+    height: 50px;
+}
 
     .button_div_writing {
         width: 100%;   
-        height: 20%;
+        height: auto;
     }
 }
