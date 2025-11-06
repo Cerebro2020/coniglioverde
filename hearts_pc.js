@@ -141,11 +141,12 @@ videoTexture.format = THREE.RGBAFormat;
   } ); 
   // LIGHTS //////
   //AMBIENT
-  const ambient = new THREE.AmbientLight(0xFFFFFF,1.5); 
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1);   
   scene.add( ambient);
-  const spotLight = new THREE.SpotLight(0xffffff, 3);
- spotLight.position.set(600,1000,0);
-  spotLight.angle = Math.PI/4;
+  /* === SPOT LIGHTS ===*/
+  const spotLight = new THREE.SpotLight(0xffffff, 5);
+  spotLight.position.set(0,3000,0);
+  spotLight.angle = Math.PI/16;
   spotLight.penumbra = 0.5;
   spotLight.decay = 3;
   spotLight.distance = 9000;
@@ -156,19 +157,37 @@ videoTexture.format = THREE.RGBAFormat;
   spotLight.shadow.camera.near = 0.1; 
   spotLight.shadow.camera.far = 10000;
   spotLight.shadow.bias = -0.0005;
-  scene.add(spotLight);  
-  //POINTS 
-  const pLight = new THREE.SpotLight(0xffffff,2,1000);  
-  pLight.position.set(0,2000,0);  
+  scene.add(spotLight);
+  
+  const spotLight2 = new THREE.SpotLight(0xffffff, 10);
+  spotLight2.position.set(0,3000,0);
+  spotLight2.angle = Math.PI/4;
+  spotLight2.penumbra = 0.5;
+  spotLight2.decay = 3;
+  spotLight2.distance = 9000;
+  spotLight2.castShadow = true;
+  spotLight2.shadow.mapSize.width = 2048;
+  spotLight2.shadow.mapSize.height = 2048;
+  spotLight2.shadow.radius = 4;
+  spotLight2.shadow.camera.near = 0.1; 
+  spotLight2.shadow.camera.far = 10000;
+  spotLight2.shadow.bias = -0.0005;
+  scene.add(spotLight2);  
+  /* === POINTS === */
+  let plPower = 1;
+
+  const pLight = new THREE.PointLight(0xFFFFFF,plPower,500);  
+  pLight.position.set(-360,400,360);  
   pLight.castShadow = true;  
   pLight.shadow.mapSize.width = 2048; 
   pLight.shadow.mapSize.height = 2048; 
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 10; 
   pLight.shadow.bias = -0.0005;
-  scene.add( pLight);  
-  const pLight2 = new THREE.PointLight( 0xFFFFFF,1,5000);  
-  pLight2.position.set(100,2000,100);  
+  scene.add( pLight); 
+
+  const pLight2 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
+  pLight2.position.set(360,400,-360);  
   pLight2.castShadow = true;   
   pLight2.shadow.mapSize.width = 2048; 
   pLight2.shadow.mapSize.height = 2048;
@@ -176,6 +195,34 @@ videoTexture.format = THREE.RGBAFormat;
   pLight2.shadow.camera.far = 100;
   pLight2.shadow.bias = -0.0005; 
   scene.add(pLight2);
+
+  const pLight3 = new THREE.PointLight(0xFFFFFF,plPower,500);  
+  pLight3.position.set(360,400,360);  
+  pLight3.castShadow = true;  
+  pLight3.shadow.mapSize.width = 2048; 
+  pLight3.shadow.mapSize.height = 2048; 
+  pLight3.shadow.camera.near = 0.5; 
+  pLight3.shadow.camera.far = 10; 
+  pLight3.shadow.bias = -0.0005;
+  scene.add( pLight3); 
+
+  const pLight4 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
+  pLight4.position.set(-360,400,-360);  
+  pLight4.castShadow = true;   
+  pLight4.shadow.mapSize.width = 2048; 
+  pLight4.shadow.mapSize.height = 2048;
+  pLight4.shadow.camera.near = 0.5; 
+  pLight4.shadow.camera.far = 100;
+  pLight4.shadow.bias = -0.0005; 
+  scene.add(pLight3,pLight4);
+
+  const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+  const pLightHelper = new THREE.PointLightHelper(pLight);
+  const pLight2Helper = new THREE.PointLightHelper(pLight2, 100);
+
+  // Aggiungi tutti gli helper alla scena
+  // scene.add(spotLightHelper, pLightHelper, pLight2Helper);
+
   // ANIMATE SCENE //////
     function animateScene() {
     requestAnimationFrame(animateScene);

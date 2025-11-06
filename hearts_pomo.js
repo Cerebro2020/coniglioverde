@@ -49,7 +49,7 @@ export default function(choose,quadri){
   scene.background = new THREE.Color(  0x000000 );
   // LIGHT
   //AMBIENT
-  const ambient = new THREE.AmbientLight( 0xffffff, 0.5 );  
+  const ambient = new THREE.AmbientLight( 0xffffff, 1.5 );  
   scene.add( ambient); 
   //POINTS 
   const pLight = new THREE.PointLight( 0xffffff, 0.26, 2000 );  
@@ -183,7 +183,7 @@ export default function(choose,quadri){
       const torsolo = glt.scene;
       torsolo.position.set(0, -5, 0);
       torsolo.rotation.set(0, -Math.PI/1.4, 0);      
-      torsolo.scale.set(10,10,10);       
+      torsolo.scale.set(11.5,11.5,11.5);       
       torsolo.traverse(function (node) {
         if (node.isMesh) {
           const material = new THREE.MeshPhysicalMaterial({
@@ -192,6 +192,9 @@ export default function(choose,quadri){
             sheenColor: new THREE.Color(v[1]),                 
             metalness: 0.5,            
             roughness: 0.0,
+            bumpMap: TextureF,
+            bumpScale:0.01,
+
           });  
           node.material = material;
           node.castShadow = true;
@@ -225,7 +228,9 @@ export default function(choose,quadri){
       sheenColor: new THREE.Color(v[1]),                  
       metalness: 0.5,            
       roughness: 0.0,
-    }); 
+      bumpMap: TextureF,
+      bumpScale: 1,
+    });     
     if (!forma) {
       forma = formeGeometriche['torus'];
       emoMaterial.color = new THREE.Color(0XC0652B);
@@ -282,7 +287,7 @@ export default function(choose,quadri){
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
     scene.add(ret);
-    ret.position.set(2,k,0);
+    ret.position.set(2,(k*0.85),0);
     ret.rotation.set( 0, k/3.4, 0 );
     ret.scale.set( 3,3,3 );
   })
@@ -296,7 +301,6 @@ export default function(choose,quadri){
     metalness:0.1,
     bumpMap: TextureF,
     bumpScale: 1,
-    //flatShading: true,
     sheenColor: 0xffffff, 
     clearcoat: 0.2, 
     clearcoatRoughness: 0.3,
