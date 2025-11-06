@@ -13,7 +13,8 @@ export default function(){
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-    camera.position.set(18,player.height+5,30);
+    // camera.position.set(18,player.height+5,30);
+    camera.position.set(0,player.height+5,0);
    
     //=== RENDERER ===
     const renderer = new THREE.WebGLRenderer({    
@@ -246,6 +247,8 @@ export default function(){
   scene.add(water);
   // 01 Pavimento 
   const lSala = new GLTFLoader();
+
+  /*
   lSala.load(    
     '3d/aqvam/01_hangar_2.glb',
       function (glt) {
@@ -424,7 +427,28 @@ export default function(){
     function (error) {
       console.error(error);      
     }     
-  ); 
+  ); */
+
+loader.load(
+  '3d/aqvam/CV_Aqvam_Ambient_2.glb',
+  function (glt) {
+    const lSala = glt.scene;
+    lSala.position.set(0, 0, 0);
+    lSala.rotation.set(0, -Math.PI / 2, 0);
+
+    lSala.traverse((node) => {
+      if (node.isMesh) {
+        node.castShadow = true;
+        node.receiveShadow = true;
+        node.material.side = THREE.DoubleSide; // opzionale
+      }
+    });
+
+    scene.add(lSala);
+  },
+  undefined,
+  (error) => console.error(error)
+);
 
   //schermo 1
   const gSchermo = new THREE.CylinderGeometry(2,2,0.1,64,16);
@@ -538,10 +562,6 @@ export default function(){
     controls.getObject().position.y += velocity.y * delta;
 
 }
-
-
-
-
     renderer.render(scene, camera);
   }
   animateScene();
