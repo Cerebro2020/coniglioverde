@@ -124,7 +124,7 @@ canvas:active {
 #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button , #btn-back button ,  #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
+  border: 0px solid rgb(255, 255, 255);
   width:70px;
   height: 20px;
   margin-right: 10px;;
@@ -168,19 +168,6 @@ canvas:active {
   transition: all 0.2s ease-in-out;
 }
 
-
-#btn-hide-boxes1 button.active,
-#btn-hide-boxes2 button.active,
-#btn-hide-boxes3 button.active {
-  border: 1px solid rgb(162, 255, 0);
-  color: rgb(42, 42, 42);
-  transform: scale(0.8);
-  transition: all 0.2s ease-in-out;
-}
-
-
-
-
 #btn-play img, #btn-pause img {
   max-width: 10px;
   filter: invert(1);
@@ -188,7 +175,7 @@ canvas:active {
 
 #btn-count button, #btn-quantity button {
   background-color: rgb(172, 26, 217);  
-  border: 1px solid rgb(255, 255, 255); 
+  border: 0px solid rgb(255, 255, 255); 
   color: rgb(255, 255, 255); 
   width:70px;
   height: 20px;
@@ -221,7 +208,7 @@ canvas:active {
 
 #btn-hide-boxes1 button {
   background-color: rgb(45, 130, 28); 
-  border: 1px solid  rgba(0, 0, 0, 0.5); 
+  border: 0px solid  rgba(0, 0, 0, 0.5); 
   color: rgb(0, 0, 0); 
   width:70px;
   height: 20px;
@@ -232,8 +219,16 @@ canvas:active {
   font-weight: 100;  
 }
 
+#btn-hide-boxes1 button.active {  
+  background-color: rgb(130, 245, 88);
+  border: 1px solid rgb(162, 255, 0); 
+  color: rgb(60, 60, 60);
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out;
+}
+
 #btn-hide-boxes2 button {
-  background-color:  rgb(0, 138, 209);   
+  background-color:  rgb(47, 90, 111);   
   border: 1px solid rgba(0, 0, 0, 0.5);
   color: rgba(0, 0, 0, 0.5); 
   width:70px;
@@ -244,8 +239,15 @@ canvas:active {
   font-size: 9px;
   font-weight: 100;  
 }
+
+#btn-hide-boxes2 button.active {  
+  background-color:  rgb(0, 138, 209);  
+  color: rgb(60, 60, 60);
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out;
+}
 #btn-hide-boxes3 button {
-  background-color: rgb(255, 255, 255);   
+  background-color: rgb(145, 141, 141);   
   border: 1px solid rgb(0, 0, 0); 
   color: rgb(0, 0, 0); 
   width:70px;
@@ -255,6 +257,13 @@ canvas:active {
   text-align: center;
   font-size: 9px;
   font-weight: 100;  
+}
+
+#btn-hide-boxes3 button.active {  
+  background-color:  rgb(255, 255, 255);  
+  color: rgb(60, 60, 60);
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out;
 }
 
 @media (max-width: 724px) {  
