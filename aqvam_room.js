@@ -13,7 +13,8 @@ export default function(){
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-    camera.position.set(0,player.heightssss,8);
+    // camera.position.set(18,player.height+5,30);
+    camera.position.set(0,player.height,-5);
    
     //=== RENDERER ===
     const renderer = new THREE.WebGLRenderer({    
@@ -35,12 +36,10 @@ export default function(){
     window.addEventListener('resize', function(){
       var width = window.innerWidth;
       var height = window.innerHeight;
+      renderer.setSize( width, height );
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-   
+    } );
     // === CAMERA 2 === 
     camera.lookAt(new THREE.Vector3( 0, player.height, 10));
     camera.lookAt( 0, 0, 0); 
@@ -108,100 +107,92 @@ export default function(){
   vTextureQ.format = THREE.RGBAFormat; 
   
   // video schermo 2  
-  var video = document.createElement('video');
-  video.src = "video/aqvam/sphere_skin.mp4";  
-  video.style.display = 'none'; 
-  video.muted = true;
-  video.loop = true; 
-  document.body.appendChild(video);
-  video.load();
-  video.play();
-  var vTexture = new THREE.VideoTexture(video);
-  vTexture.minFilter = THREE.LinearFilter; 
-  vTexture.magFilter = THREE.LinearFilter; 
-  vTexture.format = THREE.RGBAFormat;   
-  
-  var videoW = document.createElement('video');
-  videoW.src = "video/video_textures/water_loop.mp4";
-  videoW.style.display = 'none'; 
-  videoW.muted = true;
-  videoW.loop = true; 
-  document.body.appendChild(videoW);
-  videoW.load();
-  videoW.play();
-  var vTextureW = new THREE.VideoTexture(videoW);
-  vTextureW.minFilter = THREE.LinearFilter;
-  vTextureW.magFilter = THREE.LinearFilter;
-  vTextureW.format = THREE.RGBAFormat;
+  var videoQ = document.createElement('video');
+videoQ.src = "video/aqvam/aqvam_video_2Q.mp4";
+videoQ.muted = true;
+videoQ.loop = true;
+videoQ.playsInline = true;
+videoQ.autoplay = true;
+// invece di display:none
+videoQ.style.opacity = '0';
+videoQ.style.position = 'absolute';
+videoQ.style.width = '1px';
+videoQ.style.height = '1px';
+document.body.appendChild(videoQ);
+videoQ.play().catch(() => {});
+var vTextureQ = new THREE.VideoTexture(videoQ);
+vTextureQ.minFilter = THREE.LinearFilter;
+vTextureQ.magFilter = THREE.LinearFilter;
+vTextureQ.format = THREE.RGBAFormat;
+
+// video schermo 2
+var video = document.createElement('video');
+video.src = "video/aqvam/sphere_skin.mp4";
+video.muted = true;
+video.loop = true;
+video.playsInline = true;
+video.autoplay = true;
+video.style.opacity = '0';
+video.style.position = 'absolute';
+video.style.width = '1px';
+video.style.height = '1px';
+document.body.appendChild(video);
+video.play().catch(() => {});
+var vTexture = new THREE.VideoTexture(video);
+vTexture.minFilter = THREE.LinearFilter;
+vTexture.magFilter = THREE.LinearFilter;
+vTexture.format = THREE.RGBAFormat;
+
+// video schermo 3
+var videoW = document.createElement('video');
+videoW.src = "video/video_textures/water_loop.mp4";
+videoW.muted = true;
+videoW.loop = true;
+videoW.playsInline = true;
+videoW.autoplay = true;
+videoW.style.opacity = '0';
+videoW.style.position = 'absolute';
+videoW.style.width = '1px';
+videoW.style.height = '1px';
+document.body.appendChild(videoW);
+videoW.play().catch(() => {});
+var vTextureW = new THREE.VideoTexture(videoW);
+vTextureW.minFilter = THREE.LinearFilter;
+vTextureW.magFilter = THREE.LinearFilter;
+vTextureW.format = THREE.RGBAFormat;
+
+// fallback per sicurezza
+document.addEventListener('click', () => {
+  [videoQ, video, videoW].forEach(v => {
+    if (v.paused) v.play().catch(() => {});
+  });
+});
   
   ///Lights
   // ambiente
   const ambiente = new THREE.AmbientLight(0xffffff,0.175+0.3);
-
-  let plH = 5;
   // 1
   const pointL = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL.position.set(0,plH,12.5);
+  pointL.position.set(0,1,12.5);
   // 2
   const pointL2 = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL2.position.set(0,plH,-12.5);
+  pointL2.position.set(0,1,-12.5);
   // 3 
   const pointL3 = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL3.position.set(-12.5,plH,12.5);
+  pointL3.position.set(-12.5,1,12.5);
   const pointL4 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL4.position.set(12.5,plH,12.5);
+  pointL4.position.set(12.5,1,12.5);
   const pointL5 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL5.position.set(-12.5,plH,-12.5);
+  pointL5.position.set(-12.5,1,-12.5);
   const pointL6 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL6.position.set(12.5,plH,-12.5); 
+  pointL6.position.set(12.5,1,-12.5); 
 
   pointL.castShadow = true;
-  pointL.shadow.bias = -0.0005;
-  pointL.shadow.mapSize.width = 1024;
-  pointL.shadow.mapSize.height = 1024;
-  pointL.shadow.camera.near = 0.1;
-  pointL.shadow.camera.far = 50;
-  pointL.shadow.radius = 2;
-
   pointL2.castShadow = true;
-  pointL2.shadow.bias = -0.0005;
-  pointL2.shadow.mapSize.width = 1024;
-  pointL2.shadow.mapSize.height = 1024;
-  pointL2.shadow.camera.near = 0.1;
-  pointL2.shadow.camera.far = 50;
-  pointL2.shadow.radius = 2;
-
-  pointL3.castShadow = true;
-  pointL3.shadow.bias = -0.0005;
-  pointL3.shadow.mapSize.width = 1024;
-  pointL3.shadow.mapSize.height = 1024;
-  pointL3.shadow.camera.near = 0.1;
-  pointL3.shadow.camera.far = 50;
-  pointL3.shadow.radius = 2;
-
-  pointL4.castShadow = true;
-  pointL4.shadow.bias = -0.0005;
-  pointL4.shadow.mapSize.width = 1024;
-  pointL4.shadow.mapSize.height = 1024;
-  pointL4.shadow.camera.near = 0.1;
-  pointL4.shadow.camera.far = 50;
-  pointL4.shadow.radius = 2;
-
-  pointL5.castShadow = true;
-  pointL5.shadow.bias = -0.0005;
-  pointL5.shadow.mapSize.width = 1024;
-  pointL5.shadow.mapSize.height = 1024;
-  pointL5.shadow.camera.near = 0.1;
-  pointL5.shadow.camera.far = 50;
-  pointL5.shadow.radius = 2;
-
-  pointL6.castShadow = true;
-  pointL6.shadow.bias = -0.0005;
-  pointL6.shadow.mapSize.width = 1024;
-  pointL6.shadow.mapSize.height = 1024;
-  pointL6.shadow.camera.near = 0.1;
-  pointL6.shadow.camera.far = 50;
-  pointL6.shadow.radius = 2;
+  pointL3.castShadow = true; 
+  pointL4.castShadow = true; 
+  pointL5.castShadow = true; 
+  pointL6.castShadow = true; 
 
   scene.add(ambiente);
   scene.add(pointL);  
@@ -241,67 +232,6 @@ export default function(){
     backgroundSound2.setVolume(0.5);
     //backgroundSound2.play();
   });
-
-  
-// === GRUPPO LUCI A SPIRALE ===
-const totalLights = 34;
-
-const spiralGroup = new THREE.Group();
-scene.add(spiralGroup);
-
-const colors = [
-  0xff9966, 0xffcc33, 0xffff66, 0x99ff66, 0x33ff99, 0x33ffff,
-  0x3399ff, 0x6666ff, 0xcc66ff, 0xff66cc, 0xff6666, 0xffffff,
-  0xff9933, 0x66ff66, 0x33ccff, 0x9966ff, 0xcc99ff, 0xff99cc,
-  0xffcc99, 0x99ffcc, 0x99ccff, 0xccffff, 0xffcccc, 0xccccff
-];
-
-const lights = [];
-const timers = new Array(totalLights).fill(0);
-
-// === Parametri spirale ===
-const baseRadius = 13;
-const radiusStep = 0.7;
-const heightStep = 1.2;
-const angleStep = Math.PI / 6;
-
-// === Creazione luci ferme ===
-for (let i = 0; i < totalLights; i++) {
-  const light = new THREE.PointLight(colors[i], 0, 10); // spente inizialmente
-  const angle = i * angleStep;
-  const radius = baseRadius + i * radiusStep;
-  const x = Math.cos(angle) * radius;
-  const y = i * heightStep * 0.4;
-  const z = Math.sin(angle) * radius;
-  light.position.set(x, y, z);
-  spiralGroup.add(light);
-  lights.push(light);
-}
-
-// === Accensione e spegnimento casuale ===
-function animateLights() {
-  requestAnimationFrame(animateLights);
-
-  for (let i = 0; i < totalLights; i++) {
-    const light = lights[i];
-
-    // Countdown casuale per ogni luce
-    if (timers[i] <= 0) {
-      timers[i] = Math.random() * 200 + 60; // tempo prima del prossimo cambio
-      const turnOn = Math.random() < 0.4;   // 40% probabilità di accendersi
-      light.intensity = turnOn ? 1 : 0;     // ON/OFF netto
-    } else {
-      timers[i]--;
-    }
-  }
-
-  renderer.render(scene, camera);
-}
-
-animateLights();
-
-
-
  
   document.addEventListener('DOMContentLoaded', function() {
     let audioToggleButton = document.getElementById('audio-toggle-button');
@@ -352,8 +282,10 @@ animateLights();
   scene.add(water);
   // 01 Pavimento 
   const lSala = new GLTFLoader();
+
+  
   lSala.load(    
-    '3d/aqvam/CV_Aqvam_Ambient_2.glb',
+    '3d/aqvam/01_hangar_2.glb',
       function (glt) {
       const lSala = glt.scene;
       lSala.position.set(0,0,0);
@@ -367,7 +299,6 @@ animateLights();
             map: concrete,
             bumpMap:concrete,
             bumpScale:-0.001,
-            side: THREE.DoubleSide             
           });
           node.material = material;
           node.castShadow = true;
@@ -381,157 +312,178 @@ animateLights();
       console.error(error);      
     }     
   );
-  // // 02 Pool
-  // const lPool = new GLTFLoader();
-  // lPool.load(    
-  //   '3d/aqvam/02_pool.glb',
-  //     function (glt) {
-  //     const lPool = glt.scene;
-  //     lPool.position.set(0,0,0);
-  //     lPool.rotation.set(0,0,0 );  
-  //     lPool.traverse(function (node) {
-  //       if (node.isMesh) {
-  //         const material = new THREE.MeshPhysicalMaterial({
-  //           color:0x111111,   
-  //           roughness:0, 
-  //           metalness: 0.5,
-  //           ior: 1.460,
-  //         });
-  //         node.material = material;
-  //         node.castShadow = true;
-  //         node.receiveShadow = true;
-  //       }
-  //     });      
-  //     scene.add(lPool);   
-  //   },   
-  //   undefined,
-  //   function (error) {
-  //     console.error(error);      
-  //   }     
-  // );
-  // // 03 Passerelle
-  // const lPasserelle = new GLTFLoader();
-  // lPasserelle.load(    
-  //   '3d/aqvam/03_passerelle_3.glb',
-  //     function (glt) {
-  //     const lPasserelle = glt.scene;
-  //     lPasserelle.position.set(0,0,0);
-  //     lPasserelle.rotation.set(0,-Math.PI/2, 0 ); 
-  //     lPasserelle.traverse(function (node) {
-  //       if (node.isMesh) {
-  //         const material = new THREE.MeshPhysicalMaterial({
-  //           color:0x333333,
-  //           map: weave,  
-  //           roughness: 0.8,        
-  //           bumpMap:weave,
-  //           bumpScale: 0.001,
-  //           reflectivity:0,             
-  //         });
-  //         node.material = material;
-  //         node.castShadow = true;
-  //         node.receiveShadow = true;
-  //       }
-  //     });   
-  //     lPasserelle.castShadow = true,
-  //     lPasserelle.receiveShadow = true,   
-  //     scene.add(lPasserelle);
-  //   },   
-  //   undefined,
-  //   function (error) {
-  //     console.error(error);      
-  //   }     
-  // );  
-  // // 04 Vasca
-  // const lVasca = new GLTFLoader();
-  // lVasca.load(    
-  //   '3d/aqvam/04_vasca.glb',
-  //     function (glt) {
-  //     const lVasca = glt.scene;
-  //     lVasca.position.set(0,0,0);
-  //     lVasca.rotation.set(0, Math.PI/2, 0 );  
-  //     lVasca.traverse(function (node) {
-  //       if (node.isMesh) {
-  //         const material = new THREE.MeshPhysicalMaterial({
-  //           color:0xffffff,
-  //           map: marble,  
-  //           roughness: 0,
-  //           metalness: 0.5,
-  //           emissive: 0x000000,
-  //           emissiveIntensity: 1,
-  //           ior: 1.486,
-  //           reflectivity: 1,
-  //           clearcoat: 1,
-  //           clearcoatRoughness: 0,
-  //           bumpMap:uvMap,
-  //           bumpScale: 0.001,      
-  //         });
-  //         node.material = material;
-  //         node.castShadow = true;
-  //         node.receiveShadow = true;
-  //       }
-  //     });      
-  //     scene.add(lVasca);
-  //   },   
-  //   undefined,
-  //   function (error) {
-  //     console.error(error);      
-  //   }     
-  // );
-  // // 05_visitors
-  // const lVisitors = new GLTFLoader();
-  // lVisitors.load(    
-  //   '3d/aqvam/05_visitors_3.glb',
-  //     function (glt) {
-  //     const lVisitors = glt.scene;
-  //     lVisitors.position.set(0,0,0);
-  //     lVisitors.rotation.set(0,-Math.PI/2, 0 ); 
-  //     lVisitors.traverse(function (node) {
-  //       if (node.isMesh) {
-  //         const material = new THREE.MeshPhysicalMaterial({
-  //           color:0x664488,            
-  //         });
-  //         node.material = material;
-  //         node.castShadow = true;
-  //         node.receiveShadow = true;
-  //       }
-  //     });      
-  //     scene.add(lVisitors);
-  //   },   
-  //   undefined,
-  //   function (error) {
-  //     console.error(error);      
-  //   }     
-  // );
-  // // 06_capsula
-  // const lCapsula = new GLTFLoader();
-  // lCapsula.load(    
-  //   '3d/aqvam/06_capsule_5.glb',
-  //     function (glt) {
-  //     const lCapsula = glt.scene;
-  //     lCapsula.position.set(0,0,0);
-  //     lCapsula.rotation.set(0, -Math.PI/2, 0 );   
-  //     lCapsula.traverse(function (node) {
-  //       if (node.isMesh) {
-  //         const material = new THREE.MeshPhysicalMaterial({
-  //           color:0x333333,
-  //           map: weave,  
-  //           roughness: 0.5,        
-  //           bumpMap:weave,
-  //           bumpScale: 0.001,
-  //           reflectivity:0,      
-  //         });
-  //         node.material = material;
-  //         node.castShadow = true;
-  //         node.receiveShadow = true;
-  //       }
-  //     });      
-  //     scene.add(lCapsula);
-  //   },   
-  //   undefined,
-  //   function (error) {
-  //     console.error(error);      
-  //   }     
-  // ); 
+  // 02 Pool
+  const lPool = new GLTFLoader();
+  lPool.load(    
+    '3d/aqvam/02_pool.glb',
+      function (glt) {
+      const lPool = glt.scene;
+      lPool.position.set(0,0,0);
+      lPool.rotation.set(0,0,0 );  
+      lPool.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color:0x111111,   
+            roughness:0, 
+            metalness: 0.5,
+            ior: 1.460,
+          });
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });      
+      scene.add(lPool);   
+    },   
+    undefined,
+    function (error) {
+      console.error(error);      
+    }     
+  );
+  // 03 Passerelle
+  const lPasserelle = new GLTFLoader();
+  lPasserelle.load(    
+    '3d/aqvam/03_passerelle_3.glb',
+      function (glt) {
+      const lPasserelle = glt.scene;
+      lPasserelle.position.set(0,0,0);
+      lPasserelle.rotation.set(0,-Math.PI/2, 0 ); 
+      lPasserelle.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color:0x333333,
+            map: weave,  
+            roughness: 0.8,        
+            bumpMap:weave,
+            bumpScale: 0.001,
+            reflectivity:0,             
+          });
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });   
+      lPasserelle.castShadow = true,
+      lPasserelle.receiveShadow = true,   
+      scene.add(lPasserelle);
+    },   
+    undefined,
+    function (error) {
+      console.error(error);      
+    }     
+  );  
+  // 04 Vasca
+  const lVasca = new GLTFLoader();
+  lVasca.load(    
+    '3d/aqvam/04_vasca.glb',
+      function (glt) {
+      const lVasca = glt.scene;
+      lVasca.position.set(0,0,0);
+      lVasca.rotation.set(0, Math.PI/2, 0 );  
+      lVasca.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color:0xffffff,
+            map: marble,  
+            roughness: 0,
+            metalness: 0.5,
+            emissive: 0x000000,
+            emissiveIntensity: 1,
+            ior: 1.486,
+            reflectivity: 1,
+            clearcoat: 1,
+            clearcoatRoughness: 0,
+            bumpMap:uvMap,
+            bumpScale: 0.001,      
+          });
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });      
+      scene.add(lVasca);
+    },   
+    undefined,
+    function (error) {
+      console.error(error);      
+    }     
+  );
+  // 05_visitors
+  const lVisitors = new GLTFLoader();
+  lVisitors.load(    
+    '3d/aqvam/05_visitors_3.glb',
+      function (glt) {
+      const lVisitors = glt.scene;
+      lVisitors.position.set(0,0,0);
+      lVisitors.rotation.set(0,-Math.PI/2, 0 ); 
+      lVisitors.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color:0x664488,            
+          });
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });      
+      scene.add(lVisitors);
+    },   
+    undefined,
+    function (error) {
+      console.error(error);      
+    }     
+  );
+  // 06_capsula
+  const lCapsula = new GLTFLoader();
+  lCapsula.load(    
+    '3d/aqvam/06_capsule_5.glb',
+      function (glt) {
+      const lCapsula = glt.scene;
+      lCapsula.position.set(0,0,0);
+      lCapsula.rotation.set(0, -Math.PI/2, 0 );   
+      lCapsula.traverse(function (node) {
+        if (node.isMesh) {
+          const material = new THREE.MeshPhysicalMaterial({
+            color:0x333333,
+            map: weave,  
+            roughness: 0.5,        
+            bumpMap:weave,
+            bumpScale: 0.001,
+            reflectivity:0,      
+          });
+          node.material = material;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });      
+      scene.add(lCapsula);
+    },   
+    undefined,
+    function (error) {
+      console.error(error);      
+    }     
+  );
+
+// loader.load(
+//   '3d/aqvam/CV_Aqvam_Ambient.glb',
+//   function (glt) {
+//     const lSala = glt.scene;
+//     lSala.position.set(0, 0, 0);
+//     lSala.rotation.set(0, -Math.PI / 2, 0);
+
+//     lSala.traverse((node) => {
+//       if (node.isMesh) {
+//         node.castShadow = true;
+//         node.receiveShadow = true;
+//         node.material.side = THREE.DoubleSide; // opzionale
+//       }
+//     });
+
+//     scene.add(lSala);
+//   },
+//   undefined,
+//   (error) => console.error(error)
+// );
 
   //schermo 1
   const gSchermo = new THREE.CylinderGeometry(2,2,0.1,64,16);
@@ -645,10 +597,6 @@ animateLights();
     controls.getObject().position.y += velocity.y * delta;
 
 }
-
-
-
-
     renderer.render(scene, camera);
   }
   animateScene();
