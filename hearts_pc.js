@@ -274,18 +274,18 @@ videoTexture.format = THREE.RGBAFormat;
       'octaedro': new THREE.OctahedronGeometry( 1, 1 )
     };
     const nomiFormeGeometriche = ['dodecaedro','sfera', 'cubo','piramide'  ];    
-    const colori = [
-      'DEC414', 'FEF600', 'FEBE00', 'FFD700', 'C9A021',
-      'FE005B', 'FF0000', 'A32590', 'FB46FF', 'DF73FF',
-      '227BFF', '3E39FF', '222EFF', '001DEC', '2A23A3',
-      '49C51A', '2D7121', '3C6232', '0A5C0A', '008000'
-    ]; 
+     const colori = [
+      'DEC414', 'FEF600', 'FFD700', 'C9A021',
+      'FE005B', 'FF0000', 'A32590', 'DF73FF',
+      '227BFF', '222EFF', '001DEC', '2A23A3',
+      '49C51A', '2D7121', '3C6232', '008000',
+    ];   
     // Definisci i gruppi di colori
     const gruppiColori = [
-      colori.slice(0, 5),  // Primi 5 colori
-      colori.slice(5, 10), // Successivi 5 colori
-      colori.slice(10, 15), // Successivi 5 colori
-      colori.slice(15, 20)  // Ultimi 5 colori
+      colori.slice(0, 4),  // Primi 4 colori
+      colori.slice(4, 8), // Successivi 4 colori
+      colori.slice(8, 12), // Successivi 4 colori
+      colori.slice(12, 16)  // Ultimi 4 colori
     ];      
     const coloreCorrente = new THREE.Color(v[1]).getHexString().toUpperCase(); 
     let contaCorrente = [];

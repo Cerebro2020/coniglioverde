@@ -6,16 +6,16 @@
   padding: 0;   
 }
 
+
 body {
   margin: 0;
   height: 100vh;
-  background-color: #000;
   background-image: url('/images/bcg/sfondo_h5.png');
   background-repeat: no-repeat;
-  background-position: 45% 50%; 
-  background-size: cover;      
+  background-position: 50% 50%;  
+  background-size: cover;    
   background-attachment: fixed;
-  overflow: hidden;
+  overflow: hidden; 
 }
 
 #loader {
@@ -67,6 +67,20 @@ body {
 html{
   scroll-behavior: smooth;   
 }
+
+/* body {  
+  font-size: 100%;  
+  font-family: 'Source Sans 3', sans-serif;   
+  font-weight: 200;
+  color: #ffffff;
+  background-color: rgba(180,0,106, 0);   
+  background-image: url('images/bcg/Gradienti.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%; 
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+} */
 
 .info_leyer {
   position: absolute;  
@@ -253,7 +267,7 @@ a {
 }
     
 #menu-toggle:checked + .menu-button-container .menu-button {
-  background: rgba(220, 18, 18, 0);
+  background: rgba(255, 255, 255, 0);
 }
     
 #menu-toggle:checked + .menu-button-container .menu-button::after {
@@ -325,8 +339,7 @@ a {
 
 /* MENU SWIPER */
 section {  
-  /* background-color: #000000;  
-  background-image: url(/images/bcg/sfondo_h.png);  */
+  /* background-color: #000000;    */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -337,7 +350,7 @@ section {
   height: 50vh;
 }
 
-.swiper { 
+.swiper {    
   width: 100%;
   height: 80vh;
   margin-top: 60px;
@@ -346,7 +359,7 @@ section {
   justify-content: center;
 }
 
-.swiper-slide img {    
+.swiper-slide img { 
 	padding-bottom: 10px;
 	display: block;
 	margin: 0 auto 6px;  
@@ -360,14 +373,7 @@ section {
   cursor: grabbing;
 }
 
-.swiper-slide img:hover {
-  cursor: grabbing;
-  transform: scale(2);
-  z-index: 9999;
-  position: relative;
-}
-
-.swiper-slide { 
+.swiper-slide {
 	width: 100%;
   cursor: grab;  
   color: rgb(255, 255, 255);
@@ -378,7 +384,7 @@ section {
   cursor: grabbing;  
 }
 
-.swiper ul { 
+.swiper ul {   
   text-align: center;
 	list-style: none;
 	display: flex;
@@ -387,7 +393,7 @@ section {
   padding-bottom: 0px;
   margin-left: 29.5%;
   height: 130px;
-  width: 42%; 
+  width: 36%; 
 }
 
 .swiper li {
@@ -467,11 +473,10 @@ section {
 
 .label {  
 	color: rgb(255, 255, 255);
-  padding: 0px;
+  padding: 8px;
 }
 
 .button-choose { 
-  /* border: 1px solid black; */
   position: absolute;
   width: 100%;
   height: 40px;  
@@ -485,9 +490,8 @@ section {
 }
 
 #openscene {  
-  background-color: #ffffff;
-  background-color: #A2FF00;
-  color: #000000;   
+  background-color: #000000;
+  color: #ffffff;   
   width: 80px;
   height: 20px;  
   border-radius: 10px;
@@ -593,139 +597,7 @@ footer img {
 
 }
 
-.emotion-slide {
-  margin-top: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.artwork img {
-  max-width: 300px;
-  height: auto; 
-}
-
-.emotion-wheel {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 500px;
-  height: 500px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-
-.emotion-btn {
-  position: absolute;
-  width: 60px;
-  height: 70px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.emotion-btn svg {
-  width: 16px;
-  height: 16px;  
-}
-
-.emotion-label {
-  font-size: 10px;
-  color: white;
-  margin-top: 2px;
-  pointer-events: none;
-}
-
-.emotion-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 2px white;
-}
-
-.emotion-btn.selected {
-  transform: scale(1.1);
-  box-shadow: 0 0 2px white;
-}
-
-
-
-@media (max-width: 724px) {
-  .emotion-slide {
-    margin-top: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .artwork img {
-    max-width: 150px;
-    height: auto; 
-  }
-
-
-  
-  .emotion-wheel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px; /* 🔽 raggio ridotto */
-    height: 300px;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-  }
-
-
-  .emotion-btn {
-    position: absolute;
-    width: 60px;
-    height: 70px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    pointer-events: auto;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-
-  .emotion-btn svg {
-    width: 14px;
-    height: 14px;    
-  }
-
-  .emotion-label {
-    font-size: 8px;
-    color: white;
-    margin-top: 2px;
-    pointer-events: none;
-  }
-
-  .emotion-btn:hover {
-    transform: scale(0.9);
-    box-shadow: 0 0 2px white;
-  }
-
-  .emotion-btn.selected {
-    transform: scale(1);
-    box-shadow: 0 0 2px white;
-  }
-
-  .swiper-slide img:hover {
-    cursor: grabbing;
-    transform: scale(2);
-    z-index: 9999;
-    position: relative;
-  }
-
+iframe {
+  width:100%; 
+  height:100vh;  
 }

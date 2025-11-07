@@ -18,12 +18,12 @@ export default function(){
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
   // ====== RENDERER ======
   const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,//chiedi MSAA
-      alpha: true,
-      powerPreference: 'high-performance',
-      preserveDrawingBuffer: false,
-      premultipliedAlpha: true
+    canvas,
+    antialias: true,//chiedi MSAA
+    alpha: true,
+    powerPreference: 'high-performance',
+    preserveDrawingBuffer: false,
+    premultipliedAlpha: true
   });
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
@@ -57,42 +57,33 @@ export default function(){
   xhr.open('GET', './texts/aqvam.csv', true);
 
 
-    function makeTextSprite(message, parameters = {}) {
-      const fontSize = parameters.fontSize || 40;
-      const fontColor = parameters.color || '#ffffff';
-      const fontFace = parameters.font || 'Arial';
+  function makeTextSprite(message, parameters = {}) {
+    const fontSize = parameters.fontSize || 40;
+    const fontColor = parameters.color || '#ffffff';
+    const fontFace = parameters.font || 'Arial';
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    context.font = `${fontSize}px ${fontFace}`;
+    const textWidth = context.measureText(message).width;
 
-      const canvas = document.createElement('canvas');
-      const context = canvas.getContext('2d');
+    canvas.width = textWidth;
+    canvas.height = fontSize * 1.4;
 
-      context.font = `${fontSize}px ${fontFace}`;
-      const textWidth = context.measureText(message).width;
-
-      canvas.width = textWidth;
-      canvas.height = fontSize * 1.4;
-
-      // Reimposta font dopo resize
-      context.font = `${fontSize}px ${fontFace}`;
-      context.fillStyle = fontColor;
-      context.fillText(message, 0, fontSize);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.needsUpdate = true;
-
-      const spriteMaterial = new THREE.SpriteMaterial({
-        map: texture,
-        transparent: true,
-      });
-
-      const sprite = new THREE.Sprite(spriteMaterial);
-      sprite.scale.set(canvas.width / 10, canvas.height / 10, 1);
-
-      return sprite;
-    }
-
-let labelFollowMap = [];
-
-
+    // Reimposta font dopo resize
+    context.font = `${fontSize}px ${fontFace}`;
+    context.fillStyle = fontColor;
+    context.fillText(message, 0, fontSize);
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
+    const spriteMaterial = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true,
+    });
+    const sprite = new THREE.Sprite(spriteMaterial);
+    sprite.scale.set(canvas.width / 10, canvas.height / 10, 1);
+    return sprite;
+  }
+  let labelFollowMap = [];
   xhr.onload = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let rows = xhr.responseText.split('\n');
@@ -101,8 +92,7 @@ let labelFollowMap = [];
       let allCsvData = allCsvRaw.map(row => row.slice(1).map(Number));
       let boxes1 = [];
       let boxes2 = [];
-      let boxes3 = [];
-
+      let boxes3 = [];      
       let prevY1 = [];
       let prevY2 = [];
       let prevY3 = [];
@@ -134,7 +124,14 @@ let labelFollowMap = [];
           const xOffset = columnIndex * 0;//offset
           let color;                 
           const gBox = new THREE.SphereGeometry(5,8,8);
-          let mBoxColor = color !== undefined ? color : (columnIndex === 2 ?  0x008AD1 : (columnIndex === 3 ? 0xffffff : 0x2D821C));
+          let mBoxColor;
+          if (boxesArray === boxes1) {
+            mBoxColor = 0x2D821C; // Verde - Aquifier
+          } else if (boxesArray === boxes2) {
+            mBoxColor = 0x008AD1; // Azzurro - Filter
+          } else if (boxesArray === boxes3) {
+            mBoxColor = 0xFFFFFF; // Bianco - Clor
+          }
           const mBox = new THREE.MeshPhysicalMaterial({
             color: mBoxColor,
             //flatShading: true,
@@ -195,9 +192,9 @@ let labelFollowMap = [];
         }
       }
       // Create boxes for the first, second, and third column sets     
-      createBoxSet(1, boxes1 );
-      createBoxSet(2, boxes2 );
-      createBoxSet(3, boxes3 );
+      createBoxSet(0, boxes1 );
+      createBoxSet(1, boxes2 );
+      createBoxSet(2, boxes3 );
       // Function to scale the boxes in the boxes1 array
       function scaleBoxes(boxesArray, scaleX, scaleY, scaleZ) {
         boxesArray.forEach(box => {
@@ -235,17 +232,17 @@ let labelFollowMap = [];
         setBoxesVisibility(boxes3, isVisibleBoxes3);
       });
       function setBoxesVisibility(boxes, isVisible) {
-  boxes.forEach(box => {
-    const shouldShow = isVisible && box.position.y >= 0.999999;
-    box.visible = shouldShow;
+        boxes.forEach(box => {
+          const shouldShow = isVisible && box.position.y >= 0.999999;
+          box.visible = shouldShow;
 
-    // Trova la label corrispondente
-    let match = labelFollowMap.find(entry => entry.box === box);
-    if (match) {
-      match.label.visible = shouldShow;
-    }
-  });
-}
+          // Trova la label corrispondente
+          let match = labelFollowMap.find(entry => entry.box === box);
+          if (match) {
+            match.label.visible = shouldShow;
+          }
+        });
+      }
       // Ensure the boxes' visibility is respected during jump or previous actions
       function updateVisibility() {
         setBoxesVisibility(boxes1, isVisibleBoxes1);
@@ -301,11 +298,10 @@ let labelFollowMap = [];
             } else if (targetY <= 99999999) {
               targetY /= 10000;
               targetY += 500;
-            }
-      
+            }      
+          
             boxesArray[i].position.y = targetY;
-            boxesArray[i].visible = boxesArray[i].position.y >= 1;
-      
+            boxesArray[i].visible = boxesArray[i].position.y >= 1;      
             const targetRY = i * boxSpacingX;
             boxesArray[i].rotation.y = -targetRY;
             let scaleFactor = 0.6;
@@ -315,81 +311,76 @@ let labelFollowMap = [];
               const currentY = boxTrans.position.y;            
             // Logica di rotazione in base alla variazione
 
+            let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
+            let previousY = prevYArray[i];
 
-        
-  let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
-  let previousY = prevYArray[i];
+            // Logica di rotazione in base alla variazione
+            if (previousY === 0 && currentY !== 0) {
+              box.rotation.x = Math.PI / 2;
+            } else if (currentY > previousY) {
+              box.rotation.x = -2;
+            } else if (currentY < previousY) {
+              box.rotation.x = 0.95;
+            } else {
+              box.rotation.x = Math.PI / 2;
+            }
 
-  // Logica di rotazione in base alla variazione
-  if (previousY === 0 && currentY !== 0) {
-    box.rotation.x = Math.PI / 2;
-  } else if (currentY > previousY) {
-    box.rotation.x = -2;
-  } else if (currentY < previousY) {
-    box.rotation.x = 0.95;
-  } else {
-    box.rotation.x = Math.PI / 2;
-  }
+            box.position.z = -302.5 - (currentY * scaleFactor);
 
-  box.position.z = -302.5 - (currentY * scaleFactor);
-
-// Salva il valore corrente per il prossimo confronto
-prevYArray[i] = currentY;
-          }
+            // Salva il valore corrente per il prossimo confronto
+            prevYArray[i] = currentY;
           }
         }
-      
-        animateBoxes(boxes1, 1);
-        animateBoxes(boxes2, 2);
-        animateBoxes(boxes3, 3);
-      }  
-
-      let currentColumn = 0;
-      let totalColumns = Math.floor(allCsvData[0].length / 3);// Numero tot colonne da considerare (1 ogni 3)
-      let rotationPerColumn = -2 * Math.PI / totalColumns; // Rotazione del boxTrans
-      let currentRotation = 0;
-      let targetRotation = rotationPerColumn;
-      function animateScene() {
-        requestAnimationFrame(animateScene);
-        // posizione su asse y altezza
-        if (allCsvData.length > 0) {
-          if (!isPaused && allCsvData.length > 0) {
-          function animateBoxes(boxesArray, startColumnIndex) {
-            for (let i = 0; i < allCsvData.length; i++) {
-              let targetY = allCsvData[i][startColumnIndex + currentColumn * 3];
-              if (targetY <= 9) { //U
-                targetY *= 10;
-              } else if (targetY <= 99) { //D
-                targetY += 100;
-              } else if (targetY <= 999) { //C
-                targetY /= 10;
-                targetY += 200;
-              } else if (targetY <= 9999) { //M
-                targetY /= 100;
-                targetY += 300;
-              } else if (targetY <= 99999) { //DM
-                targetY /= 1000;
-                targetY += 400;
-              } else if (targetY <= 99999999) { //CM
-                targetY /= 10000;
-                targetY += 500;
-              }
+      }
                   
-              if (!isPaused) {
-                let lerpFactor = 0.125/2;
-                let lerpFactor2 = 0.00008;
-                let currentY = boxesArray[i].position.y;
+      animateBoxes(boxes1, 0);
+      animateBoxes(boxes2, 1);
+      animateBoxes(boxes3, 2);
+    }  
 
-                
-
-
-                boxesArray[i].position.y = THREE.MathUtils.lerp(currentY, targetY, lerpFactor);
-                const targetRY = i * boxSpacingX;
-                const currentRY = boxesArray[i].rotation.y;
-                boxesArray[i].rotation.y = THREE.MathUtils.lerp(-currentRY, -targetRY, 1);
-                let scaleFactor = 0.6;
-                let boxTrans = boxesArray[i];
-                let box = boxTrans.children[0];
+    let currentColumn = 0;
+    let totalColumns = Math.floor(allCsvData[0].length / 3);// Numero tot colonne da considerare (1 ogni 3)
+    let rotationPerColumn = -2 * Math.PI / totalColumns; // Rotazione del boxTrans
+    let currentRotation = 0;
+    let targetRotation = rotationPerColumn;
+    function animateScene() {
+      requestAnimationFrame(animateScene);
+      // posizione su asse y altezza
+      if (allCsvData.length > 0) {
+        if (!isPaused && allCsvData.length > 0) {
+        function animateBoxes(boxesArray, startColumnIndex) {
+          for (let i = 0; i < allCsvData.length; i++) {
+            let targetY = allCsvData[i][startColumnIndex + currentColumn * 3];
+            if (targetY <= 9) { //U
+              targetY *= 10;
+            } else if (targetY <= 99) { //D
+            targetY += 100;
+            } else if (targetY <= 999) { //C
+            targetY /= 10;
+            targetY += 200;
+            } else if (targetY <= 9999) { //M
+            targetY /= 100;
+            targetY += 300;
+            } else if (targetY <= 99999) { //DM
+            targetY /= 1000;
+            targetY += 400;
+            } else if (targetY <= 99999999) { //CM
+            targetY /= 10000;
+            targetY += 500;
+            }
+                  
+            if (!isPaused) {
+              let lerpFactor = 0.125/2;
+              let lerpFactor2 = 0.00008;
+              let currentY = boxesArray[i].position.y;               
+              
+              boxesArray[i].position.y = THREE.MathUtils.lerp(currentY, targetY, lerpFactor);
+              const targetRY = i * boxSpacingX;
+              const currentRY = boxesArray[i].rotation.y;
+              boxesArray[i].rotation.y = THREE.MathUtils.lerp(-currentRY, -targetRY, 1);
+              let scaleFactor = 0.6;
+              let boxTrans = boxesArray[i];
+              let box = boxTrans.children[0];
               if (box) {
               let currentY = boxTrans.position.y;
               let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
@@ -404,29 +395,29 @@ prevYArray[i] = currentY;
                 box.rotation.x = Math.PI / 2;
               }
 
-                // Aggiorna posizione z della coda
-                box.position.z = -302.5 - (currentY * scaleFactor);
+              // Aggiorna posizione z della coda
+              box.position.z = -302.5 - (currentY * scaleFactor);
+              // Salva il valore corrente come precedente per la prossima volta
+              prevYArray[i] = currentY;
+            }
+            prevY = boxesArray[i].position.y;
+            // rotazone coda
+            if (currentY > prevY) {
+              box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, 0.95, lerpFactor);
+              } else if (currentY < prevY) {
+              box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, -2, lerpFactor);
+              } else {
+              box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, Math.PI / 2, lerpFactor);
+            }
 
-                // Salva il valore corrente come precedente per la prossima volta
-                prevYArray[i] = currentY;
-                }
-                prevY = boxesArray[i].position.y;
-                // rotazone coda
-                if (currentY > prevY) {
-                  box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, 0.95, lerpFactor);
-                } else if (currentY < prevY) {
-                  box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, -2, lerpFactor);
-                } else {
-                  box.rotation.x = THREE.MathUtils.lerp(box.rotation.x, Math.PI / 2, lerpFactor);
-                }
-                // sparizione se inferiore a 1
-                if (boxesArray[i].position.y < 0.999999) {
-                  boxesArray[i].visible = false;
-                } else {
-                  boxesArray[i].visible = true;
-                } 
+            // sparizione se inferiore a 1
+            if (boxesArray[i].position.y < 0.999999) {
+              boxesArray[i].visible = false;
+              } else {
+              boxesArray[i].visible = true;
+            } 
 
-                let match = labelFollowMap.find(entry => entry.box === boxesArray[i]);
+            let match = labelFollowMap.find(entry => entry.box === boxesArray[i]);
                 if (match) {
                   match.label.visible = boxesArray[i].visible;
                 }
