@@ -1,224 +1,188 @@
+
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="author" content="Felice Vino">
-        <meta name="description" content="Artista e narratore, specializzato in 3D per data visualization e User Emotional Experience. Autore in cinematografia, arte visiva, AI e Arte povera digitale.">
-        <meta property="og:title" content="CONIGLIO VERDE">
-        <meta property="og:description" content="Artista e narratore, specializzato in 3D per data visualization e User Emotional Experience. Autore in cinematografia, arte visiva, AI e Arte povera digitale.">
-        <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
-        <link rel="icon" href="./images/loghi/favicon.ico">
-		<title>coniglioverde|data|h.e.arts_01</title>		
-		<link href="./bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">		
-		<link rel="stylesheet" href="css/hearts.css">
-		<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-		<!-- <script src="jquery.min.js"></script> -->
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>coniglioverde | data | h.e.arts_01</title>
+  <link rel="stylesheet" href="./bootstrap-4.0.0-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/hearts.css" />
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <header>
+    <div id="logo">
+      <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="Logo" /></a>
+    </div>
+    <input id="menu-toggle" type="checkbox" />
+    <label class="menu-button-container" for="menu-toggle">
+      <div class="menu-button"></div>
+    </label>
+    <ul class="menu">
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="data.html">DATA</a></li>
+      <li><a href="hearts_pc.html">TRY AGAIN</a></li>
+    </ul>
+  </header>
 
-		</style>
-		 <!-- Loading -->
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-		<script>			
-			$(document).ready(function() {
-				$(window).on("load", function() {
-					$("#loader").fadeOut("slow");
-			   	});
-			});
-		</script>
-	</head>
-	<body>
-		
-		
-		<header>
-			<div id="logo">
-				<a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="Coniglio Verde Logo"></a>
-			</div>
-			<input id="menu-toggle" type="checkbox" aria-label="Toggle Menu"/>
-			<label class='menu-button-container' for="menu-toggle">
-			<div class='menu-button'></div>
-			</label class='menu-button-container' for="menu-toggle">
-			<ul class="menu">
-				<li></li>
-				<li><a href="index.html">HOME</a></li>
-				<li><a href="data.html">DATA</a></li>
-				<li><a href="hearts_phone.html">TRY AGAIN</a></li>
-				<!-- <li><a href="hearts_it.html">EN | IT</a></li> -->
-			</ul>
-		</header>	
-		<!-- FOOTER -->
-        <footer id="footer">
-			<ul>
-                <li>&copy; 2023 felice vino</li>
-                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-                <!-- <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li> -->
-                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
-            </ul>
-        </footer>
-		<section>			
-			<div id="first_step">
-				<div class="swiper">
-					<!-- Additional required wrapper -->
-					<div class="swiper-wrapper">
-					</div>
-					<!-- If we need pagination -->
-					<div class="swiper-pagination"></div>
-					<!-- If we need scrollbar -->
-				</div>	
-				<div class="button-choose">		
-					<!-- <div id="choose">Hai scelto: <span></span>
-					</div> -->
-					<button class="btn btn-secondary" id="openscene" type="button">RESULT</button>
-				</div>
-			</div>
-			<canvas>
-				<script type="importmap">
+  <section>
+    <div id="first_step">
+      <div class="swiper">
+        <div class="swiper-wrapper"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="button-choose">
+        <button class="btn btn-secondary" id="openscene" type="button">RESULT</button>
+      </div>
+    </div>
+
+    <canvas>
+      <script type="importmap">
 					{
 						"imports": {
 							"three": "./three_class/three.module.js"
 						}
 					}
 				</script>
-			</canvas>
-			
-			<script type = "module">
-					import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js'
-					
-				const quadri=[
-					'01.jpg',
-					'02.jpg',
-					'03.jpg',
-					'04.jpg',
-					'05.jpg',
-					'06.jpg',
-					'07.jpg', 
-					'08.jpg', 
-					'09.jpg', 
-					'10.jpg', 
-					'11.jpg', 
-					'12.jpg', 
-					'13.jpg',  
-					'14.jpg', 
-					'15.jpg',
-					'16.jpg',
-					'17.jpg',
-					'18.jpg',
-					'19.jpg',
-					'20.jpg',					
-				];
-				const emozioni=[				
-					{color:'#DEC414',label:'Interest'},
-					{color:'#FEF600',label:'Fun'},
-					{color:'#FEBE00',label:'Pride'},
-					{color:'#FFD700',label:'Joy'},
-					{color:'#C9A021',label:'Pleasure'},
+    </canvas>
 
-					{color:'#FE005B',label:'Satisfaction'},
-					{color:'#FF0000',label:'Love'},
-					{color:'#A32590',label:'Admiration'},
-					{color:'#FB46FF',label:'Relief'},
-					{color:'#DF73FF',label:'Compassion'},
+    
 
-					{color:'#227BFF',label:'Sadness'},
-					{color:'#3E39FF',label:'Guilt'},
-					{color:'#222EFF',label:'Regret'},
-					{color:'#001DEC',label:'Shame'},
-					{color:'#2A23A3',label:'Frustration'},
+    <div class="info_leyer">
+      <div id="info">
+        <p>
+          WASD&nbsp;&nbsp;>&nbsp;&nbsp;Move &nbsp; &nbsp; SHIFT/SPACE&nbsp;&nbsp;>&nbsp;&nbsp;/Down<br />
+          Mouse&nbsp;&nbsp;>&nbsp;&nbsp;Look &nbsp; &nbsp; &nbsp;ESC/Click&nbsp;&nbsp;>&nbsp;&nbsp;Out/In
+        </p>
+      </div>
+    </div>
+    <!-- <div class="button-controls">
+      <div id="btn-camera"><button>CAMERA</button></div>
+      <div id="btn-audio"><button>AUDIO</button></div>
+    </div> -->
+  </section>
 
-					{color:'#49C51A',label:'Fear'},
-					{color:'#2D7121',label:'Disguste'},
-					{color:'#3C6232',label:'Contempt'},
-					{color:'#0A5C0A',label:'Hate'},
-					{color:'#008000',label:'Anger'},
-				]
-				
-				// prova ordine di scelta
-				let orderOfChoices = [];
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script>
+$(document).ready(function () {
+  let choose = {};
+const quadri = [
+  "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg",
+  "06.jpg", "07.jpg", "08.jpg", "09.jpg", "10.jpg",
+  "11.jpg", "12.jpg", "13.jpg", "14.jpg", "15.jpg",
+  "16.jpg", "17.jpg", "18.jpg", "19.jpg", "20.jpg"
+];
 
-				let choose={};
-				for (let i = 0; i < quadri.length; i++) {
-					choose[i] = ['#FFFFFF']; // Imposta il valore predefinito su bianco
-				}
-				_.each(quadri,(v,k)=>{
-					const newQud=$(	
-					`<div class="swiper-slide">
-						<img  src="./images/hearts/gallery_quad/${v}">
-					</div>`);
-					$('.swiper-wrapper').append(newQud);
-					const newEmo=$(`<ul></ul>`);
-					newQud.append(newEmo);
-					_.each(emozioni,vi=>{
-						let quadname=quadri.k;
-						newEmo.append(										
-							`<li style="margin-bottom:-2px; "quad="${k}" val="${vi.color}">${vi.label}
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${vi.color}"class="bi bi-heart-fill" viewBox="0 0 16 16">
-									<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-								</svg>
-							</li>
-							`
-						);
-					})
-				})
-				
-				setTimeout(function(){
+  const emozioni = [
+    { color: "#DEC414", label: "Interest" },
+    { color: "#FEF600", label: "Fun" },
+    { color: "#FEBE00", label: "Pride" },
+    { color: "#FFD700", label: "Joy" },
+    { color: "#C9A021", label: "Pleasure" },
+    { color: "#FE005B", label: "Satisfaction" },
+    { color: "#FF0000", label: "Love" },
+    { color: "#A32590", label: "Admiration" },
+    { color: "#FB46FF", label: "Relief" },
+    { color: "#DF73FF", label: "Compassion" },
+    { color: "#227BFF", label: "Sadness" },
+    { color: "#3E39FF", label: "Guilt" },
+    { color: "#222EFF", label: "Regret" },
+    { color: "#001DEC", label: "Shame" },
+    { color: "#2A23A3", label: "Frustration" },
+    { color: "#49C51A", label: "Fear" },
+    { color: "#2D7121", label: "Disguste" },
+    { color: "#3C6232", label: "Contempt" },
+    { color: "#0A5C0A", label: "Hate" },
+    { color: "#008000", label: "Anger" }
+  ];
 
-					$('#info').hide();
-					$('#btn-camera, #btn-audio').hide();
+  $.each(quadri, function (k, v) {
+    const slide = $(`
+      <div class="swiper-slide">
+        <div class="emotion-slide">
+          <div class="artwork">
+            <img src="./images/hearts/gallery_quad/${v}" alt="Opera ${k + 1}">
+          </div>
+          <div class="emotion-wheel" id="wheel-${k}"></div>
+        </div>
+      </div>
+    `);
 
-					
-					const swiper = new Swiper('.swiper',
-						{
-						pagination: {
-							el: ".swiper-pagination",
-						},
-					});
-					console.log(swiper);
-					$('.swiper li').click(function(el){
-						console.log('click');
-						if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
-						
-						if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
-							choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
-							$(this).removeClass('active');
-						}else{
-							$(this).addClass('active');
-							choose[$(this).attr('quad')].push($(this).attr('val'));								
-						}
-						$('#choose span').html(JSON.stringify(choose));
-						console.log(choose);
-					});
-				},500);
-				
-				import scene from "./hearts_phone.js"
-				
-				$('#openscene').click(function(){
-					$('#first_step').hide();
-					$('#info').show();	
-					$('#btn-camera, #btn-audio').show();
-					
-					scene(choose,quadri);
-				});
-				
-				//scene();
-			</script>			
-			<div class="info_leyer">
-				<div id="info">
-					<p>
-						WASD>Move||SHIFT/SPACE > Up/Down <br>  
-						Mouse > Look||ESC/Click > Out/In 
-					</p>
-				</div>
-			</div>
-			<div class="button-controls">
-				<div id="btn-camera">
-					<button>CAMERA</button>
-				</div>
-				<div id="btn-audio">
-					<button>AUDIO</button>
-				</div>
-			</div>			
-		</section>
-	</body>
+    $(".swiper-wrapper").append(slide);
+
+    const wheel = $(`#wheel-${k}`);
+    // const raggio = 202;
+    const raggio = window.innerWidth <= 724 ? 132 : 200;
+
+    emozioni.forEach((emo, i) => {
+      const angle = (i / emozioni.length) * 2 * Math.PI;
+      const x = Math.cos(angle) * raggio;
+      const y = Math.sin(angle) * raggio;
+
+      const btn = $(`
+        <div class="emotion-btn" title="${emo.label}">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="${emo.color}" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+          </svg>
+          <span class="emotion-label">${emo.label}</span>
+        </div>
+      `);
+
+      btn.css({
+        position: "absolute",
+        left: `calc(50% + ${x}px - 35px)`,
+        top: `calc(50% + ${y}px - 35px)`
+      });
+
+      btn.on('click', function () {
+  if (!choose[k]) choose[k] = [];
+
+  const val = emo.color;
+  const alreadySelected = $(this).hasClass('selected');
+
+  if (alreadySelected) {
+    choose[k] = choose[k].filter(c => c !== val);
+    $(this).removeClass('selected');
+  } else {
+    if (choose[k].length >= 3) return;
+    choose[k].push(val);
+    $(this).addClass('selected');
+  }
+});
+
+
+      wheel.append(btn);
+    });
+  });
+
+  new Swiper('.swiper', {
+    loop: false,
+    pagination: {
+      el: ".swiper-pagination",
+    }
+  });
+
+  $('#openscene').click(() => {
+  $('#first_step').hide();
+  $('#info').show();
+  $('#btn-camera, #btn-audio').show();
+
+  
+    for (let i = 0; i < quadri.length; i++) {
+      if (!choose[i]) {
+        choose[i] = ['#FFFFFF'];
+      }
+    }
+
+    import('./hearts_phone.js').then(({ default: scene }) => {
+      scene(choose, quadri);
+    });
+  });
+});
+</script>
+
+</body>
 </html>
