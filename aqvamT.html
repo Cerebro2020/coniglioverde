@@ -115,6 +115,9 @@
             </div>        
             <div id="btn-quantity">
                 <button type="button" class="active">QUANTITY</button>
+            </div>
+            <div id="btn-calendar">
+                <button type="button" class="active">CALENDAR</button>
             </div> 
         </div>	
         <footer id="footer">
@@ -130,12 +133,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const pauseBtn = document.querySelector('#btn-pause button');
 
   const allButtons = document.querySelectorAll(
-    '#btn-start button, #btn-play button, #btn-pause button, #btn-count button, #btn-quantity button, #btn-back button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button, #btn-audio-white button'
+    '#btn-start button, #btn-play button, #btn-pause button, #btn-count button, #btn-quantity button, #btn-calendar button, #btn-back button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button, #btn-audio-white button'
   );
 
   const multiActiveSelectors = [
     '#btn-count',
     '#btn-quantity',
+    '#btn-calendar',
     '#btn-hide-boxes1',
     '#btn-hide-boxes2',
     '#btn-hide-boxes3'
@@ -188,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setPlayState(true); // play attivo, pause spento
   document.querySelector('#btn-quantity button')?.classList.add('active'); // quantity attivo
   document.querySelector('#btn-count button')?.classList.remove('active'); // count disattivo
+  document.querySelector('#btn-calendar')?.classList.remove('active'); // count disattivo
 });
 </script>
 

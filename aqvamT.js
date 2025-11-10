@@ -116,7 +116,8 @@ export default function(){
       centro.rotation.set(0, 0, 0);
       scene.add(centro);       
       // ====== CREA BOX ====== 
-      function createBoxSet(columnIndex, boxesArray) {
+      function createBoxSet(columnIndex, boxesArray) {        
+
         for (let i = 0; i < allCsvData.length; i++) {
           if (boxesArray === boxes1) prevY1.push(0);
           if (boxesArray === boxes2) prevY2.push(0);
@@ -156,6 +157,12 @@ export default function(){
           boxTrans.position.z += xOffset;                    
           boxTrans.add(box);
           scene.add(boxTrans);
+
+          // === ID BOX === //
+
+          const id = `box-${columnIndex}-${i}`;
+          box.userData.id = id;
+          boxTrans.userData.id = id;
 
           // Calcolo angolo radiale
           let angle = (i / allCsvData.length) * 2 * Math.PI + columnIndex * 0.05;
@@ -237,7 +244,7 @@ export default function(){
           box.visible = shouldShow;
 
           // Trova la label corrispondente
-          let match = labelFollowMap.find(entry => entry.box === box);
+          let match = labelFollowMap.find(entry => entry.box.userData.id === box.userData.id);
           if (match) {
             match.label.visible = shouldShow;
           }
@@ -521,6 +528,10 @@ export default function(){
     btnQuantity.addEventListener('click', () => {
     misuratore.visible = !misuratore.visible;       
   });
+
+
+
+
   const colorsArray2 = [
     "#797979","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000",
   ];
@@ -574,7 +585,14 @@ export default function(){
     scene.add(cCalendar);        
     cCalendar.castShadow = true;
     cCalendar.receiveShadow = true;
+
+    const btnCalendar = document.getElementById('btn-calendar');
+    btnCalendar.addEventListener('click', () => {
+    cCalendar.visible = !cCalendar.visible;      
+    });
   }
+
+     
 
   // ====== BUTTONS ======
   const btnCameraC = document.getElementById('btn-cameraC');

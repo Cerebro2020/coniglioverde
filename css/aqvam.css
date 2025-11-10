@@ -121,7 +121,7 @@ canvas:active {
   z-index: 1;
 }
 
-#btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button , #btn-back button ,  #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button {
+#btn-start button, #btn-play button, #btn-pause button, #btn-count button, #btn-quantity button,#btn-calendar button, #btn-back button ,  #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button {
   background-color: rgb(0, 0, 0);
   color: rgb(255, 255, 255);
   border: 0px solid rgb(255, 255, 255);
@@ -134,7 +134,7 @@ canvas:active {
   font-weight: 100;    
 }
   
-#btn-start button:hover , #btn-play button:hover , #btn-pause button:hover, #btn-count button:hover , #btn-quantity button:hover, #btn-back button:hover, #btn-cameraC button:hover, #btn-cameraH button:hover, #btn-hide-boxes1 button:hover, #btn-hide-boxes2 button:hover,#btn-hide-boxes3 button:hover, #btn-jump-to-column button:hover, #btn-previous-column button:hover, #btn-audio-white button:hover  {
+#btn-start button:hover , #btn-play button:hover , #btn-pause button:hover, #btn-count button:hover , #btn-quantity  button:hover, #btn-calendar button:hover, #btn-back button:hover, #btn-cameraC button:hover, #btn-cameraH button:hover, #btn-hide-boxes1 button:hover, #btn-hide-boxes2 button:hover,#btn-hide-boxes3 button:hover, #btn-jump-to-column button:hover, #btn-previous-column button:hover, #btn-audio-white button:hover  {
   cursor: pointer;
   border: 1px solid rgb(162, 255, 0);
   color: rgb(162, 255, 0);
@@ -142,7 +142,7 @@ canvas:active {
   transition: all 0.2s ease-in-out
 }
 
-#btn-start button:hover , #btn-play button:hover , #btn-pause button:hover, #btn-count button:hover , #btn-quantity button:hover, #btn-back button:hover, #btn-cameraC button:hover, #btn-cameraH button:hover, #btn-hide-boxes1 button:hover, #btn-hide-boxes2 button:hover,#btn-hide-boxes3 button:hover, #btn-jump-to-column button:hover, #btn-previous-column button:hover, #btn-audio-white button:hover {
+#btn-start button:hover , #btn-play button:hover , #btn-pause button:hover, #btn-count button:hover , #btn-quantity button:hover, #btn-calendar button:hover, #btn-back button:hover, #btn-cameraC button:hover, #btn-cameraH button:hover, #btn-hide-boxes1 button:hover, #btn-hide-boxes2 button:hover,#btn-hide-boxes3 button:hover, #btn-jump-to-column button:hover, #btn-previous-column button:hover, #btn-audio-white button:hover {
   cursor: pointer;
   border: 1px solid rgb(162, 255, 0);
   color: rgb(162, 255, 0);
@@ -155,6 +155,7 @@ canvas:active {
 #btn-pause button.active,
 #btn-count button.active,
 #btn-quantity button.active,
+#btn-calendar button.active,
 #btn-back button.active,
 #btn-hide-boxes1 button.active,
 #btn-hide-boxes2 button.active,
@@ -173,7 +174,7 @@ canvas:active {
   filter: invert(1);
 }
 
-#btn-count button, #btn-quantity button {
+#btn-count button, #btn-quantity button, #btn-calendar button{
   background-color: rgb(172, 26, 217);  
   border: 0px solid rgb(255, 255, 255); 
   color: rgb(255, 255, 255); 
@@ -187,7 +188,8 @@ canvas:active {
 }
 
 #btn-count button:hover,
-#btn-quantity button:hover
+#btn-quantity button:hover,
+#btn-calendar button:hover
  {
   background-color: rgb(59, 0, 77);
   border: 1px solid rgb(162, 255, 0);
@@ -197,7 +199,8 @@ canvas:active {
 }
 
 #btn-count button.active,
-#btn-quantity button.active
+#btn-quantity button.active,
+#btn-calendar button.active
  {
   background-color: rgb(246, 62, 237);
   border: 1px solid rgb(162, 255, 0);
@@ -281,7 +284,7 @@ canvas:active {
     bottom: -62px;     
   }
 
-  #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button , #btn-back button , #btn-camera button , #btn-audio button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button  {
+  #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button, #btn-calendar button button, #btn-back button , #btn-camera button , #btn-audio button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button  {
     width:66px;
     height: 16px;
     border-radius: 12px;
