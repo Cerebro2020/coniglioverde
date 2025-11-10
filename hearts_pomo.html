@@ -26,8 +26,8 @@
 				$(window).on("load", function() {
 					$("#loader").fadeOut("slow");
 			   	});
-			});
-		</script>
+			});			
+		</script>		
 	</head>
 	<body>		
 		<header>
@@ -120,16 +120,13 @@
 			$('.swiper-wrapper').append(newQud);
 			const newEmo = $(`<ul></ul>`);
 			newQud.append(newEmo);
-			_.each(emozioni, vi => {
+			_.each(emozioni, (vi, idx) => {
 				newEmo.append(
-				`<li style="margin-bottom:-2px;" quad="${k}" val="${vi.color}">
-					${vi.label}
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="${vi.color}" class="bi bi-heart-fill" viewBox="0 0 16 16">
-					<path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-					</svg>
-				</li>`
+					`<li style="--i:${idx}" quad="${k}" val="${vi.color}">${vi.label}
+					
+					</li>`
 				);
-			});
+				});
 			});
 
 			setTimeout(function(){
@@ -156,6 +153,16 @@
 			scene(choose,quadri);
 			});
 			</script>
+			<script>
+				window.addEventListener('load', () => {
+					document.querySelectorAll('.swiper li').forEach(btn => {
+					const color = btn.getAttribute('val');
+					if (color) {
+						btn.style.backgroundColor = color;
+					}
+					});
+				});
+				</script>
 
 
 
@@ -175,7 +182,7 @@
 				<div id="btn-audio">
 					<button>AUDIO</button>
 				</div>
-			</div>			
+			</div>
 		</section>
 	</body>
 </html>
