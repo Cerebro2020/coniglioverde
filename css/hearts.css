@@ -379,7 +379,7 @@ section {
   color: rgb(255, 255, 255);
 }
 
-.swiper-slide:active {    
+.swiper-slide:active {  
 	width: 100%;
   cursor: grabbing;  
 }
@@ -435,20 +435,21 @@ section {
 @media (max-width: 724px) {
 
   .swiper {
-    width: 100vw;  
-    height: 70vh;   
+    position: relative;
+    width: 96vw;  
+    height: 70vh;     
   }
-
-  .swiper-slide img {    
-    margin-top: 10px;            
+ 
+  .swiper-slide img { 
+    margin-top: 30px;            
     height: auto;
     max-width: 300px;
   }
     
-  .swiper ul{     
-    margin-top: 10px;      
-    margin-left: 0%;
-    width: 100%;   
+  .swiper ul{
+    position: absolute;  
+    top: 60%;
+    left: -10%;
   }
   
   .swiper li {    
