@@ -350,8 +350,8 @@ section {
   height: 50vh;
 }
 
-.swiper {    
-  width: 100%;
+.swiper {   
+  width: 70%;
   height: 80vh;
   margin-top: 60px;
   display: flex;
@@ -384,16 +384,17 @@ section {
   cursor: grabbing;  
 }
 
-.swiper ul {   
+.swiper ul { 
   text-align: center;
 	list-style: none;
 	display: flex;
 	flex-wrap: wrap;
   justify-content: center;
-  padding-bottom: 0px;
-  margin-left: 29.5%;
+  position: absolute;
+  top: 64%;
+  left: 25%;
   height: 130px;
-  width: 36%; 
+  width: 50%; 
 }
 
 .swiper li {
