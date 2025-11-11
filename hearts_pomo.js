@@ -49,12 +49,20 @@ export default function(choose,quadri){
   scene.background = new THREE.Color(  0x000000 );
   // LIGHT
   //AMBIENT
-  const ambient = new THREE.AmbientLight( 0xffffff, 1.5 );  
+  const ambient = new THREE.AmbientLight( 0xffffff, 1.25 );  
   scene.add( ambient); 
   //POINTS 
-  const pLight = new THREE.PointLight( 0xffffff, 0.26, 2000 );  
-  pLight.position.set( 0, 1, 0);
+  const pLight = new THREE.SpotLight( 0xffffff, 1.5/*0.26*/, 2000 );  
+  pLight.position.set( 2.5, 2.5, 2.5);
   const pHelper = new THREE.PointLightHelper(pLight);
+
+  pLight.shadow.mapSize.width = 2048;
+  pLight.shadow.mapSize.height = 2048;
+  pLight.shadow.radius = 4;
+  pLight.shadow.camera.near = 0.1; 
+  pLight.shadow.camera.far = 10000;
+  pLight.shadow.bias = -0.0005;
+
   let pLight2 = pLight.clone();
   let pLight3 = pLight.clone();
   let pLight4 = pLight.clone();
@@ -67,7 +75,8 @@ export default function(choose,quadri){
   pLight5.position.set(0,0,-400);
   pLight6.position.set(400,0,0);
   pLight7.position.set(-400,0,0);
-  camera.add(pLight, pLight2, pLight3, pLight4, pLight5, pLight6, pLight7 );
+  camera.add(pLight /*, pLight2, pLight3, pLight4, pLight5, pLight6, pLight7*/ );
+  pLight.castShadow = true;
   scene.add(camera);
 
   // ANIMATE SCENE //////
@@ -119,10 +128,10 @@ export default function(choose,quadri){
     let conteggioAree = [0, 0, 0, 0];
 
     let mappaColori = {
-      'area1': '#E1BB0D', // giallo
-      'area2': '#E10D0D', // rosso
-      'area3': '#0DA5E1', // blu
-      'area4': '#57D743', // verde
+      'area1': '#e6c949', // giallo
+      'area2': '#d44503', // rosso
+      'area3': '#2b6f8a', // blu
+      'area4': '#477550', // verde
       'areaEquivalente': '#777777' // arancione per scelte equivalenti
     };
 
@@ -308,26 +317,54 @@ export default function(choose,quadri){
   });
   let room = new THREE.Mesh(gRoom, mRoom);
   scene.add(room);
-  // BACKGROUND 
+  ////////// BACKGROUND ///////
+      // === BACKGROUND AUDIO + TOGGLE ===
   const listenerBcg = new THREE.AudioListener();
-  camera.add(listenerBcg); 
+  camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
-  const backgroundSound = new THREE.Audio( listenerBcg );
-  audioLoader.load('audio/deep-meditation-192828.mp3', function( buffer ) {
-    backgroundSound.setBuffer( buffer );
-    backgroundSound.setLoop( true );
-    backgroundSound.setVolume( 0.1 );
-    backgroundSound.play();
-  });   
-  // Selezioniamo i pulsanti   
-  let audioButton = document.querySelector('#btn-audio-white button');
-  let isPlaying = true;  
-  audioButton.addEventListener('click', function() {
+  const backgroundSound = new THREE.Audio(listenerBcg);
+  
+  // elementi UI (già presenti in hearts_pc.html)
+  const audioToggleButton = document.getElementById('audio-toggle-button');
+  const muteIcon = document.getElementById('mute-icon');
+  const audioIcon = document.getElementById('audio-icon');
+  
+  // stato iniziale: ATTIVO
+  let isPlaying = true;
+  function syncIcons() {
+    if (!muteIcon || !audioIcon) return;
     if (isPlaying) {
-      backgroundSound.pause();
+      muteIcon.style.display = 'none';
+      audioIcon.style.display = 'inline';
     } else {
-      backgroundSound.play();
+      muteIcon.style.display = 'inline';
+      audioIcon.style.display = 'none';
     }
-    isPlaying = !isPlaying;
+  }
+  syncIcons();
+  
+  // carica e avvia audio
+  audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
+    backgroundSound.setBuffer(buffer);
+    backgroundSound.setLoop(true);
+    backgroundSound.setVolume(0.1);
+    // la scena parte da un click su "RESULT", quindi l’autoplay è consentito
+    backgroundSound.play();
   });
+  
+  // click toggle
+  if (audioToggleButton) {
+    audioToggleButton.addEventListener('click', () => {
+      if (isPlaying) {
+        backgroundSound.pause();
+      } else {
+        backgroundSound.play();
+      }
+      isPlaying = !isPlaying;
+      syncIcons();
+    });
+  } else {
+    console.warn('audio-toggle-button non trovato');
+  }  
+  
 };

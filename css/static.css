@@ -153,7 +153,7 @@ canvas {
 }
 
 .home-text {
-  width: 80vw;
+  width: 70vw;
   height: 90vh;
 }
 
@@ -176,7 +176,7 @@ canvas {
 }
 
 .home-paragraph p {
-  background-color: rgba(0, 0, 0, 0.7);
+  /* background-color: rgba(0, 0, 0, 0.7); */
   padding: 6px;  
 }
 

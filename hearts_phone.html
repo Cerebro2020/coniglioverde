@@ -131,7 +131,7 @@
 
 			setTimeout(function(){
 			$('#info').hide();
-			$('#btn-camera, #btn-audio').hide();
+			$('#btn-audio-white').hide();
 			const swiper = new Swiper('.swiper',{ pagination: { el: ".swiper-pagination" } });
 			$('.swiper li').click(function(){
 				if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
@@ -149,7 +149,7 @@
 			$('#openscene').click(function(){
 			$('#first_step').hide();
 			$('#info').show();	
-			$('#btn-camera, #btn-audio').show();
+			$('#btn-audio-white').show();
 			scene(choose,quadri);
 			});
 			</script>
@@ -167,21 +167,20 @@
 
 
 
-			<div class="info_leyer">
+			<!-- <div class="info_leyer">
 				<div id="info">
 					<p>
-						WASD&nbsp;&nbsp;>&nbsp;&nbsp;Move &nbsp; &nbsp; SHIFT/SPACE&nbsp;&nbsp;>&nbsp;&nbsp;/Down<br>  
-						Mouse&nbsp;&nbsp;>&nbsp;&nbsp;Look &nbsp; &nbsp; &nbsp;ESC/Click&nbsp;&nbsp;>&nbsp;&nbsp;Out/In 
+						GRAB
 					</p>
 				</div>
-			</div>
-			<div class="button-controls">
-				<div id="btn-camera">
-					<button>CAMERA</button>
-				</div>
-				<div id="btn-audio">
-					<button>AUDIO</button>
-				</div>
+			</div> -->
+			<div class="button-controls">				
+				<div id="btn-audio-white">
+					<button aria-label="mute" id="audio-toggle-button">
+						<img src="./images/icons/audio_mute.svg" id="mute-icon" alt="Mute Icon">
+						<img src="./images/icons/audio.svg" id="audio-icon" style="display: none;" alt="Audio Icon">
+					</button>
+        		</div>
 			</div>
 		</section>
 	</body>

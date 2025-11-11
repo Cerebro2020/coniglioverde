@@ -73,12 +73,7 @@ body {
     display: flex;
     height: 90%;   
     text-align: left;
-}
-
-.home-paragraph { 
-    font-size: 28px;       
-    line-height: 32px;    
-} */
+} 
 
 .data_ul {
   width: 100%;

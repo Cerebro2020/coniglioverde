@@ -435,8 +435,6 @@ section {
   transition: max-height 0.4s ease;  
 }
 
-
-
 .swiper-slide img:active {
   cursor: grabbing;
 }
@@ -472,8 +470,6 @@ section {
     margin-left: 70px;
   }
 }
-
-
 
 .label {  
 	color: rgb(255, 255, 255);
@@ -519,32 +515,40 @@ section {
   z-index: 1;
 }
 
-#btn-audio button , #btn-camera button {
-  background-color: rgba(255, 255, 255, 0);
-  color: rgb(0, 0, 0);
-  border: 1px solid black;
-  width:70px;
-  height: 20px;
-  margin-right: 10px;;
-  border-radius: 12px;
-  font-size: 11px;    
-}
-
 #btn-audio-white button {
-  background-color: rgba(255, 255, 255, 0);
+  background-color:  rgb(255, 255, 255);
   color: rgb(255, 255, 255);
-  border: 1px solid rgb(255, 255, 255);
-  width:70px;
-  height: 20px;
-  margin-right: 10px;;
-  border-radius: 12px;
-  font-size: 11px;    
+  border: 1.4px solid rgb(255, 255, 255);  
+  width:30px;
+  height: 30px;
+  margin-right: 0px;;
+  border-radius: 14px;
+  font-size: 11px;
+  display: flex;   
+  align-items: center; 
+  justify-content: center;
 }
 
-#btn-audio button:hover, #btn-camera button:hover, #btn-audio-white button:hover {
+#btn-audio-white button:hover {
   cursor: pointer;
   border: 1px solid rgb(162, 255, 0);
   color: rgb(162, 255, 0);
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out
+}
+
+#btn-audio-white button.active {
+  border: 1px solid rgb(162, 255, 0);
+  color: rgb(162, 255, 0);
+  transform: scale(0.8);
+  transition: all 0.2s ease-in-out;
+}
+
+
+#btn-audio-white button img {
+  filter: invert(0);
+  width: 14px;   
+  height: 14px;
 }
 
 

@@ -29,7 +29,7 @@ export default function(choose, quadri){
   
   const clock = new THREE.Clock();
   let mixer;
-  window.resetCamera = resetCamera;
+  // window.resetCamera = resetCamera;
   // SCENE  
   const scene = new THREE.Scene();
   const loader2 = new THREE.TextureLoader();
@@ -119,11 +119,11 @@ videoTexture.format = THREE.RGBAFormat;
     }
   });
   // CAMERA 
-  let initialCameraPosition = new THREE.Vector3();
-  initialCameraPosition.copy(camera.position);
-  function resetCamera() {
-    camera.position.copy(initialCameraPosition);  
-  }
+  // let initialCameraPosition = new THREE.Vector3();
+  // initialCameraPosition.copy(camera.position);
+  // function resetCamera() {
+  //   camera.position.copy(initialCameraPosition);  
+  // }
   // RENDERER
   renderer.shadowMap.enabled = true;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -483,42 +483,84 @@ videoTexture.format = THREE.RGBAFormat;
 
   
 
-let radiusC = 900;
-let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
-let poolM = new THREE.MeshPhysicalMaterial({
-  color: 0Xffccff,
-  map: videoTexture,
-   metalness: 0.05,
-  roughness: 0.1,
-  transmission: 1.0, 
-  transparent: true,
-  opacity: 0.5,
-  ior: 1.333,  
-  thickness: 1.5,    
-  displacementMap: videoTexture,
-  displacementScale: 0, 
-  clearcoat: 1,        
-  clearcoatRoughness: 0.05,
-});
+  let radiusC = 900;
+  let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
+  let poolM = new THREE.MeshPhysicalMaterial({
+    color: 0Xffccff,
+    map: videoTexture,
+    metalness: 0.05,
+    roughness: 0.1,
+    transmission: 1.0, 
+    transparent: true,
+    opacity: 0.5,
+    ior: 1.333,  
+    thickness: 1.5,    
+    displacementMap: videoTexture,
+    displacementScale: 0, 
+    clearcoat: 1,        
+    clearcoatRoughness: 0.05,
+  });
 
-let pool = new THREE.Mesh(poolG,poolM);
-pool.position.set(0,-102,0);
-pool.rotation.set(0,Math.PI,0);
-pool.receiveShadow = true;
-scene.add(pool);
+  let pool = new THREE.Mesh(poolG,poolM);
+  pool.position.set(0,-102,0);
+  pool.rotation.set(0,Math.PI,0);
+  pool.receiveShadow = true;
+  scene.add(pool);
+
+  
     
 
     ////////// BACKGROUND ///////
-    const listenerBcg = new THREE.AudioListener();
-    camera.add(listenerBcg);
-    const audioLoader = new THREE.AudioLoader();
-    const backgroundSound = new THREE.Audio( listenerBcg );
-    audioLoader.load('audio/deep-meditation-192828.mp3', function( buffer ) {
-      backgroundSound.setBuffer( buffer );
-      backgroundSound.setLoop( true );
-      backgroundSound.setVolume( 0.1 );
+    // === BACKGROUND AUDIO + TOGGLE ===
+const listenerBcg = new THREE.AudioListener();
+camera.add(listenerBcg);
+const audioLoader = new THREE.AudioLoader();
+const backgroundSound = new THREE.Audio(listenerBcg);
+
+// elementi UI (già presenti in hearts_pc.html)
+const audioToggleButton = document.getElementById('audio-toggle-button');
+const muteIcon = document.getElementById('mute-icon');
+const audioIcon = document.getElementById('audio-icon');
+
+// stato iniziale: ATTIVO
+let isPlaying = true;
+function syncIcons() {
+  if (!muteIcon || !audioIcon) return;
+  if (isPlaying) {
+    muteIcon.style.display = 'none';
+    audioIcon.style.display = 'inline';
+  } else {
+    muteIcon.style.display = 'inline';
+    audioIcon.style.display = 'none';
+  }
+}
+syncIcons();
+
+// carica e avvia audio
+audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
+  backgroundSound.setBuffer(buffer);
+  backgroundSound.setLoop(true);
+  backgroundSound.setVolume(0.1);
+  // la scena parte da un click su "RESULT", quindi l’autoplay è consentito
+  backgroundSound.play();
+});
+
+// click toggle
+if (audioToggleButton) {
+  audioToggleButton.addEventListener('click', () => {
+    if (isPlaying) {
+      backgroundSound.pause();
+    } else {
       backgroundSound.play();
-    });  
+    }
+    isPlaying = !isPlaying;
+    syncIcons();
+  });
+} else {
+  console.warn('audio-toggle-button non trovato');
+}  
+
     
     controls.lock(); 
+    
   };
