@@ -40,7 +40,7 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
     camera.updateProjectionMatrix();
   }); 
   // ====== CAMERA ======
-  camera.position.set( 0, 3900, 0 );
+  camera.position.set( 0, 5000, 0 );
   camera.lookAt(new THREE.Vector3( 0, player.height, 0));
   camera.setFocalLength ( 35 );
   let initialCameraPosition = new THREE.Vector3();
@@ -52,7 +52,7 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
   const controls = new OrbitControls( camera, renderer.domElement );
   controls.listenToKeyEvents(window);
   controls.minDistance =  0.1;    
-  controls.maxDistance = 3900;
+  controls.maxDistance = 4900;
   // ====== LIGHTS ======
   const ambiente = new THREE.AmbientLight ( 0xffffff, 1.5 );  
   scene.add( ambiente);
@@ -484,16 +484,16 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
   //scene.add(torusZ);
   let torusU = torus1.clone();
   torusU.material = torus1.material.clone();
-  torusU.material.color.set('#0015ff');
+  torusU.material.color.set('#0066ff');
   let torusD = torus1.clone();
   torusD.material = torus1.material.clone();
-  torusD.material.color.set('#15a1fe');
+  torusD.material.color.set('#00ff95');
   let torusC = torus1.clone();
   torusC.material = torus1.material.clone();
-  torusC.material.color.set('#00ff95');
+  torusC.material.color.set('#09ff00');
   let torusM = torus1.clone();
   torusM.material = torus1.material.clone();
-  torusM.material.color.set('#09ff00');
+  torusM.material.color.set('#f7fa5e');
   let torusDM = torus1.clone();
   torusDM.material = torus1.material.clone();
   torusDM.material.color.set('#ff8400');
@@ -533,11 +533,8 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
     misuratore.visible = !misuratore.visible;       
   });
 
-
-
-
   const colorsArray2 = [
-    "#797979","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000",
+    "#373737","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000","#000000",
   ];
   // Mappa decine → materiale di riferimento
   const decadeMats = [
@@ -594,9 +591,7 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
     btnCalendar.addEventListener('click', () => {
     cCalendar.visible = !cCalendar.visible;      
     });
-  }
-
-     
+  }     
 
   // ====== BUTTONS ======
   const btnCameraC = document.getElementById('btn-cameraC');
@@ -605,7 +600,7 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
   });
   const btnCameraH = document.getElementById('btn-cameraH');
   btnCameraH.addEventListener('click', () => {
-    camera.position.set( 0, 3900, 0 );          
+    camera.position.set( 0, 4000, 0 );          
   });
   const btnPause = document.getElementById('btn-pause');
   btnPause.addEventListener('click', () => {

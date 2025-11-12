@@ -270,6 +270,113 @@ canvas:active {
   transition: all 0.2s ease-in-out;
 }
 
+.counts {
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  display: flex;
+  align-items: top;
+  justify-content: center;
+  bottom: 30px
+}
+
+.counts ul {  
+  width: 20%;
+  display: flex;
+  list-style-type:none;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.counts ul li {
+  font-size: 14px;
+  font-weight: 500;
+  font-family:'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+}
+
+.counts ul li.u {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+ width: 36px;
+  height: 36px;
+  border: 1px solid #0066ff;
+  border-radius: 50px;
+  color: #0066ff;
+}
+
+.counts ul li.d {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #00ff95;
+  border-radius: 50px;
+  color: #00ff95;
+}
+
+.counts ul li.c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #09ff00;
+  border-radius: 50px;
+  color: #09ff00;
+}
+
+.counts ul li.m {
+   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #f7fa5e;
+  border-radius: 50px;
+  color: #f7fa5e;
+}
+
+.counts ul li.dm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ff8400;
+  border-radius: 50px;
+  color: #ff8400;
+}
+
+.counts ul li.cm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #ff0000;
+  border-radius: 50px;
+  color: #ff0000;
+}
+
+@media (max-width: 724px) {
+  .counts {  
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    display: flex;
+    align-items: top;
+    justify-content: center;
+    top: 100px
+  }
+
+  .counts ul {  
+    width: 86%;  
+    justify-content: space-around;
+  }
+}
+
 @media (max-width: 724px) {  
   /* da sostare in data */
 
