@@ -13,6 +13,10 @@ export default function(){
   window.resetCamera = resetCamera;
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x333333);
+  const loader = new THREE.TextureLoader();
+loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
+  scene.background = texture;
+});
   // ====== CAMERA  ======
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
