@@ -648,9 +648,9 @@ iframe {
 
 .swiper li:hover {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  font-size: 11px; 
+  width: 60px;
+  height: 60px;
+  font-size: 7px; 
   color: rgb(0, 0, 0);
   pointer-events: auto;
   transition: 0.3s;
@@ -658,10 +658,10 @@ iframe {
 
 .swiper li.active {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  font-size: 10px;  
+  width: 60px;
+  height: 60px;
   color: rgb(0, 0, 0);
+  font-size: 7px; 
   pointer-events: auto;
   transition: 0.3s;
 }
