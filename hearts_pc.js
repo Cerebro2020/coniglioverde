@@ -229,17 +229,17 @@ videoTexture.format = THREE.RGBAFormat;
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
     // movimento FPS
-    velocity.x -= velocity.x * 0.5 * delta;
-    velocity.z -= velocity.z * 0.5 * delta;
+    velocity.x -= velocity.x * 5 * delta;
+    velocity.z -= velocity.z * 5 * delta;
     direction.z = Number(move.forward) - Number(move.backward);
     direction.x = Number(move.right) - Number(move.left);
     direction.normalize();
-    if (move.forward || move.backward) velocity.z -= direction.z * 50 * delta;
-    if (move.left || move.right) velocity.x -= direction.x * 50 * delta;
+    if (move.forward || move.backward) velocity.z -= direction.z * 1000 * delta;
+    if (move.left || move.right) velocity.x -= direction.x * 1000 * delta;
     controls.moveRight(-velocity.x * delta);
     controls.moveForward(-velocity.z * delta);
     if (move.up) {
-    controls.getObject().position.y += 50 * delta;
+    controls.getObject().position.y += 1000 * delta;
   }
   const floorHeight = 1.8;
   if (move.down) {
