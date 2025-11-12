@@ -239,7 +239,7 @@ videoTexture.format = THREE.RGBAFormat;
     controls.moveRight(-velocity.x * delta);
     controls.moveForward(-velocity.z * delta);
     if (move.up) {
-    controls.getObject().position.y += 1000 * delta;
+    controls.getObject().position.y += 500 * delta;
   }
   const floorHeight = 1.8;
   if (move.down) {
