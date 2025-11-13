@@ -106,6 +106,41 @@ document.addEventListener('keyup', (e) => {
   const helper3 = new THREE.PointLightHelper(point3);
   const helper4 = new THREE.PointLightHelper(point4);
   // scene.add(helper1, helper2, helper3, helper4);
+
+  //== VIDEO TEXTURE ==//
+  const video = document.createElement('video');
+  video.src = 'video/video_textures/neutropoli.mp4';
+  // video.src = 'video/video_textures/neutropoli_2.mp4';
+  // video.src = 'video/video_textures/water_loop.mp4';
+  video.muted = true;        
+  video.loop = true;
+  video.playsInline = true;
+  video.autoplay = true;
+  video.style.display = 'none';
+  document.body.appendChild(video);
+
+  // avvia il caricamento
+  video.load();
+
+  // necessario per sbloccare l’autoplay
+  video.play().catch(() => {
+      console.warn('Autoplay bloccato finché non avviene un gesto dell’utente.');
+  });
+
+  // VideoTexture
+  const videoTexture = new THREE.VideoTexture(video);
+  videoTexture.minFilter = THREE.LinearFilter;
+  videoTexture.magFilter = THREE.LinearFilter;
+  videoTexture.wrapS = THREE.ClampToEdgeWrapping;
+  videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+
+  // avvia il video
+  video.load();
+  video.play().catch(() => {
+    // gestione opzionale se il browser blocca l'autoplay
+    console.warn('Autoplay bloccato: avvia il video dopo un gesto dell’utente.');
+  });
+
   // === TEXTURES ===
   const loader = new THREE.TextureLoader();
   const texture1 = loader.load('./images/textures/glitches_01 (6).jpg'); 
@@ -200,14 +235,16 @@ document.addEventListener('keyup', (e) => {
           const materialSGL = new THREE.MeshPhysicalMaterial({
             color: 0xffffff, 
             emissiveIntensity: 1,
-            map: texture2,  
+            map: texture2,
+            // map: videoTexture,  
             roughness: 0,
             roughnessMap: texture3,
             metalness: 0,
             metalnessMap: texture3,
             clearcoat: 0.1,
             clearcoatNormalMap: texture3,
-            bumpMap: texture3, 
+            bumpMap: texture3,
+            // bumpMap: videoTexture,
             bumpScale: 0.1, 
           });  
           node.material = materialSGL;
