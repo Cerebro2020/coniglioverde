@@ -1,6 +1,13 @@
 .canvas {
     z-index: -1;
-  }  
+    cursor: grab;
+}
+
+body {
+  cursor: grab;
+}
+
+
   
 .info_leyer {
   position: absolute;  
@@ -12,17 +19,48 @@
   justify-content: center;          
 }
 
-#info {  
-  width: 200px;
+#info { 
+  width: 300px;
   height: 30px;  		
-  z-index: 999;
+  z-index: 999; 
 }
 
 #info p {
-  color: rgb(5, 205, 208);  
+  color: rgb(255, 255, 255);  
   text-align: center; 
   font-size: 12px;
   font-weight: 400;		
+}
+
+#info img {
+  filter: invert();
+  width: 26px;
+}
+
+#info-mouse { 
+  width: 160px;
+  height: 30px;  		
+  z-index: 999; 
+}
+
+#info-mouse img {
+  filter: invert();
+  width: 20px;
+}
+
+#info-mouse ul {
+  width: 84%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;  
+}
+
+#info-mouse ul li {
+  width: 46px;
+  list-style: none;
+  font-size: 12px;
+  text-align: right;
+  
 }
 
 canvas:active {				
@@ -359,6 +397,18 @@ canvas:active {
   border-radius: 50px;
   color: #ff0000;
 }
+
+@media (max-width: 900px) {
+  .counts {   
+    width: 100%; 
+  }
+
+  .counts ul {  
+    width: 56%;  
+    justify-content: space-around;
+  }
+}
+
 
 @media (max-width: 724px) {
   .counts {  
