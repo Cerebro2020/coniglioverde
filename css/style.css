@@ -391,7 +391,7 @@ canvas {
   width: 100%; 
   height: auto;   
   top: 0%;
-  z-index: -9999;
+  z-index: -10;
 }
 
 .sub-up-down {
