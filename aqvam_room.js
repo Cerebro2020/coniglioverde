@@ -14,7 +14,7 @@ export default function(){
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
     // camera.position.set(18,player.height+5,30);
-    camera.position.set(0,player.height,-5);
+    camera.position.set(0,player.height,-18);
    
     //=== RENDERER ===
     const renderer = new THREE.WebGLRenderer({    
@@ -170,7 +170,7 @@ document.addEventListener('click', () => {
   
   ///Lights
   // ambiente
-  const ambiente = new THREE.AmbientLight(0xffffff,0.175+0.3);
+  const ambiente = new THREE.AmbientLight(0xffffff,0.5);
   // 1
   const pointL = new THREE.PointLight(0x5555ff,0.5,4); 
   pointL.position.set(0,1,12.5);
@@ -192,22 +192,87 @@ document.addEventListener('click', () => {
   pointL3.castShadow = true; 
   pointL4.castShadow = true; 
   pointL5.castShadow = true; 
-  pointL6.castShadow = true; 
+  pointL6.castShadow = true;
+
+  pointL.shadow.bias = -0.0005;
+  pointL2.shadow.bias = -0.0005;
+  pointL3.shadow.bias = -0.0005;
+  pointL4.shadow.bias = -0.0005;
+  pointL5.shadow.bias = -0.0005;
+  pointL6.shadow.bias = -0.0005;
 
   scene.add(ambiente);
-  scene.add(pointL);  
-  scene.add(pointL2);
-  scene.add(pointL3);  
-  scene.add(pointL4);
-  scene.add(pointL5);
-  scene.add(pointL6);
+  // scene.add(pointL);  
+  // scene.add(pointL2);
+  // scene.add(pointL3);  
+  // scene.add(pointL4);
+  // scene.add(pointL5);
+  // scene.add(pointL6);
 
   // luci su pavimento
   const pointL7 = new THREE.PointLight(0x5555ff,0.5,10);
   pointL7.position.set(16,0.5,28);
   pointL7.castShadow = true; 
   pointL7.castShadow = true; 
-  scene.add(pointL7);  
+  // scene.add(pointL7);  
+
+  // === GRUPPO LUCI A SPIRALE ===
+  const totalLights = 34;
+  
+  const spiralGroup = new THREE.Group();
+  scene.add(spiralGroup);
+  
+  const colors = [
+    0xff9966, 0xffcc33, 0xffff66, 0x99ff66, 0x33ff99, 0x33ffff,
+    0x3399ff, 0x6666ff, 0xcc66ff, 0xff66cc, 0xff6666, 0xffffff,
+    0xff9933, 0x66ff66, 0x33ccff, 0x9966ff, 0xcc99ff, 0xff99cc,
+    0xffcc99, 0x99ffcc, 0x99ccff, 0xccffff, 0xffcccc, 0xccccff
+  ];
+  
+  const lights = [];
+  const timers = new Array(totalLights).fill(0);
+  
+  // === Parametri spirale ===
+  const baseRadius = 13;
+  const radiusStep = 0.7;
+  const heightStep = 1.2;
+  const angleStep = Math.PI / 6;
+  
+  // === Creazione luci ferme ===
+  for (let i = 0; i < totalLights; i++) {
+    const light = new THREE.PointLight(colors[i], 0, 10); // spente inizialmente
+    const angle = i * angleStep;
+    const radius = baseRadius + i * radiusStep;
+    const x = Math.cos(angle) * radius;
+    const y = i * heightStep * 0.4;
+    const z = Math.sin(angle) * radius;
+    light.position.set(x, y, z);
+    spiralGroup.add(light);
+    lights.push(light);
+  }
+  
+  // === Accensione e spegnimento casuale ===
+  function animateLights() {
+    requestAnimationFrame(animateLights);
+  
+    for (let i = 0; i < totalLights; i++) {
+      const light = lights[i];
+  
+      // Countdown casuale per ogni luce
+      if (timers[i] <= 0) {
+        timers[i] = Math.random() * 200 + 60; // tempo prima del prossimo cambio
+        const turnOn = Math.random() < 0.7;   // 40% probabilità di accendersi
+        light.intensity = turnOn ? 1 : 0;     // ON/OFF netto
+      } else {
+        timers[i]--;
+      }
+    }
+  
+    renderer.render(scene, camera);
+  }
+  
+  animateLights();
+  
 
   // BACKGROUND 
   const listenerBcg = new THREE.AudioListener();
@@ -285,7 +350,7 @@ document.addEventListener('click', () => {
 
   
   lSala.load(    
-    '3d/aqvam/01_hangar_2.glb',
+    '3d/aqvam/CV_Aqvam_Ambient_2.glb',
       function (glt) {
       const lSala = glt.scene;
       lSala.position.set(0,0,0);
@@ -299,6 +364,7 @@ document.addEventListener('click', () => {
             map: concrete,
             bumpMap:concrete,
             bumpScale:-0.001,
+             side: THREE.DoubleSide
           });
           node.material = material;
           node.castShadow = true;
