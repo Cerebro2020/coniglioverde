@@ -450,9 +450,9 @@ videoTexture.format = THREE.RGBAFormat;
       });
         
        
-        scene.add(clone);
+        // scene.add(clone);
       }
-      scene.add(ret);   
+      scene.add(ret);   // IMMAGINE PRINCIPALE
     })  
     ////// AMBIENTE GLTF //////////////////////
     let PSy = -100;
