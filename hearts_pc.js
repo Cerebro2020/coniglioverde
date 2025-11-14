@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { PointerLockControls } from './three_class/PointerLockControls.js';
 import { GLTFLoader } from './three_class/GLTFLoader.js';
 
-export default function(choose, quadri){
+export default function(choose, quadri){  
 
   // Colori per eventuale debug (non usati ma lasciati per compatibilità)
   const colore0 = choose[0][0]; 
@@ -27,8 +27,11 @@ export default function(choose, quadri){
   const colore19 = choose[18][1]; 
   const colore20 = choose[19][1];
 
+  let allRet = [];
+  let retDaAnimare = null;
   const clock = new THREE.Clock();
   let mixer;
+  const t = clock.elapsedTime;
 
   // SCENE  
   const scene = new THREE.Scene();
@@ -212,41 +215,7 @@ export default function(choose, quadri){
   pLight4.shadow.camera.near = 0.5; 
   pLight4.shadow.camera.far = 100;
   pLight4.shadow.bias = -0.0005; 
-  scene.add(pLight3,pLight4);
-
-  // ANIMATE SCENE ////// 
-  function animateScene() {
-    requestAnimationFrame(animateScene);
-    const delta = clock.getDelta();
-    if (mixer) mixer.update(delta);
-
-    // movimento FPS
-    velocity.x -= velocity.x * 5 * delta;
-    velocity.z -= velocity.z * 5 * delta;
-    direction.z = Number(move.forward) - Number(move.backward);
-    direction.x = Number(move.right) - Number(move.left);
-    direction.normalize();
-    if (move.forward || move.backward) velocity.z -= direction.z * 1000 * delta;
-    if (move.left || move.right) velocity.x -= direction.x * 1000 * delta;
-    controls.moveRight(-velocity.x * delta);
-    controls.moveForward(-velocity.z * delta);
-
-    if (move.up) {
-      controls.getObject().position.y += 100 * delta;
-    }
-    const floorHeight = 1.8;
-    if (move.down) {
-      if (controls.getObject().position.y > floorHeight) {
-        controls.getObject().position.y -= 50 * delta;
-        if (controls.getObject().position.y < floorHeight) {
-          controls.getObject().position.y = floorHeight;
-        }
-      }
-    }
-
-    renderer.render(scene, camera);
-  }
-  animateScene();
+  scene.add(pLight3,pLight4);  
 
   // TEXTURES
   const loader = new THREE.TextureLoader();
@@ -322,8 +291,16 @@ export default function(choose, quadri){
   let gTotale = new THREE.SphereGeometry(50, 16, 16);
   let matTotale = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(coloreOggetto),
-    roughness: 0.3,
-    metalness: 0.2,
+     metalness: 0.5,
+      metalnessMap: skin2,
+      roughness: 0,
+      roughnessMap: skin2,
+      map: skin2,
+      bumpMap: skin2,
+      bumpScale: 1,     
+      alphaMap: skin2Trans,
+      transparent: true,
+      opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
   emotionTotale.position.set(0,150,0);
@@ -471,7 +448,16 @@ export default function(choose, quadri){
       // se vuoi aggiungere i cloni: scene.add(clone);
     }
 
-    scene.add(ret);   // IMMAGINE PRINCIPALE      
+    scene.add(ret);//Immagine Principale
+    allRet.push(ret);
+
+    // ret.userData.isInnerGroup = true;
+
+    emotion1.userData.isInner = true;
+    emotion2.userData.isInner = true;
+    emotion3.userData.isInner = true;
+
+
   });  
 
   ////// AMBIENTE GLTF ////////////////////// 
@@ -578,7 +564,76 @@ export default function(choose, quadri){
     });
   } else {
     console.warn('audio-toggle-button non trovato');
-  }  
+  } 
+  
+  // ANIMATE SCENE ////// 
+  function animateScene() {
+    requestAnimationFrame(animateScene);
+    const delta = clock.getDelta();
+    if (mixer) mixer.update(delta);
+
+    // movimento FPS
+    velocity.x -= velocity.x * 5 * delta;
+    velocity.z -= velocity.z * 5 * delta;
+    direction.z = Number(move.forward) - Number(move.backward);
+    direction.x = Number(move.right) - Number(move.left);
+    direction.normalize();
+    if (move.forward || move.backward) velocity.z -= direction.z * 1000 * delta;
+    if (move.left || move.right) velocity.x -= direction.x * 1000 * delta;
+    controls.moveRight(-velocity.x * delta);
+    controls.moveForward(-velocity.z * delta);
+
+    if (move.up) {
+      controls.getObject().position.y += 100 * delta;
+    }
+    const floorHeight = 1.8;
+    if (move.down) {
+      if (controls.getObject().position.y > floorHeight) {
+        controls.getObject().position.y -= 50 * delta;
+        if (controls.getObject().position.y < floorHeight) {
+          controls.getObject().position.y = floorHeight;
+        }
+      }    
+    } 
+
+          // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
+      const t = clock.elapsedTime;
+
+        scene.traverse(node => {
+          if (node.userData.isInner === true) {               
+            node.rotation.y = t * 1.2;
+            // Pulsazione leggera
+            const s = 1 + Math.sin(t * 4.0) * 0.15;
+            node.scale.set(s, s, s);
+            // Oscillazione
+            if (node.userData.baseY === undefined) {
+              node.userData.baseY = node.position.y;
+            }
+            node.position.y = node.userData.baseY +
+            Math.sin(t * 3.0) * 0.1;
+          }
+
+          // ANIMAZIONE SFERA GLOBALE (emotionTotale)
+          {
+            const t = clock.elapsedTime;
+              // pulsazione dolce
+            const s = 1.0 + Math.sin(t * 2.0) * 0.05;
+            emotionTotale.scale.set(s, s, s);
+            // rotazione lentissima (opzionale ma bella)
+            emotionTotale.rotation.y = t * 0.15;
+          }
+
+          
+        });
+
+
+
+
+    renderer.render(scene, camera);
+  }
+  animateScene();
+
+  
 
   controls.lock(); 
 };
