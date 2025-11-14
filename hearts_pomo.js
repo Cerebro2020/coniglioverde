@@ -121,9 +121,7 @@ export default function(choose,quadri){
     ];    
     const coloreCorrente = new THREE.Color(v[1]).getHexString().toUpperCase(); 
     let forma;    
-    
-    ///////////////////////////////////////////////
-
+   
     // Inizializza un array per tenere traccia del conteggio delle aree
     let conteggioAree = [0, 0, 0, 0];
 
@@ -172,7 +170,7 @@ export default function(choose,quadri){
 
     console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
 
-  // let gTotale = new THREE.SphereGeometry(1200, 16, 16);
+  // let gTotale = new THREE.SphereGeometry(200, 16, 16);
   // let matTotale = new THREE.MeshPhysicalMaterial ({
   //   color: new THREE.Color(coloreOggetto), 
   //   map: TextureQ2,

@@ -384,7 +384,7 @@ export default function(choose, quadri){
         );
         clone.rotation.y = angolo; 
         clone.scale.set(5,5,5);
-        scene.add(clone);
+        // scene.add(clone);
       }
       scene.add(ret);   
     })  

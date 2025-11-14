@@ -4,6 +4,7 @@ import { GLTFLoader } from './three_class/GLTFLoader.js';
 
 export default function(choose, quadri){
 
+  // Colori per eventuale debug (non usati ma lasciati per compatibilità)
   const colore0 = choose[0][0]; 
   const colore1 = choose[0][1]; 
   const colore2 = choose[1][1];
@@ -25,21 +26,21 @@ export default function(choose, quadri){
   const colore18 = choose[17][1];
   const colore19 = choose[18][1]; 
   const colore20 = choose[19][1];
-  //////////////// ARRAY POSIZIONI /////////////
-  
+
   const clock = new THREE.Clock();
   let mixer;
-  // window.resetCamera = resetCamera;
+
   // SCENE  
   const scene = new THREE.Scene();
   const loader2 = new THREE.TextureLoader();
   loader2.load('images/equiangular/Esky2.png', texture => {
-    texture.colorSpace = THREE.SRGBColorSpace;// colori corretti
-    texture.mapping = THREE.EquirectangularReflectionMapping; // per immagine 2:1
-    scene.background = texture;// visibile come sfondo
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    scene.background = texture;
   });
   scene.position.set(0,0,0);
-  // CAMERA //////
+
+  // CAMERA ////// 
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
   camera.position.set(0,player.height,-1200);
@@ -51,10 +52,11 @@ export default function(choose, quadri){
     backward: false,
     left: false,
     right: false,
-    up: false,     // salita con SPACE
-    down: false    // discesa con SHIFT
+    up: false,
+    down: false
   };
   
+  // VIDEO TEXTURE PER LA PISCINA
   const video = document.createElement('video');
   video.src = "video/video_textures/water_loop.mp4";
   video.loop = true;
@@ -66,11 +68,12 @@ export default function(choose, quadri){
   video.load();
   video.play();
 
-const videoTexture = new THREE.VideoTexture(video);
-videoTexture.minFilter = THREE.LinearFilter;
-videoTexture.magFilter = THREE.LinearFilter;
-videoTexture.format = THREE.RGBAFormat;
+  const videoTexture = new THREE.VideoTexture(video);
+  videoTexture.minFilter = THREE.LinearFilter;
+  videoTexture.magFilter = THREE.LinearFilter;
+  videoTexture.format = THREE.RGBAFormat;
 
+  // CONTROLLI TASTIERA
   document.addEventListener('keydown', event => {
     switch (event.code) {
       case 'KeyW': move.forward = true; break;
@@ -82,21 +85,21 @@ videoTexture.format = THREE.RGBAFormat;
     }
   });
 
-    document.addEventListener('keyup', event => {
-      switch (event.code) {
-        case 'KeyW': move.forward = false; break;
-        case 'KeyS': move.backward = false; break;
-        case 'KeyA': move.left = false; break;
-        case 'KeyD': move.right = false; break;
-        case 'Space': move.up = false; break;
-        case 'ShiftLeft': move.down = false;  break;
-      }
+  document.addEventListener('keyup', event => {
+    switch (event.code) {
+      case 'KeyW': move.forward = false; break;
+      case 'KeyS': move.backward = false; break;
+      case 'KeyA': move.left = false; break;
+      case 'KeyD': move.right = false; break;
+      case 'Space': move.up = false; break;
+      case 'ShiftLeft': move.down = false;  break;
+    }
   }); 
 
-  
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
-  camera.setFocalLength (25);
+  camera.setFocalLength(25);
+
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
     alpha:true, 
@@ -118,32 +121,27 @@ videoTexture.format = THREE.RGBAFormat;
       controls.lock();
     }
   });
-  // CAMERA 
-  // let initialCameraPosition = new THREE.Vector3();
-  // initialCameraPosition.copy(camera.position);
-  // function resetCamera() {
-  //   camera.position.copy(initialCameraPosition);  
-  // }
-  // RENDERER
+
   renderer.shadowMap.enabled = true;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 0.9;
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement ); 
-  renderer.xr.enabled = true,    
-  // RESIZE WINDOW //////
-   window.addEventListener('resize', function(){
+  renderer.xr.enabled = true;
+    
+  // RESIZE WINDOW ////// 
+  window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
     renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-  } ); 
-  // LIGHTS //////
-  //AMBIENT
+  }); 
+
+  // LIGHTS ////// 
   const ambient = new THREE.AmbientLight(0xFFFFFF,1);   
   scene.add( ambient);
-  /* === SPOT LIGHTS ===*/
+
   const spotLight = new THREE.SpotLight(0xffffff, 5);
   spotLight.position.set(0,3000,0);
   spotLight.angle = Math.PI/16;
@@ -173,7 +171,7 @@ videoTexture.format = THREE.RGBAFormat;
   spotLight2.shadow.camera.far = 10000;
   spotLight2.shadow.bias = -0.0005;
   scene.add(spotLight2);  
-  /* === POINTS === */
+
   let plPower = 1;
 
   const pLight = new THREE.PointLight(0xFFFFFF,plPower,500);  
@@ -184,7 +182,7 @@ videoTexture.format = THREE.RGBAFormat;
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 10; 
   pLight.shadow.bias = -0.0005;
-  scene.add( pLight); 
+  scene.add(pLight); 
 
   const pLight2 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
   pLight2.position.set(360,400,-360);  
@@ -204,7 +202,7 @@ videoTexture.format = THREE.RGBAFormat;
   pLight3.shadow.camera.near = 0.5; 
   pLight3.shadow.camera.far = 10; 
   pLight3.shadow.bias = -0.0005;
-  scene.add( pLight3); 
+  scene.add(pLight3); 
 
   const pLight4 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
   pLight4.position.set(-360,400,-360);  
@@ -216,18 +214,12 @@ videoTexture.format = THREE.RGBAFormat;
   pLight4.shadow.bias = -0.0005; 
   scene.add(pLight3,pLight4);
 
-  const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-  const pLightHelper = new THREE.PointLightHelper(pLight);
-  const pLight2Helper = new THREE.PointLightHelper(pLight2, 100);
-
-  // Aggiungi tutti gli helper alla scena
-  // scene.add(spotLightHelper, pLightHelper, pLight2Helper);
-
-  // ANIMATE SCENE //////
-    function animateScene() {
+  // ANIMATE SCENE ////// 
+  function animateScene() {
     requestAnimationFrame(animateScene);
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
+
     // movimento FPS
     velocity.x -= velocity.x * 5 * delta;
     velocity.z -= velocity.z * 5 * delta;
@@ -238,250 +230,276 @@ videoTexture.format = THREE.RGBAFormat;
     if (move.left || move.right) velocity.x -= direction.x * 1000 * delta;
     controls.moveRight(-velocity.x * delta);
     controls.moveForward(-velocity.z * delta);
+
     if (move.up) {
-    controls.getObject().position.y += 100 * delta;
-  }
-  const floorHeight = 1.8;
-  if (move.down) {
-    if (controls.getObject().position.y > floorHeight) {
-      controls.getObject().position.y -= 50 * delta;
-      // Evita di andare sotto al pavimento
-      if (controls.getObject().position.y < floorHeight) {
-        controls.getObject().position.y = floorHeight;
+      controls.getObject().position.y += 100 * delta;
+    }
+    const floorHeight = 1.8;
+    if (move.down) {
+      if (controls.getObject().position.y > floorHeight) {
+        controls.getObject().position.y -= 50 * delta;
+        if (controls.getObject().position.y < floorHeight) {
+          controls.getObject().position.y = floorHeight;
+        }
       }
     }
-  }
+
     renderer.render(scene, camera);
   }
   animateScene();
-  //TEXTURES
+
+  // TEXTURES
   const loader = new THREE.TextureLoader();
   let skin = loader.load("images/textures/marble_2.png");
   skin.wrapS = THREE.RepeatWrapping;
   skin.wrapT = THREE.RepeatWrapping;
   skin.repeat.set(8,8);
+
   let skin2 = loader.load("images/textures/Bronze.jpg");
   let skin2Trans = loader.load("images/textures/skin2T.png");
   skin2Trans.colorSpace = THREE.NoColorSpace;
-  // GRUPPO EMOZIONI //////
-  let emotionGroup = new THREE.Group();
-  const emozioni=_.map(choose,(v,k)=>{
-    const formeGeometriche = {
-      'sfera': new THREE.SphereGeometry( 0.8, 16, 16 ),
-      'piramide': new THREE.ConeGeometry( 1, 2, 4 ),      
-      'cubo': new THREE.BoxGeometry( 1.2, 1.2, 1.2 ),
-      'dodecaedro': new THREE.DodecahedronGeometry( 1, 0 ),
-      'octaedro': new THREE.OctahedronGeometry( 1, 1 )
-    };
-    const nomiFormeGeometriche = ['dodecaedro','sfera', 'cubo','piramide'  ];    
-     const colori = [
-      'DEC414', 'FEF600', 'FFD700', 'C9A021',
-      'FE005B', 'FF0000', 'A32590', 'DF73FF',
-      '227BFF', '222EFF', '001DEC', '2A23A3',
-      '49C51A', '2D7121', '3C6232', '008000',
-    ];   
-    // Definisci i gruppi di colori
-    const gruppiColori = [
-      colori.slice(0, 4),  // Primi 4 colori
-      colori.slice(4, 8), // Successivi 4 colori
-      colori.slice(8, 12), // Successivi 4 colori
-      colori.slice(12, 16)  // Ultimi 4 colori
-    ];      
-    const coloreCorrente = new THREE.Color(v[1]).getHexString().toUpperCase(); 
-    let contaCorrente = [];
-    for (let i = 0; i < gruppiColori.length; i++){
-    contaCorrente.push('coloreCorrente');
-    }
-    let forma;
-///////////////////////////////////////////////
-  // Inizializza un array per tenere traccia del conteggio delle aree
-  let conteggioAree = [0, 0, 0, 0];
-  let mappaColori = {
-    'area1': '#f0e73cff', // giallo
-    'area2': '#f32727ff', // rosso
-    'area3': '#2fb8eeff', // blu
-    'area4': '#6bc043ff', // verde
-    'areaEquivalente': '#777777' // arancione per scelte equivalenti
-  };
-  // Itera su ogni colore scelto
-  for (let quad in choose) {
-    // Ottieni il colore corrente
-    let coloreCorrente = new THREE.Color(choose[quad][1]).getHexString().toUpperCase();
-    // Determina a quale area appartiene il colore
-    let indiceArea;
-    for (let i = 0; i < gruppiColori.length; i++) {
-      if (gruppiColori[i].includes(coloreCorrente)) {
-        indiceArea = i;
-        break;
-      }
-    }
-    // Aggiorna il conteggio per l'area solo se il colore corrente non è bianco
-    if (indiceArea !== undefined && choose[quad][1] !== '#FFFFFF') {
-      conteggioAree[indiceArea]++;
-    }
-  }
-  // Trova il massimo conteggio
-  let maxConteggio = Math.max(...conteggioAree);
-  // Verifica se ci sono più aree con lo stesso massimo conteggio
-  let areeEquivalenti = conteggioAree.filter(conteggio => conteggio === maxConteggio).length > 1;
-  let coloreOggetto;
-  // Se ci sono scelte equivalenti, usa il colore per scelte equivalenti
-  if (areeEquivalenti) {
-    coloreOggetto = mappaColori['areaEquivalente'];
-  } else {
-    // Trova l'area con il maggior numero di scelte
-    let areaPiuScelta = conteggioAree.indexOf(maxConteggio);
-    // Se nessun'area è stata scelta (tutte hanno conteggio 0), usa il colore bianco
-    coloreOggetto = maxConteggio > 0 ? mappaColori[`area${areaPiuScelta + 1}`] : '#FFFFFF';
-  }
-  console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
-    /////// INSERIRE IL CIELO ROTANTE////////////
-    for (let i = 0; i < gruppiColori.length; i++) {
-      if (gruppiColori[i].includes(coloreCorrente)) {
-        forma = formeGeometriche[nomiFormeGeometriche[i]];
-        break; 
+
+  // ----------------------------------------------------
+  //  CALCOLO COLORE DOMINANTE (UNA SOLA VOLTA, STILE POMO)
+  // ----------------------------------------------------
+
+  const colori = [
+    'DEC414', 'FEF600', 'FFD700', 'C9A021',
+    'FE005B', 'FF0000', 'A32590', 'DF73FF',
+    '227BFF', '222EFF', '001DEC', '2A23A3',
+    '49C51A', '2D7121', '3C6232', '008000',
+  ];
+
+  const gruppiColori = [
+    colori.slice(0, 4),   // gialli
+    colori.slice(4, 8),   // rossi
+    colori.slice(8, 12),  // blu
+    colori.slice(12, 16)  // verdi
+  ];
+
+  function calcolaColoreDominante(choose, gruppiColori) {
+    let conteggioAree = [0, 0, 0, 0];
+
+    for (let quad in choose) {
+      const v = choose[quad];
+      if (!v || v.length < 2) continue;
+      const c = v[1];
+      if (!c || c === '#FFFFFF') continue;
+
+      const hex = new THREE.Color(c).getHexString().toUpperCase();
+      let indiceArea;
+      for (let i = 0; i < gruppiColori.length; i++) {
+        if (gruppiColori[i].includes(hex)) {
+          indiceArea = i;
+          break;
         }
       }
-        if (!forma) {
-        forma = formeGeometriche['octaedro'];
+      if (indiceArea !== undefined) {
+        conteggioAree[indiceArea]++;
       }
-      // EMOTION MATERIAL
-      const emoMaterial = new THREE.MeshPhysicalMaterial({
-        color: new THREE.Color(v[1]),
-        metalness: 0.5,
-        metalnessMap: skin2,
-        roughness: 0,
-        roughnessMap: skin2,
-        map: skin2,
-        bumpMap: skin2,
-        bumpScale: 1,     
-        alphaMap: skin2Trans,
-        transparent: true,
-        opacity: 1,
-      });
-      //  EMOTION 1
-      const emotion1 = new THREE.Mesh( forma, emoMaterial);  
-      emotion1.position.set(-7.1,13.5,-0.3);
-      emotion1.rotation.set(
-        0,
-        Math.PI/4,     
-        0
-      );
-      emotion1.scale.set(1.5,1.5,1.5);    
-      emotion1.castShadow = true; 
-      emotion1.receiveShadow = true;    
-      //  EMOTION 2
-      let newMat = emoMaterial.clone()
-      newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
-      let forma2; 
+    }
+
+    const maxConteggio = Math.max(...conteggioAree);
+    if (maxConteggio === 0) return '#FFFFFF';
+
+    const nMax = conteggioAree.filter(v => v === maxConteggio).length;
+    if (nMax > 1) return '#777777'; // parità
+
+    const areaPiuScelta = conteggioAree.indexOf(maxConteggio);
+    const mappaColori = {
+      0: '#fff200', // giallo
+      1: '#ff0000', // rosso
+      2: '#007afd', // blu
+      3: '#50fd00'  // verde
+    };
+    return mappaColori[areaPiuScelta] || '#FFFFFF';
+  }
+
+  const coloreOggetto = calcolaColoreDominante(choose, gruppiColori);
+  console.log('Colore dominante finale:', coloreOggetto);
+
+  // SFERA GLOBALE (EMOTION TOTALE) – UNA SOLA VOLTA
+  let gTotale = new THREE.SphereGeometry(50, 16, 16);
+  let matTotale = new THREE.MeshPhysicalMaterial({
+    color: new THREE.Color(coloreOggetto),
+    roughness: 0.3,
+    metalness: 0.2,
+  });
+  let emotionTotale = new THREE.Mesh(gTotale, matTotale);
+  emotionTotale.position.set(0,150,0);
+  scene.add(emotionTotale);
+
+  // ----------------------------------------------------
+  //  GRUPPO EMOZIONI (PER OGNI IMMAGINE)
+  // ----------------------------------------------------
+  let emotionGroup = new THREE.Group();
+
+  const emozioni = _.map(choose, (v,k) => {
+
+    const formeGeometriche = {
+      'sfera':      new THREE.SphereGeometry( 0.8, 16, 16 ),
+      'piramide':   new THREE.ConeGeometry( 1, 2, 4 ),      
+      'cubo':       new THREE.BoxGeometry( 1.2, 1.2, 1.2 ),
+      'dodecaedro': new THREE.DodecahedronGeometry( 1, 0 ),
+      'octaedro':   new THREE.OctahedronGeometry( 1, 1 )
+    };
+
+    const nomiFormeGeometriche = ['dodecaedro','sfera','cubo','piramide'];
+
+    // Colore principale della slide (seconda scelta, se presente)
+    const colorePrincipale = v[1] 
+      ? new THREE.Color(v[1]).getHexString().toUpperCase() 
+      : null;
+
+    let forma;
+
+    if (colorePrincipale) {
       for (let i = 0; i < gruppiColori.length; i++) {
-        const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
+        if (gruppiColori[i].includes(colorePrincipale)) {
+          forma = formeGeometriche[nomiFormeGeometriche[i]];
+          break; 
+        }
+      }
+    }
+
+    if (!forma) {
+      forma = formeGeometriche['octaedro'];
+    }
+
+    // MATERIAL EMOZIONI
+    const emoMaterial = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
+      metalness: 0.5,
+      metalnessMap: skin2,
+      roughness: 0,
+      roughnessMap: skin2,
+      map: skin2,
+      bumpMap: skin2,
+      bumpScale: 1,     
+      alphaMap: skin2Trans,
+      transparent: true,
+      opacity: 1,
+    });
+
+    // EMOTION 1
+    const emotion1 = new THREE.Mesh(forma, emoMaterial);  
+    emotion1.position.set(-7.1,13.5,-0.3);
+    emotion1.rotation.set(0, Math.PI/4, 0);
+    emotion1.scale.set(1.5,1.5,1.5);    
+    emotion1.castShadow = true; 
+    emotion1.receiveShadow = true;    
+
+    // EMOTION 2
+    let newMat = emoMaterial.clone();
+    newMat.color = new THREE.Color(v[2] ? v[2] : v[0] || '#FFFFFF');
+
+    let forma2;
+    if (v[2]) {
+      const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
+      for (let i = 0; i < gruppiColori.length; i++) {
         if (gruppiColori[i].includes(coloreCorrente2)) {
           forma2 = formeGeometriche[nomiFormeGeometriche[i]];    
           break; 
         }
       }
-      if (!forma2) {
-        forma2 = formeGeometriche['octaedro'];
-      }    
-      const emotion2 = new THREE.Mesh(forma2, newMat);  
-      emotion2.position.set(-7.9,11.25,-0.3);
-      emotion2.rotation.set(
-        Math.PI/4,
-        0,
-        Math.PI/2
-      );
-      emotion2.scale.set(1,1,1);    
-      emotion2.castShadow = true; 
-      emotion2.receiveShadow = true;   
-      // EMOTION 3 
-      newMat = emoMaterial.clone();
-      newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
-      let forma3;
+    }
+    if (!forma2) {
+      forma2 = formeGeometriche['octaedro'];
+    }
+
+    const emotion2 = new THREE.Mesh(forma2, newMat);  
+    emotion2.position.set(-7.9,11.25,-0.3);
+    emotion2.rotation.set(Math.PI/4, 0, Math.PI/2);
+    emotion2.scale.set(1,1,1);    
+    emotion2.castShadow = true; 
+    emotion2.receiveShadow = true;   
+
+    // EMOTION 3 
+    newMat = emoMaterial.clone();
+    newMat.color = new THREE.Color(v[3] ? v[3] : v[0] || '#FFFFFF');
+
+    let forma3;
+    if (v[3]) {
+      const coloreCorrente3 = newMat.color.getHexString().toUpperCase();
       for (let i = 0; i < gruppiColori.length; i++) {
-        const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
-        if (gruppiColori[i].includes(coloreCorrente2)) {
+        if (gruppiColori[i].includes(coloreCorrente3)) {
           forma3 = formeGeometriche[nomiFormeGeometriche[i]]; 
           break;
         }
-      }  
-      if (!forma3) {
-        forma3 = formeGeometriche['octaedro'];
-      }       
-      const emotion3 = new THREE.Mesh(forma3, newMat);  
-      emotion3.position.set(-6.1,11.5,-0.3);
-      emotion3.rotation.set(
-        Math.PI/4,
+      }
+    }
+    if (!forma3) {
+      forma3 = formeGeometriche['octaedro'];
+    }
+
+    const emotion3 = new THREE.Mesh(forma3, newMat);  
+    emotion3.position.set(-6.1,11.5,-0.3);
+    emotion3.rotation.set(Math.PI/4, 0, Math.PI/-2);
+    emotion3.scale.set(0.7,0.7,0.7); 
+    emotion3.castShadow = true; 
+    emotion3.receiveShadow = true;    
+
+    const ret = emotionGroup.clone(true);
+    ret.add(emotion1, emotion2, emotion3);
+    ret.scale.set(10,10,10);
+    ret.position.set(30,(k*25)-180,-70);
+    ret.rotation.set(
+      0,
+      k*Math.PI/-16,
+      k*Math.PI/-16,
+    );
+
+    const numCopies = 12;
+    const raggio = 200;
+    for (let i = 0; i < numCopies; i++) {
+      const clone = ret.clone(true);
+      const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
+      clone.position.set(
+        Math.cos(-angolo) * raggio,
         0,
-        Math.PI/-2
+        Math.sin(-angolo) * raggio
       );
-      emotion3.scale.set(0.7,0.7,0.7); 
-      emotion3.castShadow = true; 
-      emotion3.receiveShadow = true;    
-      const ret = emotionGroup.clone(true);
-      ret.add(emotion1, emotion2, emotion3);
-      ret.scale.set(10,10,10);
-      ret.position.set(30,(k*25)-180,-70);
-      ret.rotation.set(
-        0,
-        k*Math.PI/-16,
-        k*Math.PI/-16,
-      );
-      let randomValue = Math.floor(Math.random() * 2) + 1.5;
-      const numCopies = 12;
-      const raggio = 200;// maggiore distanza
-      for (let i = 0; i < numCopies; i++) {
-        const clone = ret.clone(true);
-        // capovolgi l’ordine (prima scelta davanti)
-        const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
-        clone.position.set(
-          Math.cos(-angolo) * raggio,
-          0,
-          Math.sin(-angolo) * raggio
-        );
-        clone.rotation.y = angolo; 
-        clone.scale.set(5,5,5);
-        clone.traverse((node) => {
+      clone.rotation.y = angolo; 
+      clone.scale.set(5,5,5);
+      clone.traverse((node) => {
         if (node.isMesh) {
           node.material = node.material.clone();
           node.material.transparent = true;
-          node.material.opacity = 1;  // o quanto vuoi
+          node.material.opacity = 1;
         }
       });
-        
-       
-        // scene.add(clone);
-      }
-      scene.add(ret);   // IMMAGINE PRINCIPALE
-    })  
-    ////// AMBIENTE GLTF //////////////////////
-    let PSy = -100;
-    
-    const loaderPlanet = new GLTFLoader();
-    loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
-      const model = gltf.scene;
-      model.traverse((node) => {
-        if (node.isMesh) {
-          // node.material.map = skin;
-          node.castShadow = true;
-          node.receiveShadow = true;
-          node.material.side = THREE.DoubleSide;
-        }
-      });
-      model.position.set(0, PSy, 0);
-      model.rotation.set(0, Math.PI / 28.5, 0);
-      const scala = 400;
-      model.scale.set(scala, scala, scala);
-      scene.add(model);
+      // se vuoi aggiungere i cloni: scene.add(clone);
+    }
 
-      mixer = new THREE.AnimationMixer(model);
-      gltf.animations.forEach((clip) => {
+    scene.add(ret);   // IMMAGINE PRINCIPALE      
+  });  
+
+  ////// AMBIENTE GLTF ////////////////////// 
+  let PSy = -100;
+    
+  const loaderPlanet = new GLTFLoader();
+  loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
+    const model = gltf.scene;
+    model.traverse((node) => {
+      if (node.isMesh) {
+        // node.material.map = skin;
+        node.castShadow = true;
+        node.receiveShadow = true;
+        node.material.side = THREE.DoubleSide;
+      }
+    });
+    model.position.set(0, PSy, 0);
+    model.rotation.set(0, Math.PI / 28.5, 0);
+    const scala = 400;
+    model.scale.set(scala, scala, scala);
+    scene.add(model);
+
+    mixer = new THREE.AnimationMixer(model);
+    gltf.animations.forEach((clip) => {
       mixer.clipAction(clip).play();
     });
-    controls.lock(); // se vuoi avviare il controllo qui
+    controls.lock();
   });
-
-  
 
   let radiusC = 900;
   let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
@@ -507,15 +525,13 @@ videoTexture.format = THREE.RGBAFormat;
   pool.receiveShadow = true;
   scene.add(pool);
 
-  ////////// BACKGROUND ///////
-  // === BACKGROUND AUDIO + TOGGLE ===
+  ////////// AUDIO DI BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
 
   const backgroundSound = new THREE.Audio(listenerBcg);
   const leavesSound = new THREE.Audio(listenerBcg);
-  // const labirynthSound = new THREE.Audio(listenerBcg);
 
   audioLoader.load('audio/hearts/leaves_rev.wav', (buffer) => {
     leavesSound.setBuffer(buffer);
@@ -524,19 +540,10 @@ videoTexture.format = THREE.RGBAFormat;
     leavesSound.play();
   });
 
-  // audioLoader.load('audio/hearts/labirynth_rev.mp3', (buffer) => {
-  //   labirynthSound.setBuffer(buffer);
-  //   labirynthSound.setLoop(true);
-  //   labirynthSound.setVolume(0.05);
-  //   labirynthSound.play();
-  // });
-
-  // elementi UI 
   const audioToggleButton = document.getElementById('audio-toggle-button');
   const muteIcon = document.getElementById('mute-icon');
   const audioIcon = document.getElementById('audio-icon');
 
-  // stato iniziale: ATTIVO
   let isPlaying = true;
   function syncIcons() {
     if (!muteIcon || !audioIcon) return;
@@ -549,6 +556,7 @@ videoTexture.format = THREE.RGBAFormat;
     }
   }
   syncIcons();
+
   audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
     backgroundSound.setBuffer(buffer);
     backgroundSound.setLoop(true);
@@ -556,17 +564,14 @@ videoTexture.format = THREE.RGBAFormat;
     backgroundSound.play();
   });
 
-  // click toggle
   if (audioToggleButton) {
     audioToggleButton.addEventListener('click', () => {
       if (isPlaying) {
         backgroundSound.pause();
         leavesSound.pause();
-        // labirynthSound.pause();
       } else {
         backgroundSound.play();
         leavesSound.play();
-        // labirynthSound.play();
       }
       isPlaying = !isPlaying;
       syncIcons();
@@ -576,5 +581,4 @@ videoTexture.format = THREE.RGBAFormat;
   }  
 
   controls.lock(); 
-    
 };

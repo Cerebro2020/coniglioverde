@@ -156,13 +156,21 @@
 				}
 				$('#choose span').html(JSON.stringify(choose));
 			});
+
 			$('#reset').click(function () {
-				$('.swiper li').removeClass('active');
-				Object.keys(choose).forEach(k => {
-					choose[k] = ['#FFFFFF'];
-				});
+				// indice della slide attiva
+				const currentIndex = swiper.activeIndex;
+
+				// rimuove lo stato "active" solo dai bottoni emozione della slide corrente
+				$(`.swiper li[quad="${currentIndex}"]`).removeClass('active');
+
+				// resetta i dati solo per quella immagine
+				choose[currentIndex] = ['#FFFFFF'];
+
+				// aggiorna la visualizzazione del JSON (se la sta usando per debug)
 				$('#choose span').html(JSON.stringify(choose));
-			});
+				});
+
 			},500);
 
 			$('#openscene').click(function(){
