@@ -62,8 +62,7 @@
                 </li>                
                 <!-- <li><a href="aqvamT_it.html">EN | IT</a></li>                        -->
             </ul>
-        </header>
-        
+        </header>        
         <div class="button-controls-aqvam-left">         
             <div id="btn-play">
                 <button type="button" ><img src= "images/icons/play-buttton.png"></button>
@@ -82,8 +81,7 @@
                     </div> 
                 </div>
             </div>
-        </div>   
-        
+        </div>        
         <div class="button-controls-jump" id="jump-controls"  style="display: none;">
             <div id="btn-jump-to-column">
                 <button type="button">
@@ -96,7 +94,6 @@
                 </button>
             </div>  
         </div>
-
         <div class="button-controls-aqvam">
             <div id="btn-cameraC">
                 <button type="button">CENTER</button>
@@ -140,72 +137,106 @@
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer>  
-            <script>
+        <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const playBtn  = document.querySelector('#btn-play button');
-  const pauseBtn = document.querySelector('#btn-pause button');
 
-  const allButtons = document.querySelectorAll(
-    '#btn-start button, #btn-play button, #btn-pause button, #btn-count button, #btn-quantity button, #btn-calendar button, #btn-back button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button, #btn-audio-white button'
-  );
+    // ---------------------------------------
+    // DEFINIZIONE DELLE CATEGORIE DI PULSANTI
+    // ---------------------------------------
 
-  const multiActiveSelectors = [
-    '#btn-count',
-    '#btn-quantity',
-    '#btn-calendar',
-    '#btn-hide-boxes1',
-    '#btn-hide-boxes2',
-    '#btn-hide-boxes3'
-  ];
+    // Toggle (interruttori indipendenti)
+    const toggleButtons = [
+        '#btn-hide-boxes1',
+        '#btn-hide-boxes2',
+        '#btn-hide-boxes3',
+        '#btn-count',
+        '#btn-quantity',
+        '#btn-calendar'
+    ];
 
-  const excludedSelectors = ['#btn-jump-to-column', '#btn-previous-column'];
+    // Radio (solo uno attivo)
+    const radioButtons = [
+        '#btn-play',
+        '#btn-pause'
+    ];
 
-  // ---- Gestione Play/Pause esclusiva ----
-  function setPlayState(isPlaying) {
-    playBtn.classList.toggle('active', isPlaying);
-    pauseBtn.classList.toggle('active', !isPlaying);
-  }
+    // No-state (non devono mai avere .active)
+    const noStateButtons = [
+        '#btn-jump-to-column',
+        '#btn-previous-column'
+    ];
 
-  playBtn.addEventListener('click',  () => setPlayState(true));
-  pauseBtn.addEventListener('click', () => setPlayState(false));
+    // ---------------------------------------
+    // FUNZIONE GENERALE PER OTTENERE IL <button>
+    // ---------------------------------------
+    function getButtonElement(selector) {
+        const container = document.querySelector(selector);
+        if (!container) return null;
+        return container.querySelector("button");
+    }
 
-  // ---- Gestione di tutti gli altri pulsanti ----
-  allButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const parentId = '#' + button.parentElement.id;
+    // ---------------------------------------
+    // TOGGLE BUTTONS (ON/OFF indipendenti)
+    // ---------------------------------------
+    toggleButtons.forEach(sel => {
+        const div = document.querySelector(sel);
+        const btn = getButtonElement(sel);
+        if (!div || !btn) return;
 
-      // Esclusi
-      if (excludedSelectors.includes(parentId)) return;
-      // Evita di interferire con play/pause
-      if (parentId === '#btn-play' || parentId === '#btn-pause') return;
-
-      const isMulti = multiActiveSelectors.includes(parentId);
-
-      // Se non fa parte dei gruppi multipli → disattiva altri pulsanti singoli
-      if (!isMulti) {
-        allButtons.forEach(b => {
-          const bParent = '#' + b.parentElement.id;
-          if (
-            !multiActiveSelectors.includes(bParent) &&
-            !excludedSelectors.includes(bParent) &&
-            bParent !== '#btn-play' &&
-            bParent !== '#btn-pause'
-          ) {
-            b.classList.remove('active');
-          }
+        div.addEventListener("click", () => {
+            btn.classList.toggle("active");
         });
-      }
-
-      // Attiva/disattiva solo il pulsante cliccato
-      button.classList.toggle('active');
     });
-  });
 
-  // ---- Stati iniziali ----
-  setPlayState(true); // play attivo, pause spento
-  document.querySelector('#btn-quantity button')?.classList.add('active'); // quantity attivo
-  document.querySelector('#btn-count button')?.classList.remove('active'); // count disattivo
-  document.querySelector('#btn-calendar')?.classList.remove('active'); // count disattivo
+    // ---------------------------------------
+    // RADIO BUTTONS (solo uno attivo)
+    // ---------------------------------------
+    radioButtons.forEach(sel => {
+        const div = document.querySelector(sel);
+        const btn = getButtonElement(sel);
+        if (!div || !btn) return;
+
+        div.addEventListener("click", () => {
+
+            // disattiva gli altri
+            radioButtons.forEach(otherSel => {
+                const otherBtn = getButtonElement(otherSel);
+                if (otherBtn) otherBtn.classList.remove("active");
+            });
+
+            // attiva questo
+            btn.classList.add("active");
+        });
+    });
+
+    // ---------------------------------------
+    // NO-STATE BUTTONS (senza active)
+    // ---------------------------------------
+    noStateButtons.forEach(sel => {
+        const div = document.querySelector(sel);
+        if (!div) return;
+
+        div.addEventListener("click", () => {
+            // non mettiamo active
+        });
+    });
+
+    // ---------------------------------------
+    // STATI INIZIALI
+    // ---------------------------------------
+
+    // play deve essere attivo
+    const playBtn = getButtonElement("#btn-play");
+    if (playBtn) playBtn.classList.add("active");
+
+    // pause deve essere spento
+    const pauseBtn = getButtonElement("#btn-pause");
+    if (pauseBtn) pauseBtn.classList.remove("active");
+
+    // COUNT deve partire spento (torus2 invisibili)
+const countBtn = getButtonElement("#btn-count");
+if (countBtn) countBtn.classList.remove("active");
+
 });
 </script>
 

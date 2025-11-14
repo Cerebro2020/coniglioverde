@@ -507,60 +507,74 @@ videoTexture.format = THREE.RGBAFormat;
   pool.receiveShadow = true;
   scene.add(pool);
 
-  
-    
+  ////////// BACKGROUND ///////
+  // === BACKGROUND AUDIO + TOGGLE ===
+  const listenerBcg = new THREE.AudioListener();
+  camera.add(listenerBcg);
+  const audioLoader = new THREE.AudioLoader();
 
-    ////////// BACKGROUND ///////
-    // === BACKGROUND AUDIO + TOGGLE ===
-const listenerBcg = new THREE.AudioListener();
-camera.add(listenerBcg);
-const audioLoader = new THREE.AudioLoader();
-const backgroundSound = new THREE.Audio(listenerBcg);
+  const backgroundSound = new THREE.Audio(listenerBcg);
+  const leavesSound = new THREE.Audio(listenerBcg);
+  // const labirynthSound = new THREE.Audio(listenerBcg);
 
-// elementi UI (già presenti in hearts_pc.html)
-const audioToggleButton = document.getElementById('audio-toggle-button');
-const muteIcon = document.getElementById('mute-icon');
-const audioIcon = document.getElementById('audio-icon');
-
-// stato iniziale: ATTIVO
-let isPlaying = true;
-function syncIcons() {
-  if (!muteIcon || !audioIcon) return;
-  if (isPlaying) {
-    muteIcon.style.display = 'none';
-    audioIcon.style.display = 'inline';
-  } else {
-    muteIcon.style.display = 'inline';
-    audioIcon.style.display = 'none';
-  }
-}
-syncIcons();
-
-// carica e avvia audio
-audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
-  backgroundSound.setBuffer(buffer);
-  backgroundSound.setLoop(true);
-  backgroundSound.setVolume(0.1);
-  // la scena parte da un click su "RESULT", quindi l’autoplay è consentito
-  backgroundSound.play();
-});
-
-// click toggle
-if (audioToggleButton) {
-  audioToggleButton.addEventListener('click', () => {
-    if (isPlaying) {
-      backgroundSound.pause();
-    } else {
-      backgroundSound.play();
-    }
-    isPlaying = !isPlaying;
-    syncIcons();
+  audioLoader.load('audio/hearts/leaves_rev.wav', (buffer) => {
+    leavesSound.setBuffer(buffer);
+    leavesSound.setLoop(true);
+    leavesSound.setVolume(0.15);
+    leavesSound.play();
   });
-} else {
-  console.warn('audio-toggle-button non trovato');
-}  
 
+  // audioLoader.load('audio/hearts/labirynth_rev.mp3', (buffer) => {
+  //   labirynthSound.setBuffer(buffer);
+  //   labirynthSound.setLoop(true);
+  //   labirynthSound.setVolume(0.05);
+  //   labirynthSound.play();
+  // });
+
+  // elementi UI 
+  const audioToggleButton = document.getElementById('audio-toggle-button');
+  const muteIcon = document.getElementById('mute-icon');
+  const audioIcon = document.getElementById('audio-icon');
+
+  // stato iniziale: ATTIVO
+  let isPlaying = true;
+  function syncIcons() {
+    if (!muteIcon || !audioIcon) return;
+    if (isPlaying) {
+      muteIcon.style.display = 'none';
+      audioIcon.style.display = 'inline';
+    } else {
+      muteIcon.style.display = 'inline';
+      audioIcon.style.display = 'none';
+    }
+  }
+  syncIcons();
+  audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
+    backgroundSound.setBuffer(buffer);
+    backgroundSound.setLoop(true);
+    backgroundSound.setVolume(0.1);
+    backgroundSound.play();
+  });
+
+  // click toggle
+  if (audioToggleButton) {
+    audioToggleButton.addEventListener('click', () => {
+      if (isPlaying) {
+        backgroundSound.pause();
+        leavesSound.pause();
+        // labirynthSound.pause();
+      } else {
+        backgroundSound.play();
+        leavesSound.play();
+        // labirynthSound.play();
+      }
+      isPlaying = !isPlaying;
+      syncIcons();
+    });
+  } else {
+    console.warn('audio-toggle-button non trovato');
+  }  
+
+  controls.lock(); 
     
-    controls.lock(); 
-    
-  };
+};

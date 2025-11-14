@@ -440,53 +440,53 @@ export default function(choose, quadri){
 
     ////////// BACKGROUND ///////
     // === BACKGROUND AUDIO + TOGGLE ===
-const listenerBcg = new THREE.AudioListener();
-camera.add(listenerBcg);
-const audioLoader = new THREE.AudioLoader();
-const backgroundSound = new THREE.Audio(listenerBcg);
+    const listenerBcg = new THREE.AudioListener();
+    camera.add(listenerBcg);
+    const audioLoader = new THREE.AudioLoader();
+    const backgroundSound = new THREE.Audio(listenerBcg);
 
-// elementi UI (già presenti in hearts_pc.html)
-const audioToggleButton = document.getElementById('audio-toggle-button');
-const muteIcon = document.getElementById('mute-icon');
-const audioIcon = document.getElementById('audio-icon');
+    // elementi UI (già presenti in hearts_pc.html)
+    const audioToggleButton = document.getElementById('audio-toggle-button');
+    const muteIcon = document.getElementById('mute-icon');
+    const audioIcon = document.getElementById('audio-icon');
 
-// stato iniziale: ATTIVO
-let isPlaying = true;
-function syncIcons() {
-  if (!muteIcon || !audioIcon) return;
-  if (isPlaying) {
-    muteIcon.style.display = 'none';
-    audioIcon.style.display = 'inline';
-  } else {
-    muteIcon.style.display = 'inline';
-    audioIcon.style.display = 'none';
-  }
-}
-syncIcons();
-
-// carica e avvia audio
-audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
-  backgroundSound.setBuffer(buffer);
-  backgroundSound.setLoop(true);
-  backgroundSound.setVolume(0.1);
-  // la scena parte da un click su "RESULT", quindi l’autoplay è consentito
-  backgroundSound.play();
-});
-
-// click toggle
-if (audioToggleButton) {
-  audioToggleButton.addEventListener('click', () => {
-    if (isPlaying) {
-      backgroundSound.pause();
-    } else {
-      backgroundSound.play();
+    // stato iniziale: ATTIVO
+    let isPlaying = true;
+    function syncIcons() {
+      if (!muteIcon || !audioIcon) return;
+      if (isPlaying) {
+        muteIcon.style.display = 'none';
+        audioIcon.style.display = 'inline';
+      } else {
+        muteIcon.style.display = 'inline';
+        audioIcon.style.display = 'none';
+      }
     }
-    isPlaying = !isPlaying;
     syncIcons();
-  });
-} else {
-  console.warn('audio-toggle-button non trovato');
-}  
+
+    // carica e avvia audio
+    audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
+      backgroundSound.setBuffer(buffer);
+      backgroundSound.setLoop(true);
+      backgroundSound.setVolume(0.1);
+      // la scena parte da un click su "RESULT", quindi l’autoplay è consentito
+      backgroundSound.play();
+    });
+
+    // click toggle
+    if (audioToggleButton) {
+      audioToggleButton.addEventListener('click', () => {
+        if (isPlaying) {
+          backgroundSound.pause();
+        } else {
+          backgroundSound.play();
+        }
+        isPlaying = !isPlaying;
+        syncIcons();
+      });
+    } else {
+      console.warn('audio-toggle-button non trovato');
+    }  
 
     
     controls.lock(); 

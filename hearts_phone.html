@@ -54,6 +54,7 @@
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer>
+		<audio id="clickAudio" src="audio/notification.mp3"></audio>
 		<section>			
 			<div id="first_step">
 				<div class="swiper">
@@ -64,9 +65,13 @@
 					<div class="swiper-pagination"></div>
 					
 				</div>	
-				<div class="button-choose">		
-					
-					<button class="btn btn-secondary" id="openscene" type="button">RESULT</button>
+				<div class="buttons-commands">
+					<div class="button-choose">
+						<button class="btn btn-secondary" id="openscene" type="button">RESULT</button>
+					</div>
+					<div class="button-reset" id="reset">
+						<button class="btn btn-secondary" id="openscene" type="button">RESET</button>
+					</div>
 				</div>
 			</div>
 			<canvas></canvas>
@@ -134,6 +139,13 @@
 			$('#btn-audio-white').hide();
 			const swiper = new Swiper('.swiper',{ pagination: { el: ".swiper-pagination" } });
 			$('.swiper li').click(function(){
+				// suono di click
+				const clickEl = document.getElementById('clickAudio');
+				if (clickEl) {
+					clickEl.currentTime = 0;
+					clickEl.play();
+				}
+
 				if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
 				if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
 				choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
@@ -142,6 +154,13 @@
 				$(this).addClass('active');
 				choose[$(this).attr('quad')].push($(this).attr('val'));								
 				}
+				$('#choose span').html(JSON.stringify(choose));
+			});
+			$('#reset').click(function () {
+				$('.swiper li').removeClass('active');
+				Object.keys(choose).forEach(k => {
+					choose[k] = ['#FFFFFF'];
+				});
 				$('#choose span').html(JSON.stringify(choose));
 			});
 			},500);
