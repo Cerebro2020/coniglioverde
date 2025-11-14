@@ -222,5 +222,36 @@
                 </div>
             </div>
         </section>
+         <div id="cookie-banner">
+      <p>
+        Questo sito usa cookie tecnici per funzionare correttamente.
+        <a href="cookie.html">Scopri di più</a>
+      </p>
+      <button id="accept-cookies">Accetto</button>
+    </div>
+
+    <div id="cookie-banner" role="dialog" aria-live="polite">
+    <!-- style="display:block !important;" -->
+      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+      <button id="accept-cookies">Accetto</button>
+    </div>
+
+    <script>
+      // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
+      if (new URLSearchParams(location.search).has('resetCookies')) {
+        localStorage.removeItem('cookiesAccepted');
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('cookie-banner');
+        const button = document.getElementById('accept-cookies');
+        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+
+        if (!accepted) banner.style.display = 'block';
+        button?.addEventListener('click', () => {
+          localStorage.setItem('cookiesAccepted', 'yes');
+          banner.remove();
+        });
+      });
+    </script>
     </body>
 </html>
