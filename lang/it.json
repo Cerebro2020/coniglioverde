@@ -1,0 +1,45 @@
+{
+  "error": {
+    "webgl": "Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser."
+  },
+  "loader": {
+    "text": "Caricamento..."
+  },
+  "noscript": "Abilita JavaScript per visualizzare i contenuti interattivi.",
+  "menu": {
+    "home": "HOME",
+    "words": "PAROLE",
+    "video": "VIDEO",
+    "images": "IMMAGINI",
+    "data": "DATI",
+    "bio": "BIO/CONTATTI",
+    "lang": "EN | IT"
+  },
+  "home": {
+    "title": "CONIGLIOVERDE",
+    "text": "Coniglioverde è ispirato al progetto Alba di Eduardo Kac. È uno spazio espositivo multimediale e un laboratorio di ricerca sull'ibridazione tra poetiche e tecnologie."
+  },
+  "writing": {
+    "text": "Nel tempo delle semi-realtà, dei mondi virtuali, delle IA che possono imitare il pensiero, cerchiamo un modo per riconnetterci con le parole.",
+    "link": "Vivi Neutropoli"
+  },
+  "cinematic": {
+    "text": "Le immagini in movimento si sono moltiplicate e frammentate sugli schermi di ogni tipo, fuori e dentro di noi.",
+    "link": "Butterfly"
+  },
+  "static": {
+    "text": "Nel fluire del tempo scorrono le immagini, ma alcune restano impigliate, si attaccano allo sguardo. Visitando questa galleria puoi trovare progetti realizzati con IA, software generativi, sensori. Strumenti antichi e nuovi per esplorare le relazioni tra visibile e immaginario.",
+    "link": "Visita la galleria"
+  },
+  "data": {
+    "text": "Produciamo una quantità sempre crescente di dati, fino a diventare — nel tempo — noi stessi il loro prodotto.",
+    "link": "Vivi H.E.Arts"
+  },
+  "footer": {
+    "copy": "© 2023 felice vino"
+  },
+  "cookie": {
+    "text": "Questo sito usa cookie tecnici. ",
+    "accept": "Accetto"
+  }
+}
