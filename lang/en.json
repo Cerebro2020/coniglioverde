@@ -1,11 +1,30 @@
 {
-  "error": {
-    "webgl": "Your device does not support WebGL or the resources are too heavy for this browser."
+  "home": {
+    "title": "CONIGLIOVERDE",
+    "text": "Coniglioverde is inspired by Eduardo Kac’s Alba project.<br><br>Is a multimedia <span class='p-bold'>exhibition space</span> and a research <span class='p-bold'>laboratory</span> on hybridation beetween <span class='p-bold'>poetics</span> and <span class='p-bold'>technologies</span>.<br><br>"
   },
-  "loader": {
-    "text": "Loading..."
+
+  "writing": {
+    "text": "In the time of <span class='p-bold'> half-realities</span>, of virtual worlds, of AIs that can imitate thought, we seek our way to reconnect with <span class='p-bold'>words</span>.<br><br><a href='writing.html'>Experience Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts."
   },
-  "noscript": "Enable JavaScript to display interactive content.",
+
+  "cinematic": {
+    "text": "Moving images have<span class='p-bold'> multiplied</span> and <span class='p-bold'>fragmented </span> on <a href='cinematic.html'>screens</a> of all kinds, out and inside ouerselves.<br><br><a href='cinematic_B_room.html'>Butterfly</a> is an immersvive movie counting about a new form of life emerging from a primordial digital broth."
+  },
+
+  "static": {
+    "text": "In the flow of time images flow, but some of them remain <span class='p-bold'>entangled</span>, they stick to the gaze.<br><br><a href='static.html'>Visiting this gallery</a> you can find projects realized with, AI, generative software, sensors.<br><br>Old and new tools to explore the relationships between <span class='p-bold'>visible</span> and <span class='p-bold'>imaginary</span>.<br><br>"
+  },
+
+  "data": {
+    "text": "We produce an ever-growing amount of <span class='p-bold'>data</span>, until — over time — we ourselves become its product.<br><br><a href='data.html'>Experience H.E.Arts</a>:<br>a sensitive device that records <span class='p-bold'>emotional art experences</span>."
+  },
+
+  "cookie": {
+    "text": "This website uses technical cookies. <a href='cookie.html'>Learn more</a>",
+    "accept": "Accept"
+  },
+
   "menu": {
     "home": "HOME",
     "words": "WORDS",
@@ -15,31 +34,18 @@
     "bio": "BIO/CONTACT",
     "lang": "EN | IT"
   },
-  "home": {
-    "title": "CONIGLIOVERDE",
-    "text": "Coniglioverde is inspired by Eduardo Kac’s Alba project. It is a multimedia exhibition space and a research laboratory on the hybridation between poetics and technologies."
+
+  "loader": {
+    "text": "Loading..."
   },
-  "writing": {
-    "text": "In the time of half-realities, virtual worlds, and AIs that can imitate thought, we seek our way to reconnect with words.",
-    "link": "Experience Neutropoli"
+
+  "error": {
+    "webgl": "Your device does not support WebGL or the resources are too heavy for this browser."
   },
-  "cinematic": {
-    "text": "Moving images have multiplied and fragmented on screens of all kinds, outside and inside ourselves.",
-    "link": "Butterfly"
-  },
-  "static": {
-    "text": "In the flow of time images pass by, but some remain entangled, sticking to the gaze. Visiting this gallery you can find projects created with AI, generative software, and sensors. Old and new tools to explore the relationship between the visible and the imaginary.",
-    "link": "Visit the gallery"
-  },
-  "data": {
-    "text": "We produce an ever-growing amount of data, until — over time — we ourselves become its product.",
-    "link": "Experience H.E.Arts"
-  },
+
+  "noscript": "Enable JavaScript to display interactive content.",
+
   "footer": {
     "copy": "© 2023 felice vino"
-  },
-  "cookie": {
-    "text": "This site uses technical cookies. ",
-    "accept": "Accept"
   }
 }
