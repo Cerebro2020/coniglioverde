@@ -27,8 +27,8 @@
         position: fixed;
         inset: 0;
         display: block;
-        z-index: -1;         
-        pointer-events: none;   /* non intercetta i click/scroll */
+        z-index: -1;
+        pointer-events: none;
       }
       #threejs-error {
         display: none;
@@ -53,54 +53,61 @@
         z-index: 9999;
       }
     </style>
-  </head> 
+  </head>
 
   <body>
     <!-- Fallback WebGL -->
-    <div id="threejs-error" role="alert" aria-live="polite">
+    <div id="threejs-error" role="alert" aria-live="polite" data-i18n="error.webgl">
       Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
     </div>
 
     <!-- Loader -->
     <div id="loader" aria-hidden="true">
       <div class="loader"></div>
-      <div class="text-loader"><p>Loading...</p></div>
+      <div class="text-loader">
+        <p data-i18n="loader.text">Loading...</p>
+      </div>
     </div>
 
     <!-- Canvas BACKGROUND -->
     <canvas id="conigliobcg"></canvas>
-    <noscript>Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
+    <noscript data-i18n="noscript">
+      Abilita JavaScript per visualizzare i contenuti interattivi.
+    </noscript>
 
-    <!-- HEADER (non tocco il tuo layout: segue il tuo CSS in style.css) -->
+    <!-- HEADER -->
     <header>
       <div id="logo">
         <a href="#">
           <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde" />
         </a>
       </div>
+
       <input id="menu-toggle" type="checkbox" aria-label="Apri/chiudi menu" />
       <label class="menu-button-container" for="menu-toggle">
         <div class="menu-button"></div>
       </label>
+
       <ul class="menu">
-        <li><a href="#">HOME</a></li>
-        <li><a href="#writing">WORDS</a></li>
-        <li><a href="#cinematic">VIDEO</a></li>
-        <li><a href="#static">IMAGES</a></li>
-        <li><a href="#data">DATA</a></li>
-        <li><a href="bio.html">BIO/CONTACT</a></li>
+        <li><a href="#" data-i18n="menu.home">HOME</a></li>
+        <li><a href="#writing" data-i18n="menu.words">WORDS</a></li>
+        <li><a href="#cinematic" data-i18n="menu.video">VIDEO</a></li>
+        <li><a href="#static" data-i18n="menu.images">IMAGES</a></li>
+        <li><a href="#data" data-i18n="menu.data">DATA</a></li>
+        <li><a href="bio.html" data-i18n="menu.bio">BIO/CONTACT</a></li>
         <li><a href="#" id="lang-toggle" data-i18n="menu.lang">EN | IT</a></li>
       </ul>
     </header>
 
-    <!-- CONTENUTI -->
+    <!-- SECTION HOME -->
     <section>
       <div class="home1-text">
         <div class="home-title">
-          <h1>CONIGLIOVERDE</h1>
+          <h1 data-i18n="home.title">CONIGLIOVERDE</h1>
         </div>
+
         <div class="home-paragraph">
-          <p>
+          <p data-i18n="home.text">
             Coniglioverde is inspired by Eduardo Kac’s Alba project.
             <br /><br />
             Is a multimedia <span class="p-bold"> exhibition space</span> and a research
@@ -109,17 +116,18 @@
             <br /><br />
           </p>
         </div>
+
         <div class="scrolling">
           <img src="images/icons/scroll-down.svg" alt="scrolling" />
         </div>
       </div>
     </section>
 
-    <!-- WORDS -->
+    <!-- SECTION WRITING -->
     <section id="writing">
       <div class="writing-text">
         <div class="home-paragraph">
-          <p>
+          <p data-i18n="writing.text">
             In the time of <span class="p-bold"> half-realities</span>, of virtual worlds, of AIs that can imitate thought,
             we seek our way to reconnect with <span class="p-bold">words</span>.
             <br /><br />
@@ -133,28 +141,30 @@
         </div>
       </div>
     </section>
-    <!--CINEMATIC --> 
+
+    <!-- SECTION CINEMATIC -->
     <section id="cinematic">
-        <div class="cinematic-text">               
-            <div class="home-paragraph">
-                <p>
-                    Moving images have<span class="p-bold"> multiplied</span> and <span class="p-bold">fragmented </span> on <a href="cinematic.html">screens</a> of all kinds, out and inside ouerselves. 
-                    <br><br>                   
-                    <a href="cinematic_B_room.html">Butterfly</a> 
-                    is an immersvive movie counting about a new form of life emerging from a primordial digital broth.
-                </p>
-                <br><br>   
-            </div>                              
-            <div class="scrolling">
-                <img src="images/icons/scroll-updown.gif" alt="scrolling">
-            </div>
+      <div class="cinematic-text">
+        <div class="home-paragraph">
+          <p data-i18n="cinematic.text">
+            Moving images have<span class="p-bold"> multiplied</span> and <span class="p-bold">fragmented </span> on <a href="cinematic.html">screens</a> of all kinds, out and inside ouerselves.
+            <br><br>
+            <a href="cinematic_B_room.html">Butterfly</a>
+            is an immersvive movie counting about a new form of life emerging from a primordial digital broth.
+          </p>
+          <br><br>
         </div>
+        <div class="scrolling">
+          <img src="images/icons/scroll-updown.gif" alt="scrolling">
+        </div>
+      </div>
     </section>
 
+    <!-- SECTION STATIC -->
     <section id="static">
       <div class="gallery-text">
         <div class="home-paragraph">
-          <p>
+          <p data-i18n="static.text">
             In the flow of time images flow, but some of them remain <span class="p-bold">entangled</span>, they stick to the gaze.
             <br /><br />
             <a href="static.html">Visiting this gallery</a> you can find projects realized with, AI, generative software, sensors.
@@ -170,34 +180,30 @@
       </div>
     </section>
 
-    <!--DATA -->             
+    <!-- SECTION DATA -->
     <section id="data">
       <div class="data-text">
         <div class="home-paragraph">
-          <p>
-            We produce an ever-growing amount of <span class="p-bold">data</span>, until — over time — we ourselves become its product.    
+          <p data-i18n="data.text">
+            We produce an ever-growing amount of <span class="p-bold">data</span>, until — over time — we ourselves become its product.
             <br><br>
-            <a href="data.html">Experience H.E.Arts</a>:<br>a sensitive device that records <span class="p-bold">emotional art experences.
+            <a href="data.html">Experience H.E.Arts</a>:<br>a sensitive device that records <span class="p-bold">emotional art experences</span>.
           </p>
-          <!-- <p>
-            <br>
-              <a href="data.html">Discover AQVAM</a>:<br></b>A narrative of the secret life harbored by water.
-          </p>        -->
         </div>
         <div class="scrolling">
           <img src="images/icons/scroll-updown.gif" alt="scrolling">
-        </div>                 
-      </div>            
+        </div>
+      </div>
     </section>
 
     <!-- FOOTER -->
     <footer id="footer">
       <ul>
-        <li>&copy; 2023 felice vino</li>
+        <li data-i18n="footer.copy">&copy; 2023 felice vino</li>
         <li>
           <a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener">
             <img src="images/icons/instagram.png" alt="instagram icon" />
-          </a>          
+          </a>
         </li>
         <li>
           <a href="https://vimeo.com/felicevino" target="_blank" rel="noopener">
@@ -207,17 +213,34 @@
       </ul>
     </footer>
 
-    <!-- ==== Script app ===== -->
+    <!-- COOKIE -->
+    <div id="cookie-banner" role="dialog" aria-live="polite">
+      <p data-i18n="cookie.text">Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+      <button id="accept-cookies" data-i18n="cookie.accept">Accetto</button>
+    </div>
+
     <script>
-      // Chiudi loader quando tutto è pronto
-      window.addEventListener('load', function () {
-        var ld = document.getElementById('loader');
-        if (ld) ld.style.display = 'none';
+      if (new URLSearchParams(location.search).has('resetCookies')) {
+        localStorage.removeItem('cookiesAccepted');
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('cookie-banner');
+        const button = document.getElementById('accept-cookies');
+        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+
+        if (!accepted) banner.style.display = 'block';
+        button?.addEventListener('click', () => {
+          localStorage.setItem('cookiesAccepted', 'yes');
+          banner.remove();
+        });
       });
     </script>
 
+    <!-- I18N -->
+    <script type="module" src="js/i18n.js"></script>
+
+    <!-- Bootstrap 3D -->
     <script type="module">
-      // Check WebGL1 per compatibilità mobile
       function webglAvailable() {
         try {
           const c = document.createElement('canvas');
@@ -256,28 +279,5 @@
       }
     </script>
 
-    <div id="cookie-banner" role="dialog" aria-live="polite">
-      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
-
-    <script>
-      // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
-      if (new URLSearchParams(location.search).has('resetCookies')) {
-        localStorage.removeItem('cookiesAccepted');
-      }
-      document.addEventListener('DOMContentLoaded', () => {
-        const banner = document.getElementById('cookie-banner');
-        const button = document.getElementById('accept-cookies');
-        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
-
-        if (!accepted) banner.style.display = 'block';
-        button?.addEventListener('click', () => {
-          localStorage.setItem('cookiesAccepted', 'yes');
-          banner.remove();
-        });
-      });
-    </script>
-    <script type="module" src="js/i18n.js"></script>
   </body>
 </html>
