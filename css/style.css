@@ -139,11 +139,11 @@ header img {
   padding-right: 10px;
 }
 
-/* .menu li:last-child a {
+.menu li:last-child a {
   font-style: normal;
   color:#ff00a2;
   font-weight: 400;
-} */
+} 
 
 .menu li a {                
   color: #a2ff00; 

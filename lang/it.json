@@ -17,8 +17,11 @@
   },
   "home": {
     "title": "CONIGLIOVERDE",
-    "text": "Coniglioverde è ispirato al progetto Alba di Eduardo Kac. È uno spazio espositivo multimediale e un laboratorio di ricerca sull'ibridazione tra poetiche e tecnologie."
-  },
+    "text": "Coniglioverde è ispirato al progetto Alba di Eduardo Kac.<br><br>È uno spazio <span class='p-bold'>espositivo</span> multimediale e un <span class='p-bold'>laboratorio</span> di ricerca sull’ibridazione tra <span class='p-bold'>poetiche</span> e <span class='p-bold'>tecnologie</span>.<br><br>"
+    },
+            
+    
+  
   "writing": {
     "text": "Nel tempo delle semi-realtà, dei mondi virtuali, delle IA che possono imitare il pensiero, cerchiamo un modo per riconnetterci con le parole.",
     "link": "Vivi Neutropoli"
