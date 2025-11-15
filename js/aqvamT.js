@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {OrbitControls} from './three_class/OrbitControls.js';
+import {OrbitControls} from '../three_class/OrbitControls.js';
 
 const boxSpacingX = 0.042;
 let prevY = 0;

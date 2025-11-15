@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {OrbitControls} from './three_class/OrbitControls.js';
-import { GLTFLoader } from './three_class/GLTFLoader.js';
+import { PointerLockControls } from '../three_class/PointerLockControls.js';
+import { GLTFLoader } from '../three_class/GLTFLoader.js';
 
 export default function(choose, quadri){  
 
@@ -41,13 +41,23 @@ export default function(choose, quadri){
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = texture;
   });
-  scene.position.set(0,0,0); 
+  scene.position.set(0,0,0);
 
   // CAMERA ////// 
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
   camera.position.set(0,player.height,-1200);
-
+  
+  const velocity = new THREE.Vector3();
+  const direction = new THREE.Vector3();
+  const move = {
+    forward: false,
+    backward: false,
+    left: false,
+    right: false,
+    up: false,
+    down: false
+  };
   
   // VIDEO TEXTURE PER LA PISCINA
   const video = document.createElement('video');
@@ -66,6 +76,28 @@ export default function(choose, quadri){
   videoTexture.magFilter = THREE.LinearFilter;
   videoTexture.format = THREE.RGBAFormat;
 
+  // CONTROLLI TASTIERA
+  document.addEventListener('keydown', event => {
+    switch (event.code) {
+      case 'KeyW': move.forward = true; break;
+      case 'KeyS': move.backward = true; break;
+      case 'KeyA': move.left = true; break;
+      case 'KeyD': move.right = true; break;
+      case 'Space': move.up = true; break;
+      case 'ShiftLeft': move.down = true; break;
+    }
+  });
+
+  document.addEventListener('keyup', event => {
+    switch (event.code) {
+      case 'KeyW': move.forward = false; break;
+      case 'KeyS': move.backward = false; break;
+      case 'KeyA': move.left = false; break;
+      case 'KeyD': move.right = false; break;
+      case 'Space': move.up = false; break;
+      case 'ShiftLeft': move.down = false;  break;
+    }
+  }); 
 
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
@@ -76,16 +108,22 @@ export default function(choose, quadri){
     alpha:true, 
     antialias:true
   });
-
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.minDistance = 35;
-  controls.maxDistance = 1900;
-  controls.maxPolarAngle = 1.5;
-  controls.enableZoom = true;
-  controls.enablePan = false;
-  controls.update();
   
- 
+  const controls = new PointerLockControls(camera, document.body); 
+
+  controls.addEventListener('lock', () => {
+    console.log('Controllo attivato');
+  });
+
+  controls.addEventListener('unlock', () => {
+    console.log('Controllo disattivato');
+  });
+  
+  renderer.domElement.addEventListener('click', () => {
+    if (!controls.isLocked) {
+      controls.lock();
+    }
+  });
 
   renderer.shadowMap.enabled = true;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -446,6 +484,7 @@ export default function(choose, quadri){
     gltf.animations.forEach((clip) => {
       mixer.clipAction(clip).play();
     });
+    controls.lock();
   });
 
   let radiusC = 900;
@@ -532,8 +571,30 @@ export default function(choose, quadri){
     requestAnimationFrame(animateScene);
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
-  
-   
+
+    // movimento FPS
+    velocity.x -= velocity.x * 5 * delta;
+    velocity.z -= velocity.z * 5 * delta;
+    direction.z = Number(move.forward) - Number(move.backward);
+    direction.x = Number(move.right) - Number(move.left);
+    direction.normalize();
+    if (move.forward || move.backward) velocity.z -= direction.z * 1000 * delta;
+    if (move.left || move.right) velocity.x -= direction.x * 1000 * delta;
+    controls.moveRight(-velocity.x * delta);
+    controls.moveForward(-velocity.z * delta);
+
+    if (move.up) {
+      controls.getObject().position.y += 100 * delta;
+    }
+    const floorHeight = 1.8;
+    if (move.down) {
+      if (controls.getObject().position.y > floorHeight) {
+        controls.getObject().position.y -= 50 * delta;
+        if (controls.getObject().position.y < floorHeight) {
+          controls.getObject().position.y = floorHeight;
+        }
+      }    
+    } 
 
           // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
       const t = clock.elapsedTime;
@@ -571,4 +632,8 @@ export default function(choose, quadri){
     renderer.render(scene, camera);
   }
   animateScene();
+
+  
+
+  controls.lock(); 
 };

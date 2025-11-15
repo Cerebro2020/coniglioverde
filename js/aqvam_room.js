@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { PointerLockControls } from './three_class/PointerLockControls.js';
-import { GLTFLoader } from './three_class/GLTFLoader.js';
+import { PointerLockControls } from '../three_class/PointerLockControls.js';
+import { GLTFLoader } from '../three_class/GLTFLoader.js';
 
 export default function(){ 
     

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import {FirstPersonControls} from './three_class/FirstPersonControls.js';
-import { GLTFLoader } from './three_class/GLTFLoader.js';
+import {FirstPersonControls} from '../three_class/FirstPersonControls.js';
+import { GLTFLoader } from '../three_class/GLTFLoader.js';
 
 export default function(){
 

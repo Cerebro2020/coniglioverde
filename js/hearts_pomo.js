@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {OrbitControls} from './three_class/OrbitControls.js';
-import { GLTFLoader } from './three_class/GLTFLoader.js';
-import { FlakesTexture } from './three_class/FlakesTexture.js';
+import {OrbitControls} from '../three_class/OrbitControls.js';
+import { GLTFLoader } from '../three_class/GLTFLoader.js';
+import { FlakesTexture } from '../three_class/FlakesTexture.js';
 
 export default function(choose,quadri){
   const clock = new THREE.Clock();
