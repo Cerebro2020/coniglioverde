@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+@mixin align-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+  font-family: 'Courier New', Courier, monospace;  
+  font-size: 4em;
+  color: white;
+
+    .parallax_wrapper {
+        border: 1px solid red;
+        height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        perspective: 300px;
+
+         .intro_screen {
+            height: 100vh;
+            background-color: tomato;
+            @include align-center;
+        }
+
+        .outro_screen {
+            height: 100vh;
+            background-color: teal;
+            @include align-center;
+        }
+
+        .parallax_group {
+            position: relative;
+            height: 100vh;
+            transform-style: preserve-3d;
+        }
+    }
+   
+}

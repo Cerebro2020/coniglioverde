@@ -108,40 +108,40 @@ export default function(){
   
   // video schermo 2  
   var videoQ = document.createElement('video');
-videoQ.src = "video/aqvam/aqvam_video_2Q.mp4";
-videoQ.muted = true;
-videoQ.loop = true;
-videoQ.playsInline = true;
-videoQ.autoplay = true;
-// invece di display:none
-videoQ.style.opacity = '0';
-videoQ.style.position = 'absolute';
-videoQ.style.width = '1px';
-videoQ.style.height = '1px';
-document.body.appendChild(videoQ);
-videoQ.play().catch(() => {});
-var vTextureQ = new THREE.VideoTexture(videoQ);
-vTextureQ.minFilter = THREE.LinearFilter;
-vTextureQ.magFilter = THREE.LinearFilter;
-vTextureQ.format = THREE.RGBAFormat;
+  videoQ.src = "video/aqvam/aqvam_video_2Q.mp4";
+  videoQ.muted = true;
+  videoQ.loop = true;
+  videoQ.playsInline = true;
+  videoQ.autoplay = true;
+  // invece di display:none
+  videoQ.style.opacity = '0';
+  videoQ.style.position = 'absolute';
+  videoQ.style.width = '1px';
+  videoQ.style.height = '1px';
+  document.body.appendChild(videoQ);
+  videoQ.play().catch(() => {});
+  var vTextureQ = new THREE.VideoTexture(videoQ);
+  vTextureQ.minFilter = THREE.LinearFilter;
+  vTextureQ.magFilter = THREE.LinearFilter;
+  vTextureQ.format = THREE.RGBAFormat;
 
-// video schermo 2
-var video = document.createElement('video');
-video.src = "video/aqvam/sphere_skin.mp4";
-video.muted = true;
-video.loop = true;
-video.playsInline = true;
-video.autoplay = true;
-video.style.opacity = '0';
-video.style.position = 'absolute';
-video.style.width = '1px';
-video.style.height = '1px';
-document.body.appendChild(video);
-video.play().catch(() => {});
-var vTexture = new THREE.VideoTexture(video);
-vTexture.minFilter = THREE.LinearFilter;
-vTexture.magFilter = THREE.LinearFilter;
-vTexture.format = THREE.RGBAFormat;
+  // video schermo 2
+  var video = document.createElement('video');
+  video.src = "video/aqvam/sphere_skin.mp4";
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.autoplay = true;
+  video.style.opacity = '0';
+  video.style.position = 'absolute';
+  video.style.width = '1px';
+  video.style.height = '1px';
+  document.body.appendChild(video);
+  video.play().catch(() => {});
+  var vTexture = new THREE.VideoTexture(video);
+  vTexture.minFilter = THREE.LinearFilter;
+  vTexture.magFilter = THREE.LinearFilter;
+  vTexture.format = THREE.RGBAFormat;
 
 // video schermo 3
 var videoW = document.createElement('video');
@@ -565,7 +565,7 @@ document.addEventListener('click', () => {
   const gSchermo2 = new THREE.SphereGeometry(1.5,64,64);  
   const mSchermo2 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map:vTexture, 
+    map:vTextureQ,
     metalness: 0.5,   
   })
   const schermo2 = new THREE.Mesh(gSchermo2,mSchermo2);
