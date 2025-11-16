@@ -190,7 +190,7 @@ export default function(choose,quadri){
       const torsolo = glt.scene;
       torsolo.position.set(0, -5, 0);
       torsolo.rotation.set(0, -Math.PI/1.4, 0);      
-      torsolo.scale.set(11.5,11.5,11.5);       
+      torsolo.scale.set(11.5,11.5,11.5);
       torsolo.traverse(function (node) {
         if (node.isMesh) {
           const material = new THREE.MeshPhysicalMaterial({
