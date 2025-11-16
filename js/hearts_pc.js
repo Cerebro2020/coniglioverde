@@ -463,30 +463,37 @@ export default function(choose, quadri){
   ////// AMBIENTE GLTF ////////////////////// 
   let PSy = -100;
     
-  const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/heart/CV_Heart_Cupola_.glb', (gltf) => {
-    const model = gltf.scene;
-    model.traverse((node) => {
-      if (node.isMesh) {
-        // node.material.map = skin;
-        node.castShadow = true;
-        node.receiveShadow = true;
+  const loaderSala = new GLTFLoader();
+
+loaderSala.load('3d/aqvam/CV_Aqvam_Ambient_2.glb', (gltf) => {
+  const model = gltf.scene;
+
+  model.traverse((node) => {
+    if (node.isMesh) {
+      node.castShadow = true;
+      node.receiveShadow = true;
+      if (node.material) {
         node.material.side = THREE.DoubleSide;
       }
-    });
-    model.position.set(0, PSy, 0);
-    model.rotation.set(0, Math.PI / 28.5, 0);
-    const scala = 400;
-    model.scale.set(scala, scala, scala);
-    scene.add(model);
-
-    mixer = new THREE.AnimationMixer(model);
-    gltf.animations.forEach((clip) => {
-      mixer.clipAction(clip).play();
-    });
-    controls.lock();
+    }
   });
 
+  model.position.set(0, 0, 0);
+  model.rotation.set(0, -Math.PI / 2, 0);
+
+  const scala = 400;
+  model.scale.set(scala, scala, scala);
+
+  scene.add(model);
+
+  // Se ci sono animazioni nel file .glb
+  mixer = new THREE.AnimationMixer(model);
+  gltf.animations.forEach((clip) => {
+    mixer.clipAction(clip).play();
+  });
+
+  controls.lock(); // Funziona solo con PointerLockControls
+});
   let radiusC = 900;
   let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
   let poolM = new THREE.MeshPhysicalMaterial({

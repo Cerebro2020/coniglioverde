@@ -127,7 +127,7 @@ export default function(){
 
   // video schermo 2
   var video = document.createElement('video');
-  video.src = "video/aqvam/sphere_skin.mp4";
+  video.src = "video/aqvam/sphere_skin_2.mp4";
   video.muted = true;
   video.loop = true;
   video.playsInline = true;
@@ -565,7 +565,7 @@ document.addEventListener('click', () => {
   const gSchermo2 = new THREE.SphereGeometry(1.5,64,64);  
   const mSchermo2 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map:vTextureQ,
+    map: vTexture,
     metalness: 0.5,   
   })
   const schermo2 = new THREE.Mesh(gSchermo2,mSchermo2);
