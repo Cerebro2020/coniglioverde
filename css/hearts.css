@@ -220,11 +220,11 @@ header img {
   padding-right: 10px;
 }
 
-.menu li:last-child a {
+/* .menu li:last-child a {
   font-style: normal;
   color:#ff00a2;
   font-weight: 400;
-}
+} */
 
 .menu li a {                
   color: #a2ff00; 
@@ -725,13 +725,13 @@ iframe {
 
   .swiper {
     width: 96vw;
-    height: 80vh;
+    height: 70vh;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-     overflow: hidden;
-  }
+    overflow: hidden;
+  } 
 
   .swiper ul {
   position: absolute;
@@ -777,7 +777,7 @@ iframe {
 
   .swiper-pagination-bullet {
     width: 4px;
-    height: 4px;
+    height: 4px; 
   }
 }
 
