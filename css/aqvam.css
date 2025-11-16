@@ -423,13 +423,29 @@ canvas:active {
     display: flex;
     align-items: top;
     justify-content: center;
-    top: 100px
+    top: 70px
   }
 
   .counts ul {  
-    width: 86%;  
+    width: 86%; 
     justify-content: space-around;
   }
+
+  .counts ul li {
+    font-size: 10px;
+  }
+
+  .counts ul li.u,
+.counts ul li.d,
+.counts ul li.c,
+.counts ul li.m,
+.counts ul li.dm,
+.counts ul li.cm {
+  width: 30px;
+  height: 30px;
+}
+
+
 }
 
 @media (max-width: 724px) {  
