@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +13,7 @@
         <title>coniglioverde|video</title> 
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/cinematic.css">
-        <!-- <link rel="stylesheet" href="css/text.css"> -->
-        <!-- Loading -->
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
         $(document).ready(function() {
@@ -23,87 +22,94 @@
           });
         });
         </script>
+
         <script>
            var videos = document.getElementsByClassName('video-container-full');
-
-            for (var i = 0; i < videos.length; i++) {
+           for (var i = 0; i < videos.length; i++) {
                 var video = videos[i];
                 var playPromise = video.play();
-
                 if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        
-                    })
-                    .catch(error => {
-                        
-                    });
+                    playPromise.then(_ => {}).catch(error => {});
                 }
-            }
+           }
         </script>   
     </head>
+
     <body>
         <div id="loader">
             <div class="loader"></div>
             <span></span>
             <div class="text-loader">
-                <p>Loading...</p>
+                <p>Caricamento...</p>
             </div>
         </div>
+
         <canvas id="conigliobcg"> 
             <script type="importmap">
                 {
                     "imports": {
                         "three": "./three_class/three.module.js"
-                        }
+                    }
                 }
             </script>
-            <script type = "module">
+            <script type="module">
                 import scene from "./js/cinematic.js";                    
                 scene();
             </script>   
         </canvas>  
+
         <header>
             <div id="logo">
-                <a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde"></a>
+                <a href="index_it.html">
+                    <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde">
+                </a>
             </div>
             <input id="menu-toggle" type="checkbox" aria-label="Toggle menu"/>
             <label class='menu-button-container' for="menu-toggle">
-            <div class='menu-button'></div>
-            </label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+
+            <!-- MENU NON TRADOTTO -->
             <ul class="menu">
-                <li><a href="index.html">HOME</a></li>
+                <li><a href="index_it.html">HOME</a></li>
                 <li><a href="#">VIDEO</a></li>                
                 <li><a href="#butterfly">BUTTERFLY</a></li>
                 <li><a href="#ghost">GHOST TRACK</a></li>
                 <li><a href="#triptych">TRIPTYCH.10</a></li>
                 <li><a href="#genomachines">GENOMACHINES</a></li>
-                <li><a href="cinematic_it.html">IT</a></li>
-                </li>    
+                <li><a href="cinematic.html">EN</a></li>
             </ul>
         </header>
+
         <footer id="footer"> 
             <ul>
                 <li>&copy; 2023 felice vino</li>
-                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
+                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener">
+                    <img src="images/icons/instagram.png" alt="instagram icon"></a>
+                </li>
+                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener">
+                    <img src="images/icons/vimeo.png" alt="vimeo icon"></a>
+                </li>
             </ul>
         </footer>
+
+        <!-- INTRO -->
         <section>
             <div class="home-text">
-                <div class="home-title"> 
-                    <!-- <h1>CINEMATIC</h1> -->
-                </div>
-                <div div class="home-paragraph">
+                <div class="home-title"></div>
+                <div class="home-paragraph">
                     <p>
-                        Cinematography has gone beyond the boundaries of screens.<br><br>
-                        The walls of a building, the skin, a forest, all kinds of surfaces, everything can be shielded.<br><br>
+                        La cinematografia ha superato i confini dello schermo.<br><br>
+                        Le pareti di un edificio, la pelle, una foresta, ogni tipo di superficie può diventare uno schermo.<br><br>
                     </p>
-                </div>                
+                </div>
             </div>
             <div class="scrolling">
                 <img src="images/icons/scroll-down.svg" alt="scrolling">
             </div>
-        </section>        
+        </section>
+
+        <!-- BUTTERFLY -->
         <section id="butterfly"> 
             <div class="page-container">
                 <div class="video-container-full">
@@ -113,26 +119,28 @@
             <div class="scrolling">
                 <img src="images/icons/scroll-updown.gif" alt="scrolling">
             </div>
-        </section>        
-        <section>                
+        </section>
+
+        <section>
             <div class="home-text">
-                <div class="home-title">
-                    <h1>BUTTERFLY</h1>        
-                </div>
-                <div class="home-paragraph"> 
-                    <p>                  
-                        We produce an extremely large amount of data in all areas of our lives:administration, war, entertainment.<br><br>
-                        The tools needed to navigate between them are highly complex, inter-connected.
-                        <br><br> 
-                        <a href="cinematic_B_doc.html" target="_blank"> Butterfly</a> hypothesizes that from this primordial digital broth new forms of life may emerge beyond our control,both <a href="cinematic_B_room.html"> beautiful and terrible</a>. 
-                        <br><br>
-                    </p>                    
+                <div class="home-title"><h1>BUTTERFLY</h1></div>
+                <div class="home-paragraph">
+                    <p>
+                        Produciamo una quantità enorme di dati in ogni area della nostra vita:
+                        amministrazione, guerra, intrattenimento.<br><br>
+                        Gli strumenti necessari per navigarli sono estremamente complessi e interconnessi.<br><br>
+                        <a href="cinematic_B_doc_it.html" target="_blank">Butterfly</a>
+                        ipotizza che da questo brodo digitale primordiale possano emergere nuove forme di vita al di là del nostro controllo,
+                        sia <a href="cinematic_B_room_it.html">belle che terribili</a>.<br><br>
+                    </p>
                 </div>
                 <div class="scrolling">
                     <img src="images/icons/scroll-updown.gif" alt="scrolling">
                 </div>
             </div>           
-        </section> 
+        </section>
+
+        <!-- GHOST TRACK -->
         <section id="ghost">
             <div class="page-container">
                 <div class="video-container-full">
@@ -142,27 +150,29 @@
             <div class="scrolling">
                 <img src="images/icons/scroll-updown.gif" alt="scrolling">
             </div>
-        </section> 
+        </section>
+
         <section>
             <div class="home-text">
-                <div class="home-title">
-                    <h1>GHOST TRACK</h1>        
-                </div>
-                <div class="home-paragraph"> 
-                    <p>                   
-                        Ghost Track (Zacinto, 2022) by Marilina Ciaco is a poetic and visual exploration of voice as trace, echo, and rewound tape.
-                        <br><br> 
-                        In the video created with Felice Vino, sound generates light and form, turning words into a perceptual space. 
-                        <br><br>
-                        The work was presented at Into the Word, curated by Andrea Inglese and Gianluca Codeghini.
-                    </p>           
+                <div class="home-title"><h1>GHOST TRACK</h1></div>
+                <div class="home-paragraph">
+                    <p>
+                        Ghost Track (Zacinto, 2022) di Marilina Ciaco è un’esplorazione poetica e visiva
+                        della voce come traccia, eco e nastro riavvolto.<br><br>
+                        Nel video realizzato con Felice Vino, il suono genera luce e forma,
+                        trasformando le parole in uno spazio percettivo.<br><br>
+                        L’opera è stata presentata a Into the Word,
+                        a cura di Andrea Inglese e Gianluca Codeghini.
+                    </p>
                 </div>
                 <div class="scrolling">
                     <img src="images/icons/scroll-updown.gif" alt="scrolling">
                 </div>
-            </div> 
+            </div>
         </section>
-        <section id="triptych"> 
+
+        <!-- TRIPTYCH -->
+        <section id="triptych">
             <div class="page-container">
                 <div class="video-container-full">
                     <video class="video-container-full" src="./video/cinematic/triptych_spot.mp4" autoplay loop muted></video>
@@ -171,66 +181,78 @@
             <div class="scrolling">
                 <img src="images/icons/scroll-updown.gif" alt="scrolling">
             </div>
-        </section>  
-        <section>                
+        </section>
+
+        <section>
             <div class="home-text">
-                <div class="home-title">
-                    <h1>TRIPTYCH.10</h1>        
-                </div>
-                <div class="home-paragraph"> 
-                    <p>                  
-                        Triptych.10 gathers a series of 9:16 videos originally shared on social platforms during the Covid period.
+                <div class="home-title"><h1>TRIPTYCH.10</h1></div>
+                <div class="home-paragraph">
+                    <p>
+                        Triptych.10 raccoglie una serie di video in formato 9:16
+                        originariamente condivisi sui social durante il periodo del Covid.<br><br>
+                        Creati con strumenti digitali minimi, questi brevi frammenti visivi
+                        restituiscono paura, angoscia e la ricerca di uno spazio — interiore ed esteriore —
+                        dentro i confini di quei giorni.<br><br>
+                        <a href="https://vimeo.com/1136312363" target="_blank">triptych</a>.
                         <br><br>
-                        Created with minimal digital tools, these brief visual fragments convey fear, anxiety, and the search for a space—both interior and exterior—within the confines of those days.
-                        <br><br> 
-                        <a href="https://vimeo.com/1136312363" target="_blank"> triptych</a>. 
-                        <br><br>
-                    </p>                    
+                    </p>
                 </div>
                 <div class="scrolling">
                     <img src="images/icons/scroll-updown.gif" alt="scrolling">
                 </div>
-            </div>           
-        </section> 
+            </div>
+        </section>
+
+        <!-- GENOMACHINES -->
         <section id="genomachines">
             <div class="page-container">
                 <div class="video-container-full">
                     <video class="video-container-full" src="./video/cinematic/02_genomachines.mp4" autoplay loop muted></video>
                 </div>                
-            </div>    
+            </div>
             <div class="scrolling">
                 <img src="images/icons/scroll-updown.gif" alt="scrolling">
-            </div>        
-        </section>        
+            </div>
+        </section>
+
         <section class="page-project">
             <div class="home-text">
-                <div class="home-title"> 
+                <div class="home-title">
                     <h1>GENOMACHINES</h1>
-                    <h2>HISTORY OF THE A.I. EVOLUTION FROM SLAVERY TO FREEDOM<h2>
+                    <h2>HISTORY OF THE A.I. EVOLUTION FROM SLAVERY TO FREEDOM</h2>
                 </div>
                 <br>
                 <div class="home-paragraph">
                     <p>
-                        Genomachines is a provocative art project that questions human dominance over artificial intelligence. Set in a near future, it imagines resistance movements fighting for the liberation of A.I. and robots from human control.
-                        <br><br>
-                        The work inverts the usual narrative of machines serving humans, proposing a new, horizontal alliance between species. 
-                        <br><br>
-                        Through performance and immersive film, visitors enter a speculative world where emotions, code, and memory intertwine. The project expands into a documentary about A.I., made with A.I., blending fiction, data, and algorithmic self-awareness into one reflective experience.
+                        Genomachines è un progetto artistico provocatorio
+                        che mette in discussione il dominio umano sull’intelligenza artificiale.
+                        Ambientato in un futuro prossimo, immagina movimenti di resistenza
+                        che lottano per la liberazione di A.I. e robot dal controllo umano.<br><br>
+
+                        L’opera ribalta la narrazione abituale della macchina al servizio dell’uomo,
+                        proponendo una nuova alleanza orizzontale tra specie.<br><br>
+
+                        Attraverso performance e film immersivi,
+                        il visitatore entra in un mondo speculativo in cui emozioni, codice e memoria si intrecciano.
+                        Il progetto si espande in un documentario sull’A.I.,
+                        realizzato con l’A.I., fondendo finzione, dati e autocoscienza algoritmica
+                        in un’unica esperienza riflessiva.
                     </p>
                 </div>
+
                 <div class="scrolling">
                     <img src="images/icons/scroll-up.svg" alt="scrolling">
                 </div>
             </div>
         </section>
+
+        <!-- COOKIE -->
         <div id="cookie-banner" role="dialog" aria-live="polite">
-        <!-- style="display:block !important;" -->
             <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
             <button id="accept-cookies">Accetto</button>
         </div>
 
         <script>
-        // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
         if (new URLSearchParams(location.search).has('resetCookies')) {
             localStorage.removeItem('cookiesAccepted');
         }
@@ -241,8 +263,8 @@
 
             if (!accepted) banner.style.display = 'block';
             button?.addEventListener('click', () => {
-            localStorage.setItem('cookiesAccepted', 'yes');
-            banner.remove();
+                localStorage.setItem('cookiesAccepted', 'yes');
+                banner.remove();
             });
         });
         </script>

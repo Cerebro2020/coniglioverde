@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,7 +27,7 @@
         position: fixed;
         inset: 0;
         display: block;
-        z-index: -1;
+        z-index: -1;         
         pointer-events: none;
       }
       #threejs-error {
@@ -57,19 +57,19 @@
 
   <body>
     <!-- Fallback WebGL -->
-    <div id="threejs-error" role="alert" aria-live="polite" data-i18n="error.webgl">
+    <div id="threejs-error" role="alert" aria-live="polite">
       Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
     </div>
 
     <!-- Loader -->
     <div id="loader" aria-hidden="true">
       <div class="loader"></div>
-      <div class="text-loader"><p data-i18n="loader.text">Loading...</p></div>
+      <div class="text-loader"><p>Caricamento...</p></div>
     </div>
 
     <!-- Canvas BACKGROUND -->
     <canvas id="conigliobcg"></canvas>
-    <noscript data-i18n="noscript">Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
+    <noscript>Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
 
     <!-- HEADER -->
     <header>
@@ -78,39 +78,38 @@
           <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde" />
         </a>
       </div>
-
       <input id="menu-toggle" type="checkbox" aria-label="Apri/chiudi menu" />
       <label class="menu-button-container" for="menu-toggle">
         <div class="menu-button"></div>
       </label>
-
       <ul class="menu">
-        <li><a href="#" data-i18n="menu.home">HOME</a></li>
-        <li><a href="#writing" data-i18n="menu.words">WORDS</a></li>
-        <li><a href="#cinematic" data-i18n="menu.video">VIDEO</a></li>
-        <li><a href="#static" data-i18n="menu.images">IMAGES</a></li>
-        <li><a href="#data" data-i18n="menu.data">DATA</a></li>
-        <li><a href="bio.html" data-i18n="menu.bio">BIO/CONTACT</a></li>
-        <li><a href="#" id="lang-toggle" data-i18n="menu.lang">EN | IT</a></li>
+        <li><a href="#">HOME</a></li>
+        <li><a href="#writing">PAROLE</a></li>
+        <li><a href="#cinematic">VIDEO</a></li>
+        <li><a href="#static">IMMAGINI</a></li>
+        <li><a href="#data">DATI</a></li>
+        <li><a href="bio.html">BIO/CONTATTI</a></li>
+        <li><a href="index.html">IT</a></li>
       </ul>
     </header>
 
-    <!-- HOME -->
+    <!-- CONTENUTI -->
     <section>
       <div class="home1-text">
         <div class="home-title">
-          <h1 data-i18n="home.title">CONIGLIOVERDE</h1>
+          <h1>CONIGLIOVERDE</h1>
         </div>
-
         <div class="home-paragraph">
-          <p data-i18n="home.text">
-            Coniglioverde is inspired by Eduardo Kac’s Alba project.<br><br>
-            Is a multimedia <span class="p-bold"> exhibition space</span> and a research
-            <span class="p-bold"> laboratory </span> on hybridation beetween
-            <span class="p-bold">poetics</span> and <span class="p-bold">technologies</span>.<br><br>
+          <p>
+            Coniglioverde è ispirato al progetto Alba di Eduardo Kac.
+            <br /><br />
+            È uno <span class="p-bold">spazio espositivo</span> multimediale e un
+            <span class="p-bold">laboratorio</span> di ricerca
+            sull’ibridazione tra <span class="p-bold">poetiche</span> e
+            <span class="p-bold">tecnologie</span>.
+            <br /><br />
           </p>
         </div>
-
         <div class="scrolling">
           <img src="images/icons/scroll-down.svg" alt="scrolling" />
         </div>
@@ -121,15 +120,16 @@
     <section id="writing">
       <div class="writing-text">
         <div class="home-paragraph">
-          <p data-i18n="index.words">
-            In the time of <span class="p-bold"> half-realities</span>, of virtual worlds, of AIs that can imitate thought,
-            we seek our way to reconnect with <span class="p-bold">words</span>.<br><br>
-            <a href="writing.html">Experience Neutropoli</a>:<br>
-            a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts.
+          <p>
+            Nel tempo delle <span class="p-bold">semi-realtà</span>, dei mondi virtuali,
+            delle IA che sanno imitare il pensiero, cerchiamo una via per riconnetterci
+            con le <span class="p-bold">parole</span>.
+            <br /><br />
+            <a href="writing_it.html">Vivi Neutropoli</a>:<br />un testo, un sottosuolo,
+            un dolore, un silenzio, una vertigine, una voce, tutte le voci, i pensieri.
           </p>
-          <br><br>
+          <br /><br />
         </div>
-
         <div class="scrolling">
           <img src="images/icons/scroll-updown.gif" alt="scrolling" />
         </div>
@@ -140,17 +140,19 @@
     <section id="cinematic">
       <div class="cinematic-text">
         <div class="home-paragraph">
-          <p data-i18n="index.cinematic">
-            Moving images have<span class="p-bold"> multiplied</span> and <span class="p-bold">fragmented </span> on
-            <a href="cinematic.html">screens</a> of all kinds, out and inside ourselves.<br><br>
+          <p>
+            Le immagini in movimento si sono <span class="p-bold">moltiplicate</span> e
+            <span class="p-bold">frammentate</span> sugli <a href="cinematic_it.html">schermi</a>
+            di ogni tipo, fuori e dentro noi stessi.
+            <br /><br />
             <a href="cinematic_B_room.html">Butterfly</a>
-            is an immersvive movie counting about a new form of life emerging from a primordial digital broth.
+            è un film immersivo che racconta la nascita di una nuova forma di vita
+            emergente da un brodo primordiale digitale.
           </p>
-          <br><br>
+          <br /><br />
         </div>
-
         <div class="scrolling">
-          <img src="images/icons/scroll-updown.gif" alt="scrolling" />
+          <img src="images/icons/scroll-updown.gif" alt="scrolling">
         </div>
       </div>
     </section>
@@ -159,14 +161,19 @@
     <section id="static">
       <div class="gallery-text">
         <div class="home-paragraph">
-          <p data-i18n="index.static">
-            In the flow of time images flow, but some of them remain <span class="p-bold">entangled</span>, they stick to the gaze.<br><br>
-            <a href="static.html">Visiting this gallery</a> you can find projects realized with AI, generative software, sensors.<br><br>
-            Old and new tools to explore the relationships between <span class="p-bold">visible</span> and
-            <span class="p-bold">imaginary</span>.
+          <p>
+            Nel flusso del tempo scorrono le immagini, ma alcune restano
+            <span class="p-bold">impigliate</span>, aderenti allo sguardo.
+            <br /><br />
+            <a href="static_it.html">Visitando questa galleria</a> troverai progetti
+            realizzati con IA, software generativi e sensori.
+            <br /><br />
+            Strumenti antichi e nuovi per esplorare le relazioni tra
+            <span class="p-bold">visibile</span> e
+            <span class="p-bold">immaginario</span>.
+            <br /><br />
           </p>
         </div>
-
         <div class="scrolling">
           <img src="images/icons/scroll-updown.gif" alt="scrolling" />
         </div>
@@ -177,13 +184,14 @@
     <section id="data">
       <div class="data-text">
         <div class="home-paragraph">
-          <p data-i18n="index.data">
-            We produce an ever-growing amount of <span class="p-bold">data</span>, until — over time — we ourselves become its product.<br><br>
-            <a href="data.html">Experience H.E.Arts</a>:<br>
-            a sensitive device that records <span class="p-bold">emotional art experences</span>.
+          <p>
+            Produciamo una quantità sempre crescente di <span class="p-bold">dati</span>,
+            fino a diventare — col tempo — noi stessi il suo prodotto.
+            <br><br>
+            <a href="data_it.html">Vivi H.E.Arts</a>:<br>un dispositivo sensibile che registra
+            <span class="p-bold">esperienze artistiche emotive</span>.
           </p>
         </div>
-
         <div class="scrolling">
           <img src="images/icons/scroll-updown.gif" alt="scrolling">
         </div>
@@ -193,7 +201,7 @@
     <!-- FOOTER -->
     <footer id="footer">
       <ul>
-        <li data-i18n="footer.copy">&copy; 2023 felice vino</li>
+        <li>&copy; 2023 felice vino</li>
         <li>
           <a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener">
             <img src="images/icons/instagram.png" alt="instagram icon" />
@@ -254,19 +262,34 @@
       }
     </script>
 
-    <!-- COOKIE BANNER -->
     <div id="cookie-banner">
-      <p data-i18n="cookie.text">
+      <p>
         Questo sito usa cookie tecnici per funzionare correttamente.
         <a href="cookie.html">Scopri di più</a>
       </p>
-      <button id="accept-cookies" data-i18n="cookie.accept">Accetto</button>
+      <button id="accept-cookies">Accetto</button>
     </div>
 
     <div id="cookie-banner" role="dialog" aria-live="polite">
-      <p data-i18n="cookie.text">Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
-      <button id="accept-cookies" data-i18n="cookie.accept">Accetto</button>
+      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+      <button id="accept-cookies">Accetto</button>
     </div>
 
+    <script>
+      if (new URLSearchParams(location.search).has('resetCookies')) {
+        localStorage.removeItem('cookiesAccepted');
+      }
+      document.addEventListener('DOMContentLoaded', () => {
+        const banner = document.getElementById('cookie-banner');
+        const button = document.getElementById('accept-cookies');
+        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+
+        if (!accepted) banner.style.display = 'block';
+        button?.addEventListener('click', () => {
+          localStorage.setItem('cookiesAccepted', 'yes');
+          banner.remove();
+        });
+      });
+    </script>
   </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Felice Vino">
+        <meta name="description" content="Digital creator and storyteller.">
+        <meta property="og:title" content="CONIGLIO VERDE">
+        <meta property="og:description" content="Digital creator and storyteller.">
+        <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
+        <link rel="icon" href="images/loghi/favicon.ico">
+        <title>coniglioverde|writing|neutropoli</title>
+
+        <link rel="stylesheet" href="css/style.css">  
+        <link rel="stylesheet" href="css/writing.css">
+        <link rel="stylesheet" href="css/writing_neutropoli.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $(window).on("load", function() {
+                    $("#loader").fadeOut("slow");
+                });
+            });
+        </script>
+    </head> 
+
+    <body> 
+        <div id="loader">
+            <div class="loader"></div>
+            <span></span>
+            <div class="text-loader">
+                <p>Caricamento...</p>
+            </div>
+        </div>
+
+        <script type="importmap">
+            {
+                "imports": { "three": "./three_class/three.module.js" }
+            }
+        </script>	
+
+        <script type="module">
+            import scene from "./js/writing_N_phone.js";          
+            scene();
+        </script>  
+
+        <header>
+            <div id="logo">
+                <a href="index_it.html#writing">
+                    <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde">
+                </a>
+            </div>
+            <input id="menu-toggle" type="checkbox" aria-label="Apri/chiudi menu"/>
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class="menu">
+                <li><a href="index_it.html">HOME</a></li>
+                <li><a href="writing_it.html#neutropoli">PAROLE</a></li>
+            </ul>
+        </header>  
+
+        <div id="cam-nav" class="button-controls">            
+            <button data-goto="1">1</button>
+            <button data-goto="2">2</button>
+            <button data-goto="3">3</button>
+            <button data-goto="4">4</button>
+            <div id="btn-audio">
+                <button>
+                    <img src="images/icons/equalizer.png" alt="icona audio">
+                </button>
+            </div>
+        </div>
+
+        <footer id="footer"></footer>
+
+        <script type="module" src="js/i18n.js"></script>        
+    </body>
+</html>
