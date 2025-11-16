@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 	<head>
 		<meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,16 +11,16 @@
         <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
         <link rel="icon" href="./images/loghi/favicon.ico">
 		<title>coniglioverde|data|h.e.arts_01</title>		
+
 		<link href="./bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css">		
 		<link rel="stylesheet" href="css/hearts.css">
+
 		<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-		<!-- <script src="jquery.min.js"></script> -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		</style>
-		 <!-- Loading -->
-		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- Loading -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 		<script>			
 			$(document).ready(function() {
 				$(window).on("load", function() {
@@ -29,56 +29,60 @@
 			});			
 		</script>		
 	</head>
+
 	<body>		
 		<header>
 			<div id="logo">
-				<a href="index.html"><img src="images/loghi/coniglio_verde_logo.png" alt="Coniglio Verde Logo"></a>
+				<a href="index_it.html"><img src="images/loghi/coniglio_verde_logo.png" alt="Coniglio Verde Logo"></a>
 			</div>
+
 			<input id="menu-toggle" type="checkbox" aria-label="Toggle Menu"/>
 			<label class='menu-button-container' for="menu-toggle">
-			<div class='menu-button'></div>
-			</label class='menu-button-container' for="menu-toggle">
+				<div class='menu-button'></div>
+			</label>
+
 			<ul class="menu">
-				<li><a href="index.html">HOME</a></li>
-				<li><a href="data.html">DATA</a></li>
-				<li><a href="hearts_pc.html">TRY AGAIN</a></li>
-				<li><a href="hearts_pc_it.html">IT</a></li>
+				<li><a href="index_it.html">HOME</a></li>
+				<li><a href="data_it.html">DATA</a></li>
+				<li><a href="hearts_pc_it.html">RICOMINCIA</a></li>
+				<li><a href="hearts_pc.html">EN</a></li>
+				
 			</ul>
 		</header>	
+
 		<!-- FOOTER -->
         <footer id="footer">
 			<ul>
                 <li>&copy; 2023 felice vino</li>
                 <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-                <!-- <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li> -->
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer>
+
 		<audio id="clickAudio" src="audio/notification.mp3"></audio>
+
 		<section>			
 			<div id="first_step">
 				<div class="swiper">
-					
-					<div class="swiper-wrapper">
-					</div>
-					
+					<div class="swiper-wrapper"></div>
 					<div class="swiper-pagination"></div>
-					
 				</div>	
+
 				<div class="buttons-commands">
 					<div class="button-choose">
-						<button class="btn btn-secondary" id="openscene" type="button">RESULT</button>
+						<button class="btn btn-secondary" id="openscene" type="button">RISULTATO</button>
 					</div>
 					<div class="button-reset" id="reset">
 						<button class="btn btn-secondary" id="openscene" type="button">RESET</button>
 					</div>
 				</div>
 			</div>
+
 			<script type="importmap">
 			{
-			"imports": {
-				"three": "./three_class/three.module.js"
-			}
+				"imports": {
+					"three": "./three_class/three.module.js"
+				}
 			}
 			</script>
 
@@ -87,28 +91,29 @@
 			import scene from "./js/hearts_pc.js";
 
 			const quadri = [
-			'01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg',
-			'09.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg',
-			'17.jpg','18.jpg','19.jpg','20.jpg'
+				'01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg',
+				'09.jpg','10.jpg','11.jpg','12.jpg','13.jpg','14.jpg','15.jpg','16.jpg',
+				'17.jpg','18.jpg','19.jpg','20.jpg'
 			];
 
+			/* EMOZIONI VERSIONE ITA CHILD-FRIENDLY */
 			const emozioni = [				
-			{ color: "#DEC414", label: "CHEERFUL" },
-			{ color: "#FEF600", label: "CURIOUS" },
-			{ color: "#FFD700", label: "SURPRISED" },
-			{ color: "#C9A021", label: "PLAYFUL" },
-			{ color: "#FE005B", label: "SAFE" },
-			{ color: "#FF0000", label: "EXCITED" },
-			{ color: "#A32590", label: "PEACEFUL" },
-			{ color: "#DF73FF", label: "UNDERSTOOD" },
-			{ color: "#227BFF", label: "CALM" },
-			{ color: "#222EFF", label: "SAD" },
-			{ color: "#2A23A3", label: "LONELY" },
-			{ color: "#001DEC", label: "THOUGHTFUL" },
-			{ color: "#49C51A", label: "NERVOUS" },
-			{ color: "#2D7121", label: "SCARED" },
-			{ color: "#008000", label: "CONFUSED" },
-			{ color: "#3C6232", label: "ANGRY" }
+				{ color: "#DEC414", label: "ALLEGRO" },
+				{ color: "#FEF600", label: "CURIOSO" },
+				{ color: "#FFD700", label: "SORPRESO" },
+				{ color: "#C9A021", label: "DIVERTITO" },
+				{ color: "#FE005B", label: "TRANQUILLO" },
+				{ color: "#FF0000", label: "ENERGICO" },
+				{ color: "#A32590", label: "SERENO" },
+				{ color: "#DF73FF", label: "CAPITO" },
+				{ color: "#227BFF", label: "TRISTE" },
+				{ color: "#222EFF", label: "ANNOIATO" },
+				{ color: "#2A23A3", label: "SOLO" },
+				{ color: "#001DEC", label: "PENSIROSO" },
+				{ color: "#49C51A", label: "AGITATO" },
+				{ color: "#2D7121", label: "SPAVENTATO" },
+				{ color: "#008000", label: "CONFUSO" },
+				{ color: "#3C6232", label: "ARRABBIATO" }
 			];
 
 			let orderOfChoices = [];
@@ -116,90 +121,90 @@
 			for (let i = 0; i < quadri.length; i++) choose[i] = ['#FFFFFF'];
 
 			_.each(quadri,(v,k)=>{
-			const newQud = $(`
-				<div class="swiper-slide">
-				<img src="./images/hearts/gallery_quad/${v}">
-				</div>`);
-			$('.swiper-wrapper').append(newQud);
-			const newEmo = $(`<ul></ul>`);
-			newQud.append(newEmo);
-			_.each(emozioni, (vi, idx) => {
-				newEmo.append(
-					`<li style="--i:${idx}" quad="${k}" val="${vi.color}">${vi.label}
-					
-					</li>`
-				);
+				const newQud = $(`
+					<div class="swiper-slide">
+						<img src="./images/hearts/gallery_quad/${v}">
+					</div>`);
+
+				$('.swiper-wrapper').append(newQud);
+
+				const newEmo = $(`<ul></ul>`);
+				newQud.append(newEmo);
+
+				_.each(emozioni, (vi, idx) => {
+					newEmo.append(
+						`<li style="--i:${idx}" quad="${k}" val="${vi.color}">${vi.label}</li>`
+					);
 				});
 			});
 
 			setTimeout(function(){
-			$('#info').hide();
-			$('#btn-audio-white').hide();
-			const swiper = new Swiper('.swiper',{ pagination: { el: ".swiper-pagination" } });
-			$('.swiper li').click(function(){
 
-				// suono di click
-				const clickEl = document.getElementById('clickAudio');
-				if (clickEl) {
-					clickEl.currentTime = 0;
-					clickEl.play();
-				}
+				$('#info').hide();
+				$('#btn-audio-white').hide();
 
-					if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
-					if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
-					choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
-					$(this).removeClass('active');
-					} else {
-					$(this).addClass('active');
-					choose[$(this).attr('quad')].push($(this).attr('val'));								
+				const swiper = new Swiper('.swiper',{ 
+					pagination: { el: ".swiper-pagination" } 
+				});
+
+				$('.swiper li').click(function(){
+
+					// suono click
+					const clickEl = document.getElementById('clickAudio');
+					if (clickEl) {
+						clickEl.currentTime = 0;
+						clickEl.play();
 					}
+
+					if(!choose[$(this).attr('quad')]) 
+						choose[$(this).attr('quad')]=[];
+
+					if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
+						choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
+						$(this).removeClass('active');
+					} else {
+						$(this).addClass('active');
+						choose[$(this).attr('quad')].push($(this).attr('val'));								
+					}
+
 					$('#choose span').html(JSON.stringify(choose));
 				});
 
-				
 				$('#reset').click(function () {
-					// indice della slide attiva
 					const currentIndex = swiper.activeIndex;
-
-					// rimuove lo stato "active" solo dai bottoni emozione della slide corrente
 					$(`.swiper li[quad="${currentIndex}"]`).removeClass('active');
-
-					// resetta i dati solo per quella immagine
 					choose[currentIndex] = ['#FFFFFF'];
-
-					// aggiorna la visualizzazione del JSON (se la sta usando per debug)
 					$('#choose span').html(JSON.stringify(choose));
-					});
-
+				});
 
 			},500);
 
 			$('#openscene').click(function(){
-			$('#first_step').hide();
-			$('#info').show();	
-			$('#btn-audio-white').show();
-			scene(choose,quadri);
+				$('#first_step').hide();
+				$('#info').show();	
+				$('#btn-audio-white').show();
+				scene(choose,quadri);
 			});
 			</script>
+
 			<script>
 				window.addEventListener('load', () => {
 					document.querySelectorAll('.swiper li').forEach(btn => {
-					const color = btn.getAttribute('val');
-					if (color) {
-						btn.style.backgroundColor = color;
-					}
+						const color = btn.getAttribute('val');
+						if (color) btn.style.backgroundColor = color;
 					});
 				});
-				</script>
+			</script>
 
 			<div class="info_leyer">
 				<div id="info">
 					<p>
-						WASD&nbsp;&nbsp;>&nbsp;&nbsp;Move &nbsp; &nbsp; SPACE/SPACE&nbsp;&nbsp;>&nbsp;&nbsp;Up/Down<br>  
-						Mouse&nbsp;&nbsp;>&nbsp;&nbsp;Look &nbsp; &nbsp; &nbsp;ESC/Click&nbsp;&nbsp;>&nbsp;&nbsp;Out/In 
+						WASD → Muovi &nbsp;&nbsp; • &nbsp;&nbsp; SPAZIO/SHIFT → Su/Giù<br>  
+						Mouse → Guarda &nbsp;&nbsp; • &nbsp;&nbsp; ESC/Click → Esci/Entra 
 					</p>
 				</div>
 			</div>
+
 			<div class="button-controls">				
 				<div id="btn-audio-white">
 					<button aria-label="mute" id="audio-toggle-button">
@@ -208,11 +213,13 @@
 					</button>
         		</div>
 			</div>
+
 		</section>
-		 <div id="cookie-banner" role="dialog" aria-live="polite">
-    		<!-- style="display:block !important;" -->
+
+		<div id="cookie-banner" role="dialog" aria-live="polite">
       		<p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
       		<button id="accept-cookies">Accetto</button>
     	</div>
+
 	</body>
 </html>

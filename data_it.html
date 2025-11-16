@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,41 +24,45 @@
             });
         </script> 
     </head>
+
     <body>
         <div id="loader">
             <div class="loader"></div>
             <span></span>
             <div class="text-loader">
-                <p>Loading...</p>
+                <p>Caricamento...</p>
             </div>
         </div>
+
         <canvas class="writing">            			
             <script type="importmap">
                 {
                     "imports": {
                         "three": "./three_class/three.module.js"
-                        }
+                    }
                 }
             </script>
         </canvas>
-        <!-- HOME -->
+
+        <!-- HEADER -->
         <header>
             <div id="logo">
-                <a href="index.html#data"><img src="images/loghi/coniglio_verde_logo.png" alt="Coniglio Verde logo"></a>
+                <a href="index_it.html#data"><img src="images/loghi/coniglio_verde_logo.png" alt="Coniglio Verde logo"></a>
             </div>
             <input id="menu-toggle" type="checkbox" aria-label="Toggle Menu"/>
             <label class='menu-button-container' for="menu-toggle">
-            <div class='menu-button'></div>
-            </label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
             <ul class="menu">
-                <li><a href="index.html">HOME</a></li>               
+                <li><a href="index_it.html">HOME</a></li>
                 <li><a href="#">DATA</a></li> 
-                <li><a href="#hearts">H.E.ARTS</a></a></li>
-                <li><a href="#aqvam">AQVAM.01</a></a></li>
-                <li><a href="#aqvam-install">AQVAM.02</a></a></li>
-                <li><a href="data_it.html">IT</a></li>
+                <li><a href="#hearts">H.E.ARTS</a></li>
+                <li><a href="#aqvam">AQVAM.01</a></li>
+                <li><a href="#aqvam-install">AQVAM.02</a></li>
+                <li><a href="data.html">EN</a></li>
             </ul>
         </header>   
+
         <!-- FOOTER -->
         <footer id="footer">
             <ul>
@@ -67,6 +71,8 @@
                 <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer> 
+
+        <!-- H.E.ARTS VIDEO INTRO -->
         <section id="hearts-top">
             <div class="video-container">
                 <video controls autoplay muted loop width="1920" height="1080">
@@ -74,143 +80,146 @@
                     Il tuo browser non supporta il tag video.
                 </video>
             </div>            
+
             <div class="home-text">
-                <div  class="logoh">
+                <div class="logoh">
                     <img src="images/loghi/hearts_logo.png" alt="">
                 </div>
+
                 <div class="home-paragraph">
                     <p>
-                        H.E.Arts stands for High Emotional Arts.
+                        H.E.Arts significa High Emotional Arts.
                         <br><br>
-                        Based on the "Geneva Wheel", is designed to record the emotional journey of a visitor to a museum.
+                        Basato sul “Geneva Wheel”, è progettato per registrare il percorso emotivo di un visitatore all’interno di un museo.
                         <br><br> 
-                        H.E.Arts transform an emotional journey into a personalized and creative data visualization. 
+                        H.E.Arts trasforma questo percorso emotivo in una visualizzazione dati personalizzata e creativa.
                     </p>
                 </div>                          
             </div>    
+            
             <div class="scrolling">
                 <img src="images/icons/scroll-down.svg" alt="scrolling">
             </div>              
         </section>            
-        <!-- GALLERY -->             
+
+        <!-- H.E.ARTS GALLERY INTRO -->
         <section id="hearts">          
             <div class="home-text">
-                <div  class="logoh">
+                <div class="logoh">
                     <img src="images/loghi/hearts_logo.png" alt="">
                 </div>
+
                 <div class="home-paragraph">
                     <p>
-                        You will find a list of emotions, grouped into four key areas. 
+                        Troverai un elenco di emozioni, raggruppate in quattro aree chiave.
                         <br><br> 
-                        Drag the image to go to the next work and so on to the last one, until you cans select the "result":
+                        Trascina l’immagine per passare al lavoro successivo e così via fino all’ultimo, quando puoi selezionare il “risultato”:
                     </p>                   
                 </div>
+
                 <div class="hearts-menu">
                     <div class="button_div_writing">
                         <a href="hearts_pc.html">
-                            <button class="button">
-                                SPACE
-                            </button>
+                            <button class="button">SPACE</button>
                         </a>
                     </div>
                     <div class="button_div_writing">
                         <a href="hearts_phone.html">
-                            <button class="button">
-                                PHONE
-                            </button>
+                            <button class="button">PHONE</button>
                         </a>
                     </div>
                     <div class="button_div_writing">
                         <a href="hearts_pomo.html">
-                            <button class="button">
-                                OBJECT
-                            </button>
+                            <button class="button">OBJECT</button>
                         </a> 
                     </div>
                 </div>
             </div>
+
             <div class="scrolling">
                 <img src="images/icons/scroll-updown.gif" alt="scrolling">
             </div>
         </section>           
-        <!-- <section id="passaggio">
-             <div class="scrolling">
-                <img src="images/icons/scroll-updown.gif" alt="scrolling">
-            </div>
-        </section> -->
-         <!-- AQVAM -->        
-         <section id="aqvam"> 
+
+        <!-- AQVAM.01 -->
+        <section id="aqvam"> 
             <section>          
                 <div class="home-text">
                     <div class="home-title">
                         <h2>AQVAM</h2>
                     </div>
+
                     <div class="home-paragraph">
                         <p>        
-                            Water is the basis of life the origin and future of life.
+                            L’acqua è la base della vita, la sua origine e il suo futuro.
                             <br><br>
-                            Scientific research discovered that can gives life even in the most extreme enviroments, as the underground sources. 
+                            La ricerca scientifica ha scoperto che può generare vita anche negli ambienti più estremi, come le sorgenti sotterranee. 
                             <br><br>
-                            AQVAM is a 2D and 3D system developed to show <a href="aqvamT.html">microbiotic ecosystems</a> cycles in three of the phases of the water purification:
-                            <br><br>           source, filtration and chlorination.  
+                            AQVAM è un sistema 2D e 3D sviluppato per mostrare i cicli degli <a href="aqvamT.html">ecosistemi microbici</a> nelle tre fasi della depurazione dell’acqua:
+                            <br><br> sorgente, filtrazione e clorazione.  
                             <br><br>
                         </p>    
                     </div>                          
                 </div>    
+
                 <div class="scrolling">
                     <img src="images/icons/scroll-updown.gif" alt="scrolling">
                 </div>              
             </section>            
+
+            <!-- AQVAM.02 INSTALLATION -->
             <section id="aqvam-install">            
                 <div class="home-text">
                     <div class="home-title">
                         <h2>AQVAM</h2>
                     </div>
+
                     <div class="home-paragraph">
                         <p>         
-                            Water is a central element in the myths and cults of all cultures.
+                            L’acqua è un elemento centrale nei miti e nei culti di tutte le culture.
                             <br><br>
-                            In this  <a href="aqvam_room.html">environment</a>, scientific data harmonizes with emotional and spiritual sensitivity.
+                            In questo <a href="aqvam_room.html">ambiente</a>, i dati scientifici si armonizzano con la sensibilità emotiva e spirituale.
                             <br><br>
-                            An invitation to reflect on the importance of safeguarding this fundamental resource. 
+                            Un invito a riflettere sull'importanza di salvaguardare questa risorsa fondamentale. 
                         </p>                   
                     </div>
                 </div>    
+
                 <div class="scrolling">
                     <img src="images/icons/scroll-up.svg" alt="scrolling">
                 </div>              
             </section> 
         </section>
-         <div id="cookie-banner">
-      <p>
-        Questo sito usa cookie tecnici per funzionare correttamente.
-        <a href="cookie.html">Scopri di più</a>
-      </p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
 
-    <div id="cookie-banner" role="dialog" aria-live="polite">
-    <!-- style="display:block !important;" -->
-      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
+        <!-- COOKIE -->
+        <div id="cookie-banner">
+            <p>
+                Questo sito usa cookie tecnici per funzionare correttamente.
+                <a href="cookie.html">Scopri di più</a>
+            </p>
+            <button id="accept-cookies">Accetto</button>
+        </div>
 
-    <script>
-      // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
-      if (new URLSearchParams(location.search).has('resetCookies')) {
-        localStorage.removeItem('cookiesAccepted');
-      }
-      document.addEventListener('DOMContentLoaded', () => {
-        const banner = document.getElementById('cookie-banner');
-        const button = document.getElementById('accept-cookies');
-        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+        <div id="cookie-banner" role="dialog" aria-live="polite">
+            <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+            <button id="accept-cookies">Accetto</button>
+        </div>
 
-        if (!accepted) banner.style.display = 'block';
-        button?.addEventListener('click', () => {
-          localStorage.setItem('cookiesAccepted', 'yes');
-          banner.remove();
-        });
-      });
-    </script>         
+        <script>
+            if (new URLSearchParams(location.search).has('resetCookies')) {
+                localStorage.removeItem('cookiesAccepted');
+            }
+            document.addEventListener('DOMContentLoaded', () => {
+                const banner = document.getElementById('cookie-banner');
+                const button = document.getElementById('accept-cookies');
+                const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
+
+                if (!accepted) banner.style.display = 'block';
+                button?.addEventListener('click', () => {
+                    localStorage.setItem('cookiesAccepted', 'yes');
+                    banner.remove();
+                });
+            });
+        </script>         
     </body>
 </html>

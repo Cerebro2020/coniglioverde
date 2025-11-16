@@ -42,7 +42,7 @@
 				<li><a href="index.html">HOME</a></li>
 				<li><a href="data.html">DATA</a></li>
 				<li><a href="hearts_pc.html">TRY AGAIN</a></li>
-				<li><a href="hearts_pc_it.html">IT</a></li>
+				<!-- <li><a href="hearts_it.html">EN | IT</a></li> -->
 			</ul>
 		</header>	
 		<!-- FOOTER -->
@@ -74,6 +74,8 @@
 					</div>
 				</div>
 			</div>
+			<canvas></canvas>
+
 			<script type="importmap">
 			{
 			"imports": {
@@ -84,7 +86,7 @@
 
 			<script type="module">
 			import Swiper from 'https://unpkg.com/swiper@8/swiper-bundle.esm.browser.min.js';
-			import scene from "./js/hearts_pc.js";
+			import scene from "./js/hearts_phone.js";
 
 			const quadri = [
 			'01.jpg','02.jpg','03.jpg','04.jpg','05.jpg','06.jpg','07.jpg','08.jpg',
@@ -137,7 +139,6 @@
 			$('#btn-audio-white').hide();
 			const swiper = new Swiper('.swiper',{ pagination: { el: ".swiper-pagination" } });
 			$('.swiper li').click(function(){
-
 				// suono di click
 				const clickEl = document.getElementById('clickAudio');
 				if (clickEl) {
@@ -145,32 +146,30 @@
 					clickEl.play();
 				}
 
-					if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
-					if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
-					choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
-					$(this).removeClass('active');
-					} else {
-					$(this).addClass('active');
-					choose[$(this).attr('quad')].push($(this).attr('val'));								
-					}
-					$('#choose span').html(JSON.stringify(choose));
+				if(!choose[$(this).attr('quad')]) choose[$(this).attr('quad')]=[];
+				if(choose[$(this).attr('quad')].indexOf($(this).attr('val'))>=0){
+				choose[$(this).attr('quad')].splice(choose[$(this).attr('quad')].indexOf($(this).attr('val')), 1);
+				$(this).removeClass('active');
+				} else {
+				$(this).addClass('active');
+				choose[$(this).attr('quad')].push($(this).attr('val'));								
+				}
+				$('#choose span').html(JSON.stringify(choose));
+			});
+
+			$('#reset').click(function () {
+				// indice della slide attiva
+				const currentIndex = swiper.activeIndex;
+
+				// rimuove lo stato "active" solo dai bottoni emozione della slide corrente
+				$(`.swiper li[quad="${currentIndex}"]`).removeClass('active');
+
+				// resetta i dati solo per quella immagine
+				choose[currentIndex] = ['#FFFFFF'];
+
+				// aggiorna la visualizzazione del JSON (se la sta usando per debug)
+				$('#choose span').html(JSON.stringify(choose));
 				});
-
-				
-				$('#reset').click(function () {
-					// indice della slide attiva
-					const currentIndex = swiper.activeIndex;
-
-					// rimuove lo stato "active" solo dai bottoni emozione della slide corrente
-					$(`.swiper li[quad="${currentIndex}"]`).removeClass('active');
-
-					// resetta i dati solo per quella immagine
-					choose[currentIndex] = ['#FFFFFF'];
-
-					// aggiorna la visualizzazione del JSON (se la sta usando per debug)
-					$('#choose span').html(JSON.stringify(choose));
-					});
-
 
 			},500);
 
@@ -192,14 +191,16 @@
 				});
 				</script>
 
-			<div class="info_leyer">
+
+
+
+			<!-- <div class="info_leyer">
 				<div id="info">
 					<p>
-						WASD&nbsp;&nbsp;>&nbsp;&nbsp;Move &nbsp; &nbsp; SPACE/SPACE&nbsp;&nbsp;>&nbsp;&nbsp;Up/Down<br>  
-						Mouse&nbsp;&nbsp;>&nbsp;&nbsp;Look &nbsp; &nbsp; &nbsp;ESC/Click&nbsp;&nbsp;>&nbsp;&nbsp;Out/In 
+						GRAB
 					</p>
 				</div>
-			</div>
+			</div> -->
 			<div class="button-controls">				
 				<div id="btn-audio-white">
 					<button aria-label="mute" id="audio-toggle-button">
@@ -209,10 +210,10 @@
         		</div>
 			</div>
 		</section>
-		 <div id="cookie-banner" role="dialog" aria-live="polite">
-    		<!-- style="display:block !important;" -->
-      		<p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
-      		<button id="accept-cookies">Accetto</button>
-    	</div>
+		<div id="cookie-banner" role="dialog" aria-live="polite">
+    	<!-- style="display:block !important;" -->
+			<p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+			<button id="accept-cookies">Accetto</button>
+		</div>
 	</body>
 </html>
