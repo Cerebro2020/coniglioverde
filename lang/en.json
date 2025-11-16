@@ -1,51 +1,52 @@
 {
-  "home": {
-    "title": "CONIGLIOVERDE",
-    "text": "Coniglioverde is inspired by Eduardo Kac’s Alba project.<br><br>Is a multimedia <span class='p-bold'>exhibition space</span> and a research <span class='p-bold'>laboratory</span> on hybridation beetween <span class='p-bold'>poetics</span> and <span class='p-bold'>technologies</span>.<br><br>"
-  },
+  "index": {
+    "error": {
+      "webgl": "Your device does not support WebGL or the resources are too heavy for this browser."
+    },
 
-  "writing": {
-    "text": "In the time of <span class='p-bold'> half-realities</span>, of virtual worlds, of AIs that can imitate thought, we seek our way to reconnect with <span class='p-bold'>words</span>.<br><br><a href='writing.html'>Experience Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts."
-  },
+    "loader": {
+      "text": "Loading."
+    },
 
-  "cinematic": {
-    "text": "Moving images have<span class='p-bold'> multiplied</span> and <span class='p-bold'>fragmented </span> on <a href='cinematic.html'>screens</a> of all kinds, out and inside ouerselves.<br><br><a href='cinematic_B_room.html'>Butterfly</a> is an immersvive movie counting about a new form of life emerging from a primordial digital broth."
-  },
+    "noscript": "Enable JavaScript to display interactive content.",
 
-  "static": {
-    "text": "In the flow of time images flow, but some of them remain <span class='p-bold'>entangled</span>, they stick to the gaze.<br><br><a href='static.html'>Visiting this gallery</a> you can find projects realized with, AI, generative software, sensors.<br><br>Old and new tools to explore the relationships between <span class='p-bold'>visible</span> and <span class='p-bold'>imaginary</span>.<br><br>"
-  },
+    "menu": {
+      "home": "HOME",
+      "words": "WORDS",
+      "video": "VIDEO",
+      "images": "IMAGES",
+      "data": "DATA",
+      "bio": "BIO/CONTACT",
+      "lang": "EN | IT"
+    },
 
-  "data": {
-    "text": "We produce an ever-growing amount of <span class='p-bold'>data</span>, until — over time — we ourselves become its product.<br><br><a href='data.html'>Experience H.E.Arts</a>:<br>a sensitive device that records <span class='p-bold'>emotional art experences</span>."
-  },
+    "home": {
+      "title": "",
+      "text": "Coniglioverde is inspired by Eduardo Kac’s Alba project.<br><br>It is a multimedia <span class='p-bold'>exhibition space</span> and a <span class='p-bold'>laboratory</span> for research on hybridisation between <span class='p-bold'>poetics</span> and <span class='p-bold'>technologies</span>.<br><br>"
+    },
 
-  "cookie": {
-    "text": "This website uses technical cookies. <a href='cookie.html'>Learn more</a>",
-    "accept": "Accept"
-  },
+    "words": {
+      "title": "",
+      "text": "In the time of <span class='p-bold'>half-realities</span>, of virtual worlds, of AIs that can imitate thought, we seek our way to reconnect with <span class='p-bold'>words</span>.<br><br><a href='writing.html'>Experience Neutropoli</a>:<br>a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts."
+    },
 
-  "menu": {
-    "home": "HOME",
-    "words": "WORDS",
-    "video": "VIDEO",
-    "images": "IMAGES",
-    "data": "DATA",
-    "bio": "BIO/CONTACT",
-    "lang": "EN | IT"
-  },
+    "cinematic": {
+      "title": "",
+      "text": "Moving images have <span class='p-bold'>multiplied</span> and <span class='p-bold'>fragmented</span> on <a href='cinematic.html'>screens</a> of all kinds, out and inside ourselves.<br><br><a href='cinematic_B_room.html'>Butterfly</a> is an immersive movie counting about a new form of life emerging from a primordial digital broth."
+    },
 
-  "loader": {
-    "text": "Loading..."
-  },
+    "static": {
+      "title": "",
+      "text": "In the flow of time images flow, but some remain <span class='p-bold'>entangled</span>, they stick to the gaze.<br><br><a href='static.html'>Visiting this gallery</a> you can find projects realized with AI, generative software, sensors.<br><br>Old and new tools to explore the relationships between <span class='p-bold'>visible</span> and <span class='p-bold'>imaginary</span>."
+    },
 
-  "error": {
-    "webgl": "Your device does not support WebGL or the resources are too heavy for this browser."
-  },
+    "data": {
+      "title": "",
+      "text": "We produce an ever-growing amount of <span class='p-bold'>data</span>, until — over time — we ourselves become its product.<br><br><a href='data.html'>Experience H.E.Arts</a>:<br>a sensitive device that records <span class='p-bold'>emotional art experences</span>."
+    },
 
-  "noscript": "Enable JavaScript to display interactive content.",
-
-  "footer": {
-    "copy": "© 2023 felice vino"
+    "footer": {
+      "copy": "© 2023 felice vino"
+    }
   }
 }

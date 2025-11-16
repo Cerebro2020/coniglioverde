@@ -56,26 +56,30 @@
   </head>
 
   <body>
+    <!-- Fallback WebGL -->
     <div id="threejs-error" role="alert" aria-live="polite" data-i18n="error.webgl">
-      Your device does not support WebGL or the resources are too heavy for this browser.
+      Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
     </div>
 
+    <!-- Loader -->
     <div id="loader" aria-hidden="true">
       <div class="loader"></div>
-      <div class="text-loader"><p data-i18n="loader.text">Loading.</p></div>
+      <div class="text-loader"><p data-i18n="loader.text">Loading...</p></div>
     </div>
 
+    <!-- Canvas BACKGROUND -->
     <canvas id="conigliobcg"></canvas>
-    <noscript data-i18n="noscript">Enable JavaScript to display interactive content.</noscript>
+    <noscript data-i18n="noscript">Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
 
+    <!-- HEADER -->
     <header>
       <div id="logo">
         <a href="#">
-          <img src="images/loghi/coniglio_verde_logo.png" alt="coniglio verde logo" />
+          <img src="images/loghi/coniglio_verde_logo.png" alt="logo coniglio verde" />
         </a>
       </div>
 
-      <input id="menu-toggle" type="checkbox" aria-label="Toggle menu" />
+      <input id="menu-toggle" type="checkbox" aria-label="Apri/chiudi menu" />
       <label class="menu-button-container" for="menu-toggle">
         <div class="menu-button"></div>
       </label>
@@ -91,6 +95,7 @@
       </ul>
     </header>
 
+    <!-- HOME -->
     <section>
       <div class="home1-text">
         <div class="home-title">
@@ -100,8 +105,8 @@
         <div class="home-paragraph">
           <p data-i18n="home.text">
             Coniglioverde is inspired by Eduardo Kac’s Alba project.<br><br>
-            It is a multimedia <span class="p-bold">exhibition space</span> and a research
-            <span class="p-bold">laboratory</span> on hybridisation between
+            Is a multimedia <span class="p-bold"> exhibition space</span> and a research
+            <span class="p-bold"> laboratory </span> on hybridation beetween
             <span class="p-bold">poetics</span> and <span class="p-bold">technologies</span>.<br><br>
           </p>
         </div>
@@ -112,11 +117,12 @@
       </div>
     </section>
 
+    <!-- WORDS -->
     <section id="writing">
       <div class="writing-text">
         <div class="home-paragraph">
           <p data-i18n="index.words">
-            In the time of <span class="p-bold">half-realities</span>, of virtual worlds, of AIs that can imitate thought,
+            In the time of <span class="p-bold"> half-realities</span>, of virtual worlds, of AIs that can imitate thought,
             we seek our way to reconnect with <span class="p-bold">words</span>.<br><br>
             <a href="writing.html">Experience Neutropoli</a>:<br>
             a text, an underground, a pain, a silence, a vertigo, a voice, all the voices, thoughts.
@@ -130,6 +136,7 @@
       </div>
     </section>
 
+    <!-- CINEMATIC -->
     <section id="cinematic">
       <div class="cinematic-text">
         <div class="home-paragraph">
@@ -137,7 +144,7 @@
             Moving images have<span class="p-bold"> multiplied</span> and <span class="p-bold">fragmented </span> on
             <a href="cinematic.html">screens</a> of all kinds, out and inside ourselves.<br><br>
             <a href="cinematic_B_room.html">Butterfly</a>
-            is an immersive movie counting about a new form of life emerging from a primordial digital broth.
+            is an immersvive movie counting about a new form of life emerging from a primordial digital broth.
           </p>
           <br><br>
         </div>
@@ -148,6 +155,7 @@
       </div>
     </section>
 
+    <!-- STATIC -->
     <section id="static">
       <div class="gallery-text">
         <div class="home-paragraph">
@@ -165,13 +173,14 @@
       </div>
     </section>
 
+    <!-- DATA -->
     <section id="data">
       <div class="data-text">
         <div class="home-paragraph">
           <p data-i18n="index.data">
             We produce an ever-growing amount of <span class="p-bold">data</span>, until — over time — we ourselves become its product.<br><br>
             <a href="data.html">Experience H.E.Arts</a>:<br>
-            a sensitive device that records <span class="p-bold">emotional art experiences</span>.
+            a sensitive device that records <span class="p-bold">emotional art experences</span>.
           </p>
         </div>
 
@@ -181,6 +190,7 @@
       </div>
     </section>
 
+    <!-- FOOTER -->
     <footer id="footer">
       <ul>
         <li data-i18n="footer.copy">&copy; 2023 felice vino</li>
@@ -197,6 +207,7 @@
       </ul>
     </footer>
 
+    <!-- ==== Script app ===== -->
     <script>
       window.addEventListener('load', function () {
         var ld = document.getElementById('loader');
@@ -227,11 +238,11 @@
           const { default: scene } = await import('./js/index.js');
           if (typeof scene === 'function') scene();
         } catch (err) {
-          console.error('Error initializing 3D scene:', err);
+          console.error('Errore nel bootstrap della scena:', err);
           const box = document.getElementById('threejs-error');
           if (box) {
             box.style.display = 'block';
-            box.textContent = 'Unable to initialize the 3D scene on this device.';
+            box.textContent = 'Impossibile inizializzare la scena 3D su questo dispositivo.';
           }
         }
       }
@@ -243,9 +254,18 @@
       }
     </script>
 
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner">
+      <p data-i18n="cookie.text">
+        Questo sito usa cookie tecnici per funzionare correttamente.
+        <a href="cookie.html">Scopri di più</a>
+      </p>
+      <button id="accept-cookies" data-i18n="cookie.accept">Accetto</button>
+    </div>
+
     <div id="cookie-banner" role="dialog" aria-live="polite">
-      <p data-i18n="cookie.text">This website uses technical cookies. <a href="cookie.html">Learn more</a></p>
-      <button id="accept-cookies" data-i18n="cookie.accept">Accept</button>
+      <p data-i18n="cookie.text">Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+      <button id="accept-cookies" data-i18n="cookie.accept">Accetto</button>
     </div>
 
   </body>

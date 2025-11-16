@@ -1,51 +1,52 @@
 {
-  "home": {
-    "title": "CONIGLIOVERDE",
-    "text": "Coniglioverde è ispirato al progetto Alba di Eduardo Kac.<br><br>È uno <span class='p-bold'>spazio espositivo</span> multimediale e un <span class='p-bold'>laboratorio</span> di ricerca sull'ibridazione tra <span class='p-bold'>poetiche</span> e <span class='p-bold'>tecnologie</span>.<br><br>"
-  },
+  "index": {
+    "error": {
+      "webgl": "Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser."
+    },
 
-  "writing": {
-    "text": "Nel tempo delle <span class='p-bold'>semi-realtà</span>, dei mondi virtuali, delle IA che possono imitare il pensiero, cerchiamo un modo per riconnetterci con le <span class='p-bold'>parole</span>.<br><br><a href='writing.html'>Vivi Neutropoli</a>:<br>un testo, un sottosuolo, un dolore, un silenzio, una vertigine, una voce, tutte le voci, pensieri."
-  },
+    "loader": {
+      "text": "Caricamento."
+    },
 
-  "cinematic": {
-    "text": "Le immagini in movimento si sono<span class='p-bold'> moltiplicate</span> e <span class='p-bold'>frammentate</span> sugli <a href='cinematic.html'>schermi</a> di ogni tipo, fuori e dentro di noi.<br><br><a href='cinematic_B_room.html'>Butterfly</a> è un film immersivo che racconta di una nuova forma di vita che emerge da un primordiale brodo digitale."
-  },
+    "noscript": "Abilita JavaScript per visualizzare i contenuti interattivi.",
 
-  "static": {
-    "text": "Nel fluire del tempo scorrono le immagini, ma alcune restano <span class='p-bold'>impigliate</span>, si attaccano allo sguardo.<br><br><a href='static.html'>Visitando questa galleria</a> puoi trovare progetti realizzati con IA, software generativi, sensori.<br><br>Strumenti antichi e nuovi per esplorare le relazioni tra <span class='p-bold'>visibile</span> e <span class='p-bold'>immaginario</span>.<br><br>"
-  },
+    "menu": {
+      "home": "HOME",
+      "words": "PAROLE",
+      "video": "VIDEO",
+      "images": "IMMAGINI",
+      "data": "DATI",
+      "bio": "BIO/CONTATTI",
+      "lang": "IT | EN"
+    },
 
-  "data": {
-    "text": "Produciamo una quantità sempre crescente di <span class='p-bold'>dati</span>, fino a diventare — nel tempo — noi stessi il loro prodotto.<br><br><a href='data.html'>Vivi H.E.Arts</a>:<br>un dispositivo sensibile che registra <span class='p-bold'>esperienze artistiche emozionali</span>."
-  },
+    "home": {
+      "title": "",
+      "text": "Coniglioverde è ispirato al progetto Alba di Eduardo Kac.<br><br>È uno spazio <span class='p-bold'>espositivo</span> multimediale e un <span class='p-bold'>laboratorio</span> di ricerca sull’ibridazione tra <span class='p-bold'>poetiche</span> e <span class='p-bold'>tecnologie</span>.<br><br>"
+    },
 
-  "cookie": {
-    "text": "Questo sito usa cookie tecnici. <a href='cookie.html'>Scopri di più</a>",
-    "accept": "Accetto"
-  },
+    "words": {
+      "title": "",
+      "text": "Nel tempo delle <span class='p-bold'>semi-realtà</span>, dei mondi virtuali e delle IA capaci di imitare il pensiero, cerchiamo una via per riconnetterci con le <span class='p-bold'>parole</span>.<br><br><a href='writing.html'>Vivi Neutropoli</a>:<br>un testo, un sotterraneo, un dolore, un silenzio, una vertigine, una voce, tutte le voci, pensieri."
+    },
 
-  "menu": {
-    "home": "HOME",
-    "words": "PAROLE",
-    "video": "VIDEO",
-    "images": "IMMAGINI",
-    "data": "DATI",
-    "bio": "BIO/CONTATTI",
-    "lang": "IT | EN"
-  },
+    "cinematic": {
+      "title": "",
+      "text": "Le immagini in movimento si sono <span class='p-bold'>moltiplicate</span> e <span class='p-bold'>frammentate</span> sugli <a href='cinematic.html'>schermi</a> di ogni tipo, fuori e dentro di noi.<br><br><a href='cinematic_B_room.html'>Butterfly</a> è un film immersivo che racconta di una nuova forma di vita che emerge da un primordiale brodo digitale."
+    },
 
-  "loader": {
-    "text": "Caricamento..."
-  },
+    "static": {
+      "title": "",
+      "text": "Nel fluire del tempo scorrono le immagini, ma alcune rimangono <span class='p-bold'>impigliate</span>, si attaccano allo sguardo.<br><br><a href='static.html'>Visitando questa galleria</a> puoi trovare progetti realizzati con IA, software generativi e sensori.<br><br>Strumenti antichi e nuovi per esplorare le relazioni tra <span class='p-bold'>visibile</span> e <span class='p-bold'>immaginario</span>."
+    },
 
-  "error": {
-    "webgl": "Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser."
-  },
+    "data": {
+      "title": "",
+      "text": "Produciamo una quantità sempre crescente di <span class='p-bold'>dati</span>, fino a diventare — nel tempo — noi stessi il loro prodotto.<br><br><a href='data.html'>Vivi H.E.Arts</a>:<br>un dispositivo sensibile che registra <span class='p-bold'>esperienze artistiche emotive</span>."
+    },
 
-  "noscript": "Abilita JavaScript per visualizzare i contenuti interattivi.",
-
-  "footer": {
-    "copy": "© 2023 felice vino"
+    "footer": {
+      "copy": "© 2023 felice vino"
+    }
   }
 }
