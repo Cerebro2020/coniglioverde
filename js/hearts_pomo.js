@@ -342,7 +342,7 @@ export default function(choose,quadri){
   syncIcons();
   
   // carica e avvia audio
-  audioLoader.load('audio/deep-meditation-192828.mp3', (buffer) => {
+  audioLoader.load('audio/hearts/deep-meditation-192828.mp3', (buffer) => {
     backgroundSound.setBuffer(buffer);
     backgroundSound.setLoop(true);
     backgroundSound.setVolume(0.1);

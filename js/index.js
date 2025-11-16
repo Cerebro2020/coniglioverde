@@ -52,7 +52,7 @@ export default function(){
   const loader = new GLTFLoader(manager);
 
   // HOLE - HOME
-  loader.load('3d/CV_Home_Hole.glb', (gltf)=>{
+  loader.load('3d/home/CV_Home_Hole.glb', (gltf)=>{
     const model = gltf.scene;
     model.position.set(25, 0, -260);
     model.rotation.set(0, Math.PI/2, Math.PI/2);
@@ -62,7 +62,7 @@ export default function(){
 
   // RABBIT - modelB
   let modelB = null;
-  loader.load('3d/CV_Black_Rabbit.glb', (gltf)=>{
+  loader.load('3d/home/CV_Black_Rabbit.glb', (gltf)=>{
     modelB = gltf.scene;
     modelB.position.set(-9, -32, -138);
     modelB.rotation.set(0, Math.PI/2.7, 0);

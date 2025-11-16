@@ -54,7 +54,7 @@ export default function(){
   controls.maxDistance = 30;  
   // GALLERY HOLE
   const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/CV_Static_Hole_2.glb', (gltf) => {
+  loaderPlanet.load('3d/static/CV_Static_Hole_2.glb', (gltf) => {
     const model = gltf.scene;
     model.traverse((node) => {
       if (node.isMesh) {

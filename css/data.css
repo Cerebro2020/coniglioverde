@@ -1,4 +1,4 @@
-body {        
+/* body {        
     min-height: 100vh;
     background-color: black;
     background-image: url('../images/bcg/SfondoI.jpg');
@@ -6,7 +6,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     z-index: -9999;      
-}
+} */
 
 .image-cover {
     width: 100%;
