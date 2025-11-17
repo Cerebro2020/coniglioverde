@@ -12,6 +12,15 @@
     <link rel="icon" href="./images/loghi/favicon.ico" />
     <title>coniglioverde</title>
     <link rel="stylesheet" href="css/style.css" />
+
+      <script>			
+			$(document).ready(function() {
+				$(window).on("load", function() {
+					$("#loader").fadeOut("slow");
+			   	});
+			});			
+		</script>
+
     
     <!-- compatibilità safari -->
     <script type="module" src="three_class/three.module.js"></script>
@@ -21,8 +30,7 @@
           "three": "./three_class/three.module.js"
         }
       }
-    </script>
-
+    </script>  
     <style>
       #conigliobcg {
         position: fixed;
