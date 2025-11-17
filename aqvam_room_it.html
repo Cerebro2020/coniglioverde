@@ -31,7 +31,9 @@
         <div class="text-loader">
             <p>Loading...</p>
         </div>
-    </div>         
+    </div>    
+    <!-- compatibilità safari -->
+    <script type="module" src="three_class/three.module.js"></script>     
     <script type="importmap">
         {
             "imports": {
@@ -71,48 +73,41 @@
         <div id="btn-audio-white">
             <button aria-label="mute" id="audio-toggle-button">
                 <img src="./images/icons/audio_mute.svg" id="mute-icon" alt="Mute Icon">
-                <img src="./images/icons/audio.svg" id="audio-icon" style="display: none;" alt="Audio Icon">
+                <img src="./images/icons/audio.svg" id="audio-icon" hidden alt="" role="audio">
             </button>
         </div>
     </div> 
-    <footer id="footer">
-        <ul>
-            <li>&copy; 2023 felice vino</li>
-            <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
-            <!-- <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li> -->
-            <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
+        <footer id="footer">
+            <ul>
+                <li>&copy; 2023 felice vino</li>
+                <li><a href="https://www.instagram.com/felice_vino/" target="_blank" rel="noopener"><img src="images/icons/instagram.png" alt="instagram icon"></a></li>
+                <!-- <li><a href="https://www.facebook.com/coniglio.verde.2024" target="_blank" rel="noopener"><img src="images/icons/meta.png" alt="meta icon"></a></li> -->
+                <li><a href="https://vimeo.com/felicevino" target="_blank" rel="noopener"><img src="images/icons/vimeo.png" alt="vimeo icon"></a></li>
             </ul>
         </footer>
-         <div id="cookie-banner">
-      <p>
-        Questo sito usa cookie tecnici per funzionare correttamente.
-        <a href="cookie.html">Scopri di più</a>
-      </p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
+            <div id="cookie-banner" role="dialog" aria-live="polite">
+                <!-- style="display:block !important;" -->
+                <p>Questo sito usa cookie tecnici per funzionare correttamente.
+                <a href="cookie.html">Scopri di più</a></p>
+                <button id="accept-cookies">Accetto</button>
+            </div>
 
-    <div id="cookie-banner" role="dialog" aria-live="polite">
-    <!-- style="display:block !important;" -->
-      <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
+        <script>
+        // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
+        if (new URLSearchParams(location.search).has('resetCookies')) {
+            localStorage.removeItem('cookiesAccepted');
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const banner = document.getElementById('cookie-banner');
+            const button = document.getElementById('accept-cookies');
+            const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
 
-    <script>
-      // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
-      if (new URLSearchParams(location.search).has('resetCookies')) {
-        localStorage.removeItem('cookiesAccepted');
-      }
-      document.addEventListener('DOMContentLoaded', () => {
-        const banner = document.getElementById('cookie-banner');
-        const button = document.getElementById('accept-cookies');
-        const accepted = localStorage.getItem('cookiesAccepted') === 'yes';
-
-        if (!accepted) banner.style.display = 'block';
-        button?.addEventListener('click', () => {
-          localStorage.setItem('cookiesAccepted', 'yes');
-          banner.remove();
+            if (!accepted) banner.style.display = 'block';
+            button?.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'yes');
+            banner.remove();
+            });
         });
-      });
-    </script>
+        </script>
     </body>
 </html>

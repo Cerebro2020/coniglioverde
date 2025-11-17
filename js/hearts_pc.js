@@ -465,7 +465,7 @@ export default function(choose, quadri){
     
   const loaderSala = new GLTFLoader();
 
-loaderSala.load('3d/aqvam/CV_Aqvam_Ambient_2.glb', (gltf) => {
+loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
   const model = gltf.scene;
 
   model.traverse((node) => {
@@ -478,7 +478,7 @@ loaderSala.load('3d/aqvam/CV_Aqvam_Ambient_2.glb', (gltf) => {
     }
   });
 
-  model.position.set(0, 0, 0);
+  model.position.set(0, PSy, 0);
   model.rotation.set(0, -Math.PI / 2, 0);
 
   const scala = 400;

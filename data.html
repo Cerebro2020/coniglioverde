@@ -11,6 +11,7 @@
         <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde.github.io/">
         <link rel="icon" href="./images/loghi/favicon.ico">
         <title>coniglioverde|data</title>
+        
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/data.css"> 
         <link rel="stylesheet" href="css/text.css"> 
@@ -32,7 +33,9 @@
                 <p>Loading...</p>
             </div>
         </div>
-        <canvas class="writing">            			
+        <canvas class="writing">
+            <!-- compatibilità safari -->
+            <script type="module" src="three_class/three.module.js"></script>            			
             <script type="importmap">
                 {
                     "imports": {
@@ -181,13 +184,7 @@
                 </div>              
             </section> 
         </section>
-         <div id="cookie-banner">
-      <p>
-        Questo sito usa cookie tecnici per funzionare correttamente.
-        <a href="cookie.html">Scopri di più</a>
-      </p>
-      <button id="accept-cookies">Accetto</button>
-    </div>
+         
 
     <div id="cookie-banner" role="dialog" aria-live="polite">
     <!-- style="display:block !important;" -->

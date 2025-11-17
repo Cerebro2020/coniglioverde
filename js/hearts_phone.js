@@ -83,9 +83,7 @@ export default function(choose, quadri){
   controls.maxPolarAngle = 1.5;
   controls.enableZoom = true;
   controls.enablePan = false;
-  controls.update();
-  
- 
+  controls.update();  
 
   renderer.shadowMap.enabled = true;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;

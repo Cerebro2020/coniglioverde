@@ -34,7 +34,9 @@
             </div>
         </div>
 
-        <canvas class="writing">            			
+        <canvas class="writing"> 
+            <!-- compatibilità safari -->
+        <script type="module" src="three_class/three.module.js"></script>           			
             <script type="importmap">
                 {
                     "imports": {
@@ -192,16 +194,10 @@
         </section>
 
         <!-- COOKIE -->
-        <div id="cookie-banner">
-            <p>
-                Questo sito usa cookie tecnici per funzionare correttamente.
-                <a href="cookie.html">Scopri di più</a>
-            </p>
-            <button id="accept-cookies">Accetto</button>
-        </div>
+        
 
         <div id="cookie-banner" role="dialog" aria-live="polite">
-            <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
+            <p>Questo sito usa cookie tecnici per funzionare correttamente. <a href="cookie.html">Scopri di più</a></p>
             <button id="accept-cookies">Accetto</button>
         </div>
 

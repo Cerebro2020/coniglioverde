@@ -70,6 +70,10 @@ canvas:active {
     cursor: grabbing;
 }
 
+#submenu {
+  display: none;
+}
+
 .button-controls {
   width: 94%;
   position: absolute;

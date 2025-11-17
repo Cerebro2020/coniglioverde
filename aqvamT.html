@@ -33,6 +33,8 @@
                 <p>Loading...</p>
             </div>
         </div>   -->
+        <!-- compatibilità safari -->
+    <script type="module" src="three_class/three.module.js"></script>
         <script type="importmap">
             {
                 "imports": {
@@ -61,11 +63,11 @@
         </header>        
         <div class="button-controls-aqvam-left">         
             <div id="btn-play">
-                <button type="button" ><img src= "images/icons/play-buttton.png"></button>
+                <button type="button" ><img src= "images/icons/play-buttton.png" alt="play"></button>
             </div>          
             <div id="btn-pause">
-            <button type="button"><img src= "images/icons/pause.png"></button>        
-                <div id="submenu" style="display: none;">
+            <button type="button"><img src= "images/icons/pause.png" alt="pause"></button>        
+                <div id="submenu" hidden>
                     <div id="btn-hide-boxes1">
                         <button type="button" class="active">AQUIFER</button>
                     </div>         
@@ -78,7 +80,7 @@
                 </div>
             </div>
         </div>        
-        <div class="button-controls-jump" id="jump-controls"  style="display: none;">
+        <div class="button-controls-jump" id="jump-controls"  hidden>
             <div id="btn-jump-to-column">
                 <button type="button">
                     <img src="images/icons/jump.png" alt="scrolling">
@@ -121,7 +123,7 @@
 				<div id="info-mouse">
                     <ul>
                         <li>3D </li>
-                        <li><img src="images/icons/mouse.png"></li>
+                        <li><img src="images/icons/mouse.png" alt="" reole="info-mouse"></li>
                         <li>PAN</li>
                     </ul>
 				</div>

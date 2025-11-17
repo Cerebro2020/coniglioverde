@@ -127,7 +127,7 @@ export default function(){
 
   // video schermo 2
   var video = document.createElement('video');
-  video.src = "video/aqvam/sphere_skin_2.mp4";
+  video.src = "video/aqvam/sphere_skin_2d.mp4";
   video.muted = true;
   video.loop = true;
   video.playsInline = true;
