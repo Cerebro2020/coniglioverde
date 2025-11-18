@@ -11,12 +11,13 @@ export default function(){
     scene.background = new THREE.Color( 0x000000);   
     scene.fog = new THREE.Fog(0x008888, 10, 100);
     scene.fog = new THREE.Fog(0x000000, 10, 100);
+    scene.position.set(0,-2,0);
      // === PLAYER ===
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
-    // camera.position.set(18,player.height+5,30);
-    camera.position.set(0,player.height,-18);
+    camera.position.set(18,player.height,23);
+    // camera.position.set(0,player.height,-18);
    
     //=== RENDERER ===
     const renderer = new THREE.WebGLRenderer({    
@@ -45,7 +46,7 @@ export default function(){
     // === CAMERA 2 === 
     camera.lookAt(new THREE.Vector3( 0, player.height, 10));
     camera.lookAt( 0, 0, 0); 
-    camera.setFocalLength ( 25 );
+    camera.setFocalLength ( 15 );
     // === CONTROLS ===
     const controls = new PointerLockControls(camera, document.body);
     scene.add(controls.getObject());
