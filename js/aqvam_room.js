@@ -11,7 +11,6 @@ export default function(){
     scene.background = new THREE.Color( 0x000000);   
     scene.fog = new THREE.Fog(0x008888, 10, 100);
     scene.fog = new THREE.Fog(0x000000, 10, 100);
-    scene.position.set(0,-2,0);
      // === PLAYER ===
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
