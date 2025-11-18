@@ -7,8 +7,10 @@ export default function(){
   const clock = new THREE.Clock();
     // === SCENE  ===
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color( 0x008888 );  
+    scene.background = new THREE.Color( 0x008888);
+    scene.background = new THREE.Color( 0x000000);   
     scene.fog = new THREE.Fog(0x008888, 10, 100);
+    scene.fog = new THREE.Fog(0x000000, 10, 100);
      // === PLAYER ===
     let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
@@ -127,7 +129,7 @@ export default function(){
 
   // video schermo 2
   var video = document.createElement('video');
-  video.src = "video/aqvam/sphere_skin_2d.mp4";
+  video.src = "video/aqvam/sphere_skin_2.mp4";
   video.muted = true;
   video.loop = true;
   video.playsInline = true;
@@ -143,71 +145,36 @@ export default function(){
   vTexture.magFilter = THREE.LinearFilter;
   vTexture.format = THREE.RGBAFormat;
 
-// video schermo 3
-var videoW = document.createElement('video');
-videoW.src = "video/video_textures/water_loop.mp4";
-videoW.muted = true;
-videoW.loop = true;
-videoW.playsInline = true;
-videoW.autoplay = true;
-videoW.style.opacity = '0';
-videoW.style.position = 'absolute';
-videoW.style.width = '1px';
-videoW.style.height = '1px';
-document.body.appendChild(videoW);
-videoW.play().catch(() => {});
-var vTextureW = new THREE.VideoTexture(videoW);
-vTextureW.minFilter = THREE.LinearFilter;
-vTextureW.magFilter = THREE.LinearFilter;
-vTextureW.format = THREE.RGBAFormat;
+  // video schermo 3
+  var videoW = document.createElement('video');
+  videoW.src = "video/video_textures/water_loop.mp4";
+  videoW.muted = true;
+  videoW.loop = true;
+  videoW.playsInline = true;
+  videoW.autoplay = true;
+  videoW.style.opacity = '0';
+  videoW.style.position = 'absolute';
+  videoW.style.width = '1px';
+  videoW.style.height = '1px';
+  document.body.appendChild(videoW);
+  videoW.play().catch(() => {});
+  var vTextureW = new THREE.VideoTexture(videoW);
+  vTextureW.minFilter = THREE.LinearFilter;
+  vTextureW.magFilter = THREE.LinearFilter;
+  vTextureW.format = THREE.RGBAFormat;
 
-// fallback per sicurezza
-document.addEventListener('click', () => {
-  [videoQ, video, videoW].forEach(v => {
-    if (v.paused) v.play().catch(() => {});
+  // fallback per sicurezza
+  document.addEventListener('click', () => {
+    [videoQ, video, videoW].forEach(v => {
+      if (v.paused) v.play().catch(() => {});
+    });
   });
-});
   
   ///Lights
   // ambiente
-  const ambiente = new THREE.AmbientLight(0xffffff,0.5);
-  // 1
-  const pointL = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL.position.set(0,1,12.5);
-  // 2
-  const pointL2 = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL2.position.set(0,1,-12.5);
-  // 3 
-  const pointL3 = new THREE.PointLight(0x5555ff,0.5,4); 
-  pointL3.position.set(-12.5,1,12.5);
-  const pointL4 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL4.position.set(12.5,1,12.5);
-  const pointL5 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL5.position.set(-12.5,1,-12.5);
-  const pointL6 = new THREE.PointLight(0x5555ff,0.5,10);
-  pointL6.position.set(12.5,1,-12.5); 
-
-  pointL.castShadow = true;
-  pointL2.castShadow = true;
-  pointL3.castShadow = true; 
-  pointL4.castShadow = true; 
-  pointL5.castShadow = true; 
-  pointL6.castShadow = true;
-
-  pointL.shadow.bias = -0.0005;
-  pointL2.shadow.bias = -0.0005;
-  pointL3.shadow.bias = -0.0005;
-  pointL4.shadow.bias = -0.0005;
-  pointL5.shadow.bias = -0.0005;
-  pointL6.shadow.bias = -0.0005;
+  const ambiente = new THREE.AmbientLight(0xffffff,0.3);
 
   scene.add(ambiente);
-  // scene.add(pointL);  
-  // scene.add(pointL2);
-  // scene.add(pointL3);  
-  // scene.add(pointL4);
-  // scene.add(pointL5);
-  // scene.add(pointL6);
 
   // luci su pavimento
   const pointL7 = new THREE.PointLight(0x5555ff,0.5,10);
@@ -345,10 +312,10 @@ document.addEventListener('click', () => {
   water.position.set( 0,0.1, 0 );
   water.rotation.set(0,0,0);
   scene.add(water);
-  // 01 Pavimento 
-  const lSala = new GLTFLoader();
 
-  
+
+  // === SCENA  === //
+  const lSala = new GLTFLoader(); 
   lSala.load(    
     '3d/aqvam/CV_Aqvam_Ambient_2.glb',
       function (glt) {
@@ -378,180 +345,8 @@ document.addEventListener('click', () => {
       console.error(error);      
     }     
   );
-  // 02 Pool
-  const lPool = new GLTFLoader();
-  lPool.load(    
-    '3d/aqvam/02_pool.glb',
-      function (glt) {
-      const lPool = glt.scene;
-      lPool.position.set(0,0,0);
-      lPool.rotation.set(0,0,0 );  
-      lPool.traverse(function (node) {
-        if (node.isMesh) {
-          const material = new THREE.MeshPhysicalMaterial({
-            color:0x111111,   
-            roughness:0, 
-            metalness: 0.5,
-            ior: 1.460,
-          });
-          node.material = material;
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
-      });      
-      scene.add(lPool);   
-    },   
-    undefined,
-    function (error) {
-      console.error(error);      
-    }     
-  );
-  // 03 Passerelle
-  const lPasserelle = new GLTFLoader();
-  lPasserelle.load(    
-    '3d/aqvam/03_passerelle_3.glb',
-      function (glt) {
-      const lPasserelle = glt.scene;
-      lPasserelle.position.set(0,0,0);
-      lPasserelle.rotation.set(0,-Math.PI/2, 0 ); 
-      lPasserelle.traverse(function (node) {
-        if (node.isMesh) {
-          const material = new THREE.MeshPhysicalMaterial({
-            color:0x333333,
-            map: weave,  
-            roughness: 0.8,        
-            bumpMap:weave,
-            bumpScale: 0.001,
-            reflectivity:0,             
-          });
-          node.material = material;
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
-      });   
-      lPasserelle.castShadow = true,
-      lPasserelle.receiveShadow = true,   
-      scene.add(lPasserelle);
-    },   
-    undefined,
-    function (error) {
-      console.error(error);      
-    }     
-  );  
-  // 04 Vasca
-  const lVasca = new GLTFLoader();
-  lVasca.load(    
-    '3d/aqvam/04_vasca.glb',
-      function (glt) {
-      const lVasca = glt.scene;
-      lVasca.position.set(0,0,0);
-      lVasca.rotation.set(0, Math.PI/2, 0 );  
-      lVasca.traverse(function (node) {
-        if (node.isMesh) {
-          const material = new THREE.MeshPhysicalMaterial({
-            color:0xffffff,
-            map: marble,  
-            roughness: 0,
-            metalness: 0.5,
-            emissive: 0x000000,
-            emissiveIntensity: 1,
-            ior: 1.486,
-            reflectivity: 1,
-            clearcoat: 1,
-            clearcoatRoughness: 0,
-            bumpMap:uvMap,
-            bumpScale: 0.001,      
-          });
-          node.material = material;
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
-      });      
-      scene.add(lVasca);
-    },   
-    undefined,
-    function (error) {
-      console.error(error);      
-    }     
-  );
-  // 05_visitors
-  const lVisitors = new GLTFLoader();
-  lVisitors.load(    
-    '3d/aqvam/05_visitors_3.glb',
-      function (glt) {
-      const lVisitors = glt.scene;
-      lVisitors.position.set(0,0,0);
-      lVisitors.rotation.set(0,-Math.PI/2, 0 ); 
-      lVisitors.traverse(function (node) {
-        if (node.isMesh) {
-          const material = new THREE.MeshPhysicalMaterial({
-            color:0x664488,            
-          });
-          node.material = material;
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
-      });      
-      scene.add(lVisitors);
-    },   
-    undefined,
-    function (error) {
-      console.error(error);      
-    }     
-  );
-  // 06_capsula
-  const lCapsula = new GLTFLoader();
-  lCapsula.load(    
-    '3d/aqvam/06_capsule_5.glb',
-      function (glt) {
-      const lCapsula = glt.scene;
-      lCapsula.position.set(0,0,0);
-      lCapsula.rotation.set(0, -Math.PI/2, 0 );   
-      lCapsula.traverse(function (node) {
-        if (node.isMesh) {
-          const material = new THREE.MeshPhysicalMaterial({
-            color:0x333333,
-            map: weave,  
-            roughness: 0.5,        
-            bumpMap:weave,
-            bumpScale: 0.001,
-            reflectivity:0,      
-          });
-          node.material = material;
-          node.castShadow = true;
-          node.receiveShadow = true;
-        }
-      });      
-      scene.add(lCapsula);
-    },   
-    undefined,
-    function (error) {
-      console.error(error);      
-    }     
-  );
 
-// loader.load(
-//   '3d/aqvam/CV_Aqvam_Ambient.glb',
-//   function (glt) {
-//     const lSala = glt.scene;
-//     lSala.position.set(0, 0, 0);
-//     lSala.rotation.set(0, -Math.PI / 2, 0);
-
-//     lSala.traverse((node) => {
-//       if (node.isMesh) {
-//         node.castShadow = true;
-//         node.receiveShadow = true;
-//         node.material.side = THREE.DoubleSide; // opzionale
-//       }
-//     });
-
-//     scene.add(lSala);
-//   },
-//   undefined,
-//   (error) => console.error(error)
-// );
-
-  //schermo 1
+  // SHERMO INFERIORE
   const gSchermo = new THREE.CylinderGeometry(2,2,0.1,64,16);
   const mSchermo = new THREE.MeshPhysicalMaterial({    
     map:vTextureQ, 
@@ -561,7 +356,8 @@ document.addEventListener('click', () => {
   schermo.position.set(0,1.66,0);
   schermo.rotation.set(0,1.66,0);
   scene.add(schermo);
-  // schermo 2
+
+  // SCHERMO SUPERIORE
   const gSchermo2 = new THREE.SphereGeometry(1.5,64,64);  
   const mSchermo2 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
@@ -634,37 +430,40 @@ document.addEventListener('click', () => {
 
     if (video.readyState === video.HAVE_ENOUGH_DATA) {
       const brightness2 = extractVideoData(video, auxCtx2);
-      spotS2.intensity = brightness2 * 50; 
-      pointL.intensity = brightness2 * 100;
-      pointL2.intensity = brightness2 * 100;
-      pointL3.intensity = brightness2 * 100;
-      pointL4.intensity = brightness2 * 100;
-      pointL5.intensity = brightness2 * 100;
-      pointL6.intensity = brightness2 * 100;
+      spotS2.intensity = brightness2 * 50;     
     }
 
     if (controls.isLocked === true) {
-  const delta = clock.getDelta();
-  velocity.x -= velocity.x * 20.0 * delta;
-  velocity.y -= velocity.y * 10.0 * delta;
-  velocity.z -= velocity.z * 20.0 * delta;
+      const delta = clock.getDelta();
+      velocity.x -= velocity.x * 20.0 * delta;
+      velocity.y -= velocity.y * 10.0 * delta;
+      velocity.z -= velocity.z * 20.0 * delta;
 
-  direction.z = Number(move.forward) - Number(move.backward);
-  direction.x = Number(move.right) - Number(move.left);
-  direction.y = Number(move.up) - Number(move.down);
-  direction.normalize();
+      direction.z = Number(move.forward) - Number(move.backward);
+      direction.x = Number(move.right) - Number(move.left);
+      direction.y = Number(move.up) - Number(move.down);
+      direction.normalize();
 
-  if (move.forward || move.backward) velocity.z -= direction.z * player.speed * delta * 150;
-  if (move.left || move.right) velocity.x -= direction.x * player.speed * delta * 150;
-  if (move.up || move.down) velocity.y += direction.y* player.speed * delta * 150;
+      if (move.forward || move.backward) velocity.z -= direction.z * player.speed * delta * 150;
+      if (move.left || move.right) velocity.x -= direction.x * player.speed * delta * 150;
+      if (move.up || move.down) velocity.y += direction.y* player.speed * delta * 150;
 
-  controls.moveRight(-velocity.x * delta);
-  controls.moveForward(-velocity.z * delta);
-    controls.getObject().position.y += velocity.y * delta;
+      
 
-}
+      controls.moveRight(-velocity.x * delta);
+      controls.moveForward(-velocity.z * delta);
+      controls.getObject().position.y += velocity.y * delta;
+    }
+
+    // ====== LIMITE DI DISCESA ======
+    const floorHeight = 1.8;
+
+    if (controls.getObject().position.y < floorHeight) {
+        controls.getObject().position.y = floorHeight;
+        velocity.y = 0; // blocca la velocità verso il basso
+    }
+
     renderer.render(scene, camera);
   }
   animateScene();
-  // if (typeof controls !== 'undefined') controls.enabled = false;
 };
