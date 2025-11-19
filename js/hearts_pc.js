@@ -142,12 +142,12 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFFFFF,1);   
+  const ambient = new THREE.AmbientLight(0xFFDDDD,1.5);   
   scene.add( ambient);
 
-  const spotLight = new THREE.SpotLight(0xffffff, 5);
+  const spotLight = new THREE.SpotLight(0xffffff, 1);
   spotLight.position.set(0,3000,0);
-  spotLight.angle = Math.PI/16;
+  spotLight.angle = Math.PI/4;
   spotLight.penumbra = 0.5;
   spotLight.decay = 3;
   spotLight.distance = 9000;
@@ -160,9 +160,9 @@ export default function(choose, quadri){
   spotLight.shadow.bias = -0.0005;
   scene.add(spotLight);
   
-  const spotLight2 = new THREE.SpotLight(0xffffff, 10);
-  spotLight2.position.set(0,3000,0);
-  spotLight2.angle = Math.PI/4;
+  const spotLight2 = new THREE.SpotLight(0xffffff, 2);
+  spotLight2.position.set(0,1500,0);
+  spotLight2.angle = Math.PI/16;
   spotLight2.penumbra = 0.5;
   spotLight2.decay = 3;
   spotLight2.distance = 9000;
@@ -638,6 +638,11 @@ loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
 
     renderer.render(scene, camera);
   }
+////////////////////
+
+
+
+
   animateScene();
 
   
