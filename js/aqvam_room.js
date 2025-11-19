@@ -207,7 +207,7 @@ export default function(){
   
   // === Creazione luci ferme ===
   for (let i = 0; i < totalLights; i++) {
-    const light = new THREE.PointLight(colors[i], 0, 10); // spente inizialmente
+    const light = new THREE.PointLight(colors[i], 0, 7); // spente inizialmente
     const angle = i * angleStep;
     const radius = baseRadius + i * radiusStep;
     const x = Math.cos(angle) * radius;
