@@ -45,7 +45,7 @@ export default function(){
     // === CAMERA 2 === 
     camera.lookAt(new THREE.Vector3( 0, player.height, 10));
     camera.lookAt( 0, 0, 0); 
-    camera.setFocalLength ( 15 );
+    camera.setFocalLength ( 20 );
     // === CONTROLS ===
     const controls = new PointerLockControls(camera, document.body);
     scene.add(controls.getObject());
@@ -184,7 +184,7 @@ export default function(){
   // scene.add(pointL7);  
 
   // === GRUPPO LUCI A SPIRALE ===
-  const totalLights = 34;
+  const totalLights = 24;
   
   const spiralGroup = new THREE.Group();
   scene.add(spiralGroup);
@@ -200,8 +200,8 @@ export default function(){
   const timers = new Array(totalLights).fill(0);
   
   // === Parametri spirale ===
-  const baseRadius = 13;
-  const radiusStep = 0.7;
+  const baseRadius = 10/*13*/;
+  const radiusStep = 0.5 /*0.7*/;
   const heightStep = 1.2;
   const angleStep = Math.PI / 6;
   
@@ -271,6 +271,12 @@ export default function(){
     let audioIcon = document.getElementById('audio-icon');
     let isPlaying = false; // Initially not playing
 
+    audioToggleButton.addEventListener('keydown', function(e) {
+        if (e.code === 'Space' || e.code === 'Enter') {
+            e.preventDefault();
+        }
+    });
+
     // Ensure audio is initially muted
     backgroundSound.pause();
     backgroundSound2.pause();
@@ -312,7 +318,6 @@ export default function(){
   water.position.set( 0,0.1, 0 );
   water.rotation.set(0,0,0);
   scene.add(water);
-
 
   // === SCENA  === //
   const lSala = new GLTFLoader(); 
