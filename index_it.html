@@ -11,22 +11,21 @@
     <meta property="og:url" content="https://cerebro2020.github.io/coniglioverde/" />
     <meta property="og:image" content="https://cerebro2020.github.io/coniglioverde/images/loghi/coniglio_verde_logo.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Coniglioverde" />
-    
+    <meta property="og:site_name" content="Coniglioverde" />    
     <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde/" />
     <link rel="icon" href="./images/loghi/favicon.ico" />
     <title>coniglioverde</title>
+
     <link rel="stylesheet" href="css/style.css" />
 
-      <script>			
+    <script>			
 			$(document).ready(function() {
 				$(window).on("load", function() {
 					$("#loader").fadeOut("slow");
 			   	});
 			});			
 		</script>
-
-    
+    <script async src="https://unpkg.com/es-module-shims@1.11.0/dist/es-module-shims.js"></script>    
     <!-- compatibilità safari -->
     <script type="module" src="three_class/three.module.js"></script>
     <script type="importmap">
@@ -35,38 +34,7 @@
           "three": "./three_class/three.module.js"
         }
       }
-    </script>  
-    <style>
-      #conigliobcg {
-        position: fixed;
-        inset: 0;
-        display: block;
-        z-index: -1;         
-        pointer-events: none;
-      }
-      #threejs-error {
-        display: none;
-        padding: 1rem;
-        background: #111;
-        color: #fff;
-      }
-      noscript {
-        display: block;
-        padding: 1rem;
-        background: #300;
-        color: #fff;
-        font-weight: 600;
-      }
-      #loader {
-        position: fixed;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        background: #000;
-        color: #fff;
-        z-index: 9999;
-      }
-    </style>
+    </script> 
   </head>
 
   <body>

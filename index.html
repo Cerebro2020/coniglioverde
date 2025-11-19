@@ -11,14 +11,21 @@
     <meta property="og:url" content="https://cerebro2020.github.io/coniglioverde/" />
     <meta property="og:image" content="https://cerebro2020.github.io/coniglioverde/images/loghi/coniglio_verde_logo.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Coniglioverde" />
-
+    <meta property="og:site_name" content="Coniglioverde" />    
     <link rel="canonical" href="https://cerebro2020.github.io/coniglioverde/" />
     <link rel="icon" href="./images/loghi/favicon.ico" />
     <title>coniglioverde</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <script async src="https://unpkg.com/es-module-shims@1.11.0/dist/es-module-shims.js"></script>
 
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script>			
+			$(document).ready(function() {
+				$(window).on("load", function() {
+					$("#loader").fadeOut("slow");
+			   	});
+			});			
+		</script>
+    <script async src="https://unpkg.com/es-module-shims@1.11.0/dist/es-module-shims.js"></script>    
     <!-- compatibilità safari -->
     <script type="module" src="three_class/three.module.js"></script>
     <script type="importmap">
@@ -27,26 +34,12 @@
           "three": "./three_class/three.module.js"
         }
       }
-    </script>
-  </head> 
+    </script> 
+  </head>
 
   <body>
-    <!-- Fallback WebGL -->
-    <div id="threejs-error" role="alert" aria-live="polite">
-      Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
-    </div>
 
-    <!-- Loader -->
-    <div id="loader" aria-hidden="true">
-      <div class="loader"></div>
-      <div class="text-loader"><p>Loading...</p></div>
-    </div>
-
-    <!-- Canvas BACKGROUND -->
-    <canvas id="conigliobcg"></canvas>
-    <noscript>Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
-
-    <!-- HEADER (non tocco il tuo layout: segue il tuo CSS in style.css) -->
+    <!-- HEADER -->
     <header>
       <div id="logo">
         <a href="#">
@@ -63,10 +56,25 @@
         <li><a href="#cinematic">VIDEO</a></li>
         <li><a href="#static">IMAGES</a></li>
         <li><a href="#data">DATA</a></li>
-        <li><a href="bio.html">BIO/CONTACT</a></li>
+        <li><a href="bio.html">BIO/CONTACTS</a></li>
         <li><a href="index_it.html">IT</a></li>
       </ul>
     </header>
+
+    <!-- Fallback WebGL -->
+    <div id="threejs-error" role="alert" aria-live="polite">
+      Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
+    </div>
+
+    <!-- Loader -->
+    <div id="loader" aria-hidden="true">
+      <div class="loader"></div>
+      <div class="text-loader"><p>Caricamento...</p></div>
+    </div>
+
+    <!-- Canvas BACKGROUND -->
+    <canvas id="conigliobcg"></canvas>
+    <noscript>Abilita JavaScript per visualizzare i contenuti interattivi.</noscript>
 
     <!-- CONTENUTI -->
     <section>
