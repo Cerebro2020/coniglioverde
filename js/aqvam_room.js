@@ -12,7 +12,7 @@ export default function(){
     scene.fog = new THREE.Fog(0x008888, 10, 100);
     scene.fog = new THREE.Fog(0x000000, 10, 100);
      // === PLAYER ===
-    let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
+    let player = { height:2.1, speed:0.2, turnSpeed:Math.PI*0.02 };
     // === CAMERA ===
     const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
     camera.position.set(18,player.height,23);
@@ -64,8 +64,8 @@ export default function(){
       case 'KeyS': move.backward = true; break;
       case 'KeyA': move.left = true; break;
       case 'KeyD': move.right = true; break;
-      case 'Space': move.up = true; break;
-      case 'ShiftLeft': move.down = true; break;
+      // case 'Space': move.up = true; break;
+      // case 'ShiftLeft': move.down = true; break;
     }
   });
   document.addEventListener('keyup', (e) => {
@@ -74,8 +74,8 @@ export default function(){
       case 'KeyS': move.backward = false; break;
       case 'KeyA': move.left = false; break;
       case 'KeyD': move.right = false; break;
-      case 'Space': move.up = false; break;
-      case 'ShiftLeft': move.down = false; break;
+      // case 'Space': move.up = false; break;
+      // case 'ShiftLeft': move.down = false; break;
     }
   });
   
@@ -207,7 +207,7 @@ export default function(){
   
   // === Creazione luci ferme ===
   for (let i = 0; i < totalLights; i++) {
-    const light = new THREE.PointLight(colors[i], 0, 7); // spente inizialmente
+    const light = new THREE.PointLight(colors[i],0,7); // spente inizialmente
     const angle = i * angleStep;
     const radius = baseRadius + i * radiusStep;
     const x = Math.cos(angle) * radius;
@@ -271,11 +271,11 @@ export default function(){
     let audioIcon = document.getElementById('audio-icon');
     let isPlaying = false; // Initially not playing
 
-    audioToggleButton.addEventListener('keydown', function(e) {
-        if (e.code === 'Space' || e.code === 'Enter') {
-            e.preventDefault();
-        }
-    });
+    // audioToggleButton.addEventListener('keydown', function(e) {
+    //     if (e.code === 'Space' || e.code === 'Enter') {
+    //         e.preventDefault();
+    //     }
+    // });
 
     // Ensure audio is initially muted
     backgroundSound.pause();
