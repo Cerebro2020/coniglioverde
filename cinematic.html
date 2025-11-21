@@ -106,7 +106,11 @@
         <section id="butterfly"> 
             <div class="page-container">
                 <div class="video-container-full">
-                    <video class="video-container-full" src="./video/cinematic/butterfly_spot.mp4" autoplay loop muted></video>
+                    <video class="video-container-full"
+                           src="./video/cinematic/butterfly_spot.mp4"
+                           autoplay loop muted
+                           data-tags="Butterfly, Felice Vino, Coniglio Verde, digital art, speculative biology, immersive video, experimental film, data aesthetics">
+                    </video>
                 </div>
             </div>
             <div class="scrolling">
@@ -135,7 +139,11 @@
         <section id="ghost">
             <div class="page-container">
                 <div class="video-container-full">
-                    <video class="video-container-full" src="./video/cinematic/ghost.mp4" autoplay loop muted></video>
+                    <video class="video-container-full"
+                           src="./video/cinematic/ghost.mp4"
+                           autoplay loop muted
+                           data-tags="Ghost Track, Felice Vino, Marilina Ciaco, poetry film, sound visualization, abstract video, experimental art">
+                    </video>
                 </div>
             </div>
             <div class="scrolling">
@@ -164,7 +172,11 @@
         <section id="triptych"> 
             <div class="page-container">
                 <div class="video-container-full">
-                    <video class="video-container-full" src="./video/cinematic/triptych_spot.mp4" autoplay loop muted></video>
+                    <video class="video-container-full"
+                           src="./video/cinematic/triptych_spot.mp4"
+                           autoplay loop muted
+                           data-tags="Triptych.10, 9:16 video, Covid diary, lockdown art, Felice Vino, vertical experimental film">
+                    </video>
                 </div>
             </div>
             <div class="scrolling">
@@ -194,7 +206,11 @@
         <section id="deserto"> 
             <div class="page-container">
                 <div class="video-container-full">
-                    <video class="video-container-full" src="./video/cinematic/deserto.mp4" autoplay loop muted></video>
+                    <video class="video-container-full"
+                           src="./video/cinematic/deserto.mp4"
+                           autoplay loop muted
+                           data-tags="Dal deserto rosso, Millennio di primavera, Felice Vino, Maria Borio, poetic video, abstract transitions, lyrical video art">
+                    </video>
                 </div>
             </div>
             <div class="scrolling">
@@ -222,7 +238,11 @@
         <section id="genomachines">
             <div class="page-container">
                 <div class="video-container-full">
-                    <video class="video-container-full" src="./video/cinematic/02_genomachines.mp4" autoplay loop muted></video>
+                    <video class="video-container-full"
+                           src="./video/cinematic/02_genomachines.mp4"
+                           autoplay loop muted
+                           data-tags="Genomachines, Felice Vino, Coniglio Verde, AI liberation, speculative future, posthuman art, immersive film">
+                    </video>
                 </div>                
             </div>    
             <div class="scrolling">
@@ -251,13 +271,11 @@
             </div>
         </section>
         <div id="cookie-banner" role="dialog" aria-live="polite">
-        <!-- style="display:block !important;" -->
             <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
             <button id="accept-cookies">Accetto</button>
         </div>
 
         <script>
-        // opzionale: aggiungi ?resetCookies=1 all'URL per resettare nei test
         if (new URLSearchParams(location.search).has('resetCookies')) {
             localStorage.removeItem('cookiesAccepted');
         }
