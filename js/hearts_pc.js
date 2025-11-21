@@ -467,7 +467,6 @@ export default function(choose, quadri){
 
 loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
   const model = gltf.scene;
-
   model.traverse((node) => {
     if (node.isMesh) {
       node.castShadow = true;

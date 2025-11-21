@@ -1,0 +1,14 @@
+body { 
+    margin: 0; 
+    overflow: hidden; 
+}
+
+#instructions {
+    position: absolute; 
+    top: 3%; width: 100%;
+    text-align: center; 
+    color: #fff;
+    font-family: Arial; 
+    font-size: 12px;
+    transform: translateY(-50%);    
+}
