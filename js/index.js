@@ -51,24 +51,45 @@ export default function(){
   );
   const loader = new GLTFLoader(manager);
 
-  // HOLE - HOME
-  loader.load('3d/home/CV_Home_Hole.glb', (gltf)=>{
-    const model = gltf.scene;
-    model.position.set(25, 0, -260);
-    model.rotation.set(0, Math.PI/2, Math.PI/2);
-    model.scale.set(0.65,0.65,0.65);
-    scene.add(model);
-  }, undefined, (err)=>console.error('GLTF Hole error:', err));
+  let holeLoaded = false;
+let hole = null;
+let rabbit = null;
 
-  // RABBIT - modelB
-  let modelB = null;
-  loader.load('3d/home/CV_Black_Rabbit.glb', (gltf)=>{
-    modelB = gltf.scene;
-    modelB.position.set(-9, -32, -138);
-    modelB.rotation.set(0, Math.PI/2.7, 0);
-    modelB.scale.set(10,10,10);
-    scene.add(modelB);
-  }, undefined, (err)=>console.error('GLTF Rabbit error:', err));
+
+  loader.load(
+  '3d/home/CV_Home_Hole.glb',
+  (gltf)=>{
+    hole = gltf.scene;
+    hole.position.set(25, 0, -260);
+    hole.rotation.set(0, Math.PI/2, Math.PI/2);
+    hole.scale.set(0.65,0.65,0.65);
+    scene.add(hole);
+
+    holeLoaded = true;
+
+    // quando il tunnel è pronto --> carica rabbit
+    loadRabbit();
+  }
+);
+
+  // 2) FUNZIONE CHE CARICA RABBIT SOLO DOPO IL TUNNEL
+function loadRabbit(){
+  loader.load(
+    '3d/home/CV_Black_Rabbit.glb',
+    (gltf)=>{
+      rabbit = gltf.scene;
+      rabbit.visible = false;
+
+      rabbit.position.set(-9, -32, -138);
+      rabbit.rotation.set(0, Math.PI/2.7, 0);
+      rabbit.scale.set(10,10,10);
+      scene.add(rabbit);
+
+      // Rabbit appare SOLO dopo che Hole è sicuro in scena
+      setTimeout(()=>{ rabbit.visible = true; }, 200);
+    }
+  );
+}
 
   // ====== SCROLL (formule identiche alle tue) ======
   function moveCamera(){

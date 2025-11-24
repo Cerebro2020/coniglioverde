@@ -7,8 +7,8 @@ canvas:active {
 }
 
 /* === INFO LAYER === */
-.info_leyer { 
-  position: absolute;
+.info_leyer {   
+  position: absolute;  
   top: 0;
   width: 100%;
   height: 60px;
@@ -32,7 +32,7 @@ canvas:active {
 }
 
 /* === PAGE CONTAINER === */
-.page-container {
+.page-container {  
   width: 100%;
   height: 86vh;
   position: absolute;
@@ -84,9 +84,9 @@ iframe {
   font-style: italic;
 } */
 
-.home-text {
+.home-text {  
   width: 70%;
-  height: 70vh;
+  height: 80vh;
   flex-direction: column; 
   justify-content: space-between;
 }
@@ -94,7 +94,7 @@ iframe {
 .home-title{ 
   width: 100%;
   margin-left: 0%;
-  height: 30%;
+  height: 20%;
   align-items: center;  
 }
 
@@ -114,9 +114,9 @@ iframe {
 
 .home-paragraph {
   width: 100%;
-  height: 60%;
+  height: 80%;
   display: flex;
-  justify-content: flex-start; 
+  justify-content: center; 
   align-items: center;
 }
 
@@ -174,8 +174,6 @@ iframe {
   color: rgb(162, 255, 0);
 }
 
-
-
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
   .text-container {
@@ -184,6 +182,11 @@ iframe {
 }
 
 @media (max-width: 724px) {
+
+  .home-text {
+    width: 90%;
+  }
+
   .home-title h1 {
     font-size: 40px;
     line-height: 36px;
@@ -199,7 +202,7 @@ iframe {
   }
 
   .text-container {
-    width: 90%;
+    width: 100%;
     font-size: 18px;
     line-height: 22px;
   }

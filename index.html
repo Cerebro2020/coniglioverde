@@ -29,27 +29,34 @@
 
     <link rel="stylesheet" href="css/style.css" />
 
-    <script>			
-			$(document).ready(function() {
-				$(window).on("load", function() {
-					$("#loader").fadeOut("slow");
-			   	});
-			});			
+   
 		</script>
     <script async src="https://unpkg.com/es-module-shims@1.11.0/dist/es-module-shims.js"></script>    
     <!-- compatibilità safari -->
-    <script type="module" src="three_class/three.module.js"></script>
+      <script>
+        $(document).ready(function() {
+          $(window).on("load", function() {
+            $("#loader").fadeOut("slow");
+          });
+        });
+        </script> 
+  </head>
+    <script type="module" src="three_class/three.module.js"></script>    
     <script type="importmap">
       {
         "imports": {
           "three": "./three_class/three.module.js"
         }
       }
-    </script> 
-  </head>
-
+    </script>   
   <body>
-
+    <div id="loader">
+            <div class="loader"></div>
+            <span></span>
+            <div class="text-loader">
+                <p>Loading...</p>
+            </div>
+        </div>
     <!-- HEADER -->
     <header>
       <div id="logo">
@@ -75,13 +82,7 @@
     <!-- Fallback WebGL -->
     <div id="threejs-error" role="alert" aria-live="polite">
       Il tuo dispositivo non supporta WebGL oppure le risorse risultano troppo pesanti per questo browser.
-    </div>
-
-    <!-- Loader -->
-    <div id="loader" aria-hidden="true">
-      <div class="loader"></div>
-      <div class="text-loader"><p>Caricamento...</p></div>
-    </div>
+    </div> 
 
     <!-- Canvas BACKGROUND -->
     <canvas id="conigliobcg"></canvas>
