@@ -60,22 +60,22 @@ export default function(){
   let int = 0.8;
   let dist = 8; 
   // EMME
-  const point1 = new THREE.SpotLight(pointcolor, int, dist);
+  const point1 = new THREE.PointLight(pointcolor, int, dist);
   point1.castShadow = true;
   point1.position.set(-2,3.5,-53)
   scene.add(point1);
   // CHI HA
-  const point2 = new THREE.SpotLight(pointcolor, int, dist);
+  const point2 = new THREE.PointLight(pointcolor, int, dist);
   point2.castShadow = true;  
   point2.position.set(-21,3,-93);
   scene.add(point2);
   // ACCAVALLA
-  const point3 = new THREE.SpotLight(pointcolor, int, dist);
+  const point3 = new THREE.PointLight(pointcolor, int, dist);
   point3.castShadow = true;  
-  point3.position.set(-22,24,47.5);
+  point3.position.set(-22,26,47);
   scene.add(point3);
   // CIOCCA
-  const point4 = new THREE.SpotLight(pointcolor, int, dist);
+  const point4 = new THREE.PointLight(pointcolor, int, dist);
   point4.castShadow = true;
   point4.position.set(22,-16,-54);
   scene.add(point4);
@@ -231,8 +231,6 @@ toggleModeButton.addEventListener('click', () => {
     }
     isPlaying = !isPlaying;
   });
-
-    
     // const modeIcon = document.getElementById('mode-icon');
 
     // toggleModeButton.addEventListener('click', () => {
@@ -280,6 +278,7 @@ toggleModeButton.addEventListener('click', () => {
       speakerChiHa.position.set(-21,-7.5,-90);
       speakerAccavalla.position.set(22,-27,-50);
       speakerCiocca.position.set(-22,13,50);
+
       scene.add(speakerEmme,speakerChiHa,speakerAccavalla,speakerCiocca);
       // AUDIO DISTANCE  
       function animateScene() {
@@ -319,22 +318,21 @@ toggleModeButton.addEventListener('click', () => {
 
   // Gestione volumi di sottofondo
   if (
-    soundEmme.isPlaying ||
-    soundChiha.isPlaying ||
-    soundAccavalla.isPlaying ||
-    soundCiocca.isPlaying
-  ) {
-    backgroundSound.setVolume(0.05);
-    backgroundSound2.setVolume(0.07);
-  } else {
-    backgroundSound.setVolume(0.1);
-    backgroundSound2.setVolume(0.07);
-  }
-}
-        
-        
+      soundEmme.isPlaying ||
+      soundChiha.isPlaying ||
+      soundAccavalla.isPlaying ||
+      soundCiocca.isPlaying
+    ) {
+      backgroundSound.setVolume(0.05);
+      backgroundSound2.setVolume(0.07);
+    } else {
+      backgroundSound.setVolume(0.1);
+      backgroundSound2.setVolume(0.07);
+      }
+    }      
+            
   
-      animateScene();
+    animateScene();
     }, 
     undefined, 
     function (error) {
@@ -376,6 +374,74 @@ toggleModeButton.addEventListener('click', () => {
     console.error(error);      
     } 
   );
+
+  const SittingLoader = new GLTFLoader();
+  SittingLoader.load(    
+   './3d/subway/sitting.glb',
+    function (glt) {
+      const sittingG = glt.scene;
+      sittingG.position.set( 0, 0, 0 );
+      sittingG.rotation.set( 0, -Math.PI/2, 0 );      
+      sittingG.scale.set( 3, 3, 3 );        
+      sittingG.traverse(function (node) {
+        if (node.isMesh) {
+          const materialSGL = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff, 
+            emissive: 0x000000,
+            map: texture1,  
+            bumpMap: texture1, 
+            bumpScale: 0.1,     
+            roughness: 0.5,
+            metalness: 0.5,
+          }); 
+          node.material = materialSGL;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });        
+      scene.add(sittingG);        
+      sittingG.castShadow = true; 
+      sittingG.receiveShadow = true; 
+    }, 
+    undefined, 
+    function (error) {
+    console.error(error);      
+    } 
+  );
+
+  const Sitting2Loader = new GLTFLoader();
+      Sitting2Loader.load(    
+       './3d/subway/sitting_2.glb',
+        function (glt) {
+          const sitting2G = glt.scene;
+          sitting2G.position.set( 0, 0, 0 );
+          sitting2G.rotation.set( 0, -Math.PI/2, 0 );      
+          sitting2G.scale.set( 3, 3, 3 );        
+          sitting2G.traverse(function (node) {
+            if (node.isMesh) {
+              const materialSGL = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff, 
+                emissive: 0x000000,
+                map: texture1,  
+                bumpMap: texture1, 
+                bumpScale: 0.1,     
+                roughness: 0.5,
+                metalness: 0.5,
+              }); 
+              node.material = materialSGL;
+              node.castShadow = true;
+              node.receiveShadow = true;
+            }
+          });        
+          scene.add(sitting2G);        
+          sitting2G.castShadow = true; 
+          sitting2G.receiveShadow = true; 
+        }, 
+        undefined, 
+        function (error) {
+        console.error(error);      
+        } 
+      );
 
     // == TEWEEN ==
     let currentTween = null;

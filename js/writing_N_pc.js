@@ -73,33 +73,33 @@ document.addEventListener('keyup', (e) => {
   }
 });
   // LIGHTS
-  //AMBIENT
-  const ambiente = new THREE.AmbientLight ( 0xffffff, 0.2 )
-  scene.add( ambiente);
-  // === POINTLIGHT === 
-  let pointcolor = 0xffffff;
-  let int = 0.8;
-  let dist = 8; 
-  // EMME
-  const point1 = new THREE.SpotLight(pointcolor, int, dist);
-  point1.castShadow = true;
-  point1.position.set(-2,3.5,-53)
-  scene.add(point1);
-  // CHI HA
-  const point2 = new THREE.SpotLight(pointcolor, int, dist);
-  point2.castShadow = true;  
-  point2.position.set(-21,3,-93);
-  scene.add(point2);
-  // ACCAVALLA
-  const point3 = new THREE.SpotLight(pointcolor, int, dist);
-  point3.castShadow = true;  
-  point3.position.set(-22,24,47.5);
-  scene.add(point3);
-  // CIOCCA
-  const point4 = new THREE.SpotLight(pointcolor, int, dist);
-  point4.castShadow = true;
-  point4.position.set(22,-16,-54);
-  scene.add(point4);
+    //AMBIENT
+    const ambiente = new THREE.AmbientLight ( 0xffffff, 0.2 )
+    scene.add( ambiente);
+    // === POINTLIGHT === 
+    let pointcolor = 0xffffff;
+    let int = 0.8;
+    let dist = 8; 
+    // EMME
+    const point1 = new THREE.PointLight(pointcolor, int, dist);
+    point1.castShadow = true;
+    point1.position.set(-2,3.5,-53)
+    scene.add(point1);
+    // CHI HA
+    const point2 = new THREE.PointLight(pointcolor, int, dist);
+    point2.castShadow = true;  
+    point2.position.set(-21,3,-93);
+    scene.add(point2);
+    // ACCAVALLA
+    const point3 = new THREE.PointLight(pointcolor, int, dist);
+    point3.castShadow = true;  
+    point3.position.set(-22,26,47);
+    scene.add(point3);
+    // CIOCCA
+    const point4 = new THREE.PointLight(pointcolor, int, dist);
+    point4.castShadow = true;
+    point4.position.set(22,-16,-54);
+    scene.add(point4);
   // Helper 
   const helper1 = new THREE.PointLightHelper(point1);
   const helper2 = new THREE.PointLightHelper(point2);
@@ -386,6 +386,74 @@ document.addEventListener('keyup', (e) => {
     console.error(error);      
     } 
   );
+
+  const SittingLoader = new GLTFLoader();
+    SittingLoader.load(    
+     './3d/subway/sitting.glb',
+      function (glt) {
+        const sittingG = glt.scene;
+        sittingG.position.set( 0, 0, 0 );
+        sittingG.rotation.set( 0, -Math.PI/2, 0 );      
+        sittingG.scale.set( 3, 3, 3 );        
+        sittingG.traverse(function (node) {
+          if (node.isMesh) {
+            const materialSGL = new THREE.MeshPhysicalMaterial({
+              color: 0xffffff, 
+              emissive: 0x000000,
+              map: texture1,  
+              bumpMap: texture1, 
+              bumpScale: 0.1,     
+              roughness: 0.5,
+              metalness: 0.5,
+            }); 
+            node.material = materialSGL;
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });        
+        scene.add(sittingG);        
+        sittingG.castShadow = true; 
+        sittingG.receiveShadow = true; 
+      }, 
+      undefined, 
+      function (error) {
+      console.error(error);      
+      } 
+    );
+
+    const Sitting2Loader = new GLTFLoader();
+    Sitting2Loader.load(    
+     './3d/subway/sitting_2.glb',
+      function (glt) {
+        const sitting2G = glt.scene;
+        sitting2G.position.set( 0, 0, 0 );
+        sitting2G.rotation.set( 0, -Math.PI/2, 0 );      
+        sitting2G.scale.set( 3, 3, 3 );        
+        sitting2G.traverse(function (node) {
+          if (node.isMesh) {
+            const materialSGL = new THREE.MeshPhysicalMaterial({
+              color: 0xffffff, 
+              emissive: 0x000000,
+              map: texture1,  
+              bumpMap: texture1, 
+              bumpScale: 0.1,     
+              roughness: 0.5,
+              metalness: 0.5,
+            }); 
+            node.material = materialSGL;
+            node.castShadow = true;
+            node.receiveShadow = true;
+          }
+        });        
+        scene.add(sitting2G);        
+        sitting2G.castShadow = true; 
+        sitting2G.receiveShadow = true; 
+      }, 
+      undefined, 
+      function (error) {
+      console.error(error);      
+      } 
+    );
     
   animate();
   if (typeof controls !== 'undefined') controls.enabled = false;
