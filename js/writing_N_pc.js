@@ -278,14 +278,12 @@ document.addEventListener('keyup', (e) => {
         if (move.left) velocity.x -= player.speed;
         if (move.right) velocity.x += player.speed;
         if (move.up) velocity.y += player.speed;
-        if (move.down) velocity.y -= player.speed;
-
-        
+        if (move.down) velocity.y -= player.speed;        
 
         direction.copy(velocity).normalize();
-        controls.moveRight(direction.x * delta * 4.5);
-        controls.moveForward(direction.z * delta * 4.5);
-        controls.getObject().position.y += velocity.y * delta * 7;
+        controls.moveRight(direction.x * delta * 7);
+        controls.moveForward(direction.z * delta * 7);
+        controls.getObject().position.y += velocity.y * delta * 40;
         renderer.render( scene, camera );
         // VAR DISTANCE //
         var distance = camera.position.distanceTo(speakerEmme.position);
