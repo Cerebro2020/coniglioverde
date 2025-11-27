@@ -6,16 +6,26 @@
   padding: 0;   
 }
 
-
 body {
   margin: 0;
   height: 100vh;
+  background-color: #000; /* rimane pieno */
+  overflow: hidden;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-image: url('../images/bcg/sfondo_h5.png');
   background-repeat: no-repeat;
-  background-position: 50% 50%;  
-  background-size: cover;    
+  background-position: 50% 50%;
+  background-size: cover;
   background-attachment: fixed;
-  overflow: hidden; 
+  opacity: 0.4; /* REGOLA QUI L’OPACITÀ SOLO DELL'IMMAGINE */
+  pointer-events: none;
+  z-index: -1;
 }
 
 #loader {
