@@ -14,9 +14,9 @@ export default function(){
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x333333);
   const loader = new THREE.TextureLoader();
-loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
-  scene.background = texture;
-});
+  loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
+    scene.background = texture;
+  });
   // ====== CAMERA  ======
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 10000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
@@ -59,7 +59,6 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
   // ====== XHR ======
   const xhr = new XMLHttpRequest();
   xhr.open('GET', './texts/aqvam.csv', true);
-
 
   function makeTextSprite(message, parameters = {}) {
     const fontSize = parameters.fontSize || 40;
@@ -121,7 +120,6 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
       scene.add(centro);       
       // ====== CREA BOX ====== 
       function createBoxSet(columnIndex, boxesArray) {        
-
         for (let i = 0; i < allCsvData.length; i++) {
           if (boxesArray === boxes1) prevY1.push(0);
           if (boxesArray === boxes2) prevY2.push(0);
@@ -182,23 +180,21 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
           let points = [
             new THREE.Vector3(0, 0, 0), // in locale, la testa è origine
             new THREE.Vector3(endX - box.getWorldPosition(new THREE.Vector3()).x, 
-                    endY - box.getWorldPosition(new THREE.Vector3()).y,
-                    endZ - box.getWorldPosition(new THREE.Vector3()).z)
-            ];
-            let lineGeo = new THREE.BufferGeometry().setFromPoints(points);
-            let lineMat = new THREE.LineBasicMaterial({ color: 0xffffff });
-            let line = new THREE.Line(lineGeo, lineMat);
-            box.add(line);
-            line.visible = false; // se vuoi che resti invisibile
+              endY - box.getWorldPosition(new THREE.Vector3()).y,
+              endZ - box.getWorldPosition(new THREE.Vector3()).z)
+          ];
+          let lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+          let lineMat = new THREE.LineBasicMaterial({ color: 0xffffff });
+          let line = new THREE.Line(lineGeo, lineMat);
+          box.add(line);
+          line.visible = false; // se vuoi che resti invisibile
 
-            // Aggiungi il testo (sprite)
-            let label = makeTextSprite(names[i]);            
-            label.position.set(endX, endY, endZ);
-            scene.add(label);
+          // Aggiungi il testo (sprite)
+          let label = makeTextSprite(names[i]);            
+          label.position.set(endX, endY, endZ);
+          scene.add(label);
 
-            labelFollowMap.push({ box: box, label: label });
-
-
+          labelFollowMap.push({ box: box, label: label });
           boxesArray.push(boxTrans);
         }
       }
@@ -318,6 +314,7 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
             let scaleFactor = 0.6;
             let boxTrans = boxesArray[i];
             let box = boxTrans.children[0];
+            
             if (box) {
               const currentY = boxTrans.position.y;            
             // Logica di rotazione in base alla variazione
@@ -379,6 +376,8 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
             targetY /= 10000;
             targetY += 500;
             }
+            targetY = Math.round(targetY * 100) / 100;
+
                   
             if (!isPaused) {
               let lerpFactor = 0.125/2;
@@ -428,43 +427,51 @@ loader.load('images/bcg/aqvamT_background.jpg', function(texture) {
               boxesArray[i].visible = true;
             } 
 
-            let match = labelFollowMap.find(entry => entry.box === boxesArray[i]);
-                if (match) {
-                  match.label.visible = boxesArray[i].visible;
-                }
+            // let match = labelFollowMap.find(entry => entry.box === boxesArray[i]);
+
+                        
+            let match = labelFollowMap.find(entry => entry.box === box);
+            if (match) {
+              match.label.visible = boxTrans.visible;
+            }
+
+            if (match) {
+              match.label.visible = boxesArray[i].visible;
+            }
                    
-                if (Math.abs(currentRotation - targetRotation) < 1) {
-                  if (currentColumn === 0) {
-                    currentRotation = 0;
-                  }
-                  targetRotation = rotationPerColumn * currentColumn;
-                }
-                currentRotation = THREE.MathUtils.lerp(currentRotation, targetRotation, lerpFactor2);
-                centro.rotation.y = currentRotation;
-                      
-                if (clock.getElapsedTime() > 4) {
-                  clock.start();
-                  currentColumn = (currentColumn + 1) % totalColumns; // Incrementa di 1 per passare alla colonna successiva ogni 3
-                }
+            if (Math.abs(currentRotation - targetRotation) < 1) {
+            if (currentColumn === 0) {
+              currentRotation = 0;
               }
+              targetRotation = rotationPerColumn * currentColumn;
+            }
+
+            currentRotation = THREE.MathUtils.lerp(currentRotation, targetRotation, lerpFactor2);
+            centro.rotation.y = currentRotation;
+                      
+            if (clock.getElapsedTime() > 4) {
+              clock.start();
+              currentColumn = (currentColumn + 1) % totalColumns; // Incrementa di 1 per passare alla colonna successiva ogni 3
             }
           }
-          animateBoxes(boxes1, 1); 
-          animateBoxes(boxes2, 2);
-          animateBoxes(boxes3, 3);
         }
+     }
+        animateBoxes(boxes1, 0); 
+        animateBoxes(boxes2, 1);
+        animateBoxes(boxes3, 2);
+    }
         
-        labelFollowMap.forEach(({ box, label }) => {
-          const worldPos = new THREE.Vector3();
-          box.getWorldPosition(worldPos);
-          label.position.set(worldPos.x, worldPos.y + 30, worldPos.z); // +30 per tenerla sopra
-        });
+      labelFollowMap.forEach(({ box, label }) => {
+      const worldPos = new THREE.Vector3();
+      box.getWorldPosition(worldPos);
+      label.position.set(worldPos.x, worldPos.y + 30, worldPos.z); // +30 per tenerla sopra
+  });
 
-        controls.update(clock.getDelta());
-        renderer.render(scene, camera); 
-        }           
-      }
-      animateScene();
+  controls.update(clock.getDelta());
+  renderer.render(scene, camera); 
+   }           
+  }
+    animateScene();
     }
   };
   xhr.send();
