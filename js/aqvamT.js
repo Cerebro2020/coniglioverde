@@ -92,7 +92,16 @@ export default function(){
       let rows = xhr.responseText.split('\n');
       let allCsvRaw = rows.slice(1).map(row => row.split(','));
       let names = allCsvRaw.map(row => row[0]);
-      let allCsvData = allCsvRaw.map(row => row.slice(1).map(Number));
+      
+      // let allCsvData = allCsvRaw.map(row => row.slice(1).map(Number));
+
+      let allCsvData = allCsvRaw.map(row =>
+        row.slice(1).map(v => {
+          let num = Number(v.trim());
+          return isNaN(num) ? 0 : num;
+        })
+      );
+      
       let boxes1 = [];
       let boxes2 = [];
       let boxes3 = [];      
@@ -178,7 +187,7 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
 
           // Calcolo angolo radiale
           let angle = (i / allCsvData.length) * 2 * Math.PI + columnIndex * 0.05;
-          let radius = 100 + columnIndex * 200;
+          let radius = 100;          
           let labelHeight = 50;
 
           // Posizione finale dell’etichetta
@@ -308,13 +317,13 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
               targetY += 200;
             } else if (targetY <= 9999) {
               targetY /= 100;
-              targetY += 300;
+              targetY += 270;
             } else if (targetY <= 99999) {
               targetY /= 1000;
-              targetY += 400;
+              targetY += 360;
             } else if (targetY <= 99999999) {
               targetY /= 10000;
-              targetY += 500;
+              targetY += 450;
             }      
           
             boxesArray[i].position.y = targetY;
@@ -344,10 +353,10 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
             }
 
             let extraDepth = 1;        // set 1 = profondità attuale
-if (boxesArray === boxes2) extraDepth = 0.6;   // set 2 = meno lunga
-if (boxesArray === boxes3) extraDepth = 0.4;   // set 3 = ancora più corta
+            if (boxesArray === boxes2) extraDepth = 0.6;   // set 2 = meno lunga
+            if (boxesArray === boxes3) extraDepth = 0.4;   // set 3 = ancora più corta
 
-box.position.z = -302.5 - (currentY * scaleFactor * extraDepth);
+            box.position.z = -302.5 - (targetY * scaleFactor);
 
 
             // Salva il valore corrente per il prossimo confronto
