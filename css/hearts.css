@@ -418,30 +418,32 @@ section {
 
 .swiper-slide {
  position: relative;
-  width: 100%;
-  height: 100%;
+ width: 100%;
+ height: 100%; 
 }
 
 .swiper-slide img {
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: auto;
-  width: 200px;
+  width: 280px;
   z-index: 1;
   cursor: grab;
+  border-radius: 50px;
 }
 
 .swiper-slide img:hover {
-   position: absolute;
-  top: 50%;
+  position: absolute;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);  
   max-height: 455px;
   width: auto;
   z-index: 1;
-  cursor: grab;
+  cursor: grab;  
+  border-radius: 0px;
   transition: max-height 0.4s ease;  
 }
 

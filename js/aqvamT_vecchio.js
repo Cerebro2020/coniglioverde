@@ -147,18 +147,7 @@ export default function(){
           boxLine.position.set(0, 0, 0);
           boxLine.scale.set(1.4, 0.1, 0.1);
           scene.add(boxLine);
-
-
-
-          let tailLength = 70;
-if (boxesArray === boxes2) tailLength = 60;   // accorciamento set 2
-if (boxesArray === boxes3) tailLength = 50;   // accorciamento set 3
-
-let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
-
-
-
-
+          let lineG = new THREE.CylinderGeometry(0.1,3,70,8,1);
           let lineVer = new THREE.Mesh(lineG, mBox);
           // ====== CODA ======
           lineVer.position.set(0, 0, 35);
@@ -172,6 +161,7 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
           scene.add(boxTrans);
 
           // === ID BOX === //
+
           const id = `box-${columnIndex}-${i}`;
           box.userData.id = id;
           boxTrans.userData.id = id;
@@ -219,8 +209,8 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
         });
       }
       // Scale the boxes1 array
-      scaleBoxes(boxes2,1,1,1); 
-      scaleBoxes(boxes3,1,1,1);      
+      scaleBoxes(boxes2,0.98, 1,0.98); 
+      scaleBoxes(boxes3,0.97, 1,0.97);      
       // ====== FUNZIONI BUTTON ======
       document.getElementById('btn-pause').addEventListener('click', function() {
         document.getElementById('submenu').style.display = 'block';
@@ -343,12 +333,7 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
               box.rotation.x = Math.PI / 2;
             }
 
-            let extraDepth = 1;        // set 1 = profondità attuale
-if (boxesArray === boxes2) extraDepth = 0.6;   // set 2 = meno lunga
-if (boxesArray === boxes3) extraDepth = 0.4;   // set 3 = ancora più corta
-
-box.position.z = -302.5 - (currentY * scaleFactor * extraDepth);
-
+            box.position.z = -302.5 - (currentY * scaleFactor);
 
             // Salva il valore corrente per il prossimo confronto
             prevYArray[i] = currentY;
@@ -374,23 +359,24 @@ box.position.z = -302.5 - (currentY * scaleFactor * extraDepth);
         function animateBoxes(boxesArray, startColumnIndex) {
           for (let i = 0; i < allCsvData.length; i++) {
             let targetY = allCsvData[i][startColumnIndex + currentColumn * 3];
-            if (targetY <= 9) {           // U  ->  0..9   → ~  0..90
-            targetY *= 10;
-          } else if (targetY <= 99) {   // D  -> 10..99 → ~ 100..189
-            targetY += 90;              // era +100
-          } else if (targetY <= 999) {  // C  -> 100..999 → ~ 190..279
+            if (targetY <= 9) { //U
+              targetY *= 10;
+            } else if (targetY <= 99) { //D
+            targetY += 100;
+            } else if (targetY <= 999) { //C
             targetY /= 10;
-            targetY += 180;             // era +200
-          } else if (targetY <= 9999) { // M
+            targetY += 200;
+            } else if (targetY <= 9999) { //M
             targetY /= 100;
-            targetY += 270;             // era +300
-          } else if (targetY <= 99999) { // DM
+            targetY += 300;
+            } else if (targetY <= 99999) { //DM
             targetY /= 1000;
-            targetY += 360;             // era +400
-          } else if (targetY <= 99999999) { // CM
+            targetY += 400;
+            } else if (targetY <= 99999999) { //CM
             targetY /= 10000;
-            targetY += 450;             // era +500
-          }
+            targetY += 500;
+            }
+            targetY = Math.round(targetY * 100) / 100;
 
                   
             if (!isPaused) {
@@ -525,19 +511,19 @@ box.position.z = -302.5 - (currentY * scaleFactor * extraDepth);
   torusMM.material = torus1.material.clone();
   torusMM.material.color.set('#000000');
   torusU.position.set(0,-490, 0);
-  torusD.position.set(0,-400, 0);
-  torusC.position.set(0,-310, 0);
-  torusM.position.set(0,-220, 0);  
-  torusDM.position.set(0,-130, 0);
-  torusCM.position.set(0, -40, 0);
-  torusMM.position.set(0, 50, 0);    
+  torusD.position.set(0,-390, 0);
+  torusC.position.set(0,-290, 0);
+  torusM.position.set(0,-190, 0);  
+  torusDM.position.set(0,-90, 0);
+  torusCM.position.set(0, 10, 0);
+  torusMM.position.set(0, 100, 0);    
   const scalU = 0.51; 
-  const scalD = 0.6;
-  const scalC = 0.69;
-  const scalM = 0.78;
-  const scalDM = 0.87; 
-  const scalCM = 0.96;  
-  const scalMM = 1.015; 
+  const scalD = 0.61;
+  const scalC = 0.71;
+  const scalM = 0.81;
+  const scalDM = 0.91; 
+  const scalCM = 1.01;  
+  const scalMM = 1.1; 
   torusU.scale.set(scalU,scalU,scalU); 
   torusD.scale.set(scalD,scalD,scalD);
   torusC.scale.set(scalC,scalC,scalC);
@@ -569,10 +555,10 @@ box.position.z = -302.5 - (currentY * scaleFactor * extraDepth);
   // Gruppo per i torus "contatore"
   const counterGroup = new THREE.Group();
   scene.add(counterGroup);
-  for (let i = 0; i < 53; i++){
+  for (let i = 0; i < 60; i++){
     const torus2G = new THREE.TorusGeometry( 300,0.25, 128, 128 );
     const torus2 = new THREE.Mesh(torus2G);
-    const decade  = Math.floor(i/9);
+    const decade  = Math.floor(i/10);
     torus2.material = decadeMats[decade];
     torus2.position.set(0,-189.5+(i*10),0);
     torus2.rotation.set( Math.PI/2,0,0);
