@@ -170,13 +170,13 @@ function animate() {
         direction.normalize();
 
         const moveVector = new THREE.Vector3(
-    Number(move.right) - Number(move.left),
-    0,
-    Number(move.backward) - Number(move.forward)
-);
+        Number(move.right) - Number(move.left),
+        0,
+        Number(move.backward) - Number(move.forward)
+      );
 
-if (moveVector.lengthSq() > 0) {
-    moveVector.normalize();
+      if (moveVector.lengthSq() > 0) {
+      moveVector.normalize();
     
     // Trasforma in base alla direzione della camera
     const directionVector = new THREE.Vector3();
@@ -190,8 +190,8 @@ if (moveVector.lengthSq() > 0) {
     velocityVector.addScaledVector(directionVector, -moveVector.z); // avanti/indietro
     velocityVector.addScaledVector(right, moveVector.x); // destra/sinistra
 
-    // VELOCITà DI SPOSTAMENTO
-    velocityVector.multiplyScalar(player.speed * 50.0 * delta);
+    // VELOCITA DI SPOSTAMENTO
+    velocityVector.multiplyScalar(player.speed * 150.0 * delta);
 
     const position = controls.getObject().position.clone();
     const nextPosition = position.clone().add(velocityVector);
