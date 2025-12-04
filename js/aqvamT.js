@@ -546,7 +546,7 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
   const scalM = 0.78;
   const scalDM = 0.87; 
   const scalCM = 0.96;  
-  const scalMM = 1.015; 
+  const scalMM = 1.03; 
   torusU.scale.set(scalU,scalU,scalU); 
   torusD.scale.set(scalD,scalD,scalD);
   torusC.scale.set(scalC,scalC,scalC);
