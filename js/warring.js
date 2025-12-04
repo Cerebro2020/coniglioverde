@@ -79,8 +79,7 @@ lSala.load(
   function (glt) {
     const lSala = glt.scene;
     lSala.position.set(0,-17,-10);
-    lSala.rotation.set(0,-Math.PI/2, 0 );  
-
+    lSala.rotation.set(0,-Math.PI/2,0);
     lSala.traverse(function (node) {
   if (node.isMesh) {
     // const material = new THREE.MeshPhysicalMaterial({

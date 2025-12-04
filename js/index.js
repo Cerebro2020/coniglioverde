@@ -36,11 +36,18 @@ export default function(){
 
   // ====== RESIZE ======
   window.addEventListener('resize', ()=>{
-    const w = window.innerWidth, h = window.innerHeight;
-    camera.aspect = w/h; camera.updateProjectionMatrix();
-    renderer.setSize(w, h);
-  });
+  const w = window.innerWidth, h = window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
 
+  // Sposta la camera a destra se in modalità verticale (portrait)
+  if (h > w) {
+    camera.position.x = 30; // Sposta di 5 unità a destra
+  } else {
+    camera.position.x = 0; // Reset posizione orizzontale in landscape
+  }
+});
   // ====== MODELLI ======
   const manager = new THREE.LoadingManager(
     ()=>{ const ld=document.getElementById('loader'); if(ld) ld.style.display='none'; },
@@ -72,10 +79,15 @@ export default function(){
 
   // ====== SCROLL (formule identiche alle tue) ======
   function moveCamera(){
-    const t = document.body.getBoundingClientRect().top;
-    camera.position.set(0, 0, t * 0.15);
-    camera.rotation.set(0, -(t * 0.0001), 0);
-  }
+  const t = document.body.getBoundingClientRect().top;
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const offsetX = isPortrait ? 30 : 0; // puoi aumentare questo valore per vedere più effetto
+
+  camera.position.set(offsetX, 0, t * 0.15);
+  camera.rotation.set(0, -(t * 0.0001), 0);
+}
+
+
   function moveModelB(){
     const t = document.body.getBoundingClientRect().top;
     if(modelB){
