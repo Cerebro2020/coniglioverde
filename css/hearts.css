@@ -18,12 +18,13 @@ body::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url('../images/bcg/sfondo_h5.png');
+  background-image: url('../images/bcg/gemini_12.png'); 
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: cover;
   background-attachment: fixed;
-  opacity: 0.4; /* REGOLA QUI L’OPACITÀ SOLO DELL'IMMAGINE */
+  opacity: 0.4; 
+  opacity: 1;
   pointer-events: none;
   z-index: -1;
 }
@@ -424,11 +425,11 @@ section {
 
 .swiper-slide img {
   position: absolute;
-  top: 48%;
-  left: 50%;
+  top: 47%;
+  left: 49.5%;
   transform: translate(-50%, -50%);
   height: auto;
-  width: 280px;
+  width: 270px;
   z-index: 1;
   cursor: grab;
   border-radius: 50px;
