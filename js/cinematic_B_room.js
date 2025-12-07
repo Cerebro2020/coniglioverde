@@ -31,17 +31,13 @@ export default function(){
 
   // TEXTURES
   const loader = new THREE.TextureLoader();  
-  const TextureV1 = loader.load('./video/cinematic/AS_1.png');
-  const TextureV2 = loader.load('./video/cinematic/AS_2.png');
-  const TextureV3 = loader.load('./video/cinematic/AS_2.png');
-  const TextureV4 = loader.load('./video/cinematic/AS_2.png');
-  const TextureV5 = loader.load('./video/cinematic/AS_5.png');
-  const TextureV6 = loader.load('./video/cinematic/AS_6.png');
-  const TextureV7 = loader.load('./video/cinematic/AS_D.png');
- 
-
-  // SCENE & FOG
-  //scene.background = new THREE.Color( 0xff0000 );
+  const TextureV1 = loader.load('./video/cinematic/BF_A1.mp4');
+  const TextureV2 = loader.load('./video/cinematic/BF_A2.mp4');
+  const TextureV3 = loader.load('./video/cinematic/BF_A3.mp4');
+  const TextureV4 = loader.load('./video/cinematic/BF_A1.mp4');
+  const TextureV5 = loader.load('./video/cinematic/BF_A2.mp4');
+  const TextureV6 = loader.load('./video/cinematic/BF_A3.mp4');
+  const TextureV7 = loader.load('./video/cinematic/BF_A1.mp4');
   
   // CAMERA
   camera.position.set( 0, 1.5, 20);
@@ -87,26 +83,20 @@ export default function(){
     requestAnimationFrame( animateScene );
     renderer.render( scene, camera );
   };
-  animateScene();
-
-  // UV MAP //
-  // const uvLoader = new THREE.TextureLoader();
-  // const uvPaper = uvLoader.load('images/uvmap/paper.jpg');
-  // uvPaper.wrapS = THREE.RepeatWrapping;
-  // uvPaper.wrapT = THREE.RepeatWrapping;
-  // uvPaper.repeat.set(8, 8); 
+  animateScene(); 
 
   // VIDEO A1
-  // var videoA1 = document.createElement('video');
-  // videoA1.src = "./video/cinematic/BF_A1.mp4";
-  // videoA1.style.display = 'none';
-  // videoA1.muted = true; 
-  // videoA1.loop = true; 
-  // document.body.appendChild(videoA1); 
-  // var vTextureA1 = new THREE.VideoTexture(videoA1);
-  // vTextureA1.minFilter = THREE.LinearFilter;
-  // vTextureA1.magFilter = THREE.LinearFilter;
-  // vTextureA1.format = THREE.RGBAFormat; 
+  var videoA1 = document.createElement('video');
+  videoA1.src = "./video/cinematic/BF_A1.mp4";
+  videoA1.style.display = 'none';
+  videoA1.muted = true; 
+  videoA1.loop = true; 
+  videoA1.playsInline = true;
+  document.body.appendChild(videoA1); 
+  var vTextureA1 = new THREE.VideoTexture(videoA1);
+  vTextureA1.minFilter = THREE.LinearFilter;
+  vTextureA1.magFilter = THREE.LinearFilter;
+  vTextureA1.format = THREE.RGBAFormat; 
 
   // VIDEO A2
   var videoA2 = document.createElement('video');
@@ -114,6 +104,7 @@ export default function(){
   videoA2.style.display = 'none';
   videoA2.muted = true; 
   videoA2.loop = true; 
+  videoA2.playsInline = true;
   videoA2.volume = 0.1;
   document.body.appendChild(videoA2); 
   var vTextureA2 = new THREE.VideoTexture(videoA2);
@@ -122,113 +113,95 @@ export default function(){
   vTextureA2.format = THREE.RGBAFormat;  
 
   // VIDEO A3
-  // var videoA3 = document.createElement('video');
-  // videoA3.src = "./video/cinematic/BF_A3.mp4";
-  // videoA3.style.display = 'none';
-  // videoA3.muted = true; 
-  // videoA3.loop = true; 
-  // document.body.appendChild(videoA3); 
-  // var vTextureA3 = new THREE.VideoTexture(videoA3);
-  // vTextureA3.minFilter = THREE.LinearFilter;
-  // vTextureA3.magFilter = THREE.LinearFilter;
-  // vTextureA3.format = THREE.RGBAFormat;  
+  var videoA3 = document.createElement('video');
+  videoA3.src = "./video/cinematic/BF_A3.mp4";
+  videoA3.style.display = 'none';
+  videoA3.muted = true; 
+  videoA3.loop = true;
+  videoA3.playsInline = true; 
+  document.body.appendChild(videoA3); 
+  var vTextureA3 = new THREE.VideoTexture(videoA3);
+  vTextureA3.minFilter = THREE.LinearFilter;
+  vTextureA3.magFilter = THREE.LinearFilter;
+  vTextureA3.format = THREE.RGBAFormat;  
 
   // Crea un array per memorizzare i tuoi video
   var videos = [/*videoA1,*/ videoA2/*, videoA3*/]; 
 
-  // Contatore per tenere traccia dei video pronti per la riproduzione
-  var videosReady = 0;
-
-  // Aggiungi un listener per l'evento 'loadeddata' a ciascun video
-  for (var i = 0; i < videos.length; i++) {
-      videos[i].addEventListener('loadeddata', function() {
-          videosReady++;
-
-          // Se tutti i video sono pronti, avvia la riproduzione
-          if (videosReady === videos.length) {
-              for (var j = 0; j < videos.length; j++) {
-                  videos[j].play();
-              }
-          }
-      });
-
-      // Carica il video
-      videos[i].load();
-  }
-
   // Ottieni il riferimento al tuo pulsante
-  // var playButton = document.querySelector('#btn-camera button');
+var playButton = document.querySelector('#btn-camera button');
 
-  // // Aggiungi un listener per l'evento 'click' al pulsante
-  // playButton.addEventListener('click', function() {
-  //     // Avvia tutti e tre i video
-  //     videoA1.play();
-  //     videoA2.play();
-  //     videoA3.play();
-  // });
+// Aggiungi un listener per l'evento 'click' al pulsante
+playButton.addEventListener('click', function() {
+    
+    // 1. Avvia il caricamento dei video per assicurarti che siano pronti
+    videoA1.load();
+    videoA2.load();
+    videoA3.load();
+    
+    // 2. Avvia la riproduzione e gestisci eventuali errori del browser
+    videoA1.play().catch(e => console.warn("Video A1 Play Failed:", e));
+    videoA2.play().catch(e => console.warn("Video A2 Play Failed:", e));
+    videoA3.play().catch(e => console.warn("Video A3 Play Failed:", e));
+    
+    // Suggerimento: Aggiorna la texture in Three.js per forzare l'aggiornamento (già in animate, ma utile)
+    vTextureA1.needsUpdate = true;
+    vTextureA2.needsUpdate = true;
+    vTextureA3.needsUpdate = true;
+});
 
-  // var pauseButton = document.querySelector('#btn-pause button');
+  let audioButton = document.querySelector('#btn-audio button');
+  let isMuted = false;
 
-  // Aggiungi un listener per l'evento 'click' al pulsante di pausa
-  // pauseButton.addEventListener('click', function() {
-  //     // Metti in pausa tutti e tre i video
-  //     videoA1.pause();
-  //     videoA2.pause();
-  //     videoA3.pause();
-  // });
-
-  // let audioButton = document.querySelector('#btn-audio button');
-  // let isMuted = false;
-
-  // audioButton.addEventListener('click', function() {
-  //     if (isMuted) {
-  //         videoA2.muted = false;
-  //     } else {
-  //         videoA2.muted = true;
-  //     }
-  //     // Cambiamo lo stato
-  //     isMuted = !isMuted;
-  // });
+  audioButton.addEventListener('click', function() {
+      if (isMuted) {
+          videoA2.muted = false;
+      } else {
+          videoA2.muted = true;
+      }
+      // Cambiamo lo stato
+      isMuted = !isMuted;
+  });
   
   // MATERIALS
-  // const material = new THREE.MeshPhysicalMaterial({
-  //   color: 0x000000,
-  //   map: TextureV1,       
-  // }); 
+  const material = new THREE.MeshPhysicalMaterial({
+    color: 0x000000,
+    map: TextureV1,       
+  }); 
 
   const materialA1 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: TextureV1,       
+    map: vTextureA1,       
   }); 
 
   const materialA2 = new THREE.MeshPhysicalMaterial({
     color: 0x000000,
-    //map: TextureV2,       
+    map: vTextureA1,       
   }); 
 
   const materialA3 = new THREE.MeshPhysicalMaterial({
     color: 0x000000,
-    //map: TextureV3,       
+    map: vTextureA1,       
   }); 
 
   const materialA4 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: TextureV4,       
+    map: vTextureA1,       
   }); 
 
   const materialA5 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: TextureV5,       
+    map: vTextureA1,       
   }); 
 
   const materialA6 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: TextureV6,       
+    map: vTextureA2,       
   }); 
 
   const materialA7 = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
-    map: TextureV7,       
+    map: vTextureA3,       
   }); 
 
   const material2 = new THREE.MeshPhysicalMaterial({
@@ -432,47 +405,6 @@ export default function(){
         console.error(error);      
       }   
     );
-
-  // FEMALE    
-  // const loaderHousewife = new OBJLoader();
-  // let housewife;
-     
-  // LOAD A RESOURCE
-  // loaderHousewife.load('3d/humans/housewife.obj',
-  //   function ( objHousewife ) {
-  //     objHousewife.position.set( -5, -4, -10 );
-  //     objHousewife.rotation.set( 0, Math.PI/2.2, 0 );      
-  //     try{
-  //       const matHousewife = new THREE.MeshPhysicalMaterial({
-  //        color: 0x555555,          
-  //         //clearcoat: 1.0,
-  //         //clearcoatRoughness: 0.1                  
-  //       })     
-        
-  //       objHousewife.children[0].material=matHousewife;
-  //     }catch(e){
-  //       console.log(e);
-  //     }
-  //     housewife=objHousewife;     
-  //     console.log( 'body was loaded', housewife );
-  //     housewife.position.set(0,-5,10);
-  //     housewife.rotation.set(0, Math.PI,0); 
-  //     housewife.castShadow = true;     
-  //     scene.add( housewife );
-  //     let hh = 0.08;
-
-  //     housewife.scale.set( hh, hh, hh);        
-     
-  //     },
-  //     // called when loading is in progresses
-  //     function ( xhr ) {
-  //       console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-  //     },
-  //   // called when loading has errors
-  //   function ( error ) {
-  //     console.log( 'An error happened' );
-  //   }
-  // );
 
   animateScene();  
  

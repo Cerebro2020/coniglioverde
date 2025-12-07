@@ -1,7 +1,14 @@
-
 import * as THREE from 'three';
 import { PointerLockControls } from '../three_class/PointerLockControls.js';
 import { GLTFLoader } from '../three_class/GLTFLoader.js';
+import { EffectComposer } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/RenderPass.js';
+import { Pass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/Pass.js';
+import { UnrealBloomPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { ShaderPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/ShaderPass.js';
+import { FXAAShader } from 'https://unpkg.com/three@0.158.0/examples/jsm/shaders/FXAAShader.js';
+
+
 
 const clock = new THREE.Clock();
 const scene = new THREE.Scene();
@@ -22,6 +29,105 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+class CustomPass extends Pass {
+    constructor() {
+        super();
+
+        this.uniforms = {
+            tDiffuse: { value: null },
+            time: { value: 0 },
+            amount: { value: 0.002 },
+            resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+        };
+
+        this.material = new THREE.ShaderMaterial({
+            uniforms: this.uniforms,
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform float time;
+                uniform float amount;
+                uniform vec2 resolution;
+                varying vec2 vUv;
+
+                void main() {
+                    vec2 uv = vUv;
+
+                    // Chromatic aberration
+                    vec2 off = vec2(amount, 0.0);
+                    float r = texture2D(tDiffuse, uv + off).r;
+                    float g = texture2D(tDiffuse, uv).g;
+                    float b = texture2D(tDiffuse, uv - off).b;
+
+                    gl_FragColor = vec4(r, g, b, 1.0);
+                }
+            `,
+            depthWrite: false,
+            depthTest: false
+        });
+
+        this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        this.scene = new THREE.Scene();
+        this.quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material);
+        this.scene.add(this.quad);
+
+        this.needsSwap = true;
+    }
+
+    render(renderer, writeBuffer, readBuffer) {
+        this.uniforms.tDiffuse.value = readBuffer.texture;
+        this.uniforms.time.value += 0.016;
+
+        if (this.renderToScreen) {
+            renderer.setRenderTarget(null);
+            renderer.render(this.scene, this.camera);
+        } else {
+            renderer.setRenderTarget(writeBuffer);
+            renderer.render(this.scene, this.camera);
+        }
+    }
+
+    setSize(w, h) {
+        this.uniforms.resolution.value.set(w, h);
+    }
+}
+
+const composer = new EffectComposer(renderer);
+composer.setSize(window.innerWidth, window.innerHeight);
+
+const renderPass = new RenderPass(scene, camera);
+composer.addPass(renderPass);
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.6,   // strength
+    0.4,   // radius
+    0.85   // threshold
+);
+// composer.addPass(bloomPass);
+
+const fxaaPass = new ShaderPass(FXAAShader);
+fxaaPass.material.uniforms['resolution'].value.set(
+    1 / window.innerWidth,
+    1 / window.innerHeight
+);
+// composer.addPass(fxaaPass);
+
+// fxaaPass.material.uniforms['resolution'].value.set(
+//     1 / w,
+//     1 / h
+// );
+
+const customPass = new CustomPass();
+customPass.renderToScreen = true;
+composer.addPass(customPass);
+
 // CONTROLS //
 const controls = new PointerLockControls(camera, document.body);
 scene.add(controls.getObject());
@@ -35,6 +141,9 @@ window.addEventListener('resize', () => {
     renderer.setSize(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
+
+    composer.setSize(w, h);
+    customPass.setSize(w, h);
 });
 
 const move = { forward: false, backward: false, left: false, right: false };
@@ -82,13 +191,7 @@ lSala.load(
     lSala.rotation.set(0,-Math.PI/2,0);
     lSala.traverse(function (node) {
   if (node.isMesh) {
-    // const material = new THREE.MeshPhysicalMaterial({
-    //   color: 0x333333,
-    //   roughness: 1,
-    //   bumpScale: -0.001,
-    //   side: THREE.DoubleSide
-    // });
-    // node.material = material;
+
     node.castShadow = true;
     node.receiveShadow = true;
 
@@ -96,7 +199,6 @@ lSala.load(
     const size = new THREE.Vector3();
     node.geometry.boundingBox.getSize(size);
 
-    //Accettiamo solo mesh di dimensioni decenti
     if (size.length() > 1.0) {
       collidableObjects.push(node);
       console.log('Collider aggiunto:', node.name, size.length());
@@ -116,36 +218,22 @@ lSala.load(
 const collidableObjects = [box];
 
 // LIGHT
-// AMBIENTE
-// const light = new THREE.HemisphereLight(0xffffff, 0x444444, 0.3);
 const light = new THREE.AmbientLight(0xffdddd, 0.1);
 light.position.set(0, 10, 0);
 scene.add(light);
-// SPOT
-const spot = new THREE.SpotLight(0xccccff,1.2,1600);
-spot.position.set(0,200,-380);
-spot.angle = Math.PI/16;
-spot.penumbra = 0.5;
-spot.decay = 3;
-spot.distance = 6000;
-spot.castShadow = true;
-spot.shadow.mapSize.width = 2048;
-spot.shadow.mapSize.height = 2048;
-spot.shadow.radius = 4;
-spot.shadow.camera.near = 0.1; 
-spot.shadow.camera.far = 10000;
-spot.shadow.bias = -0.0005;
-// scene.add(spot);
-// const spotH = new THREE.SpotLightHelper(spot);
-// scene.add(spotH);
-// POINT 
-// PointLight + helper
-const pointLight = new THREE.PointLight(0xccccff, 1, 3000, 5);
-pointLight.position.set(0,380,-380);
-// scene.add(pointLight);
 
-const helper = new THREE.PointLightHelper(pointLight, 0.2 /* sphere size for helper */);
-//scene.add(helper);
+// CREA la torcia (NESSUNA modifica non necessaria)
+const flash = new THREE.SpotLight(0xffffff, 1, 2000, Math.PI / 4, 0.4, 1.5);
+flash.castShadow = true;
+
+// attacca SOLO la luce
+camera.add(flash);
+
+// il target va nella scena, NON sulla camera
+scene.add(flash.target);
+
+// direzione re-usabile
+const dir = new THREE.Vector3();
 
 function checkCollision(pos) {
     const playerBox = new THREE.Box3().setFromCenterAndSize(pos, new THREE.Vector3(1, player.height, 1));
@@ -157,6 +245,13 @@ function checkCollision(pos) {
 
 function animate() {
     requestAnimationFrame(animate);
+
+    // --- TORCIA: solo fix minimo ---
+    camera.getWorldPosition(flash.position);
+    camera.getWorldDirection(dir);
+    flash.target.position.copy(flash.position).add(dir.multiplyScalar(20));
+    flash.target.updateMatrixWorld();
+    // -------------------------------
 
     if (controls.isLocked) {
         const delta = clock.getDelta();
@@ -177,19 +272,16 @@ function animate() {
       if (moveVector.lengthSq() > 0) {
       moveVector.normalize();
     
-    // Trasforma in base alla direzione della camera
     const directionVector = new THREE.Vector3();
     controls.getDirection(directionVector);
-    directionVector.y = 0; // ignora l'altezza
+    directionVector.y = 0;
     directionVector.normalize();
 
-    // Costruiamo il vettore movimento locale
     const right = new THREE.Vector3().crossVectors(directionVector, new THREE.Vector3(0, 1, 0));
     const velocityVector = new THREE.Vector3();
-    velocityVector.addScaledVector(directionVector, -moveVector.z); // avanti/indietro
-    velocityVector.addScaledVector(right, moveVector.x); // destra/sinistra
+    velocityVector.addScaledVector(directionVector, -moveVector.z);
+    velocityVector.addScaledVector(right, moveVector.x);
 
-    // VELOCITA DI SPOSTAMENTO
     velocityVector.multiplyScalar(player.speed * 150.0 * delta);
 
     const position = controls.getObject().position.clone();
@@ -201,6 +293,7 @@ function animate() {
   }
 
   } 
-  renderer.render(scene, camera);
+
+  composer.render();
 }
 animate();
