@@ -25,7 +25,8 @@
                     setTimeout(() => loader.style.display = "none", 600);
                 }
             });
-        </script>        
+        </script>
+        <script src="contact.js"></script>  
     </head>
 
     <body>       
@@ -405,6 +406,24 @@
                 <img src="images/icons/scroll-up.svg" alt="scrolling icon">
             </div>
         </section>
+        </section>
+        <section id="contact">
+            <form id="contact-form" class="contact-form">
+                <h2>CONTACT</h2>
+                <label for="name">Nome</label>
+                <input type="text" id="name" name="name" required placeholder="Il tuo nome">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="tua@email.com">
+
+                <label for="message">Messaggio</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Scrivi qui il tuo messaggio..."></textarea>
+
+                <button type="submit">Invia</button>
+
+                <p id="form-status" class="form-status"></p>
+                </form>
+            </section>
 
         <!-- COOKIE -->
         <div id="cookie-banner" role="dialog" aria-live="polite">

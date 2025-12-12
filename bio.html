@@ -26,7 +26,8 @@
                     setTimeout(() => loader.style.display = "none", 600);
                 }
             });
-        </script>        
+        </script> 
+        <script src="contact.js"></script>       
     </head>
     <body>       
         <div id="loader">
@@ -51,7 +52,8 @@
                 <li><a href="#agenda">AGENDA</a></li></li>
                 <li><a href="events.html">PAST EVENTS</a></li>
                 <li><a href="#with">COLLABS</a></li>
-                <li><a href="#credits">CREDITS</a></li>  
+                <li><a href="#credits">CREDITS</a></li>
+                <li><a href="#contact">CONTACTS</a></li>
                 <li><a href="bio_it.html">IT</a></li>            
             </ul>
         </header>
@@ -423,6 +425,23 @@
                 <img src="images/icons/scroll-up.svg" alt="scrolling icon">
             </div> 
         </section>
+        <section id="contact">
+            <form id="contact-form" class="contact-form">
+                <h2>CONTACT</h2>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="your name">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com">
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required placeholder="Write here your message..."></textarea>
+
+                <button type="submit">Send</button>
+
+                <p id="form-status" class="form-status"></p>
+                </form>
+            </section>
         <div id="cookie-banner" role="dialog" aria-live="polite">
         <!-- style="display:block !important;" -->
             <p>Questo sito usa cookie tecnici. <a href="cookie.html">Scopri di più</a></p>
