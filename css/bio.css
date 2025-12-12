@@ -473,7 +473,7 @@ section {
 }
 
 
-.contact-form {
+form {
   max-width: 400px;
   margin: 40px auto;
   padding: 25px;
@@ -483,53 +483,46 @@ section {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
   font-family: sans-serif;
+  color: white;
 }
 
-.contact-form h2 {
-  font-weight: 100;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.contact-form label {
-  font-weight: 600;
-  margin-top: 12px;
+form label {
   display: block;
+  font-weight: 600;
+  margin-top: 15px;
+  font-size: 14px;
+  color: white;
 }
 
-.contact-form input,
-.contact-form textarea {
-  .contact-form {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 25px 30px; /* <-- Aggiungi padding destra/sinistra uguale */
-    border-radius: 12px;
-    background: #ffffffd9;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    font-family: sans-serif;
-  }
+form label input,
+form label textarea {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
 }
 
-.contact-form button {
+form button {
   margin-top: 20px;
   width: 100%;
   padding: 12px;
-  background: greenyellow;;
+  background: greenyellow;
   color: black;
   border: none;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 100;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.contact-form button:hover {
-  background: #005fcc;
+form button:hover {
+  background: #b2ff00;
 }
 
-.form-status {
-  margin-top: 15px;
-  text-align: center;
-  font-weight: 100;
-}

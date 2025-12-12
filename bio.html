@@ -425,21 +425,18 @@
             </div> 
         </section>
         <section id="contact">
-            <form id="contact-form" class="contact-form">
-                <h2>CONTACT</h2>
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" autocomplete="name">
-
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" autocomplete="your@email.com">
-
-                <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" autocomplete="off"></textarea>
-
+            <form action="https://formspree.io/f/mwpgalwg" method="POST">
+                <label>
+                    Your email:
+                    <input type="email" name="email">
+                </label>
+                <label>
+                    Your message:
+                    <textarea name="message"></textarea>
+                </label>
+                <!-- your other form fields go here -->
                 <button type="submit">Send</button>
-
-                <p id="form-status" class="form-status"></p>
-                </form>
+            </form>
             </section>
         <div id="cookie-banner" role="dialog" aria-live="polite">
         <!-- style="display:block !important;" -->
