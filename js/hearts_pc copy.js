@@ -1,9 +1,6 @@
 import * as THREE from 'three';
 import { PointerLockControls } from '../three_class/PointerLockControls.js';
 import { GLTFLoader } from '../three_class/GLTFLoader.js';
-import { EffectComposer } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/RenderPass.js';
-import { BokehPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/BokehPass.js';
 
 export default function(choose, quadri){  
 
@@ -134,22 +131,6 @@ export default function(choose, quadri){
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement ); 
   renderer.xr.enabled = true;
-
-  // === POST-PROCESSING: COMPOSER + DOF (BokehPass) ===
-  const composer = new EffectComposer(renderer);
-  composer.setSize(window.innerWidth, window.innerHeight);
-
-  const renderPass = new RenderPass(scene, camera);
-  composer.addPass(renderPass);
-
-  // DOF come primo effetto di post (prima di eventuali altri futuri)
-  const bokehPass = new BokehPass(scene, camera, {
-    focus: 500,        
-    aperture: 0.000005,  // intensità blur
-    maxblur: 0.02      // raggio massimo blur
-    // width/height vengono presi dal composer
-  });
-  composer.addPass(bokehPass);
     
   // RESIZE WINDOW ////// 
   window.addEventListener('resize', function(){
@@ -158,9 +139,6 @@ export default function(choose, quadri){
     renderer.setSize( width, height );
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-
-    // aggiorna anche il composer (e quindi il DOF)
-    composer.setSize(width, height);
   }); 
 
   // LIGHTS ////// 
@@ -313,16 +291,16 @@ export default function(choose, quadri){
   let gTotale = new THREE.SphereGeometry(50, 16, 16);
   let matTotale = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(coloreOggetto),
-    metalness: 0.5,
-    metalnessMap: skin2,
-    roughness: 0,
-    roughnessMap: skin2,
-    map: skin2,
-    bumpMap: skin2,
-    bumpScale: 1,     
-    alphaMap: skin2Trans,
-    transparent: true,
-    opacity: 1,
+     metalness: 0.5,
+      metalnessMap: skin2,
+      roughness: 0,
+      roughnessMap: skin2,
+      map: skin2,
+      bumpMap: skin2,
+      bumpScale: 1,     
+      alphaMap: skin2Trans,
+      transparent: true,
+      opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
   emotionTotale.position.set(0,150,0);
@@ -366,19 +344,19 @@ export default function(choose, quadri){
     }
 
     // MATERIAL EMOZIONI
-     const emoMaterial = new THREE.MeshPhysicalMaterial({
-         color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
-         metalness: 0.5,
-         metalnessMap: skin2,
-         roughness: 0,
-         roughnessMap: skin2,
-         map: skin2,
-         bumpMap: skin2,
-         bumpScale: 1,     
-         alphaMap: skin2Trans,
-         transparent: true,
-         opacity: 1,
-       });
+    const emoMaterial = new THREE.MeshPhysicalMaterial({
+      color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
+      metalness: 0.5,
+      metalnessMap: skin2,
+      roughness: 0,
+      roughnessMap: skin2,
+      map: skin2,
+      bumpMap: skin2,
+      bumpScale: 1,     
+      alphaMap: skin2Trans,
+      transparent: true,
+      opacity: 1,
+    });
 
     // EMOTION 1
     const emotion1 = new THREE.Mesh(forma, emoMaterial);  
@@ -487,35 +465,34 @@ export default function(choose, quadri){
     
   const loaderSala = new GLTFLoader();
 
-  loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
-    const model = gltf.scene;
-    model.traverse((node) => {
-      if (node.isMesh) {
-        node.castShadow = true;
-        node.receiveShadow = true;
-        if (node.material) {
-          node.material.side = THREE.DoubleSide;
-        }
+loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
+  const model = gltf.scene;
+  model.traverse((node) => {
+    if (node.isMesh) {
+      node.castShadow = true;
+      node.receiveShadow = true;
+      if (node.material) {
+        node.material.side = THREE.DoubleSide;
       }
-    });
-
-    model.position.set(0, PSy, 0);
-    model.rotation.set(0, -Math.PI / 2, 0);
-
-    const scala = 400;
-    model.scale.set(scala, scala, scala);
-
-    scene.add(model);
-
-    // Se ci sono animazioni nel file .glb
-    mixer = new THREE.AnimationMixer(model);
-    gltf.animations.forEach((clip) => {
-      mixer.clipAction(clip).play();
-    });
-
-    controls.lock(); // Funziona solo con PointerLockControls
+    }
   });
 
+  model.position.set(0, PSy, 0);
+  model.rotation.set(0, -Math.PI / 2, 0);
+
+  const scala = 400;
+  model.scale.set(scala, scala, scala);
+
+  scene.add(model);
+
+  // Se ci sono animazioni nel file .glb
+  mixer = new THREE.AnimationMixer(model);
+  gltf.animations.forEach((clip) => {
+    mixer.clipAction(clip).play();
+  });
+
+  controls.lock(); // Funziona solo con PointerLockControls
+});
   let radiusC = 900;
   let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
   let poolM = new THREE.MeshPhysicalMaterial({
@@ -625,39 +602,49 @@ export default function(choose, quadri){
       }    
     } 
 
-    // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
-    const t = clock.elapsedTime;
+          // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
+      const t = clock.elapsedTime;
 
-    scene.traverse(node => {
-      if (node.userData.isInner === true) {               
-        node.rotation.y = t * 1.2;
-        // Pulsazione leggera
-        const s = 1 + Math.sin(t * 4.0) * 0.15;
-        node.scale.set(s, s, s);
-        // Oscillazione
-        if (node.userData.baseY === undefined) {
-          node.userData.baseY = node.position.y;
-        }
-        node.position.y = node.userData.baseY +
-          Math.sin(t * 3.0) * 0.1;
-      }
+        scene.traverse(node => {
+          if (node.userData.isInner === true) {               
+            node.rotation.y = t * 1.2;
+            // Pulsazione leggera
+            const s = 1 + Math.sin(t * 4.0) * 0.15;
+            node.scale.set(s, s, s);
+            // Oscillazione
+            if (node.userData.baseY === undefined) {
+              node.userData.baseY = node.position.y;
+            }
+            node.position.y = node.userData.baseY +
+            Math.sin(t * 3.0) * 0.1;
+          }
 
-      // ANIMAZIONE SFERA GLOBALE (emotionTotale)
-      {
-        const t = clock.elapsedTime;
-        // pulsazione dolce
-        const s = 1.0 + Math.sin(t * 2.0) * 0.05;
-        emotionTotale.scale.set(s, s, s);
-        // rotazione lentissima (opzionale ma bella)
-        emotionTotale.rotation.y = t * 0.15;
-      }
-    });
+          // ANIMAZIONE SFERA GLOBALE (emotionTotale)
+          {
+            const t = clock.elapsedTime;
+              // pulsazione dolce
+            const s = 1.0 + Math.sin(t * 2.0) * 0.05;
+            emotionTotale.scale.set(s, s, s);
+            // rotazione lentissima (opzionale ma bella)
+            emotionTotale.rotation.y = t * 0.15;
+          }
 
-    // QUI: DOF + render finale
-    composer.render();
+          
+        });
+
+
+
+
+    renderer.render(scene, camera);
   }
+////////////////////
+
+
+
 
   animateScene();
+
+  
 
   controls.lock(); 
 };
