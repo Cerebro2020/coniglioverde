@@ -48,25 +48,6 @@ export default function(choose, quadri){
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
   camera.position.set(0,400,-1300);
 
-  
-  // VIDEO TEXTURE PER LA PISCINA
-  const video = document.createElement('video');
-  video.src = "video/video_textures/water_loop.mp4";
-  video.loop = true;
-  video.muted = true;
-  video.playsInline = true;
-  video.autoplay = true;
-  video.style.display = "none";
-  document.body.appendChild(video);
-  video.load();
-  video.play();
-
-  const videoTexture = new THREE.VideoTexture(video);
-  videoTexture.minFilter = THREE.LinearFilter;
-  videoTexture.magFilter = THREE.LinearFilter;
-  videoTexture.format = THREE.RGBAFormat;
-
-
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
   camera.setFocalLength(25);
@@ -446,30 +427,6 @@ export default function(choose, quadri){
     });
   });
 
-  let radiusC = 900;
-  let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
-  let poolM = new THREE.MeshPhysicalMaterial({
-    color: 0Xffccff,
-    map: videoTexture,
-    metalness: 0.05,
-    roughness: 0.1,
-    transmission: 1.0, 
-    transparent: true,
-    opacity: 0.5,
-    ior: 1.333,  
-    thickness: 1.5,    
-    displacementMap: videoTexture,
-    displacementScale: 0, 
-    clearcoat: 1,        
-    clearcoatRoughness: 0.05,
-  });
-
-  let pool = new THREE.Mesh(poolG,poolM);
-  pool.position.set(0,-102,0);
-  pool.rotation.set(0,Math.PI,0);
-  pool.receiveShadow = true;
-  // scene.add(pool);
-
   ////////// AUDIO DI BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
@@ -530,10 +487,7 @@ export default function(choose, quadri){
     requestAnimationFrame(animateScene);
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
-  
-   
-
-          // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
+      // ANIMAZIONE RET – solo il gruppo interno di emotion1–2–3
       const t = clock.elapsedTime;
 
         scene.traverse(node => {
@@ -558,14 +512,8 @@ export default function(choose, quadri){
             emotionTotale.scale.set(s, s, s);
             // rotazione lentissima (opzionale ma bella)
             emotionTotale.rotation.y = t * 0.15;
-          }
-
-          
+          }          
         });
-
-
-
-
     renderer.render(scene, camera);
   }
   animateScene();
