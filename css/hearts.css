@@ -318,9 +318,10 @@ header img {
 @media (max-width: 724px) {
  
   .menu-button-container {      
-    display: flex;    
+    display: flex;  
   }
   
+
   .menu { 
     background-color:  rgba(255, 0, 162, 0.8);      
     position:absolute;    
@@ -790,6 +791,10 @@ iframe {
   .swiper-pagination-bullet {
     width: 4px;
     height: 4px; 
+  }
+
+  .button-controls {
+    bottom: 60px;
   }
 }
 
