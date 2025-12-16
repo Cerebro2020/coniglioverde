@@ -159,15 +159,15 @@ export default function(choose, quadri){
   scene.add(pLight3,pLight4);  
 
   // TEXTURES
-  const loader = new THREE.TextureLoader();
-  let skin = loader.load("images/textures/marble_2.png");
-  skin.wrapS = THREE.RepeatWrapping;
-  skin.wrapT = THREE.RepeatWrapping;
-  skin.repeat.set(8,8);
+  // const loader = new THREE.TextureLoader();
+  // let skin = loader.load("images/textures/marble_2.png");
+  // skin.wrapS = THREE.RepeatWrapping;
+  // skin.wrapT = THREE.RepeatWrapping;
+  // skin.repeat.set(8,8);
 
-  let skin2 = loader.load("images/textures/Bronze.jpg");
-  let skin2Trans = loader.load("images/textures/skin2T.png");
-  skin2Trans.colorSpace = THREE.NoColorSpace;
+  // let skin2 = loader.load("images/textures/Bronze.jpg");
+  // let skin2Trans = loader.load("images/textures/skin2T.png");
+  // skin2Trans.colorSpace = THREE.NoColorSpace;
 
   // ----------------------------------------------------
   //  CALCOLO COLORE DOMINANTE (UNA SOLA VOLTA, STILE POMO)
@@ -233,14 +233,14 @@ export default function(choose, quadri){
   let matTotale = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(coloreOggetto),
      metalness: 0.5,
-      metalnessMap: skin2,
+      // metalnessMap: skin2,
       roughness: 0,
-      roughnessMap: skin2,
-      map: skin2,
-      bumpMap: skin2,
-      bumpScale: 1,     
-      alphaMap: skin2Trans,
-      transparent: true,
+      // roughnessMap: skin2,
+      // map: skin2,
+      // bumpMap: skin2,
+      // bumpScale: 1,     
+      // alphaMap: skin2Trans,
+      // transparent: true,
       opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
@@ -288,13 +288,13 @@ export default function(choose, quadri){
     const emoMaterial = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
       metalness: 0.5,
-      metalnessMap: skin2,
+      // metalnessMap: skin2,
       roughness: 0,
-      roughnessMap: skin2,
-      map: skin2,
-      bumpMap: skin2,
+      // roughnessMap: skin2,
+      // map: skin2,
+      // bumpMap: skin2,
       bumpScale: 1,     
-      alphaMap: skin2Trans,
+      // alphaMap: skin2Trans,
       transparent: true,
       opacity: 1,
     });
