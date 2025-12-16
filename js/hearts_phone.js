@@ -541,13 +541,13 @@ export default function(choose, quadri){
             node.rotation.y = t * 1.2;
             // Pulsazione leggera
             const s = 1 + Math.sin(t * 4.0) * 0.15;
-            node.scale.set(s, s, s);
+            // node.scale.set(s, s, s);
             // Oscillazione
             if (node.userData.baseY === undefined) {
               node.userData.baseY = node.position.y;
             }
-            node.position.y = node.userData.baseY +
-            Math.sin(t * 3.0) * 0.1;
+            // node.position.y = node.userData.baseY +
+            // Math.sin(t * 3.0) * 0.1;
           }
 
           // ANIMAZIONE SFERA GLOBALE (emotionTotale)
