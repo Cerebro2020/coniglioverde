@@ -39,7 +39,7 @@ export default function(choose, quadri){
   // SCENE  
   const scene = new THREE.Scene();
   const loader2 = new THREE.TextureLoader();
-  loader2.load('images/equiangular/Esky2.png', texture => {
+  loader2.load('images/equiangular/Space_4.jpg', texture => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = texture;
@@ -49,7 +49,7 @@ export default function(choose, quadri){
   // CAMERA ////// 
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,player.height,-1200);
+  camera.position.set(0,player.height,-1800);
   
   const velocity = new THREE.Vector3();
   const direction = new THREE.Vector3();
@@ -146,10 +146,11 @@ export default function(choose, quadri){
   const bokehPass = new BokehPass(scene, camera, {
     focus: 500,        
     aperture: 0.000005,  // intensità blur
-    maxblur: 0.02      // raggio massimo blur
+    maxblur: 0.001      // raggio massimo blur
     // width/height vengono presi dal composer
   });
-  composer.addPass(bokehPass);
+
+  // composer.addPass(bokehPass);
     
   // RESIZE WINDOW ////// 
   window.addEventListener('resize', function(){
@@ -164,7 +165,7 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFDDDD,1.5);   
+  const ambient = new THREE.AmbientLight(0xFFDDDD,0.5);   
   scene.add( ambient);
 
   const spotLight = new THREE.SpotLight(0xffffff, 1);
@@ -250,6 +251,8 @@ export default function(choose, quadri){
   let skin2Trans = loader.load("images/textures/skin2T.png");
   skin2Trans.colorSpace = THREE.NoColorSpace;
 
+  let skin3 = loader.load("images/textures/moon.jpg");
+
   // ----------------------------------------------------
   //  CALCOLO COLORE DOMINANTE (UNA SOLA VOLTA, STILE POMO)
   // ----------------------------------------------------
@@ -310,22 +313,22 @@ export default function(choose, quadri){
   console.log('Colore dominante finale:', coloreOggetto);
 
   // SFERA GLOBALE (EMOTION TOTALE) – UNA SOLA VOLTA
-  let gTotale = new THREE.SphereGeometry(50, 16, 16);
+  let gTotale = new THREE.SphereGeometry(600, 64, 64);
   let matTotale = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(coloreOggetto),
-    metalness: 0.5,
-    metalnessMap: skin2,
-    roughness: 0,
-    roughnessMap: skin2,
-    map: skin2,
-    bumpMap: skin2,
-    bumpScale: 1,     
-    alphaMap: skin2Trans,
-    transparent: true,
-    opacity: 1,
+    // metalness: 0.5,
+    // metalnessMap: skin2,
+    // roughness: 0,
+    // roughnessMap: skin2,
+    map: skin3,
+    bumpMap: skin3,
+    bumpScale: 10,     
+    // alphaMap: skin2Trans,
+    // transparent: true,
+    // opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
-  emotionTotale.position.set(0,150,0);
+  emotionTotale.position.set(0,3600,0);
   scene.add(emotionTotale);
 
   // ----------------------------------------------------
@@ -378,7 +381,8 @@ export default function(choose, quadri){
          alphaMap: skin2Trans,
          transparent: true,
          opacity: 1,
-       });
+       });    
+    
 
     // EMOTION 1
     const emotion1 = new THREE.Mesh(forma, emoMaterial);  
@@ -440,8 +444,8 @@ export default function(choose, quadri){
 
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
-    ret.scale.set(10,10,10);
-    ret.position.set(30,(k*25)-180,-70);
+    ret.scale.set(30,30,30);
+    ret.position.set(30,(k*100)-300,-70);
     ret.rotation.set(
       0,
       k*Math.PI/-16,
@@ -478,8 +482,6 @@ export default function(choose, quadri){
     emotion1.userData.isInner = true;
     emotion2.userData.isInner = true;
     emotion3.userData.isInner = true;
-
-
   });  
 
   ////// AMBIENTE GLTF ////////////////////// 
@@ -487,7 +489,7 @@ export default function(choose, quadri){
     
   const loaderSala = new GLTFLoader();
 
-  loaderSala.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
+  loaderSala.load('3d/heart/CV_Heart_Cupola_.glb', (gltf) => {
     const model = gltf.scene;
     model.traverse((node) => {
       if (node.isMesh) {
@@ -538,7 +540,7 @@ export default function(choose, quadri){
   pool.position.set(0,-102,0);
   pool.rotation.set(0,Math.PI,0);
   pool.receiveShadow = true;
-  scene.add(pool);
+  //scene.add(pool);
 
   ////////// AUDIO DI BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
@@ -632,14 +634,14 @@ export default function(choose, quadri){
       if (node.userData.isInner === true) {               
         node.rotation.y = t * 1.2;
         // Pulsazione leggera
-        const s = 1 + Math.sin(t * 4.0) * 0.15;
-        node.scale.set(s, s, s);
+        // const s = 1 + Math.sin(t * 4.0) * 0.15;
+        // node.scale.set(s, s, s);
         // Oscillazione
         if (node.userData.baseY === undefined) {
           node.userData.baseY = node.position.y;
         }
-        node.position.y = node.userData.baseY +
-          Math.sin(t * 3.0) * 0.1;
+        // node.position.y = node.userData.baseY +
+        // Math.sin(t * 3.0) * 0.1;
       }
 
       // ANIMAZIONE SFERA GLOBALE (emotionTotale)
@@ -647,7 +649,7 @@ export default function(choose, quadri){
         const t = clock.elapsedTime;
         // pulsazione dolce
         const s = 1.0 + Math.sin(t * 2.0) * 0.05;
-        emotionTotale.scale.set(s, s, s);
+        // emotionTotale.scale.set(s, s, s);
         // rotazione lentissima (opzionale ma bella)
         emotionTotale.rotation.y = t * 0.15;
       }

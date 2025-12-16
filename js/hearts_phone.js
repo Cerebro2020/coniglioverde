@@ -36,17 +36,17 @@ export default function(choose, quadri){
   // SCENE  
   const scene = new THREE.Scene();
   const loader2 = new THREE.TextureLoader();
-  loader2.load('images/equiangular/Esky2.png', texture => {
+  loader2.load('images/equiangular/Space_4.jpg', texture => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = texture;
   });
-  scene.position.set(0,0,0); 
+  scene.position.set(0,-300,0); 
 
   // CAMERA ////// 
   const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };  
-  camera.position.set(0,player.height,-1200);
+  camera.position.set(0,400,-1300);
 
   
   // VIDEO TEXTURE PER LA PISCINA
@@ -102,10 +102,10 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFFFFF,1);   
+  const ambient = new THREE.AmbientLight(0xFFFFFF,0.5);   
   scene.add( ambient);
 
-  const spotLight = new THREE.SpotLight(0xffffff, 5);
+  const spotLight = new THREE.SpotLight(0xffffff, 0.5);
   spotLight.position.set(0,3000,0);
   spotLight.angle = Math.PI/16;
   spotLight.penumbra = 0.5;
@@ -120,7 +120,7 @@ export default function(choose, quadri){
   spotLight.shadow.bias = -0.0005;
   scene.add(spotLight);
   
-  const spotLight2 = new THREE.SpotLight(0xffffff, 10);
+  const spotLight2 = new THREE.SpotLight(0xffffff, 1);
   spotLight2.position.set(0,3000,0);
   spotLight2.angle = Math.PI/4;
   spotLight2.penumbra = 0.5;
@@ -248,7 +248,7 @@ export default function(choose, quadri){
   console.log('Colore dominante finale:', coloreOggetto);
 
   // SFERA GLOBALE (EMOTION TOTALE) – UNA SOLA VOLTA
-  let gTotale = new THREE.SphereGeometry(50, 16, 16);
+  let gTotale = new THREE.SphereGeometry(100, 16, 16);
   let matTotale = new THREE.MeshPhysicalMaterial({
     color: new THREE.Color(coloreOggetto),
      metalness: 0.5,
@@ -263,7 +263,7 @@ export default function(choose, quadri){
       opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
-  emotionTotale.position.set(0,150,0);
+  emotionTotale.position.set(0,600,0);
   scene.add(emotionTotale);
 
   // ----------------------------------------------------
@@ -378,8 +378,8 @@ export default function(choose, quadri){
 
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
-    ret.scale.set(10,10,10);
-    ret.position.set(30,(k*25)-180,-70);
+    ret.scale.set(20,20,20);
+    ret.position.set(40,(k*50)-240,-70);
     ret.rotation.set(
       0,
       k*Math.PI/-16,
@@ -424,7 +424,7 @@ export default function(choose, quadri){
   let PSy = -100;
     
   const loaderPlanet = new GLTFLoader();
-  loaderPlanet.load('3d/heart/CV_Heart_Cupola.glb', (gltf) => {
+  loaderPlanet.load('3d/heart/CV_Heart_Cupola_.glb', (gltf) => {
     const model = gltf.scene;
     model.traverse((node) => {
       if (node.isMesh) {
@@ -468,7 +468,7 @@ export default function(choose, quadri){
   pool.position.set(0,-102,0);
   pool.rotation.set(0,Math.PI,0);
   pool.receiveShadow = true;
-  scene.add(pool);
+  // scene.add(pool);
 
   ////////// AUDIO DI BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
