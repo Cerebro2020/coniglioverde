@@ -216,7 +216,7 @@ document.addEventListener('keyup', (e) => {
   audioLoader2.load('audio/neutropoli/attraction.m4a', function( buffer ) {
     backgroundSound2.setBuffer( buffer );
     backgroundSound2.setLoop( true );
-    backgroundSound2.setVolume(1);
+    backgroundSound2.setVolume(0);
     backgroundSound2.play();
   });
 
@@ -332,10 +332,10 @@ document.addEventListener('keyup', (e) => {
         if (soundEmme.isPlaying || soundChiha.isPlaying || soundAccavalla.isPlaying || soundCiocca.isPlaying
         ) {
           backgroundSound.setVolume(0.05);
-          backgroundSound2.setVolume(0.07);
+          backgroundSound2.setVolume(0);
         } else {
-          backgroundSound.setVolume(0.1);
-          backgroundSound2.setVolume(0.07);
+          backgroundSound.setVolume(0.01);
+          backgroundSound2.setVolume(0);
         }        
         soundEmme.setVolume(volume)
         soundChiha.setVolume(volume2)
@@ -419,39 +419,7 @@ document.addEventListener('keyup', (e) => {
       } 
     );
 
-    const Sitting2Loader = new GLTFLoader();
-    Sitting2Loader.load(    
-     './3d/subway/sitting_2.glb',
-      function (glt) {
-        const sitting2G = glt.scene;
-        sitting2G.position.set( 0, 0, 0 );
-        sitting2G.rotation.set( 0, -Math.PI/2, 0 );      
-        sitting2G.scale.set( 3, 3, 3 );        
-        sitting2G.traverse(function (node) {
-          if (node.isMesh) {
-            const materialSGL = new THREE.MeshPhysicalMaterial({
-              color: 0xffffff, 
-              emissive: 0x000000,
-              map: texture1,  
-              bumpMap: texture1, 
-              bumpScale: 0.1,     
-              roughness: 0.5,
-              metalness: 0.5,
-            }); 
-            node.material = materialSGL;
-            node.castShadow = true;
-            node.receiveShadow = true;
-          }
-        });        
-        scene.add(sitting2G);        
-        sitting2G.castShadow = true; 
-        sitting2G.receiveShadow = true; 
-      }, 
-      undefined, 
-      function (error) {
-      console.error(error);      
-      } 
-    );
+    
     
   animate();
   if (typeof controls !== 'undefined') controls.enabled = false;
