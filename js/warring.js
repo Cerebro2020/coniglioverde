@@ -14,7 +14,7 @@ const scene = new THREE.Scene();
 
 // BACKGROUND EQUIRETTANGOLARE
 const loader2 = new THREE.TextureLoader();
-loader2.load('images/equiangular/Sky_S4.png', texture => {
+loader2.load('images/equiangular/Space_4.jpg', texture => {
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.mapping = THREE.EquirectangularReflectionMapping;
   scene.background = texture;
@@ -116,26 +116,26 @@ composer.setSize(window.innerWidth, window.innerHeight);
 const renderPass = new RenderPass(scene, camera);
 composer.addPass(renderPass);
 
-// 2) Bloom (pronto ma disattivato)
+// 2) Bloom 
 const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(window.innerWidth, window.innerHeight),
   0.6, // strength
   0.4, // radius
   0.85 // threshold
 );
-// composer.addPass(bloomPass); // se vuoi attivarlo, decomenta questa riga
+// composer.addPass(bloomPass); 
 
-// 3) FXAA (pronto ma disattivato)
+// 3) FXAA 
 const fxaaPass = new ShaderPass(FXAAShader);
 fxaaPass.material.uniforms['resolution'].value.set(
   1 / window.innerWidth,
   1 / window.innerHeight
 );
-// composer.addPass(fxaaPass); // attivalo se vuoi anti-aliasing extra
+// composer.addPass(fxaaPass); 
 
 // 4) Motion Blur tramite AfterimagePass (ATTIVO)
-const afterimagePass = new AfterimagePass(0.85);
-// più alto = più scia / blur; prova 0.6–0.9
+const afterimagePass = new AfterimagePass(0.5);
+
 composer.addPass(afterimagePass);
 
 // 5) CustomPass come ultimo (output a schermo)
@@ -204,11 +204,7 @@ document.addEventListener('keyup', e => {
 });
 
 // ===== OGGETTI DI TEST ======================================
-const floorGeometry = new THREE.PlaneGeometry(200, 200);
-const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x444444 });
-const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-floor.rotation.x = -Math.PI / 2;
-// scene.add(floor);
+
 
 const boxGeometry = new THREE.BoxGeometry(4, 10, 10);
 const boxMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
@@ -251,7 +247,7 @@ lSala.load(
 );
 
 // ===== LUCI =================================================
-const light = new THREE.AmbientLight(0xffdddd, 0.1);
+const light = new THREE.AmbientLight(0xffdddd, 0.5);
 light.position.set(0, 10, 0);
 scene.add(light);
 
