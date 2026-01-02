@@ -87,7 +87,7 @@ html::-webkit-scrollbar {
 }
 
 /* HEADER */
-/* MENU AMBURGER */
+/* MENU HAMBURGER */
 header { 
   width: 100%;
   top: 0;
@@ -127,7 +127,7 @@ header img {
   margin-right: 20px;
 }
 
-.menu ul {  
+.menu ul {    
   height: 100%;
 }
 
@@ -139,30 +139,14 @@ header img {
   padding-right: 10px;
 }
 
-/* .menu li:last-child a {
-  font-style: normal;
-  color:#ff00a2;
-  font-weight: 400;
-}  */
-
 .menu > li:last-child > a {
   font-style: normal;
   color: #ff00a2;
   font-weight: 400;
 }
 
-
-
-
-
-
-
-
-
 .menu li a {                
-  color: #a2ff00; 
-  /* color: #ff00a2; 
-  color: #00a2ff; */  
+  color: #a2ff00;  
   text-decoration: none;
   font-size: 16px;   
   font-weight: 300;
@@ -240,18 +224,17 @@ header img {
 @media (max-width: 724px) {
  
   .menu-button-container {      
-    display: flex;    
+    display: flex;
   }
   
-  .menu { 
-    background-color:  rgba(255, 0, 162, 0.8);      
+  .menu {    
     position:absolute;    
     height: 100vh;
     top: 0;
     margin-top: 0px;    
     left: 0;        
     flex-direction: column;
-    width: 100%;   
+    width: 70%;   
     align-items: center;
     overflow:hidden;
   } 
@@ -442,8 +425,6 @@ canvas {
   margin-left: 34%;
 }
 
-
-
 .data-text {
   width: 40%;  
   height: 44vh; 
@@ -501,11 +482,9 @@ canvas {
 
 .home-paragraph a {  
   font-weight: 200;  
-  /* font-style: italic; */
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 4px; 
-
+  text-underline-offset: 4px;
 }
 
 .p-italic { 
@@ -517,6 +496,26 @@ canvas {
 }
 .p-bold {
   font-weight: 600;
+}
+
+.tab {
+  display: flex;
+  justify-content: space-around;
+}
+
+.tab a {
+  text-decoration: none;
+  background-color: black;
+  font-size: 20px;
+  padding: 1px;
+}
+
+.tableft {
+  width: 40%;
+}
+
+.tabright {
+  width: 40%;
 }
 
 .images-div {
