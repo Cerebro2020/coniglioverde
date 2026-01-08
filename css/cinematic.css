@@ -177,8 +177,8 @@ iframe {
   }
 
   .home-paragraph p {
-    font-size: 16px;
-    line-height: 17px;
+    font-size: 19px;
+    line-height: 21px;
   }
 
   .text-container {
@@ -258,7 +258,7 @@ iframe {
 
 @media (max-width: 724px) {
   .menu {
-    background-color: rgba(255, 0, 162, 0.8);
+    /* background-color: rgba(255, 0, 162, 0.8); */
     position: absolute;
     top: 0;
     left: 0;

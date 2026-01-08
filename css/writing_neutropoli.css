@@ -22,6 +22,10 @@ footer {
   bottom: 126px;
 }
 
+.home-paragrapgh {
+  justify-content: flex-start;
+}
+
 .button-controls button {
   background-color: rgba(154, 255, 2, 0);
   color: rgb(255, 255, 255);
@@ -72,13 +76,13 @@ font-weight: 100;
 @media (max-width: 724px) {
 
   #cam-nav {
-      width: 4%;
-      height: 60vh;
-      justify-content: space-between;
-      display: flex;
-      flex-direction: column;
-      align-items: left;
-      left: 20px;
-      bottom: 126px;
-    }
+    width: 4%;
+    height: 60vh;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    left: 20px;
+    bottom: 126px;
+  } 
 }
