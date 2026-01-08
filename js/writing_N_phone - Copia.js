@@ -11,9 +11,6 @@ export default function(){
 
   let cameraIsMoving = false;
   const clock = new THREE.Clock();
-
-  // === DEVICE PROFILE (mobile-safe) ===
-  const isMobile = window.matchMedia('(max-width: 724px)').matches || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   // window.resetCamera = resetCamera;
   // === SCENE  ===
   const scene = new THREE.Scene();
@@ -30,12 +27,12 @@ export default function(){
     alpha:true, 
     antialias:true
   });
-  renderer.shadowMap.enabled = !isMobile;
+  renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 1;
   renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setPixelRatio( window.devicePixelRatio );
   document.body.appendChild( renderer.domElement );
   // === RESIZE WINDOW ===
   window.addEventListener('resize', function(){
@@ -43,7 +40,7 @@ export default function(){
     var height = window.innerHeight;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.5));
     renderer.setSize(window.innerWidth, window.innerHeight);  
   });
   // === CAMERA 2 === 
@@ -241,216 +238,7 @@ toggleModeButton.addEventListener('click', () => {
     //   modeIcon.src = autoMode ? 'images/icons/moviecam.png' : 'images/icons/book.png';
     //   modeIcon.alt = autoMode ? 'modalità automatica' : 'modalità manuale';
     // });
-  
-// === STREAMING (single navigable environment) ===
-// Carica modelli pesanti solo quando la camera è vicina; quando è lontana li rende invisibili.
-// Nota: per evitare side-effect su oggetti clonati/cached, qui non si fa dispose aggressivo.
-// Se in futuro vuoi liberare memoria, si può introdurre una cache per-asset e dispose controllato.
-
-const STREAM_CENTER = new THREE.Vector3(0, 0, 0); // ambiente unico: centro logico
-const STREAM_LOAD_RADIUS = isMobile ? 140 : 220;
-const STREAM_HIDE_RADIUS = isMobile ? 180 : 260;
-
-let subwayG = null;
-let sittingG = null;
-let sitting2G = null;
-
-let subwayLoading = false;
-let sittingLoading = false;
-let sitting2Loading = false;
-
-function setVisibleSafe(obj, visible) {
-  if (!obj) return;
-  obj.visible = visible;
-}
-
-function loadSubwayOnce() {
-  if (subwayG || subwayLoading) return;
-  subwayLoading = true;
-
-  const urlMobile = './3d/subway/subway6_phone.glb';
-    const urlDesktop = './3d/subway/subway6.glb';
-    const l = new GLTFLoader();
-
-    const doLoad = (url) => l.load(
-    url,
-    function (glt) {
-      subwayG = glt.scene;
-      subwayG.position.set(0, 0, 0);
-      subwayG.rotation.set(0, -Math.PI / 2, 0);
-      subwayG.scale.set(3, 3, 3);
-
-      subwayG.traverse(function (node) {
-        if (node.isMesh) {
-          // Materiale più leggero su mobile
-          node.material = isMobile
-            ? new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture1, roughness: 0.85, metalness: 0.1 })
-            : new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                emissive: 0x000000,
-                map: texture1,
-                bumpMap: texture1,
-                bumpScale: 0.1,
-                roughness: 0.5,
-                metalness: 0.5,
-              });
-
-          node.castShadow = false;
-          node.receiveShadow = false;
-        }
-      });
-
-      scene.add(subwayG);
-      setVisibleSafe(subwayG, false); // verrà resa visibile quando vicino
-      subwayLoading = false;
-    },
-    undefined,
-    function (error) {
-        console.error(error);
-        // Fallback: se la versione mobile non esiste, prova quella desktop
-        if (isMobile && url === urlMobile) {
-          doLoad(urlDesktop);
-          return;
-        }
-        subwayLoading = false;
-      }
-    );
-
-    doLoad(isMobile ? urlMobile : urlDesktop);
-}
-
-function loadSittingOnce() {
-  if (sittingG || sittingLoading) return;
-  sittingLoading = true;
-
-  const urlMobile = './3d/subway/sitting_phone.glb';
-    const urlDesktop = './3d/subway/sitting.glb';
-    const l = new GLTFLoader();
-
-    const doLoad = (url) => l.load(
-    url,
-    function (glt) {
-      sittingG = glt.scene;
-      sittingG.position.set(0, 0, 0);
-      sittingG.rotation.set(0, -Math.PI / 2, 0);
-      sittingG.scale.set(3, 3, 3);
-
-      sittingG.traverse(function (node) {
-        if (node.isMesh) {
-          node.material = isMobile
-            ? new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture1, roughness: 0.9, metalness: 0.05 })
-            : new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                emissive: 0x000000,
-                map: texture1,
-                bumpMap: texture1,
-                bumpScale: 0.1,
-                roughness: 0.5,
-                metalness: 0.5,
-              });
-
-          node.castShadow = false;
-          node.receiveShadow = false;
-        }
-      });
-
-      scene.add(sittingG);
-      setVisibleSafe(sittingG, false);
-      sittingLoading = false;
-    },
-    undefined,
-    function (error) {
-        console.error(error);
-        // Fallback: se la versione mobile non esiste, prova quella desktop
-        if (isMobile && url === urlMobile) {
-          doLoad(urlDesktop);
-          return;
-        }
-        sittingLoading = false;
-      }
-    );
-
-    doLoad(isMobile ? urlMobile : urlDesktop);
-}
-
-function loadSitting2Once() {
-  if (sitting2G || sitting2Loading) return;
-  sitting2Loading = true;
-
-  const urlMobile = './3d/subway/sitting_2_phone.glb';
-    const urlDesktop = './3d/subway/sitting_2.glb';
-    const l = new GLTFLoader();
-
-    const doLoad = (url) => l.load(
-    url,
-    function (glt) {
-      sitting2G = glt.scene;
-      sitting2G.position.set(0, 0, 0);
-      sitting2G.rotation.set(0, -Math.PI / 2, 0);
-      sitting2G.scale.set(3, 3, 3);
-
-      sitting2G.traverse(function (node) {
-        if (node.isMesh) {
-          node.material = isMobile
-            ? new THREE.MeshStandardMaterial({ color: 0xffffff, map: texture1, roughness: 0.9, metalness: 0.05 })
-            : new THREE.MeshPhysicalMaterial({
-                color: 0xffffff,
-                emissive: 0x000000,
-                map: texture1,
-                bumpMap: texture1,
-                bumpScale: 0.1,
-                roughness: 0.5,
-                metalness: 0.5,
-              });
-
-          node.castShadow = false;
-          node.receiveShadow = false;
-        }
-      });
-
-      scene.add(sitting2G);
-      setVisibleSafe(sitting2G, false);
-      sitting2Loading = false;
-    },
-    undefined,
-    function (error) {
-        console.error(error);
-        // Fallback: se la versione mobile non esiste, prova quella desktop
-        if (isMobile && url === urlMobile) {
-          doLoad(urlDesktop);
-          return;
-        }
-        sitting2Loading = false;
-      }
-    );
-
-    doLoad(isMobile ? urlMobile : urlDesktop);
-}
-
-let lastStreamCheck = 0;
-function streamUpdate(nowMs) {
-  // Throttle: evita controlli ad ogni frame
-  if (nowMs - lastStreamCheck < 300) return;
-  lastStreamCheck = nowMs;
-
-  const d = camera.position.distanceTo(STREAM_CENTER);
-
-  // Carica quando si entra nel raggio, nasconde quando si esce
-  if (d < STREAM_LOAD_RADIUS) {
-    loadSubwayOnce();
-    loadSittingOnce();
-    loadSitting2Once();
-    setVisibleSafe(subwayG, true);
-    setVisibleSafe(sittingG, true);
-    setVisibleSafe(sitting2G, true);
-  } else if (d > STREAM_HIDE_RADIUS) {
-    setVisibleSafe(subwayG, false);
-    setVisibleSafe(sittingG, false);
-    setVisibleSafe(sitting2G, false);
-  }
-}
-
-// SPEAKER - GLTF   
+  // SPEAKER - GLTF   
   const speakerLoader = new GLTFLoader();
   speakerLoader.load(    
     './3d/humans/Low_person_3.glb',
@@ -496,7 +284,6 @@ function streamUpdate(nowMs) {
       function animateScene() {
   requestAnimationFrame(animateScene);
   controls.update(clock.getDelta());
-  streamUpdate(performance.now());
   renderer.render(scene, camera);
 
   // Blocca logica audio se la camera è in movimento
@@ -552,11 +339,111 @@ function streamUpdate(nowMs) {
       console.error(error);      
     }
   );
-    // === OBJECTS ===
-  // Modelli principali (subway / sitting) sono gestiti via streaming per mobile (vedi sezione STREAMING sopra).
-  // === END OBJECTS (streamed) ===
+  // === OBJECTS ===
+  // SUBWAY GLB
+  const subwayGLoader = new GLTFLoader();
+  subwayGLoader.load(    
+   './3d/subway/subway6.glb',
+    function (glt) {
+      const subwayG = glt.scene;
+      subwayG.position.set( 0, 0, 0 );
+      subwayG.rotation.set( 0, -Math.PI/2, 0 );      
+      subwayG.scale.set( 3, 3, 3 );        
+      subwayG.traverse(function (node) {
+        if (node.isMesh) {
+          const materialSGL = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff, 
+            emissive: 0x000000,
+            map: texture1,  
+            bumpMap: texture1, 
+            bumpScale: 0.1,     
+            roughness: 0.5,
+            metalness: 0.5,
+          }); 
+          node.material = materialSGL;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });        
+      scene.add(subwayG);        
+      subwayG.castShadow = true; 
+      subwayG.receiveShadow = true; 
+    }, 
+    undefined, 
+    function (error) {
+    console.error(error);      
+    } 
+  );
 
-// == TEWEEN ==
+  const SittingLoader = new GLTFLoader();
+  SittingLoader.load(    
+   './3d/subway/sitting.glb',
+    function (glt) {
+      const sittingG = glt.scene;
+      sittingG.position.set( 0, 0, 0 );
+      sittingG.rotation.set( 0, -Math.PI/2, 0 );      
+      sittingG.scale.set( 3, 3, 3 );        
+      sittingG.traverse(function (node) {
+        if (node.isMesh) {
+          const materialSGL = new THREE.MeshPhysicalMaterial({
+            color: 0xffffff, 
+            emissive: 0x000000,
+            map: texture1,  
+            bumpMap: texture1, 
+            bumpScale: 0.1,     
+            roughness: 0.5,
+            metalness: 0.5,
+          }); 
+          node.material = materialSGL;
+          node.castShadow = true;
+          node.receiveShadow = true;
+        }
+      });        
+      scene.add(sittingG);        
+      sittingG.castShadow = true; 
+      sittingG.receiveShadow = true; 
+    }, 
+    undefined, 
+    function (error) {
+    console.error(error);      
+    } 
+  );
+
+  const Sitting2Loader = new GLTFLoader();
+      Sitting2Loader.load(    
+       './3d/subway/sitting_2.glb',
+        function (glt) {
+          const sitting2G = glt.scene;
+          sitting2G.position.set( 0, 0, 0 );
+          sitting2G.rotation.set( 0, -Math.PI/2, 0 );      
+          sitting2G.scale.set( 3, 3, 3 );        
+          sitting2G.traverse(function (node) {
+            if (node.isMesh) {
+              const materialSGL = new THREE.MeshPhysicalMaterial({
+                color: 0xffffff, 
+                emissive: 0x000000,
+                map: texture1,  
+                bumpMap: texture1, 
+                bumpScale: 0.1,     
+                roughness: 0.5,
+                metalness: 0.5,
+              }); 
+              node.material = materialSGL;
+              node.castShadow = true;
+              node.receiveShadow = true;
+            }
+          });        
+          scene.add(sitting2G);        
+          sitting2G.castShadow = true; 
+          sitting2G.receiveShadow = true; 
+        }, 
+        undefined, 
+        function (error) {
+        console.error(error);      
+        } 
+      );
+
+    // == TEWEEN ==
     let currentTween = null;
 
     document.querySelectorAll('[data-goto]').forEach(button => {
