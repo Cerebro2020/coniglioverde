@@ -165,8 +165,11 @@ iframe {
 
   .home-text {
     width: 90%;
-    height: 80vh;
-    
+    height: 80vh;    
+  }
+
+  .home-title {
+    margin-bottom: 0px;
   }
 
   .home-title h1 {
@@ -180,6 +183,7 @@ iframe {
 
   .home-paragraph {
     height: 90%;
+    margin-top: 0px;
   }
 
   .home-paragraph p {
@@ -360,4 +364,29 @@ iframe {
     content: 'images/logo2.jpg';
     width: 40px;
   }
+}
+
+
+@media (max-width: 724px) {
+
+  /* evita il "vuoto" creato da space-between */
+  section .home-text{
+    justify-content: flex-start !important;
+    gap: 20px; /* controlla qui lo spazio fra titolo e testo */
+  }
+
+  /* rimuove altezze forzate che generano spazio inutile */
+  section .home-title{
+    height: auto !important;
+    margin-bottom: 0 !important; /* override del margin-bottom:20px di style.css */
+  }
+
+  section .home-paragraph{
+    height: auto !important;
+    margin-top: 0 !important;
+  }
+
+  /* opzionale: riduce ulteriormente lo stacco fra h1 e paragrafo */
+  section .home-title h1{ margin: 0 0 4px 0; }
+  section .home-title h2{ margin: 0; }
 }
