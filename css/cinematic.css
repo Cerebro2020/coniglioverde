@@ -164,7 +164,9 @@ iframe {
 @media (max-width: 724px) {
 
   .home-text {
-    width: 90%;    
+    width: 90%;
+    height: 80vh;
+    
   }
 
   .home-title h1 {
