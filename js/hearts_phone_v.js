@@ -36,7 +36,7 @@ export default function(choose, quadri){
   // SCENE  
   const scene = new THREE.Scene();
   const loader2 = new THREE.TextureLoader();
-  loader2.load('images/equiangular/Space_4.jpg', texture => {
+  loader2.load('images/equiangular/Esky2.png', texture => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = texture;
@@ -83,7 +83,7 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFFFFF,0.5);   
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1.5);   
   scene.add( ambient);
 
   const spotLight = new THREE.SpotLight(0xffffff, 0.5);
