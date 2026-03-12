@@ -165,12 +165,12 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFFFFF,1.7);   
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1);   
   scene.add( ambient);
 
-  const spotLight = new THREE.SpotLight(0xffffff, 1);
-  spotLight.position.set(0,3000,0);
-  spotLight.angle = Math.PI/4;
+  const spotLight = new THREE.SpotLight(0xffffff, 2);
+  spotLight.position.set(1000,2500,0);
+  spotLight.angle = Math.PI/2;
   spotLight.penumbra = 0.5;
   spotLight.decay = 3;
   spotLight.distance = 9000;
@@ -181,11 +181,11 @@ export default function(choose, quadri){
   spotLight.shadow.camera.near = 0.1; 
   spotLight.shadow.camera.far = 10000;
   spotLight.shadow.bias = -0.0005;
-  //scene.add(spotLight);
+  scene.add(spotLight);
   
-  const spotLight2 = new THREE.SpotLight(0xffffff, 2);
-  spotLight2.position.set(0,1500,0);
-  spotLight2.angle = Math.PI/16;
+  const spotLight2 = new THREE.SpotLight(0xffffff, 1);
+  spotLight2.position.set(1000,2500,0);
+  spotLight2.angle = Math.PI/8;
   spotLight2.penumbra = 0.5;
   spotLight2.decay = 3;
   spotLight2.distance = 9000;
@@ -196,7 +196,7 @@ export default function(choose, quadri){
   spotLight2.shadow.camera.near = 0.1; 
   spotLight2.shadow.camera.far = 10000;
   spotLight2.shadow.bias = -0.0005;
-  //scene.add(spotLight2);  
+  scene.add(spotLight2);  
 
   let plPower = 1;
 
@@ -314,7 +314,7 @@ export default function(choose, quadri){
 
   // SFERA GLOBALE (EMOTION TOTALE) – UNA SOLA VOLTA
   let gTotale = new THREE.SphereGeometry(600, 64, 64);
-  let matTotale = new THREE.MeshPhysicalMaterial({
+  let matTotale = new THREE.MeshToonMaterial({
     color: new THREE.Color(coloreOggetto),
     // metalness: 0.5,
     // metalnessMap: skin2,
@@ -369,15 +369,15 @@ export default function(choose, quadri){
     }
 
     // MATERIAL EMOZIONI
-     const emoMaterial = new THREE.MeshPhysicalMaterial({
+     const emoMaterial = new THREE.MeshToonMaterial({
          color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
-        //  metalness: 0.5,
-        //  metalnessMap: skin2,
-        //  roughness: 0,
-        //  roughnessMap: skin2,
+         metalness: 0.5,
+         metalnessMap: skin2,
+         roughness: 0,
+         roughnessMap: skin2,
         //  map: skin2,
-        //  bumpMap: skin2,
-        //  bumpScale: 1,     
+         bumpMap: skin2,
+         bumpScale: 1,     
         //  alphaMap: skin2Trans,
         //  transparent: true,
         //  opacity: 1,
@@ -500,6 +500,19 @@ export default function(choose, quadri){
         }
       }
     });
+    // model.traverse((node) => {
+    //   if (node.isMesh) {
+
+    //     const oldMat = node.material;
+
+    //     node.material = new THREE.MeshToonMaterial({
+    //       map: oldMat.map
+    //     });
+
+    //     node.castShadow = true;
+    //     node.receiveShadow = true;
+    //   }
+    // });
 
     model.position.set(0, PSy, 0);
     model.rotation.set(0, -Math.PI / 2, 0);
@@ -574,10 +587,10 @@ export default function(choose, quadri){
   }
   syncIcons();
 
-  audioLoader.load('audio/hearts/deep-meditation-192828.mp3', (buffer) => {
+  audioLoader.load('audio/hearts/Neither_Sweat_Nor_Tears.mp3', (buffer) => {
     backgroundSound.setBuffer(buffer);
     backgroundSound.setLoop(true);
-    backgroundSound.setVolume(0.1);
+    backgroundSound.setVolume(0.2);
     backgroundSound.play();
   });
 
