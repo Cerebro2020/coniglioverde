@@ -369,119 +369,135 @@ export default function(choose, quadri){
     }
 
     // MATERIAL EMOZIONI
-     const emoMaterial = new THREE.MeshToonMaterial({
-         color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
-         metalness: 0.5,
-         metalnessMap: skin2,
-         roughness: 0,
-         roughnessMap: skin2,
-        //  map: skin2,
-         bumpMap: skin2,
-         bumpScale: 1,     
-        //  alphaMap: skin2Trans,
-        //  transparent: true,
-        //  opacity: 1,
-       });    
-    
+const emoMaterial = new THREE.MeshToonMaterial({
+  color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
+  metalness: 0.5,
+  metalnessMap: skin2,
+  roughness: 0,
+  roughnessMap: skin2,
+  // map: skin2,
+  bumpMap: skin2,
+  bumpScale: 1,
+  // alphaMap: skin2Trans,
+  // transparent: true,
+  // opacity: 1,
+});
 
-    // EMOTION 1
-    const emotion1 = new THREE.Mesh(forma, emoMaterial);  
-    emotion1.position.set(-7.1,13.5,-0.3);
-    emotion1.rotation.set(0, Math.PI/4, 0);
-    emotion1.scale.set(1.5,1.5,1.5);    
-    emotion1.castShadow = true; 
-    emotion1.receiveShadow = true;    
+// EMOTION 1
+const emotion1 = new THREE.Mesh(forma, emoMaterial);
+emotion1.position.set(-7.1, 13.5, -0.3);
+emotion1.rotation.set(0, Math.PI / 4, 0);
+emotion1.scale.set(1.5, 1.5, 1.5);
+emotion1.castShadow = true;
+emotion1.receiveShadow = true;
 
-    // EMOTION 2
-    let newMat = emoMaterial.clone();
-    newMat.color = new THREE.Color(v[2] ? v[2] : v[0] || '#FFFFFF');
+// EMOTION 2
+let emotion2 = null;
 
-    let forma2;
-    if (v[2]) {
-      const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
-      for (let i = 0; i < gruppiColori.length; i++) {
-        if (gruppiColori[i].includes(coloreCorrente2)) {
-          forma2 = formeGeometriche[nomiFormeGeometriche[i]];    
-          break; 
-        }
-      }
+if (v[2]) {
+  const mat2 = emoMaterial.clone();
+  mat2.color = new THREE.Color(v[2]);
+
+  let forma2 = null;
+  const coloreCorrente2 = mat2.color.getHexString().toUpperCase();
+
+  for (let i = 0; i < gruppiColori.length; i++) {
+    if (gruppiColori[i].includes(coloreCorrente2)) {
+      forma2 = formeGeometriche[nomiFormeGeometriche[i]];
+      break;
     }
-    if (!forma2) {
-      forma2 = formeGeometriche['octaedro'];
+  }
+
+  if (!forma2) {
+    forma2 = formeGeometriche['octaedro'];
+  }
+
+  emotion2 = new THREE.Mesh(forma2, mat2);
+  emotion2.position.set(-7.9, 11.25, -0.3);
+  emotion2.rotation.set(Math.PI / 4, 0, Math.PI / 2);
+  emotion2.scale.set(1, 1, 1);
+  emotion2.castShadow = true;
+  emotion2.receiveShadow = true;
+}
+
+// EMOTION 3
+let emotion3 = null;
+
+if (v[3]) {
+  const mat3 = emoMaterial.clone();
+  mat3.color = new THREE.Color(v[3]);
+
+  let forma3 = null;
+  const coloreCorrente3 = mat3.color.getHexString().toUpperCase();
+
+  for (let i = 0; i < gruppiColori.length; i++) {
+    if (gruppiColori[i].includes(coloreCorrente3)) {
+      forma3 = formeGeometriche[nomiFormeGeometriche[i]];
+      break;
     }
+  }
 
-    const emotion2 = new THREE.Mesh(forma2, newMat);  
-    emotion2.position.set(-7.9,11.25,-0.3);
-    emotion2.rotation.set(Math.PI/4, 0, Math.PI/2);
-    emotion2.scale.set(1,1,1);    
-    emotion2.castShadow = true; 
-    emotion2.receiveShadow = true;   
+  if (!forma3) {
+    forma3 = formeGeometriche['octaedro'];
+  }
 
-    // EMOTION 3 
-    newMat = emoMaterial.clone();
-    newMat.color = new THREE.Color(v[3] ? v[3] : v[0] || '#FFFFFF');
+  emotion3 = new THREE.Mesh(forma3, mat3);
+  emotion3.position.set(-6.1, 11.5, -0.3);
+  emotion3.rotation.set(Math.PI / 4, 0, Math.PI / -2);
+  emotion3.scale.set(0.7, 0.7, 0.7);
+  emotion3.castShadow = true;
+  emotion3.receiveShadow = true;
+}
 
-    let forma3;
-    if (v[3]) {
-      const coloreCorrente3 = newMat.color.getHexString().toUpperCase();
-      for (let i = 0; i < gruppiColori.length; i++) {
-        if (gruppiColori[i].includes(coloreCorrente3)) {
-          forma3 = formeGeometriche[nomiFormeGeometriche[i]]; 
-          break;
-        }
-      }
+const ret = emotionGroup.clone(true);
+ret.add(emotion1);
+
+if (emotion2) ret.add(emotion2);
+if (emotion3) ret.add(emotion3);
+
+ret.scale.set(30, 30, 30);
+ret.position.set(30, (k * 100) - 300, -70);
+ret.rotation.set(
+  0,
+  k * Math.PI / -16,
+  k * Math.PI / -16,
+);
+
+const numCopies = 12;
+const raggio = 200;
+
+for (let i = 0; i < numCopies; i++) {
+  const clone = ret.clone(true);
+  const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
+
+  clone.position.set(
+    Math.cos(-angolo) * raggio,
+    0,
+    Math.sin(-angolo) * raggio
+  );
+
+  clone.rotation.y = angolo;
+  clone.scale.set(5, 5, 5);
+
+  clone.traverse((node) => {
+    if (node.isMesh) {
+      node.material = node.material.clone();
+      node.material.transparent = true;
+      node.material.opacity = 1;
     }
-    if (!forma3) {
-      forma3 = formeGeometriche['octaedro'];
-    }
+  });
 
-    const emotion3 = new THREE.Mesh(forma3, newMat);  
-    emotion3.position.set(-6.1,11.5,-0.3);
-    emotion3.rotation.set(Math.PI/4, 0, Math.PI/-2);
-    emotion3.scale.set(0.7,0.7,0.7); 
-    emotion3.castShadow = true; 
-    emotion3.receiveShadow = true;    
+  // se vuoi aggiungere i cloni: scene.add(clone);
+}
 
-    const ret = emotionGroup.clone(true);
-    ret.add(emotion1, emotion2, emotion3);
-    ret.scale.set(30,30,30);
-    ret.position.set(30,(k*100)-300,-70);
-    ret.rotation.set(
-      0,
-      k*Math.PI/-16,
-      k*Math.PI/-16,
-    );
+scene.add(ret); // Immagine Principale
+allRet.push(ret);
 
-    const numCopies = 12;
-    const raggio = 200;
-    for (let i = 0; i < numCopies; i++) {
-      const clone = ret.clone(true);
-      const angolo = ((numCopies - 1 - i) / numCopies) * Math.PI * 2;
-      clone.position.set(
-        Math.cos(-angolo) * raggio,
-        0,
-        Math.sin(-angolo) * raggio
-      );
-      clone.rotation.y = angolo; 
-      clone.scale.set(5,5,5);
-      clone.traverse((node) => {
-        if (node.isMesh) {
-          node.material = node.material.clone();
-          node.material.transparent = true;
-          node.material.opacity = 1;
-        }
-      });
-      // se vuoi aggiungere i cloni: scene.add(clone);
-    }
+// ret.userData.isInnerGroup = true;
 
-    scene.add(ret);//Immagine Principale
-    allRet.push(ret);
-
-    // ret.userData.isInnerGroup = true;
-
-    emotion1.userData.isInner = true;
-    emotion2.userData.isInner = true;
-    emotion3.userData.isInner = true;
+emotion1.userData.isInner = true;
+if (emotion2) emotion2.userData.isInner = true;
+if (emotion3) emotion3.userData.isInner = true;
   });  
 
   ////// AMBIENTE GLTF ////////////////////// 
