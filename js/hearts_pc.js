@@ -104,7 +104,7 @@ export default function(choose, quadri){
 
   camera.rotation.set(0,0,0);
   camera.lookAt(new THREE.Vector3( 0, player.height, 1000)); 
-  camera.setFocalLength(25);
+  camera.setFocalLength(15);
 
   // RENDERER
   const renderer = new THREE.WebGLRenderer({
@@ -165,7 +165,7 @@ export default function(choose, quadri){
   }); 
 
   // LIGHTS ////// 
-  const ambient = new THREE.AmbientLight(0xFFDDDD,1.5);   
+  const ambient = new THREE.AmbientLight(0xFFFFFF,1.7);   
   scene.add( ambient);
 
   const spotLight = new THREE.SpotLight(0xffffff, 1);
@@ -181,7 +181,7 @@ export default function(choose, quadri){
   spotLight.shadow.camera.near = 0.1; 
   spotLight.shadow.camera.far = 10000;
   spotLight.shadow.bias = -0.0005;
-  scene.add(spotLight);
+  //scene.add(spotLight);
   
   const spotLight2 = new THREE.SpotLight(0xffffff, 2);
   spotLight2.position.set(0,1500,0);
@@ -196,7 +196,7 @@ export default function(choose, quadri){
   spotLight2.shadow.camera.near = 0.1; 
   spotLight2.shadow.camera.far = 10000;
   spotLight2.shadow.bias = -0.0005;
-  scene.add(spotLight2);  
+  //scene.add(spotLight2);  
 
   let plPower = 1;
 
@@ -208,7 +208,7 @@ export default function(choose, quadri){
   pLight.shadow.camera.near = 0.5; 
   pLight.shadow.camera.far = 10; 
   pLight.shadow.bias = -0.0005;
-  scene.add(pLight); 
+  //scene.add(pLight); 
 
   const pLight2 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
   pLight2.position.set(360,400,-360);  
@@ -218,7 +218,7 @@ export default function(choose, quadri){
   pLight2.shadow.camera.near = 0.5; 
   pLight2.shadow.camera.far = 100;
   pLight2.shadow.bias = -0.0005; 
-  scene.add(pLight2);
+  //scene.add(pLight2);
 
   const pLight3 = new THREE.PointLight(0xFFFFFF,plPower,500);  
   pLight3.position.set(360,400,360);  
@@ -228,7 +228,7 @@ export default function(choose, quadri){
   pLight3.shadow.camera.near = 0.5; 
   pLight3.shadow.camera.far = 10; 
   pLight3.shadow.bias = -0.0005;
-  scene.add(pLight3); 
+  //scene.add(pLight3); 
 
   const pLight4 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
   pLight4.position.set(-360,400,-360);  
@@ -238,7 +238,7 @@ export default function(choose, quadri){
   pLight4.shadow.camera.near = 0.5; 
   pLight4.shadow.camera.far = 100;
   pLight4.shadow.bias = -0.0005; 
-  scene.add(pLight3,pLight4);  
+  //scene.add(pLight3,pLight4);  
 
   // TEXTURES
   const loader = new THREE.TextureLoader();
@@ -328,7 +328,7 @@ export default function(choose, quadri){
     // opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
-  emotionTotale.position.set(0,3600,0);
+  emotionTotale.position.set(1000,2400,0);
   scene.add(emotionTotale);
 
   // ----------------------------------------------------
@@ -371,16 +371,16 @@ export default function(choose, quadri){
     // MATERIAL EMOZIONI
      const emoMaterial = new THREE.MeshPhysicalMaterial({
          color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
-         metalness: 0.5,
-         metalnessMap: skin2,
-         roughness: 0,
-         roughnessMap: skin2,
-         map: skin2,
-         bumpMap: skin2,
-         bumpScale: 1,     
-         alphaMap: skin2Trans,
-         transparent: true,
-         opacity: 1,
+        //  metalness: 0.5,
+        //  metalnessMap: skin2,
+        //  roughness: 0,
+        //  roughnessMap: skin2,
+        //  map: skin2,
+        //  bumpMap: skin2,
+        //  bumpScale: 1,     
+        //  alphaMap: skin2Trans,
+        //  transparent: true,
+        //  opacity: 1,
        });    
     
 
@@ -489,7 +489,7 @@ export default function(choose, quadri){
     
   const loaderSala = new GLTFLoader();
 
-  loaderSala.load('3d/heart/CV_Heart_Cupola_.glb', (gltf) => {
+  loaderSala.load('3d/heart/CV_Heart_Cupola_2.glb', (gltf) => {
     const model = gltf.scene;
     model.traverse((node) => {
       if (node.isMesh) {
@@ -620,7 +620,7 @@ export default function(choose, quadri){
     const floorHeight = 1.8;
     if (move.down) {
       if (controls.getObject().position.y > floorHeight) {
-        controls.getObject().position.y -= 50 * delta;
+        controls.getObject().position.y -= 100 * delta;
         if (controls.getObject().position.y < floorHeight) {
           controls.getObject().position.y = floorHeight;
         }
@@ -651,7 +651,7 @@ export default function(choose, quadri){
         const s = 1.0 + Math.sin(t * 2.0) * 0.05;
         // emotionTotale.scale.set(s, s, s);
         // rotazione lentissima (opzionale ma bella)
-        emotionTotale.rotation.y = t * 0.15;
+        emotionTotale.rotation.y = t * 0.05;
       }
     });
 
