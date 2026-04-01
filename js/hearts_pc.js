@@ -197,48 +197,7 @@ export default function(choose, quadri){
   spotLight2.shadow.camera.far = 10000;
   spotLight2.shadow.bias = -0.0005;
   scene.add(spotLight2);  
-
-  let plPower = 1;
-
-  const pLight = new THREE.PointLight(0xFFFFFF,plPower,500);  
-  pLight.position.set(-360,400,360);  
-  pLight.castShadow = true;  
-  pLight.shadow.mapSize.width = 2048; 
-  pLight.shadow.mapSize.height = 2048; 
-  pLight.shadow.camera.near = 0.5; 
-  pLight.shadow.camera.far = 10; 
-  pLight.shadow.bias = -0.0005;
-  //scene.add(pLight); 
-
-  const pLight2 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
-  pLight2.position.set(360,400,-360);  
-  pLight2.castShadow = true;   
-  pLight2.shadow.mapSize.width = 2048; 
-  pLight2.shadow.mapSize.height = 2048;
-  pLight2.shadow.camera.near = 0.5; 
-  pLight2.shadow.camera.far = 100;
-  pLight2.shadow.bias = -0.0005; 
-  //scene.add(pLight2);
-
-  const pLight3 = new THREE.PointLight(0xFFFFFF,plPower,500);  
-  pLight3.position.set(360,400,360);  
-  pLight3.castShadow = true;  
-  pLight3.shadow.mapSize.width = 2048; 
-  pLight3.shadow.mapSize.height = 2048; 
-  pLight3.shadow.camera.near = 0.5; 
-  pLight3.shadow.camera.far = 10; 
-  pLight3.shadow.bias = -0.0005;
-  //scene.add(pLight3); 
-
-  const pLight4 = new THREE.PointLight( 0xFFFFFF,plPower,500);  
-  pLight4.position.set(-360,400,-360);  
-  pLight4.castShadow = true;   
-  pLight4.shadow.mapSize.width = 2048; 
-  pLight4.shadow.mapSize.height = 2048;
-  pLight4.shadow.camera.near = 0.5; 
-  pLight4.shadow.camera.far = 100;
-  pLight4.shadow.bias = -0.0005; 
-  //scene.add(pLight3,pLight4);  
+ 
 
   // TEXTURES
   const loader = new THREE.TextureLoader();
@@ -316,16 +275,6 @@ export default function(choose, quadri){
   let gTotale = new THREE.SphereGeometry(600, 64, 64);
   let matTotale = new THREE.MeshToonMaterial({
     color: new THREE.Color(coloreOggetto),
-    // metalness: 0.5,
-    // metalnessMap: skin2,
-    // roughness: 0,
-    // roughnessMap: skin2,
-    map: skin3,
-    bumpMap: skin3,
-    bumpScale: 10,     
-    // alphaMap: skin2Trans,
-    // transparent: true,
-    // opacity: 1,
   });
   let emotionTotale = new THREE.Mesh(gTotale, matTotale);
   emotionTotale.position.set(1000,2400,0);
@@ -369,27 +318,33 @@ export default function(choose, quadri){
     }
 
     // MATERIAL EMOZIONI
-const emoMaterial = new THREE.MeshToonMaterial({
-  color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
-  metalness: 0.5,
-  metalnessMap: skin2,
-  roughness: 0,
-  roughnessMap: skin2,
-  // map: skin2,
-  bumpMap: skin2,
-  bumpScale: 1,
-  // alphaMap: skin2Trans,
-  // transparent: true,
-  // opacity: 1,
-});
+    const emoMaterial = new THREE.MeshToonMaterial({
+      color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
+    });
 
-// EMOTION 1
-const emotion1 = new THREE.Mesh(forma, emoMaterial);
-emotion1.position.set(-7.1, 13.5, -0.3);
-emotion1.rotation.set(0, Math.PI / 4, 0);
-emotion1.scale.set(1.5, 1.5, 1.5);
-emotion1.castShadow = true;
-emotion1.receiveShadow = true;
+  // EMOTION 1
+  const emotion1 = new THREE.Mesh(forma, emoMaterial);
+  emotion1.position.set(-7.1, 13.5, -0.3);
+  emotion1.rotation.set(0, 0, 0);
+  emotion1.scale.set(1.5, 1.5, 1.5);
+  emotion1.castShadow = true;
+  emotion1.receiveShadow = true;
+
+  const geometry = new THREE.CylinderGeometry(
+  0.1, // radiusTop
+  0.1, // radiusBottom
+  8,    // height
+  24    // radialSegments
+);
+
+  const material = new THREE.MeshToonMaterial({
+    color: new THREE.Color(v[1] || v[0] || '#FFFFFF'),
+  });
+
+  const cylinder = new THREE.Mesh(geometry, material);
+  cylinder.position.set(0,-4,0);
+
+  emotion1.add(cylinder);
 
 // EMOTION 2
 let emotion2 = null;
@@ -455,10 +410,11 @@ ret.add(emotion1);
 if (emotion2) ret.add(emotion2);
 if (emotion3) ret.add(emotion3);
 
-ret.scale.set(30, 30, 30);
-ret.position.set(30, (k * 100) - 300, -70);
+let sRet = 30;
+ret.scale.set(sRet, sRet, sRet);
+ret.position.set(230, (k * 50) - 300, -70);
 ret.rotation.set(
-  0,
+  k * Math.PI / -16,
   k * Math.PI / -16,
   k * Math.PI / -16,
 );
@@ -546,30 +502,6 @@ if (emotion3) emotion3.userData.isInner = true;
 
     controls.lock(); // Funziona solo con PointerLockControls
   });
-
-  let radiusC = 900;
-  let poolG = new THREE.CylinderGeometry(radiusC,radiusC,0.5,32);
-  let poolM = new THREE.MeshPhysicalMaterial({
-    color: 0Xffccff,
-    map: videoTexture,
-    metalness: 0.05,
-    roughness: 0.1,
-    transmission: 1.0, 
-    transparent: true,
-    opacity: 0.5,
-    ior: 1.333,  
-    thickness: 1.5,    
-    displacementMap: videoTexture,
-    displacementScale: 0, 
-    clearcoat: 1,        
-    clearcoatRoughness: 0.05,
-  });
-
-  let pool = new THREE.Mesh(poolG,poolM);
-  pool.position.set(0,-102,0);
-  pool.rotation.set(0,Math.PI,0);
-  pool.receiveShadow = true;
-  //scene.add(pool);
 
   ////////// AUDIO DI BACKGROUND ///////
   const listenerBcg = new THREE.AudioListener();
@@ -661,7 +593,7 @@ if (emotion3) emotion3.userData.isInner = true;
 
     scene.traverse(node => {
       if (node.userData.isInner === true) {               
-        node.rotation.y = t * 1.2;
+        node.rotation.y = t * 0;
         // Pulsazione leggera
         // const s = 1 + Math.sin(t * 4.0) * 0.15;
         // node.scale.set(s, s, s);
