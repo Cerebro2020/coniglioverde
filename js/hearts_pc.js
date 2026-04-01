@@ -333,7 +333,7 @@ export default function(choose, quadri){
   const geometry = new THREE.CylinderGeometry(
   0.1, // radiusTop
   0.1, // radiusBottom
-  8,    // height
+  6,    // height
   24    // radialSegments
 );
 
