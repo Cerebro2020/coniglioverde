@@ -2,55 +2,92 @@ import * as THREE from 'three';
 import {OrbitControls} from '../three_class/OrbitControls.js';
 import { GLTFLoader } from '../three_class/GLTFLoader.js';
 import { FlakesTexture } from '../three_class/FlakesTexture.js';
+import { EffectComposer } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { BokehPass } from 'https://unpkg.com/three@0.158.0/examples/jsm/postprocessing/BokehPass.js';
 
 export default function(choose,quadri){
   const clock = new THREE.Clock();
   window.resetCamera = resetCamera;
+
   // SCENE  
   const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x050505, 0.0025);
+
   // CAMERA //////
   const camera = new THREE.PerspectiveCamera( 50 , window.innerWidth / window.innerHeight, 0.1, 4000 );
   let player = { height:1.8, speed:0.2, turnSpeed:Math.PI*0.02 };
-  camera.position.set( -20, 0, 350 );  /* 200, 40*/
+  camera.position.set( -20, 0, 350 );  /* posizione originale */
   camera.lookAt(new THREE.Vector3( 0, player.height, 0)); 
   /*camera.setFocalLength ( 70 );*/
   camera.setFocalLength ( 35 );
+
   // RENDERER
   const renderer = new THREE.WebGLRenderer({alpha:true, antialias:true}); 
+
   // CONTROLS 
   const controls = new OrbitControls( camera, renderer.domElement );  
   controls.listenToKeyEvents( window );
   controls.minDistance =  80;    
   controls.maxDistance = 350;
+
   let initialCameraPosition = new THREE.Vector3();
   initialCameraPosition.copy(camera.position);
+
   // Crea una funzione per resettare la camera
   function resetCamera() {
     camera.position.copy(initialCameraPosition);  
   } 
+
   // RENDERER
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; 
-  renderer.toneMapping = THREE.LinearToneMapping;
-	renderer.toneMappingExposure = 1;  
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+	renderer.toneMappingExposure = 0.9;  
   renderer.setSize( window.innerWidth, window.innerHeight );
   document.body.appendChild( renderer.domElement );
+
+  // POST-PROCESSING LEGGERO
+  const composer = new EffectComposer(renderer);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  composer.addPass(new RenderPass(scene, camera));
+
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    0.35,
+    0.35,
+    0.82
+  );
+  composer.addPass(bloomPass);
+
+  const bokehPass = new BokehPass(scene, camera, {
+    focus: 260,
+    aperture: 0.0000025,
+    maxblur: 0.0012
+  });
+  composer.addPass(bokehPass);
 
   // RESIZE WINDOW 
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
     var height = window.innerHeight;
     renderer.setSize( width, height );
+    composer.setSize(width, height);
+    bloomPass.setSize(width, height);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
   } );
 
   // SCENE & FOG 
-  scene.background = new THREE.Color(  0x000000 );
+  scene.background = new THREE.Color(0x050507);
+
   // LIGHT
   //AMBIENT
-  const ambient = new THREE.AmbientLight( 0xffffff, 1.25 );  
+  const ambient = new THREE.AmbientLight( 0xffffff, 0.22 );  
   scene.add( ambient); 
+
   //POINTS 
   const pLight = new THREE.SpotLight( 0xffffff, 1.5/*0.26*/, 2000 );  
   pLight.position.set( 2.5, 2.5, 2.5);
@@ -79,16 +116,33 @@ export default function(choose,quadri){
   pLight.castShadow = true;
   scene.add(camera);
 
+  // Luci laterali cromatiche per maggiore profondità
+  const blueLight = new THREE.PointLight(0x2244ff, 2.5, 1200);
+  blueLight.position.set(-250, 120, -180);
+  scene.add(blueLight);
+
+  const redLight = new THREE.PointLight(0xff3355, 2.0, 1000);
+  redLight.position.set(220, -80, 150);
+  scene.add(redLight);
+
+  const topLight = new THREE.SpotLight(0xffffff, 3.5);
+  topLight.position.set(0, 260, 0);
+  topLight.angle = Math.PI / 4;
+  topLight.penumbra = 1;
+  topLight.castShadow = true;
+  scene.add(topLight);
+
   // ANIMATE SCENE //////
   function animateScene(){
     requestAnimationFrame( animateScene );
-    renderer.render( scene, camera );
+    composer.render();
   };
   animateScene();
 
   //TEXTURES
   const loader = new THREE.TextureLoader();  
   let TextureF = loader.load('images/textures/Ottone.jpg');
+  TextureF.colorSpace = THREE.SRGBColorSpace;
   
   // new THREE.CanvasTexture(new FlakesTexture());
   TextureF.wrapS = THREE.RepeatWrapping;
@@ -105,13 +159,16 @@ export default function(choose,quadri){
       'dodecaedro': new THREE.DodecahedronGeometry( 1, 0 ),
       'torus': new THREE.BoxGeometry( 1.2, 1.2, 1.2 ),
     }; 
+
     const nomiFormeGeometriche = ['dodecaedro','sfera', 'cubo','piramide'  ]; 
+
     const colori = [
       'DEC414', 'FEF600', 'FFD700', 'C9A021',
       'FE005B', 'FF0000', 'A32590', 'DF73FF',
       '227BFF', '222EFF', '001DEC', '2A23A3',
       '49C51A', '2D7121', '3C6232', '008000',
     ];   
+
     // Definisci i gruppi di colori
     const gruppiColori = [
       colori.slice(0, 4),  // Primi 4 colori
@@ -119,6 +176,7 @@ export default function(choose,quadri){
       colori.slice(8, 12), // Successivi 4 colori
       colori.slice(12, 16)  // Ultimi 4 colori
     ];    
+
     const coloreCorrente = new THREE.Color(v[1]).getHexString().toUpperCase(); 
     let forma;    
    
@@ -168,7 +226,7 @@ export default function(choose,quadri){
       coloreOggetto = maxConteggio > 0 ? mappaColori[`area${areaPiuScelta + 1}`] : '#FFFFFF';
     }
 
-    console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
+    // console.log(`Il colore dell'oggetto è ${coloreOggetto}.`);
 
   // let gTotale = new THREE.SphereGeometry(200, 16, 16);
   // let matTotale = new THREE.MeshPhysicalMaterial ({
@@ -197,8 +255,10 @@ export default function(choose,quadri){
             map: TextureF,
             color: new THREE.Color(coloreOggetto),             
             sheenColor: new THREE.Color(v[1]),                 
-            metalness: 0.5,            
-            roughness: 0.0,
+            metalness: 0.12,            
+            roughness: 0.22,
+            clearcoat: 1,
+            clearcoatRoughness: 0.12,
             bumpMap: TextureF,
             bumpScale:0.01,
 
@@ -220,39 +280,47 @@ export default function(choose,quadri){
 
   ///////////////////////////////////////
     for (let i = 0; i < gruppiColori.length; i++) {
-      console.log(`Checking group ${i}:`, gruppiColori[i]);
-      console.log(`Current color:`, coloreCorrente);
-      console.log(`Is color in group?`, gruppiColori[i].includes(coloreCorrente));
+      // console.log(`Checking group ${i}:`, gruppiColori[i]);
+      // console.log(`Current color:`, coloreCorrente);
+      // console.log(`Is color in group?`, gruppiColori[i].includes(coloreCorrente));
       if (gruppiColori[i].includes(coloreCorrente)) {
         forma = formeGeometriche[nomiFormeGeometriche[i]];         
         break; 
       }
     }
+
     // EMOTION MATERIAL
     const emoMaterial = new THREE.MeshPhysicalMaterial({
       map: TextureF,
       color: new THREE.Color(v[1]),
       sheenColor: new THREE.Color(v[1]),                  
-      metalness: 0.5,            
-      roughness: 0.0,
+      metalness: 0.12,            
+      roughness: 0.22,
+            clearcoat: 1,
+            clearcoatRoughness: 0.12,
       bumpMap: TextureF,
       bumpScale: 1,
     });     
+
     if (!forma) {
       forma = formeGeometriche['torus'];
       emoMaterial.color = new THREE.Color(0XC0652B);
     }     
+
     //  EMOTION 1
     const emotion1 = new THREE.Mesh( forma, emoMaterial);  
     emotion1.position.set(-7.1, -3.5, 0 );
     emotion1.rotation.set( 0, 0, 0);
     emotion1.scale.set( 1.5, 1.5, 1.5 );     
     emotion1.castShadow = true; 
-    emotion1.receiveShadow = true;     
+    emotion1.receiveShadow = true;
+    emotion1.userData.baseScale = 1.5;     
+
     //  EMOTION 2
     let newMat = emoMaterial.clone()
     newMat.color = new THREE.Color(v[2] ? v[2] : v[0]);
     let forma2; 
+
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
       if (gruppiColori[i].includes(coloreCorrente2)) {
@@ -260,20 +328,25 @@ export default function(choose,quadri){
         break; 
       }
     }
+
     if (!forma2) {
       forma2 = formeGeometriche['torus'];
       newMat.color = new THREE.Color(0XC0652B);
     }
+
     const emotion2 = new THREE.Mesh(forma2, newMat);  
     emotion2.position.set( -9.1, -5.5, 0 );
     emotion2.rotation.set( 0, 0, Math.PI/2 );
     emotion2.scale.set( 1.3, 1.3, 1.3 );     
     emotion2.castShadow = true; 
-    emotion2.receiveShadow = true;    
+    emotion2.receiveShadow = true;
+    emotion2.userData.baseScale = 1.3;    
+
     // EMOTION 3 
     newMat = emoMaterial.clone();
     newMat.color = new THREE.Color(v[3] ? v[3] : v[0]);
     let forma3;
+
     for (let i = 0; i < gruppiColori.length; i++) {
       const coloreCorrente2 = newMat.color.getHexString().toUpperCase();
       if (gruppiColori[i].includes(coloreCorrente2)) {
@@ -281,16 +354,20 @@ export default function(choose,quadri){
         break;
       }
     }  
+
     if (!forma3) {
       forma3 = formeGeometriche['torus'];
       newMat.color = new THREE.Color(0XC0652B);
     }
+
     const emotion3 = new THREE.Mesh(forma3, newMat);  
     emotion3.position.set( -7.7, -7, 0 );
     emotion3.rotation.set( 0, 0, Math.PI/1.5 );
     emotion3.scale.set( 1.1, 1.1, 1.1 );     
     emotion3.castShadow = true; 
-    emotion3.receiveShadow = true;        
+    emotion3.receiveShadow = true;
+    emotion3.userData.baseScale = 1.1;        
+
     const ret = emotionGroup.clone(true);
     ret.add(emotion1, emotion2, emotion3);
     scene.add(ret);
@@ -303,9 +380,11 @@ export default function(choose,quadri){
   let mRoom = new THREE.MeshPhysicalMaterial({
     map:TextureF,
     color: 0x402225,
-    color: 0x1c1c1c,
-    roughness:0.5,
-    metalness:0.1,
+    color: 0x151518,
+    emissive: 0x050505,
+    emissiveIntensity: 0.2,
+    roughness:0.35,
+    metalness:0.05,
     bumpMap: TextureF,
     bumpScale: 1,
     sheenColor: 0xffffff, 
@@ -313,10 +392,12 @@ export default function(choose,quadri){
     clearcoatRoughness: 0.3,
     side: THREE.DoubleSide,
   });
+
   let room = new THREE.Mesh(gRoom, mRoom);
   scene.add(room);
+
   ////////// BACKGROUND ///////
-      // === BACKGROUND AUDIO + TOGGLE ===
+  // === BACKGROUND AUDIO + TOGGLE ===
   const listenerBcg = new THREE.AudioListener();
   camera.add(listenerBcg);
   const audioLoader = new THREE.AudioLoader();
@@ -329,6 +410,7 @@ export default function(choose,quadri){
   
   // stato iniziale: ATTIVO
   let isPlaying = true;
+
   function syncIcons() {
     if (!muteIcon || !audioIcon) return;
     if (isPlaying) {
@@ -339,6 +421,7 @@ export default function(choose,quadri){
       audioIcon.style.display = 'none';
     }
   }
+
   syncIcons();
   
   // carica e avvia audio
