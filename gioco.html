@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fantasy Explorer - Third Person</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { overflow: hidden; font-family: Arial, sans-serif; background: #050816; color: white; }
+
+    #ui {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      z-index: 10;
+      padding: 14px 18px;
+      border-radius: 16px;
+      background: rgba(5, 8, 22, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      font-size: 16px;
+      line-height: 1.6;
+      min-width: 260px;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    #message {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      padding: 12px 22px;
+      border-radius: 999px;
+      background: rgba(5, 8, 22, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+    }
+
+    #message.visible { opacity: 1; }
+
+    #help {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      padding: 12px 18px;
+      border-radius: 16px;
+      background: rgba(5, 8, 22, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #dbeafe;
+      font-size: 15px;
+      text-align: center;
+      line-height: 1.5;
+      max-width: 92vw;
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      background: #5eead4;
+      color: #06141b;
+      font-weight: bold;
+    }
+
+    button:hover { background: #99f6e4; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <strong>Fantasy Explorer</strong><br />
+    Cristalli raccolti: <span id="score">0</span>/10<br />
+    Elementi distrutti: <span id="destroyed">0</span><br />
+    Arma: <span id="weapon">Bastone</span><br />
+    Stato: <span id="state">Esplorazione</span><br />
+    <button onclick="restartGame()">Ricomincia</button>
+  </div>
+
+  <div id="message"></div>
+
+  <div id="help">
+    W / A / S / D o frecce: cammina · SHIFT: corri · F: estrai/rinfodera la spada · SPAZIO: attacca.<br />
+    Raccogli i cristalli azzurri e distruggi i cristalli oscuri avvicinandoti con la spada estratta.
+  </div>
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js";
+
+    const scoreEl = document.getElementById("score");
+    const destroyedEl = document.getElementById("destroyed");
+    const weaponEl = document.getElementById("weapon");
+    const stateEl = document.getElementById("state");
+    const messageEl = document.getElementById("message");
+
+    let score = 0;
+    let destroyedCount = 0;
+    let keys = {};
+    let swordDrawn = false;
+    let isAttacking = false;
+
+    const crystals = [];
+    const darkCrystals = [];
+    const magicParticles = [];
+    const fragments = [];
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x09111f);
+    scene.fog = new THREE.FogExp2(0x07111f, 0.018);
+
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 500);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    document.body.appendChild(renderer.domElement);
+
+    const hemisphere = new THREE.HemisphereLight(0xbfd7ff, 0x17240f, 0.65);
+    scene.add(hemisphere);
+
+    const sun = new THREE.DirectionalLight(0xfff2d0, 2.1);
+    sun.position.set(36, 72, 28);
+    sun.castShadow = true;
+    sun.shadow.mapSize.width = 2048;
+    sun.shadow.mapSize.height = 2048;
+    sun.shadow.camera.near = 1;
+    sun.shadow.camera.far = 160;
+    sun.shadow.camera.left = -80;
+    sun.shadow.camera.right = 80;
+    sun.shadow.camera.top = 80;
+    sun.shadow.camera.bottom = -80;
+    scene.add(sun);
+
+    const blueLight = new THREE.PointLight(0x7dd3fc, 2.2, 90);
+    blueLight.position.set(-22, 16, -24);
+    scene.add(blueLight);
+
+    const violetLight = new THREE.PointLight(0xc084fc, 1.8, 75);
+    violetLight.position.set(34, 12, 32);
+    scene.add(violetLight);
+
+    function createSky() {
+      const skyGeometry = new THREE.SphereGeometry(260, 48, 32);
+      const skyMaterial = new THREE.ShaderMaterial({
+        side: THREE.BackSide,
+        uniforms: {
+          topColor: { value: new THREE.Color(0x07111f) },
+          bottomColor: { value: new THREE.Color(0x1e293b) }
+        },
+        vertexShader: `
+          varying vec3 vWorldPosition;
+          void main() {
+            vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+            vWorldPosition = worldPosition.xyz;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 topColor;
+          uniform vec3 bottomColor;
+          varying vec3 vWorldPosition;
+          void main() {
+            float h = normalize(vWorldPosition).y;
+            float t = smoothstep(-0.2, 0.9, h);
+            gl_FragColor = vec4(mix(bottomColor, topColor, t), 1.0);
+          }
+        `
+      });
+      scene.add(new THREE.Mesh(skyGeometry, skyMaterial));
+    }
+
+    createSky();
+
+    const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x243b22, roughness: 0.98, metalness: 0.01 });
+    const groundGeometry = new THREE.PlaneGeometry(220, 220, 120, 120);
+    const groundPositions = groundGeometry.attributes.position;
+
+    for (let i = 0; i < groundPositions.count; i++) {
+      const x = groundPositions.getX(i);
+      const y = groundPositions.getY(i);
+      const height = Math.sin(x * 0.08) * 0.45 + Math.cos(y * 0.07) * 0.35 + Math.sin((x + y) * 0.035) * 0.55;
+      groundPositions.setZ(i, height);
+    }
+
+    groundGeometry.computeVertexNormals();
+
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    const pathMaterial = new THREE.MeshStandardMaterial({ color: 0x6b5434, roughness: 0.92 });
+    const path = new THREE.Mesh(new THREE.PlaneGeometry(18, 155, 12, 80), pathMaterial);
+    path.rotation.x = -Math.PI / 2;
+    path.position.y = 0.08;
+    path.receiveShadow = true;
+    scene.add(path);
+
+    const lakeMaterial = new THREE.MeshStandardMaterial({
+      color: 0x0e7490,
+      emissive: 0x083344,
+      emissiveIntensity: 0.28,
+      roughness: 0.25,
+      metalness: 0.05,
+      transparent: true,
+      opacity: 0.72
+    });
+
+    const lake = new THREE.Mesh(new THREE.CircleGeometry(18, 64), lakeMaterial);
+    lake.rotation.x = -Math.PI / 2;
+    lake.position.set(-46, 0.11, 8);
+    scene.add(lake);
+
+    const player = new THREE.Group();
+    scene.add(player);
+
+    const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0x5eead4, emissive: 0x0f766e, emissiveIntensity: 0.15, roughness: 0.42 });
+    const cloakMaterial = new THREE.MeshStandardMaterial({ color: 0x4338ca, roughness: 0.62, metalness: 0.05 });
+    const skinMaterial = new THREE.MeshStandardMaterial({ color: 0xf5c7a9, roughness: 0.58 });
+    const darkMaterial = new THREE.MeshStandardMaterial({ color: 0x111827, roughness: 0.6 });
+    const metalMaterial = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.42, metalness: 0.45 });
+
+    const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.55, 1.25, 10, 20), bodyMaterial);
+    body.position.y = 1.25;
+    body.castShadow = true;
+    player.add(body);
+
+    const belt = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.045, 8, 24), darkMaterial);
+    belt.position.y = 1.15;
+    belt.rotation.x = Math.PI / 2;
+    player.add(belt);
+
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.42, 28, 28), skinMaterial);
+    head.position.y = 2.38;
+    head.castShadow = true;
+    player.add(head);
+
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.45, 24, 12, 0, Math.PI * 2, 0, Math.PI * 0.55), darkMaterial);
+    hair.position.y = 2.52;
+    hair.castShadow = true;
+    player.add(hair);
+
+    const cloak = new THREE.Mesh(new THREE.ConeGeometry(0.78, 1.55, 32), cloakMaterial);
+    cloak.position.set(0, 1.12, -0.22);
+    cloak.rotation.x = Math.PI;
+    cloak.castShadow = true;
+    player.add(cloak);
+
+    const shoulderL = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), metalMaterial);
+    shoulderL.position.set(-0.55, 1.72, 0.05);
+    shoulderL.scale.set(1.2, 0.65, 0.8);
+    shoulderL.castShadow = true;
+
+    const shoulderR = shoulderL.clone();
+    shoulderR.position.x = 0.55;
+    player.add(shoulderL, shoulderR);
+
+    const staffMaterial = new THREE.MeshStandardMaterial({ color: 0x8b5a2b, roughness: 0.68 });
+    const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.055, 0.055, 2.35, 14), staffMaterial);
+    staff.position.set(0.72, 1.28, 0.1);
+    staff.rotation.z = 0.18;
+    staff.castShadow = true;
+    player.add(staff);
+
+    const staffGemMaterial = new THREE.MeshStandardMaterial({
+      color: 0xa78bfa,
+      emissive: 0x7c3aed,
+      emissiveIntensity: 1.4,
+      roughness: 0.2,
+      metalness: 0.2
+    });
+
+    const staffGem = new THREE.Mesh(new THREE.OctahedronGeometry(0.22, 0), staffGemMaterial);
+    staffGem.position.set(0.92, 2.42, 0.1);
+    player.add(staffGem);
+
+    const swordMaterial = new THREE.MeshStandardMaterial({
+      color: 0xdbe4ee,
+      metalness: 0.9,
+      roughness: 0.2,
+      emissive: 0x94a3b8,
+      emissiveIntensity: 0.25
+    });
+
+    const sword = new THREE.Group();
+    sword.position.set(0.7, 1.1, -0.25);
+    sword.rotation.set(0, 0, -0.45);
+    sword.visible = false;
+    player.add(sword);
+
+    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.09, 1.9, 0.18), swordMaterial);
+    blade.position.y = 0.95;
+    blade.castShadow = true;
+    sword.add(blade);
+
+    const guard = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.08, 0.18), metalMaterial);
+    guard.position.y = 0.02;
+    guard.castShadow = true;
+    sword.add(guard);
+
+    const handle = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.45, 12), darkMaterial);
+    handle.position.y = -0.25;
+    handle.castShadow = true;
+    sword.add(handle);
+
+    const playerLight = new THREE.PointLight(0xa78bfa, 1.6, 13);
+    playerLight.position.set(0, 2.6, 0);
+    player.add(playerLight);
+
+    const trunkMaterial = new THREE.MeshStandardMaterial({ color: 0x4a2f1b, roughness: 0.84 });
+    const leafMaterial = new THREE.MeshStandardMaterial({ color: 0x14532d, roughness: 0.72 });
+    const leafDarkMaterial = new THREE.MeshStandardMaterial({ color: 0x0f3b22, roughness: 0.78 });
+    const rockMaterial = new THREE.MeshStandardMaterial({ color: 0x3f3f46, roughness: 0.86 });
+    const crystalMaterial = new THREE.MeshStandardMaterial({ color: 0x67e8f9, emissive: 0x0891b2, emissiveIntensity: 1.35, roughness: 0.18, metalness: 0.2 });
+    const darkCrystalMaterial = new THREE.MeshStandardMaterial({ color: 0x1e1b4b, emissive: 0x7c3aed, emissiveIntensity: 0.85, roughness: 0.28, metalness: 0.18 });
+
+    function createTree(x, z, scale = 1) {
+      const tree = new THREE.Group();
+      tree.position.set(x, 0, z);
+      tree.rotation.y = Math.random() * Math.PI * 2;
+
+      const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.25 * scale, 0.42 * scale, 2.4 * scale, 10), trunkMaterial);
+      trunk.position.y = 1.2 * scale;
+      trunk.castShadow = true;
+      tree.add(trunk);
+
+      const leaves1 = new THREE.Mesh(new THREE.ConeGeometry(1.35 * scale, 2.55 * scale, 18), Math.random() > 0.5 ? leafMaterial : leafDarkMaterial);
+      leaves1.position.y = 2.65 * scale;
+      leaves1.castShadow = true;
+      tree.add(leaves1);
+
+      const leaves2 = new THREE.Mesh(new THREE.ConeGeometry(1.0 * scale, 2.1 * scale, 18), leafMaterial);
+      leaves2.position.y = 3.85 * scale;
+      leaves2.castShadow = true;
+      tree.add(leaves2);
+
+      scene.add(tree);
+    }
+
+    function createRock(x, z, scale = 1) {
+      const rock = new THREE.Mesh(new THREE.DodecahedronGeometry(scale, 0), rockMaterial);
+      rock.position.set(x, scale * 0.5, z);
+      rock.rotation.set(Math.random(), Math.random(), Math.random());
+      rock.scale.y = 0.55 + Math.random() * 0.7;
+      rock.castShadow = true;
+      rock.receiveShadow = true;
+      scene.add(rock);
+    }
+
+    function createTower(x, z) {
+      const group = new THREE.Group();
+      group.position.set(x, 0, z);
+
+      const towerMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.82 });
+      const tower = new THREE.Mesh(new THREE.CylinderGeometry(2.1, 2.6, 9, 22), towerMat);
+      tower.position.y = 4.5;
+      tower.castShadow = true;
+      group.add(tower);
+
+      const roof = new THREE.Mesh(new THREE.ConeGeometry(3.1, 4.2, 22), new THREE.MeshStandardMaterial({ color: 0x7f1d1d, roughness: 0.72 }));
+      roof.position.y = 10.6;
+      roof.castShadow = true;
+      group.add(roof);
+
+      const windowMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, emissive: 0xf59e0b, emissiveIntensity: 0.9 });
+      for (let i = 0; i < 3; i++) {
+        const win = new THREE.Mesh(new THREE.BoxGeometry(0.75, 1.1, 0.08), windowMat);
+        const angle = i * Math.PI * 2 / 3;
+        win.position.set(Math.sin(angle) * 2.12, 5.2 + i * 0.9, Math.cos(angle) * 2.12);
+        win.lookAt(0, win.position.y, 0);
+        group.add(win);
+      }
+
+      scene.add(group);
+    }
+
+    function createCrystal(x, z) {
+      const group = new THREE.Group();
+      group.position.set(x, 0.9, z);
+      group.userData.collected = false;
+
+      const crystal = new THREE.Mesh(new THREE.OctahedronGeometry(0.78, 0), crystalMaterial);
+      crystal.castShadow = true;
+      group.add(crystal);
+
+      const halo = new THREE.Mesh(
+        new THREE.TorusGeometry(1.05, 0.025, 8, 64),
+        new THREE.MeshBasicMaterial({ color: 0x67e8f9, transparent: true, opacity: 0.55 })
+      );
+      halo.rotation.x = Math.PI / 2;
+      group.add(halo);
+
+      const light = new THREE.PointLight(0x67e8f9, 1.25, 9);
+      light.position.y = 0.8;
+      group.add(light);
+
+      scene.add(group);
+      crystals.push(group);
+    }
+
+    function createDarkCrystal(x, z, scale = 1) {
+      const group = new THREE.Group();
+      group.position.set(x, scale * 0.85, z);
+      group.userData.destroyed = false;
+
+      const crystal = new THREE.Mesh(new THREE.OctahedronGeometry(scale, 0), darkCrystalMaterial);
+      crystal.castShadow = true;
+      group.add(crystal);
+
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(scale * 1.05, 0.025, 8, 48),
+        new THREE.MeshBasicMaterial({ color: 0xc084fc, transparent: true, opacity: 0.55 })
+      );
+      ring.rotation.x = Math.PI / 2;
+      group.add(ring);
+
+      const light = new THREE.PointLight(0x7c3aed, 1.25, 9);
+      group.add(light);
+
+      scene.add(group);
+      darkCrystals.push(group);
+    }
+
+    function createFlower(x, z) {
+      const group = new THREE.Group();
+      group.position.set(x, 0.1, z);
+
+      const colors = [0xf0abfc, 0xfda4af, 0x93c5fd, 0xfde68a];
+      const petalMat = new THREE.MeshStandardMaterial({ color: colors[Math.floor(Math.random() * colors.length)], roughness: 0.65 });
+      const centerMat = new THREE.MeshStandardMaterial({ color: 0xfacc15, roughness: 0.5 });
+
+      for (let i = 0; i < 5; i++) {
+        const petal = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 8), petalMat);
+        const angle = i * Math.PI * 2 / 5;
+        petal.position.set(Math.cos(angle) * 0.14, 0.18, Math.sin(angle) * 0.14);
+        petal.scale.set(1, 0.45, 1);
+        group.add(petal);
+      }
+
+      const center = new THREE.Mesh(new THREE.SphereGeometry(0.07, 8, 8), centerMat);
+      center.position.y = 0.18;
+      group.add(center);
+      scene.add(group);
+    }
+
+    function createMagicParticles() {
+      const particleMaterial = new THREE.MeshBasicMaterial({ color: 0xc4b5fd, transparent: true, opacity: 0.65 });
+      for (let i = 0; i < 70; i++) {
+        const particle = new THREE.Mesh(new THREE.SphereGeometry(0.035 + Math.random() * 0.035, 8, 8), particleMaterial.clone());
+        particle.position.set((Math.random() - 0.5) * 130, 1.5 + Math.random() * 12, (Math.random() - 0.5) * 130);
+        particle.userData.speed = 0.2 + Math.random() * 0.5;
+        particle.userData.phase = Math.random() * Math.PI * 2;
+        scene.add(particle);
+        magicParticles.push(particle);
+      }
+    }
+
+    function createFragment(position) {
+      const fragment = new THREE.Mesh(
+        new THREE.OctahedronGeometry(0.12 + Math.random() * 0.2, 0),
+        darkCrystalMaterial.clone()
+      );
+      fragment.position.copy(position);
+      fragment.userData.velocity = new THREE.Vector3(
+        (Math.random() - 0.5) * 0.36,
+        Math.random() * 0.35 + 0.08,
+        (Math.random() - 0.5) * 0.36
+      );
+      fragment.userData.life = 1;
+      scene.add(fragment);
+      fragments.push(fragment);
+    }
+
+    function createCastle(x, z) {
+      const castle = new THREE.Group();
+      castle.position.set(x, 0, z);
+
+      const wallMaterial = new THREE.MeshStandardMaterial({
+        color: 0x7c8aa0,
+        roughness: 0.82,
+        metalness: 0.05
+      });
+
+      const roofMaterial = new THREE.MeshStandardMaterial({
+        color: 0x4c1d1d,
+        roughness: 0.7
+      });
+
+      const windowMaterial = new THREE.MeshStandardMaterial({
+        color: 0xfacc15,
+        emissive: 0xf59e0b,
+        emissiveIntensity: 1.2,
+        roughness: 0.3
+      });
+
+      const base = new THREE.Mesh(
+        new THREE.BoxGeometry(26, 10, 18),
+        wallMaterial
+      );
+      base.position.y = 5;
+      base.castShadow = true;
+      base.receiveShadow = true;
+      castle.add(base);
+
+      const entrance = new THREE.Mesh(
+        new THREE.BoxGeometry(5, 7, 2),
+        new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.9 })
+      );
+      entrance.position.set(0, 3.5, 8.9);
+      castle.add(entrance);
+
+      const bridge = new THREE.Mesh(
+        new THREE.BoxGeometry(7, 0.5, 14),
+        new THREE.MeshStandardMaterial({ color: 0x6b4423, roughness: 0.9 })
+      );
+      bridge.position.set(0, 0.3, 17);
+      bridge.castShadow = true;
+      castle.add(bridge);
+
+      const moat = new THREE.Mesh(
+        new THREE.RingGeometry(15, 24, 64),
+        new THREE.MeshStandardMaterial({
+          color: 0x0e7490,
+          emissive: 0x083344,
+          emissiveIntensity: 0.3,
+          transparent: true,
+          opacity: 0.7,
+          roughness: 0.2
+        })
+      );
+      moat.rotation.x = -Math.PI / 2;
+      moat.position.y = 0.02;
+      castle.add(moat);
+
+      const towerPositions = [
+        [-11, -7],
+        [11, -7],
+        [-11, 7],
+        [11, 7]
+      ];
+
+      towerPositions.forEach(pos => {
+        const tower = new THREE.Group();
+        tower.position.set(pos[0], 0, pos[1]);
+
+        const body = new THREE.Mesh(
+          new THREE.CylinderGeometry(3, 3.5, 16, 24),
+          wallMaterial
+        );
+        body.position.y = 8;
+        body.castShadow = true;
+        body.receiveShadow = true;
+        tower.add(body);
+
+        const roof = new THREE.Mesh(
+          new THREE.ConeGeometry(4.2, 6, 24),
+          roofMaterial
+        );
+        roof.position.y = 19;
+        roof.castShadow = true;
+        tower.add(roof);
+
+        for (let i = 0; i < 4; i++) {
+          const windowMesh = new THREE.Mesh(
+            new THREE.BoxGeometry(0.7, 1.2, 0.1),
+            windowMaterial
+          );
+
+          const angle = i * Math.PI / 2;
+          windowMesh.position.set(Math.sin(angle) * 3.05, 9, Math.cos(angle) * 3.05);
+          windowMesh.lookAt(0, 9, 0);
+          tower.add(windowMesh);
+        }
+
+        castle.add(tower);
+      });
+
+      for (let i = 0; i < 9; i++) {
+        const crenel = new THREE.Mesh(
+          new THREE.BoxGeometry(1.2, 1.4, 1.2),
+          wallMaterial
+        );
+
+        crenel.position.set(-11 + i * 2.75, 10.7, 8.8);
+        crenel.castShadow = true;
+        castle.add(crenel);
+      }
+
+      const bannerMaterial = new THREE.MeshStandardMaterial({
+        color: 0x4338ca,
+        emissive: 0x312e81,
+        emissiveIntensity: 0.25,
+        side: THREE.DoubleSide
+      });
+
+      const banner = new THREE.Mesh(
+        new THREE.PlaneGeometry(3, 5),
+        bannerMaterial
+      );
+      banner.position.set(0, 13, 9.2);
+      castle.add(banner);
+
+      const portal = new THREE.Mesh(
+        new THREE.TorusGeometry(2.8, 0.24, 16, 64),
+        new THREE.MeshStandardMaterial({
+          color: 0x67e8f9,
+          emissive: 0x22d3ee,
+          emissiveIntensity: 2,
+          roughness: 0.2,
+          metalness: 0.15
+        })
+      );
+
+      portal.position.set(0, 6, -4);
+      portal.rotation.y = Math.PI / 2;
+      portal.userData.isPortal = true;
+      castle.add(portal);
+
+      const portalLight = new THREE.PointLight(0x67e8f9, 3, 28);
+      portalLight.position.set(0, 6, -4);
+      castle.add(portalLight);
+
+      scene.add(castle);
+      return castle;
+    }
+
+    function createTemple(x, z) {
+      const temple = new THREE.Group();
+      temple.position.set(x, 0, z);
+
+      const stoneMaterial = new THREE.MeshStandardMaterial({
+        color: 0x94a3b8,
+        roughness: 0.82,
+        metalness: 0.08
+      });
+
+      const darkStone = new THREE.MeshStandardMaterial({
+        color: 0x475569,
+        roughness: 0.88
+      });
+
+      const base = new THREE.Mesh(
+        new THREE.BoxGeometry(18, 1.6, 18),
+        darkStone
+      );
+      base.position.y = 0.8;
+      base.receiveShadow = true;
+      base.castShadow = true;
+      temple.add(base);
+
+      const altar = new THREE.Mesh(
+        new THREE.BoxGeometry(4, 2.5, 4),
+        stoneMaterial
+      );
+      altar.position.y = 2.2;
+      altar.castShadow = true;
+      temple.add(altar);
+
+      const portalRing = new THREE.Mesh(
+        new THREE.TorusGeometry(2.6, 0.24, 16, 64),
+        new THREE.MeshStandardMaterial({
+          color: 0x67e8f9,
+          emissive: 0x22d3ee,
+          emissiveIntensity: 2,
+          roughness: 0.2,
+          metalness: 0.15
+        })
+      );
+
+      portalRing.position.set(0, 5.2, 0);
+      portalRing.rotation.y = Math.PI / 2;
+      portalRing.userData.isPortal = true;
+      temple.add(portalRing);
+
+      const portalLight = new THREE.PointLight(0x67e8f9, 3, 24);
+      portalLight.position.set(0, 5.2, 0);
+      temple.add(portalLight);
+
+      for (let i = 0; i < 4; i++) {
+        const column = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.65, 0.72, 8, 18),
+          stoneMaterial
+        );
+
+        const angle = i * Math.PI / 2 + Math.PI / 4;
+        column.position.set(Math.cos(angle) * 6.5, 4, Math.sin(angle) * 6.5);
+        column.castShadow = true;
+        column.receiveShadow = true;
+        temple.add(column);
+
+        const top = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.95, 0.95, 0.5, 18),
+          darkStone
+        );
+
+        top.position.y = 4.2;
+        column.add(top);
+      }
+
+      const archGeometry = new THREE.TorusGeometry(3.4, 0.22, 12, 40, Math.PI);
+
+      for (let i = 0; i < 2; i++) {
+        const arch = new THREE.Mesh(archGeometry, stoneMaterial);
+        arch.position.y = 5.5;
+        arch.rotation.y = i * Math.PI / 2;
+        arch.castShadow = true;
+        temple.add(arch);
+      }
+
+      scene.add(temple);
+      return temple;
+    }
+
+    function createRuin(x, z, rotation = 0) {
+      const ruin = new THREE.Group();
+      ruin.position.set(x, 0, z);
+      ruin.rotation.y = rotation;
+
+      const ruinMaterial = new THREE.MeshStandardMaterial({
+        color: 0x64748b,
+        roughness: 0.9,
+        metalness: 0.04
+      });
+
+      const floor = new THREE.Mesh(
+        new THREE.BoxGeometry(10, 0.6, 6),
+        ruinMaterial
+      );
+      floor.position.y = 0.3;
+      floor.receiveShadow = true;
+      ruin.add(floor);
+
+      for (let i = 0; i < 3; i++) {
+        const pillar = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.42, 0.5, 5 + Math.random() * 2, 12),
+          ruinMaterial
+        );
+
+        pillar.position.set(-3 + i * 3, 2.5, -1.8 + Math.random());
+        pillar.rotation.z = (Math.random() - 0.5) * 0.2;
+        pillar.castShadow = true;
+        ruin.add(pillar);
+      }
+
+      const brokenWall = new THREE.Mesh(
+        new THREE.BoxGeometry(6, 3, 0.5),
+        ruinMaterial
+      );
+
+      brokenWall.position.set(0, 1.5, 2.5);
+      brokenWall.rotation.y = 0.15;
+      brokenWall.castShadow = true;
+      ruin.add(brokenWall);
+
+      scene.add(ruin);
+    }
+
+    function createFantasyWorld() {
+      for (let i = 0; i < 80; i++) {
+        const x = (Math.random() - 0.5) * 185;
+        const z = (Math.random() - 0.5) * 185;
+        if (Math.abs(x) < 11 && Math.abs(z) < 65) continue;
+        createTree(x, z, 0.75 + Math.random() * 0.9);
+      }
+
+      for (let i = 0; i < 45; i++) {
+        const x = (Math.random() - 0.5) * 175;
+        const z = (Math.random() - 0.5) * 175;
+        createRock(x, z, 0.45 + Math.random() * 1.45);
+      }
+
+      for (let i = 0; i < 160; i++) {
+        const x = (Math.random() - 0.5) * 170;
+        const z = (Math.random() - 0.5) * 170;
+        if (Math.abs(x) < 3 && Math.abs(z) < 25) continue;
+        createFlower(x, z);
+      }
+
+      createTower(-34, -48);
+      createTower(38, -55);
+      createTower(-46, 44);
+
+      const mainCastle = createCastle(0, -72);
+      scene.userData.portal = mainCastle;
+
+      createRuin(-28, -12, 0.3);
+      createRuin(34, 14, -0.5);
+      createRuin(-52, 36, 1.1);
+      createRuin(52, -38, -0.9);
+
+      const crystalPositions = [
+        [0, -18], [12, -36], [-16, -46], [28, -18], [-30, -8],
+        [18, 22], [-22, 30], [42, 36], [-44, 56], [0, 64]
+      ];
+      crystalPositions.forEach(([x, z]) => createCrystal(x, z));
+
+      const darkPositions = [
+        [-11, -25], [22, -44], [-33, -36], [36, -4], [-48, 18],
+        [30, 30], [-35, 46], [50, 52], [12, 74], [-12, 8]
+      ];
+      darkPositions.forEach(([x, z]) => createDarkCrystal(x, z, 0.8 + Math.random() * 0.5));
+
+      createMagicParticles();
+    }
+
+    createFantasyWorld();
+
+    function showMessage(text) {
+      messageEl.textContent = text;
+      messageEl.classList.add("visible");
+      clearTimeout(showMessage.timeout);
+      showMessage.timeout = setTimeout(() => messageEl.classList.remove("visible"), 1300);
+    }
+
+    function updateUI() {
+      scoreEl.textContent = score;
+      destroyedEl.textContent = destroyedCount;
+      weaponEl.textContent = swordDrawn ? "Spada" : "Bastone";
+      stateEl.textContent = score >= 10 ? "Missione completata" : "Esplorazione";
+    }
+
+    function toggleSword() {
+      swordDrawn = !swordDrawn;
+      sword.visible = swordDrawn;
+      staff.visible = !swordDrawn;
+      staffGem.visible = !swordDrawn;
+      updateUI();
+      showMessage(swordDrawn ? "Spada estratta" : "Bastone equipaggiato");
+    }
+
+    function attack() {
+      if (!swordDrawn) {
+        showMessage("Prima estrai la spada con F");
+        return;
+      }
+
+      if (isAttacking) return;
+      isAttacking = true;
+
+      sword.rotation.x = -1.45;
+      sword.rotation.z = -1.1;
+
+      setTimeout(() => {
+        sword.rotation.x = 0;
+        sword.rotation.z = -0.45;
+        isAttacking = false;
+      }, 180);
+
+      let hit = false;
+
+      darkCrystals.forEach(obj => {
+        if (obj.userData.destroyed) return;
+
+        const distance = obj.position.distanceTo(player.position);
+        if (distance < 4.6) {
+          obj.userData.destroyed = true;
+          obj.visible = false;
+          hit = true;
+          destroyedCount++;
+
+          for (let i = 0; i < 16; i++) {
+            createFragment(obj.position);
+          }
+        }
+      });
+
+      if (hit) {
+        updateUI();
+        showMessage("Elemento distrutto");
+      } else {
+        showMessage("Attacco a vuoto");
+      }
+    }
+
+    function restartGame() {
+      score = 0;
+      destroyedCount = 0;
+      swordDrawn = false;
+      isAttacking = false;
+
+      player.position.set(0, 0.35, 18);
+      player.rotation.y = Math.PI;
+      sword.visible = false;
+      staff.visible = true;
+      staffGem.visible = true;
+
+      crystals.forEach(c => {
+        c.visible = true;
+        c.userData.collected = false;
+      });
+
+      darkCrystals.forEach(c => {
+        c.visible = true;
+        c.userData.destroyed = false;
+      });
+
+      updateUI();
+      showMessage("Nuova esplorazione");
+    }
+
+    window.restartGame = restartGame;
+
+    window.addEventListener("keydown", event => {
+      const key = event.key.toLowerCase();
+
+      if (["arrowup", "arrowdown", "arrowleft", "arrowright", " "].includes(key)) {
+        event.preventDefault();
+      }
+
+      if (key === "f") toggleSword();
+      if (key === " ") attack();
+
+      keys[key] = true;
+    });
+
+    window.addEventListener("keyup", event => {
+      keys[event.key.toLowerCase()] = false;
+    });
+
+    function updatePlayer(delta) {
+      const turnSpeed = 2.6 * delta;
+      const walkSpeed = keys["shift"] ? 14 : 8;
+      const moveSpeed = walkSpeed * delta;
+
+      if (keys["a"] || keys["arrowleft"]) player.rotation.y += turnSpeed;
+      if (keys["d"] || keys["arrowright"]) player.rotation.y -= turnSpeed;
+
+      let moving = false;
+
+      if (keys["w"] || keys["arrowup"]) {
+        player.position.x -= Math.sin(player.rotation.y) * moveSpeed;
+        player.position.z -= Math.cos(player.rotation.y) * moveSpeed;
+        moving = true;
+      }
+
+      if (keys["s"] || keys["arrowdown"]) {
+        player.position.x += Math.sin(player.rotation.y) * moveSpeed * 0.65;
+        player.position.z += Math.cos(player.rotation.y) * moveSpeed * 0.65;
+        moving = true;
+      }
+
+      player.position.x = THREE.MathUtils.clamp(player.position.x, -95, 95);
+      player.position.z = THREE.MathUtils.clamp(player.position.z, -95, 95);
+
+      if (moving) {
+        body.position.y = 1.25 + Math.sin(performance.now() * 0.012) * 0.08;
+        cloak.rotation.z = Math.sin(performance.now() * 0.01) * 0.075;
+        shoulderL.rotation.z = Math.sin(performance.now() * 0.012) * 0.12;
+        shoulderR.rotation.z = -shoulderL.rotation.z;
+      } else {
+        body.position.y = 1.25;
+        cloak.rotation.z *= 0.9;
+        shoulderL.rotation.z *= 0.9;
+        shoulderR.rotation.z *= 0.9;
+      }
+    }
+
+    function updateCamera() {
+      const cameraOffset = new THREE.Vector3(0, 6.2, 11.5);
+      cameraOffset.applyAxisAngle(new THREE.Vector3(0, 1, 0), player.rotation.y);
+
+      const targetPosition = player.position.clone().add(cameraOffset);
+      camera.position.lerp(targetPosition, 0.075);
+
+      const lookTarget = player.position.clone();
+      lookTarget.y += 1.65;
+      camera.lookAt(lookTarget);
+    }
+
+    function checkCrystals() {
+      crystals.forEach(crystal => {
+        if (crystal.userData.collected) return;
+
+        const distance = crystal.position.distanceTo(player.position);
+        if (distance < 2.2) {
+          crystal.userData.collected = true;
+          crystal.visible = false;
+          score++;
+          updateUI();
+          showMessage("Cristallo raccolto");
+
+          if (score === 10) {
+            showMessage("Portale del tempio attivato");
+          }
+        }
+      });
+    }
+
+    function updateFragments() {
+      for (let i = fragments.length - 1; i >= 0; i--) {
+        const fragment = fragments[i];
+        fragment.position.add(fragment.userData.velocity);
+        fragment.userData.velocity.y -= 0.012;
+        fragment.userData.life -= 0.018;
+        fragment.rotation.x += 0.08;
+        fragment.rotation.y += 0.06;
+
+        if (fragment.material.transparent !== true) {
+          fragment.material.transparent = true;
+        }
+        fragment.material.opacity = Math.max(fragment.userData.life, 0);
+
+        if (fragment.userData.life <= 0) {
+          scene.remove(fragment);
+          fragments.splice(i, 1);
+        }
+      }
+    }
+
+    window.addEventListener("resize", () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    const clock = new THREE.Clock();
+    restartGame();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const delta = clock.getDelta();
+      const elapsed = clock.getElapsedTime();
+
+      updatePlayer(delta);
+      updateCamera();
+      checkCrystals();
+      updateFragments();
+
+      crystals.forEach((crystal, i) => {
+        if (!crystal.userData.collected) {
+          crystal.rotation.y += 0.026;
+          crystal.position.y = 0.9 + Math.sin(elapsed * 2.4 + i) * 0.18;
+          crystal.children[1].rotation.z += 0.012;
+          crystal.children[1].scale.setScalar(1 + Math.sin(elapsed * 2 + i) * 0.08);
+        }
+      });
+
+      darkCrystals.forEach((crystal, i) => {
+        if (!crystal.userData.destroyed) {
+          crystal.rotation.y -= 0.018;
+          crystal.position.y = 0.9 + Math.sin(elapsed * 2.1 + i) * 0.15;
+          crystal.children[1].rotation.z -= 0.016;
+        }
+      });
+
+      magicParticles.forEach(particle => {
+        particle.position.y += delta * particle.userData.speed;
+        particle.position.x += Math.sin(elapsed + particle.userData.phase) * delta * 0.12;
+        if (particle.position.y > 14) particle.position.y = 1.2;
+      });
+
+      lake.material.opacity = 0.66 + Math.sin(elapsed * 1.7) * 0.05;
+      staffGem.rotation.y += 0.03;
+
+      if (scene.userData.portal) {
+        const portal = scene.userData.portal.children.find(c => c.userData.isPortal);
+        if (portal) {
+          portal.rotation.z += 0.012;
+          portal.material.emissiveIntensity = 1.5 + Math.sin(elapsed * 3) * 0.6;
+        }
+      }
+      staffGem.material.emissiveIntensity = 1.15 + Math.sin(elapsed * 4) * 0.45;
+
+      if (swordDrawn && !isAttacking) {
+        sword.rotation.z = -0.45 + Math.sin(elapsed * 8) * 0.025;
+      }
+
+      blueLight.intensity = 1.9 + Math.sin(elapsed * 1.2) * 0.35;
+      violetLight.intensity = 1.45 + Math.sin(elapsed * 0.9) * 0.35;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
