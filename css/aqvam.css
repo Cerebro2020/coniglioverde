@@ -143,12 +143,12 @@ canvas:active {
   bottom: 20px;  
   align-items: center;
   justify-content: right;
-  z-index: 1;    
+  z-index: 1;
 } 
 
-.button-controls-jump[hidden] {
-  display: none !important;
-}
+ .button-controls-jump[hidden] {
+    display: none !important;
+  }
 
 #btn-jump-to-column button img {
   max-height: 10px;
@@ -444,11 +444,11 @@ canvas:active {
   }
 
   .counts ul li.u,
-.counts ul li.d,
-.counts ul li.c,
-.counts ul li.m,
-.counts ul li.dm,
-.counts ul li.cm {
+  .counts ul li.d,
+  .counts ul li.c,
+  .counts ul li.m,
+  .counts ul li.dm,
+  .counts ul li.cm {
   width: 30px;
   height: 30px;
 }
@@ -460,16 +460,17 @@ canvas:active {
   /* da sostare in data */
 
   .button-controls-aqvam { 
-    bottom: -50px;
+    bottom: -62px;
   }
 
   .button-controls-jump {     
-    bottom: -50px; 
+    bottom: -62px; 
   }  
 
   .button-controls-aqvam-left { 
-    bottom: -50px;     
+    bottom: -62px;     
   }
+ 
 
   #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button, #btn-calendar button button, #btn-back button , #btn-camera button , #btn-audio button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button  {
     width:66px;
