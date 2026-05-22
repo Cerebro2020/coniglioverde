@@ -30,7 +30,7 @@ export default function(){
     premultipliedAlpha: true
   });
   renderer.setSize( window.innerWidth, window.innerHeight );
-  document.body.appendChild( renderer.domElement );
+  // document.body.appendChild( renderer.domElement );
   // ====== RESIZE ======
   window.addEventListener('resize', function(){
     var width = window.innerWidth;
@@ -232,13 +232,14 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
       scaleBoxes(boxes3,1,1,1);      
       // ====== FUNZIONI BUTTON ======
       document.getElementById('btn-pause').addEventListener('click', function() {
-        document.getElementById('submenu').style.display = 'block';
-        document.getElementById('jump-controls').style.display = 'block';       
-      });
-      document.getElementById('btn-play').addEventListener('click', function() {
-        document.getElementById('submenu').style.display = 'none';
-        document.getElementById('jump-controls').style.display = 'none';
-      });
+      document.getElementById('submenu').style.display = 'block';
+      document.getElementById('jump-controls').hidden = false;       
+    });
+
+    document.getElementById('btn-play').addEventListener('click', function() {
+      document.getElementById('submenu').style.display = 'none';
+      document.getElementById('jump-controls').hidden = true;
+    });
       let isVisibleBoxes1 = true;
       let isVisibleBoxes2 = true;
       let isVisibleBoxes3 = true;

@@ -143,8 +143,12 @@ canvas:active {
   bottom: 20px;  
   align-items: center;
   justify-content: right;
-  z-index: 1;
+  z-index: 1;    
 } 
+
+.button-controls-jump[hidden] {
+  display: none !important;
+}
 
 #btn-jump-to-column button img {
   max-height: 10px;
@@ -456,15 +460,15 @@ canvas:active {
   /* da sostare in data */
 
   .button-controls-aqvam { 
-    bottom: -62px;
+    bottom: -50px;
   }
 
   .button-controls-jump {     
-    bottom: -62px; 
+    bottom: -50px; 
   }  
 
   .button-controls-aqvam-left { 
-    bottom: -62px;     
+    bottom: -50px;     
   }
 
   #btn-start button , #btn-play button , #btn-pause button , #btn-count button , #btn-quantity button, #btn-calendar button button, #btn-back button , #btn-camera button , #btn-audio button, #btn-cameraC button, #btn-cameraH button, #btn-hide-boxes1 button, #btn-hide-boxes2 button, #btn-hide-boxes3 button, #btn-jump-to-column button, #btn-previous-column button  {
