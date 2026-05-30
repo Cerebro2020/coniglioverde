@@ -305,73 +305,71 @@ let lineG = new THREE.CylinderGeometry(0.1,3,tailLength,8,1);
       function updateCenterRotation() {
         centro.rotation.y = targetRotation;
       }      
-    function normalizeAqvamValue(value) {
-  let targetY = Number(value) || 0;
+      function animateBoxesImmediately() {
+        function animateBoxes(boxesArray, startColumnIndex) {
+          for (let i = 0; i < allCsvData.length; i++) {
+            let targetY = allCsvData[i][startColumnIndex + currentColumn * 3];
+            if (targetY <= 9) {
+              targetY *= 10;
+            } else if (targetY <= 99) {
+              targetY += 100;
+            } else if (targetY <= 999) {
+              targetY /= 10;
+              targetY += 200;
+            } else if (targetY <= 9999) {
+              targetY /= 100;
+              targetY += 270;
+            } else if (targetY <= 99999) {
+              targetY /= 1000;
+              targetY += 360;
+            } else if (targetY <= 99999999) {
+              targetY /= 10000;
+              targetY += 450;
+            }      
+          
+            boxesArray[i].position.y = targetY;
+            boxesArray[i].visible = boxesArray[i].position.y >= 1;      
+            const targetRY = i * boxSpacingX;
+            boxesArray[i].rotation.y = -targetRY;
+            let scaleFactor = 0.6;
+            let boxTrans = boxesArray[i];
+            let box = boxTrans.children[0];
+            
+            if (box) {
+              const currentY = boxTrans.position.y;            
+            // Logica di rotazione in base alla variazione
 
-  if (targetY <= 9) {
-    targetY *= 10;
-  } else if (targetY <= 99) {
-    targetY += 90;
-  } else if (targetY <= 999) {
-    targetY /= 10;
-    targetY += 180;
-  } else if (targetY <= 9999) {
-    targetY /= 100;
-    targetY += 270;
-  } else if (targetY <= 99999) {
-    targetY /= 1000;
-    targetY += 360;
-  } else if (targetY <= 99999999) {
-    targetY /= 10000;
-    targetY += 450;
-  }
+            let prevYArray = (boxesArray === boxes1) ? prevY1 : (boxesArray === boxes2) ? prevY2 : prevY3;
+            let previousY = prevYArray[i];
 
-  return targetY;
-}
+            // Logica di rotazione in base alla variazione
+            if (previousY === 0 && currentY !== 0) {
+              box.rotation.x = Math.PI / 2;
+            } else if (currentY > previousY) {
+              box.rotation.x = -2;
+            } else if (currentY < previousY) {
+              box.rotation.x = 0.95;
+            } else {
+              box.rotation.x = Math.PI / 2;
+            }
 
-function getColumnValue(i, startColumnIndex, columnIndex) {
-  return normalizeAqvamValue(allCsvData[i][startColumnIndex + columnIndex * 3]);
-}
+            let extraDepth = 1;        // set 1 = profondità attuale
+            if (boxesArray === boxes2) extraDepth = 0.6;   // set 2 = meno lunga
+            if (boxesArray === boxes3) extraDepth = 0.4;   // set 3 = ancora più corta
 
-function animateBoxesImmediately() {
-  function animateBoxes(boxesArray, startColumnIndex) {
-    const previousColumn = (currentColumn - 1 + totalColumns) % totalColumns;
+            box.position.z = -302.5 - (targetY * scaleFactor);
 
-    for (let i = 0; i < allCsvData.length; i++) {
-      const targetY = getColumnValue(i, startColumnIndex, currentColumn);
-      const previousY = getColumnValue(i, startColumnIndex, previousColumn);
 
-      const boxTrans = boxesArray[i];
-      const box = boxTrans.children[0];
-      const scaleFactor = 0.6;
-
-      boxTrans.position.y = targetY;
-      boxTrans.visible = targetY >= 1;
-
-      const targetRY = i * boxSpacingX;
-      boxTrans.rotation.y = -targetRY;
-
-      if (box) {
-        if (targetY > previousY) {
-          box.rotation.x = -2;
-        } else if (targetY < previousY) {
-          box.rotation.x = 0.95;
-        } else {
-          box.rotation.x = Math.PI / 2;
+            // Salva il valore corrente per il prossimo confronto
+            prevYArray[i] = currentY;
+          }
         }
-
-        box.position.z = -302.5 - (targetY * scaleFactor);
       }
-
-      const prevYArray = boxesArray === boxes1 ? prevY1 : boxesArray === boxes2 ? prevY2 : prevY3;
-      prevYArray[i] = targetY;
-    }
-  }
-
-  animateBoxes(boxes1, 0);
-  animateBoxes(boxes2, 1);
-  animateBoxes(boxes3, 2);
-}
+                  
+      animateBoxes(boxes1, 0);
+      animateBoxes(boxes2, 1);
+      animateBoxes(boxes3, 2);
+    }  
 
     let currentColumn = 0;
     let totalColumns = Math.floor(allCsvData[0].length / 3);// Numero tot colonne da considerare (1 ogni 3)
@@ -385,10 +383,24 @@ function animateBoxesImmediately() {
         if (!isPaused && allCsvData.length > 0) {
         function animateBoxes(boxesArray, startColumnIndex) {
           for (let i = 0; i < allCsvData.length; i++) {
-            
-            let targetY = normalizeAqvamValue(
-  allCsvData[i][startColumnIndex + currentColumn * 3]
-);
+            let targetY = allCsvData[i][startColumnIndex + currentColumn * 3];
+            if (targetY <= 9) {           // U  ->  0..9   → ~  0..90
+            targetY *= 10;
+          } else if (targetY <= 99) {   // D  -> 10..99 → ~ 100..189
+            targetY += 90;              // era +100
+          } else if (targetY <= 999) {  // C  -> 100..999 → ~ 190..279
+            targetY /= 10;
+            targetY += 180;             // era +200
+          } else if (targetY <= 9999) { // M
+            targetY /= 100;
+            targetY += 270;             // era +300
+          } else if (targetY <= 99999) { // DM
+            targetY /= 1000;
+            targetY += 360;             // era +400
+          } else if (targetY <= 99999999) { // CM
+            targetY /= 10000;
+            targetY += 450;             // era +500
+          }
 
                   
             if (!isPaused) {
