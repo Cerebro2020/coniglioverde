@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform Shooter Marx</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: #101820;
+      font-family: Arial, sans-serif;
+      color: #17202a;
+    }
+
+    #gameWrap {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(#1c3f5c, #78c7ff 42%, #d8f6ff 68%, #77b947 68%);
+    }
+
+    canvas {
+      width: min(100vw, 1280px);
+      height: min(100vh, 720px);
+      background: linear-gradient(#74c9ff 0%, #d7f7ff 58%, #a5de68 58%, #77b947 100%);
+      border: 4px solid #17202a;
+      image-rendering: auto;
+      box-shadow: 0 20px 50px rgba(0,0,0,.28);
+    }
+
+    .hud {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1180px, calc(100vw - 36px));
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+      font-weight: 800;
+      text-shadow: 0 2px 0 rgba(255,255,255,.65);
+      font-size: clamp(14px, 2vw, 20px);
+      z-index: 5;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.55);
+      border: 2px solid rgba(23,32,42,.35);
+      border-radius: 16px;
+      padding: 8px 14px;
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, .35);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      z-index: 10;
+    }
+
+    .card {
+      max-width: 660px;
+      background: rgba(10, 20, 30, .9);
+      border: 2px solid rgba(255,255,255,.35);
+      border-radius: 28px;
+      padding: 34px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+    }
+
+    h1 {
+      font-size: clamp(32px, 6vw, 62px);
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 10px 0;
+    }
+
+    .keys {
+      margin-top: 18px;
+      font-size: 16px;
+      color: #d9f5ff;
+    }
+
+    button {
+      margin-top: 24px;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 26px;
+      font-weight: 900;
+      font-size: 18px;
+      cursor: pointer;
+      color: #17202a;
+      background: #ffd34d;
+      box-shadow: 0 6px 0 #b88410;
+    }
+
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #b88410;
+    }
+  </style>
+</head>
+<body>
+  <div id="gameWrap">
+    <canvas id="game" width="1280" height="720"></canvas>
+
+    <div class="hud">
+      <div class="panel" id="scoreBox">Punti: 0</div>
+      <div class="panel" id="healthBox">Vita: 3</div>
+      <div class="panel" id="levelBox">Livello: 1</div>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="card">
+        <h1>Platform Shooter Marx</h1>
+        <p>Corri, salta tra piattaforme su più livelli e colpisci i nemici prima che ti raggiungano.</p>
+        <p class="keys">Comandi: A/D o frecce per muoversi · W/Spazio per saltare · J o X per sparare · R per ricominciare</p>
+        <button id="startBtn">Inizia</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+
+    const scoreBox = document.getElementById('scoreBox');
+    const healthBox = document.getElementById('healthBox');
+    const levelBox = document.getElementById('levelBox');
+    const overlay = document.getElementById('overlay');
+    const startBtn = document.getElementById('startBtn');
+
+    const W = canvas.width;
+    const H = canvas.height;
+
+    /*
+      SPRITE SHEET
+      Salva l'immagine generata nella stessa cartella di questo file HTML
+      con questo nome esatto:
+
+      marx_sprite_sheet.png
+
+      Il codice sotto usa una griglia 6 colonne × 5 righe.
+      Con il riferimento generato, le righe sono interpretate così:
+      riga 0 = idle / camminata leggera
+      riga 1 = corsa
+      riga 2 = salto
+      riga 3 = sparo
+      riga 4 = danno / morte
+    */
+    const sprite = new Image();
+    sprite.src = 'marx_sprite_sheet.png';
+
+    const SPRITE_COLS = 6;
+    const SPRITE_ROWS = 5;
+
+    let frameW = 256;
+    let frameH = 204;
+
+    sprite.onload = () => {
+      frameW = sprite.width / SPRITE_COLS;
+      frameH = sprite.height / SPRITE_ROWS;
+    };
+
+    const animations = {
+      idle:  { row: 0, frames: 1, speed: 18 },
+      run:   { row: 1, frames: 6, speed: 6 },
+      jump:  { row: 2, frames: 4, speed: 9 },
+      shoot: { row: 3, frames: 4, speed: 6 },
+      hurt:  { row: 4, frames: 2, speed: 10 },
+      die:   { row: 4, frames: 6, speed: 12 }
+    };
+
+    const keys = new Set();
+    let running = false;
+    let cameraX = 0;
+    let score = 0;
+    let levelIndex = 0;
+    let shootCooldown = 0;
+    let lastShotTimer = 0;
+    let animAction = 'idle';
+    let animFrameTime = 0;
+    let gameOver = false;
+
+    const gravity = 0.75;
+    const friction = 0.82;
+
+    const player = {
+      x: 80,
+      y: 420,
+      w: 54,
+      h: 72,
+      vx: 0,
+      vy: 0,
+      speed: 0.75,
+      maxSpeed: 7.5,
+      jump: 17,
+      grounded: false,
+      dir: 1,
+      health: 3,
+      inv: 0,
+      hurtTimer: 0
+    };
+
+    const levels = [
+      {
+        length: 2600,
+        platforms: [
+          {x:0,y:650,w:2600,h:70},
+          {x:240,y:545,w:210,h:34},
+          {x:560,y:455,w:220,h:34},
+          {x:920,y:560,w:250,h:34},
+          {x:1280,y:465,w:220,h:34},
+          {x:1630,y:380,w:240,h:34},
+          {x:1980,y:520,w:260,h:34}
+        ],
+        enemies: [
+          {x:650,y:410,w:44,h:44,vx:1.4,min:560,max:760,alive:true},
+          {x:1020,y:516,w:44,h:44,vx:1.7,min:930,max:1130,alive:true},
+          {x:1720,y:336,w:44,h:44,vx:1.5,min:1640,max:1840,alive:true},
+          {x:2140,y:476,w:44,h:44,vx:2.0,min:1990,max:2240,alive:true}
+        ],
+        coins: [
+          {x:300,y:500,taken:false},
+          {x:620,y:410,taken:false},
+          {x:710,y:410,taken:false},
+          {x:1000,y:515,taken:false},
+          {x:1350,y:420,taken:false},
+          {x:1720,y:335,taken:false},
+          {x:2070,y:475,taken:false}
+        ],
+        flag: {x:2460,y:535,w:34,h:115}
+      },
+      {
+        length: 3200,
+        platforms: [
+          {x:0,y:650,w:3200,h:70},
+          {x:260,y:560,w:180,h:34},
+          {x:540,y:470,w:180,h:34},
+          {x:850,y:380,w:180,h:34},
+          {x:1200,y:500,w:260,h:34},
+          {x:1600,y:410,w:250,h:34},
+          {x:2020,y:540,w:270,h:34},
+          {x:2400,y:430,w:250,h:34},
+          {x:2780,y:330,w:210,h:34}
+        ],
+        enemies: [
+          {x:580,y:426,w:44,h:44,vx:1.7,min:540,max:700,alive:true},
+          {x:910,y:336,w:44,h:44,vx:1.8,min:850,max:990,alive:true},
+          {x:1300,y:456,w:44,h:44,vx:2.2,min:1210,max:1430,alive:true},
+          {x:1690,y:366,w:44,h:44,vx:2.2,min:1610,max:1830,alive:true},
+          {x:2140,y:496,w:44,h:44,vx:2.4,min:2030,max:2260,alive:true},
+          {x:2470,y:386,w:44,h:44,vx:2.0,min:2410,max:2620,alive:true}
+        ],
+        coins: [
+          {x:300,y:515,taken:false},
+          {x:590,y:425,taken:false},
+          {x:900,y:335,taken:false},
+          {x:1270,y:455,taken:false},
+          {x:1730,y:365,taken:false},
+          {x:2130,y:495,taken:false},
+          {x:2500,y:385,taken:false},
+          {x:2860,y:285,taken:false}
+        ],
+        flag: {x:3060,y:535,w:34,h:115}
+      }
+    ];
+
+    let bullets = [];
+
+    function currentLevel() {
+      return levels[levelIndex];
+    }
+
+    function resetGame() {
+      score = 0;
+      levelIndex = 0;
+      player.health = 3;
+      gameOver = false;
+      resetLevel();
+    }
+
+    function resetLevel() {
+      const level = currentLevel();
+      player.x = 80;
+      player.y = 420;
+      player.vx = 0;
+      player.vy = 0;
+      player.dir = 1;
+      player.inv = 80;
+      player.hurtTimer = 0;
+      bullets = [];
+      cameraX = 0;
+      level.enemies.forEach(e => e.alive = true);
+      level.coins.forEach(c => c.taken = false);
+      updateHud();
+    }
+
+    function updateHud() {
+      scoreBox.textContent = `Punti: ${score}`;
+      healthBox.textContent = `Vita: ${player.health}`;
+      levelBox.textContent = `Livello: ${levelIndex + 1}`;
+    }
+
+    function rects(a, b) {
+      return a.x < b.x + b.w &&
+             a.x + a.w > b.x &&
+             a.y < b.y + b.h &&
+             a.y + a.h > b.y;
+    }
+
+    function shoot() {
+      if (shootCooldown > 0 || gameOver) return;
+
+      bullets.push({
+        x: player.x + player.w / 2 + player.dir * 34,
+        y: player.y + 31,
+        w: 20,
+        h: 8,
+        vx: player.dir * 13
+      });
+
+      shootCooldown = 16;
+      lastShotTimer = 22;
+    }
+
+    function damagePlayer() {
+      if (player.inv > 0 || gameOver) return;
+
+      player.health--;
+      player.inv = 90;
+      player.hurtTimer = 34;
+      player.vx = -player.dir * 9;
+      player.vy = -11;
+      updateHud();
+
+      if (player.health <= 0) {
+        gameOver = true;
+        running = false;
+        animAction = 'die';
+        animFrameTime = 0;
+        overlay.style.display = 'grid';
+        overlay.querySelector('h1').textContent = 'Game Over';
+        overlay.querySelector('p').textContent = 'Hai perso tutte le vite. Premi il pulsante o R per ricominciare.';
+        startBtn.textContent = 'Ricomincia';
+      }
+    }
+
+    function nextLevel() {
+      levelIndex++;
+
+      if (levelIndex >= levels.length) {
+        running = false;
+        overlay.style.display = 'grid';
+        overlay.querySelector('h1').textContent = 'Hai vinto';
+        overlay.querySelector('p').textContent = `Punteggio finale: ${score}`;
+        startBtn.textContent = 'Gioca ancora';
+        return;
+      }
+
+      resetLevel();
+    }
+
+    function setAnimation(action) {
+      if (animAction !== action) {
+        animAction = action;
+        animFrameTime = 0;
+      } else {
+        animFrameTime++;
+      }
+    }
+
+    function updateAnimationState() {
+      if (gameOver) {
+        setAnimation('die');
+      } else if (player.hurtTimer > 0) {
+        setAnimation('hurt');
+      } else if (!player.grounded) {
+        setAnimation('jump');
+      } else if (lastShotTimer > 0) {
+        setAnimation('shoot');
+      } else if (Math.abs(player.vx) > 0.7) {
+        setAnimation('run');
+      } else {
+        setAnimation('idle');
+      }
+    }
+
+    function update() {
+      if (!running) return;
+
+      const level = currentLevel();
+
+      if (keys.has('ArrowLeft') || keys.has('a')) {
+        player.vx -= player.speed;
+        player.dir = -1;
+      }
+
+      if (keys.has('ArrowRight') || keys.has('d')) {
+        player.vx += player.speed;
+        player.dir = 1;
+      }
+
+      if ((keys.has('ArrowUp') || keys.has('w') || keys.has(' ')) && player.grounded) {
+        player.vy = -player.jump;
+        player.grounded = false;
+      }
+
+      if (keys.has('j') || keys.has('x')) shoot();
+
+      player.vx = Math.max(-player.maxSpeed, Math.min(player.maxSpeed, player.vx));
+      player.vy += gravity;
+      player.x += player.vx;
+      player.y += player.vy;
+      player.vx *= friction;
+      player.grounded = false;
+
+      for (const p of level.platforms) {
+        if (rects(player, p)) {
+          const prevBottom = player.y + player.h - player.vy;
+          const prevTop = player.y - player.vy;
+          const prevRight = player.x + player.w - player.vx;
+          const prevLeft = player.x - player.vx;
+
+          if (prevBottom <= p.y) {
+            player.y = p.y - player.h;
+            player.vy = 0;
+            player.grounded = true;
+          } else if (prevTop >= p.y + p.h) {
+            player.y = p.y + p.h;
+            player.vy = 0;
+          } else if (prevRight <= p.x) {
+            player.x = p.x - player.w;
+            player.vx = 0;
+          } else if (prevLeft >= p.x + p.w) {
+            player.x = p.x + p.w;
+            player.vx = 0;
+          }
+        }
+      }
+
+      if (player.x < 0) player.x = 0;
+      if (player.x + player.w > level.length) player.x = level.length - player.w;
+
+      if (player.y > H + 200) {
+        damagePlayer();
+        resetLevel();
+      }
+
+      if (player.inv > 0) player.inv--;
+      if (player.hurtTimer > 0) player.hurtTimer--;
+      if (shootCooldown > 0) shootCooldown--;
+      if (lastShotTimer > 0) lastShotTimer--;
+
+      updateAnimationState();
+
+      for (const b of bullets) {
+        b.x += b.vx;
+      }
+
+      bullets = bullets.filter(b => b.x > cameraX - 80 && b.x < cameraX + W + 80);
+
+      for (const e of level.enemies) {
+        if (!e.alive) continue;
+
+        e.x += e.vx;
+
+        if (e.x < e.min || e.x + e.w > e.max) {
+          e.vx *= -1;
+        }
+
+        if (rects(player, e)) {
+          damagePlayer();
+        }
+
+        for (const b of bullets) {
+          if (rects(b, e)) {
+            e.alive = false;
+            b.dead = true;
+            score += 100;
+            updateHud();
+          }
+        }
+      }
+
+      bullets = bullets.filter(b => !b.dead);
+
+      for (const c of level.coins) {
+        if (!c.taken && rects(player, {x:c.x,y:c.y,w:28,h:28})) {
+          c.taken = true;
+          score += 25;
+          updateHud();
+        }
+      }
+
+      if (rects(player, level.flag)) {
+        score += 250;
+        updateHud();
+        nextLevel();
+      }
+
+      cameraX = Math.max(0, Math.min(level.length - W, player.x - W * 0.42));
+    }
+
+    function drawRoundedRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function drawBackground() {
+      ctx.clearRect(0, 0, W, H);
+
+      ctx.save();
+      ctx.translate(-cameraX * 0.25, 0);
+      for (let i = -1; i < 12; i++) {
+        const x = i * 260;
+        ctx.fillStyle = 'rgba(255,255,255,.75)';
+        ctx.beginPath();
+        ctx.arc(x + 70, 135, 34, 0, Math.PI * 2);
+        ctx.arc(x + 105, 125, 48, 0, Math.PI * 2);
+        ctx.arc(x + 152, 138, 35, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+
+      ctx.save();
+      ctx.translate(-cameraX * 0.45, 0);
+      for (let i = -1; i < 18; i++) {
+        ctx.fillStyle = i % 2 ? '#62ad56' : '#4f994f';
+        ctx.beginPath();
+        ctx.moveTo(i * 190, 650);
+        ctx.lineTo(i * 190 + 95, 430 + (i % 3) * 40);
+        ctx.lineTo(i * 190 + 210, 650);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function drawPlayer() {
+      const anim = animations[animAction] || animations.idle;
+      const frameIndex = Math.floor(animFrameTime / anim.speed) % anim.frames;
+      const sx = frameIndex * frameW;
+      const sy = anim.row * frameH;
+
+      const drawW = 145;
+      const drawH = 145;
+      const drawX = player.x + player.w / 2 - drawW / 2;
+      const drawY = player.y + player.h - drawH + 14;
+
+      if (sprite.complete && sprite.naturalWidth > 0) {
+        ctx.save();
+
+        if (player.dir === -1) {
+          ctx.translate(drawX + drawW, drawY);
+          ctx.scale(-1, 1);
+          ctx.drawImage(sprite, sx, sy, frameW, frameH, 0, 0, drawW, drawH);
+        } else {
+          ctx.drawImage(sprite, sx, sy, frameW, frameH, drawX, drawY, drawW, drawH);
+        }
+
+        ctx.restore();
+      } else {
+        ctx.fillStyle = '#e64b3c';
+        ctx.strokeStyle = '#552016';
+        ctx.lineWidth = 4;
+        drawRoundedRect(player.x, player.y, player.w, player.h, 12);
+      }
+    }
+
+    function draw() {
+      const level = currentLevel();
+      drawBackground();
+
+      ctx.save();
+      ctx.translate(-cameraX, 0);
+
+      for (const p of level.platforms) {
+        ctx.fillStyle = '#7b4f2a';
+        ctx.strokeStyle = '#2d1b10';
+        ctx.lineWidth = 4;
+        drawRoundedRect(p.x, p.y, p.w, p.h, 12);
+        ctx.fillStyle = '#45b649';
+        ctx.fillRect(p.x + 4, p.y + 4, p.w - 8, 12);
+      }
+
+      for (const c of level.coins) {
+        if (c.taken) continue;
+        ctx.fillStyle = '#ffd34d';
+        ctx.strokeStyle = '#9b6f00';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.ellipse(c.x + 14, c.y + 14, 12, 16, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      }
+
+      for (const e of level.enemies) {
+        if (!e.alive) continue;
+        ctx.fillStyle = '#8e44ad';
+        ctx.strokeStyle = '#2d1238';
+        ctx.lineWidth = 4;
+        drawRoundedRect(e.x, e.y, e.w, e.h, 12);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(e.x + 9, e.y + 13, 8, 8);
+        ctx.fillRect(e.x + 27, e.y + 13, 8, 8);
+        ctx.fillStyle = '#111111';
+        ctx.fillRect(e.x + 12, e.y + 16, 4, 4);
+        ctx.fillRect(e.x + 30, e.y + 16, 4, 4);
+      }
+
+      for (const b of bullets) {
+        ctx.fillStyle = '#ff4d4d';
+        ctx.strokeStyle = '#7a1010';
+        ctx.lineWidth = 2;
+        drawRoundedRect(b.x, b.y, b.w, b.h, 4);
+      }
+
+      const f = level.flag;
+      ctx.fillStyle = '#2c3e50';
+      ctx.fillRect(f.x, f.y, 8, f.h);
+      ctx.fillStyle = '#ffdd57';
+      ctx.strokeStyle = '#7d5f00';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(f.x + 8, f.y + 8);
+      ctx.lineTo(f.x + 86, f.y + 32);
+      ctx.lineTo(f.x + 8, f.y + 58);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      if (!(player.inv > 0 && Math.floor(player.inv / 6) % 2 === 0)) {
+        drawPlayer();
+      }
+
+      ctx.restore();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    startBtn.addEventListener('click', () => {
+      resetGame();
+      running = true;
+      overlay.style.display = 'none';
+      overlay.querySelector('h1').textContent = 'Platform Shooter Marx';
+      overlay.querySelector('p').textContent = 'Corri, salta tra piattaforme su più livelli e colpisci i nemici prima che ti raggiungano.';
+      startBtn.textContent = 'Inizia';
+    });
+
+    window.addEventListener('keydown', (e) => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      keys.add(k);
+
+      if (k === 'r') {
+        resetGame();
+        running = true;
+        overlay.style.display = 'none';
+      }
+
+      if ([' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      keys.delete(k);
+    });
+
+    resetGame();
+    loop();
+  </script>
+</body>
+</html>
